@@ -14,25 +14,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('login');
+    return view('login')->with('title', 'Login');
 });
 
 Route::get('/login', function () {
-    return view('login');
+    return view('login')->with('title', 'Login');
 });
 
 Route::get('/register', function () {
-    return view('register');
+    return view('register')->with('title', 'Registration');
 });
 
 Route::get('/forgot-password', function () {
-    return view('forgot-password');
+    return view('forgot-password')->with('title', 'Forgot Password');
 });
 
 Route::get('/home', function () {
-    return view('dashboard.index');
+    return view('dashboard.index')->with('title', 'Dashboard');
 });
 
 Route::fallback(function () {
-    return view('errors.404');
+    return view('errors.404')->with('title', '404 Error');
 });

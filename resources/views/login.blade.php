@@ -4,7 +4,7 @@
 <head>
     <!-- Basic Page Info -->
     <meta charset="utf-8">
-    <title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
+    <title>{{ $title }}</title>
 
     <!-- Site favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('vendors/images/apple-touch-icon.png') }}">
@@ -40,7 +40,7 @@
     <div class="login-header box-shadow">
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <div class="brand-logo">
-                <a href="login.html">
+                <a href="#">
                     <img src="{{ asset('vendors/images/logo-boarding-house.png') }}" alt="">
                 </a>
             </div>
@@ -66,18 +66,18 @@
                             <div class="select-role">
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn active">
-                                        <input type="radio" name="options" id="admin">
+                                        <input type="radio" name="options" id="admin" checked>
                                         <div class="icon"><img src="{{ asset('vendors/images/briefcase.svg') }}" class="svg"
                                                 alt=""></div>
                                         <span>I'm</span>
-                                        Manager
+                                        Landlord
                                     </label>
                                     <label class="btn">
                                         <input type="radio" name="options" id="user">
                                         <div class="icon"><img src="{{ asset('vendors/images/person.svg') }}" class="svg"
                                                 alt=""></div>
                                         <span>I'm</span>
-                                        Employee
+                                        Ternant
                                     </label>
                                 </div>
                             </div>
