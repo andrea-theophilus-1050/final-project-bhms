@@ -7,9 +7,7 @@
     <title>{{ $title }}</title>
 
     <!-- Site favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('vendors/images/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('vendors/images/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('vendors/images/favicon-16x16.png') }}">
+    <link rel=" shortcut icon" type="image/png" sizes="16x16" href="{{ asset('vendors/images/logo-login-register.png') }}">
 
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -67,22 +65,22 @@
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn active">
                                         <input type="radio" name="options" id="admin" checked>
-                                        <div class="icon"><img src="{{ asset('vendors/images/briefcase.svg') }}" class="svg"
-                                                alt=""></div>
+                                        <div class="icon"><img src="{{ asset('vendors/images/briefcase.svg') }}"
+                                                class="svg" alt=""></div>
                                         <span>I'm</span>
                                         Landlord
                                     </label>
                                     <label class="btn">
                                         <input type="radio" name="options" id="user">
-                                        <div class="icon"><img src="{{ asset('vendors/images/person.svg') }}" class="svg"
-                                                alt=""></div>
+                                        <div class="icon"><img src="{{ asset('vendors/images/person.svg') }}"
+                                                class="svg" alt=""></div>
                                         <span>I'm</span>
                                         Ternant
                                     </label>
                                 </div>
                             </div>
                             <div class="input-group custom">
-                                <input type="text" class="form-control form-control-lg" placeholder="Username">
+                                <input type="text" class="form-control form-control-lg" placeholder="Email">
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
                                 </div>
@@ -115,7 +113,18 @@
                                     </div>
                                     <div class="input-group mb-0">
                                         <a class="btn btn-outline-primary btn-lg btn-block"
-                                            href="{{ url('register') }}">Register To Create Account</a>
+                                            href="{{ url('register') }}"><img
+                                                src="{{ asset('vendors/images/google-logo.png') }}"
+                                                style="height: 30px; width: 30px; margin-right: 10px" /> Log in with
+                                            Google</a>
+                                    </div>
+
+                                    <div class="input-group mb-0" style="margin-top: 10px">
+                                        <a class="btn btn-outline-primary btn-lg btn-block"
+                                            href="{{ url('register') }}"><img
+                                                src="{{ asset('vendors/images/facebook-logo.png') }}"
+                                                style="height: 30px; width: 30px; margin-right: 10px" /> Log in with
+                                            Facebook</a>
                                     </div>
                                 </div>
                             </div>

@@ -9,7 +9,7 @@
     <title>{{ $title }}</title>
 
     <!-- Site favicon -->
-    <link rel="icon" type="image/png" href="{{ asset('vendors/images/System_Home_Icon_32.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('vendors/images/System_Home_Icon_32.png') }}">
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
