@@ -80,15 +80,15 @@
                                 </div>
                             </div>
                             <div class="input-group custom">
-                                <input type="text" class="form-control form-control-lg" placeholder="Email">
+                                <input type="email" class="form-control form-control-lg" placeholder="Email" autofocus autocomplete="on" required >
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
                                 </div>
                             </div>
                             <div class="input-group custom">
-                                <input type="password" class="form-control form-control-lg" placeholder="Password">
+                                <input type="password" class="form-control form-control-lg" placeholder="Password" id="password" required>
                                 <div class="input-group-append custom">
-                                    <span class="input-group-text"><i class="dw dw-padlock1"></i></span>
+                                    <span class="input-group-text"><i class="dw dw-eye" id="togglePassword"></i></span>
                                 </div>
                             </div>
                             <div class="row pb-30">
@@ -139,6 +139,7 @@
     <script src="{{ asset('vendors/scripts/script.min.js') }}"></script>
     <script src="{{ asset('vendors/scripts/process.js') }}"></script>
     <script src="{{ asset('vendors/scripts/layout-settings.js') }}"></script>
+    <script src="{{ asset('vendors/scripts/validate.js') }}"></script>
 </body>
 
 </html>

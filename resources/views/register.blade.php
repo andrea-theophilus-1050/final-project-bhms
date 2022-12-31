@@ -61,29 +61,29 @@
                         <div class="login-title">
                             <h2 class="text-center text-primary">Register for Landlords</h2>
                         </div>
-                        <form>                            
+                        <form>
                             <div class="input-group custom">
-                                <input type="text" class="form-control form-control-lg" placeholder="Email" autofocus>
+                                <input type="email" class="form-control form-control-lg" placeholder="Email" autofocus
+                                    autocomplete="on" required>
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="icon-copy dw dw-email"></i></span>
                                 </div>
                             </div>
                             <div class="input-group custom">
-                                <input type="text" class="form-control form-control-lg" placeholder="Phone number">
+                                <input type="password" class="form-control form-control-lg" placeholder="Password"
+                                    id="password" required onChange="comparePassword()">
                                 <div class="input-group-append custom">
-                                    <span class="input-group-text"><i class="icon-copy dw dw-phone-call"></i></span>
+                                    <span class="input-group-text"><i class="dw dw-eye" id="togglePassword"></i></span>
                                 </div>
                             </div>
+
                             <div class="input-group custom">
-                                <input type="password" class="form-control form-control-lg" placeholder="Password">
+                                <input type="password" class="form-control form-control-lg"
+                                    placeholder="Confirm Password" id="confirmPassword" required
+                                    onChange="comparePassword()">
                                 <div class="input-group-append custom">
-                                    <span class="input-group-text"><i class="dw dw-padlock1"></i></span>
-                                </div>
-                            </div>
-                            <div class="input-group custom">
-                                <input type="password" class="form-control form-control-lg" placeholder="Confirm Password">
-                                <div class="input-group-append custom">
-                                    <span class="input-group-text"><i class="dw dw-padlock1"></i></span>
+                                    <span class="input-group-text"><i class="dw dw-eye"
+                                            id="toggleConfirmPassword"></i></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -143,6 +143,7 @@
     <script src="{{ asset('vendors/scripts/layout-settings.js') }}"></script>
     <script src="{{ asset('src/plugins/jquery-steps/jquery.steps.js') }}"></script>
     <script src="{{ asset('vendors/scripts/steps-setting.js') }}"></script>
+    <script src="{{ asset('vendors/scripts/validate.js') }}"></script>
 </body>
 
 </html>
