@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/icon-font.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('src/plugins/jquery-steps/jquery.steps.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/passwordStrength.css') }}">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
@@ -71,46 +72,58 @@
                             </div>
                             <div class="input-group custom">
                                 <input type="password" class="form-control form-control-lg" placeholder="Password"
-                                    id="password" required onChange="comparePassword()">
+                                    id="password" required onkeyup="trigger()">
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="dw dw-eye" id="togglePassword"></i></span>
                                 </div>
                             </div>
 
+                            <div class="indicator">
+                                <span class="weak"></span>
+                                <span class="medium"></span>
+                                <span class="strong"></span>
+                            </div>
+                            <div class="text">Password Strength checker</div>
+
                             <div class="input-group custom">
                                 <input type="password" class="form-control form-control-lg"
                                     placeholder="Confirm Password" id="confirmPassword" required
-                                    onChange="comparePassword()">
+                                    onkeyup="comparePassword()">
                                 <div class="input-group-append custom">
-                                    <span class="input-group-text"><i class="dw dw-eye"
-                                            id="toggleConfirmPassword"></i></span>
+                                    <span class="input-group-text"><i class="dw dw-checked" id="checkedPassword"></i><i
+                                            class="dw dw-eye" id="toggleConfirmPassword"></i></span>
                                 </div>
                             </div>
+                            <div class="textComparePassword">Password and Confirm password do not match</div>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="input-group mb-0">
                                         <input class="btn btn-primary btn-lg btn-block" type="submit" value="Register">
                                     </div>
-                                    <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR
-                                    </div>
-                                    <div class="input-group mb-0">
-                                        <a class="btn btn-outline-primary btn-lg btn-block"
-                                            href="{{ url('register') }}"><img
-                                                src="{{ asset('vendors/images/google-logo.png') }}"
-                                                style="height: 30px; width: 30px; margin-right: 10px" /> Log in with
-                                            Google</a>
-                                    </div>
-
-                                    <div class="input-group mb-0" style="margin-top: 10px">
-                                        <a class="btn btn-outline-primary btn-lg btn-block"
-                                            href="{{ url('register') }}"><img
-                                                src="{{ asset('vendors/images/facebook-logo.png') }}"
-                                                style="height: 30px; width: 30px; margin-right: 10px" /> Log in with
-                                            Facebook</a>
-                                    </div>
                                 </div>
                             </div>
                         </form>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR
+                                </div>
+                                <div class="input-group mb-0">
+                                    <a class="btn btn-outline-primary btn-lg btn-block"
+                                        href="{{ url('register') }}"><img
+                                            src="{{ asset('vendors/images/google-logo.png') }}"
+                                            style="height: 30px; width: 30px; margin-right: 10px" /> Log in with
+                                        Google</a>
+                                </div>
+
+                                <div class="input-group mb-0" style="margin-top: 10px">
+                                    <a class="btn btn-outline-primary btn-lg btn-block"
+                                        href="{{ url('register') }}"><img
+                                            src="{{ asset('vendors/images/facebook-logo.png') }}"
+                                            style="height: 30px; width: 30px; margin-right: 10px" /> Log in with
+                                        Facebook</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -120,8 +133,8 @@
     <button type="button" id="success-modal-btn" hidden data-toggle="modal" data-target="#success-modal"
         data-backdrop="static">Launch modal</button>
 
-    <div class="modal fade" id="success-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
+    <div class="modal fade" id="success-modal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered max-width-400" role="document">
             <div class="modal-content">
                 <div class="modal-body text-center font-18">
