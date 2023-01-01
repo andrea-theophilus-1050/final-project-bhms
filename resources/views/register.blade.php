@@ -98,7 +98,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="input-group mb-0">
-                                        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Register">
+                                        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Register" onclick="validateInput()">
                                     </div>
                                 </div>
                             </div>

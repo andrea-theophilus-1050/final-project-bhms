@@ -26,8 +26,8 @@ const textComparePassword = document.querySelector('.textComparePassword');
 const iconChecked = document.querySelector('#checkedPassword');
 
 function comparePassword() {
-    if (confirmPassword.value != "" && password.value != confirmPassword.value) {
-        textComparePassword.style.display = "block";   
+    if (confirmPassword.value != "" && confirmPassword.value != password.value) {
+        textComparePassword.style.display = "block";
         iconChecked.style.display = "none";
     } else {
         textComparePassword.style.display = "none";
@@ -87,5 +87,29 @@ function trigger() {
     } else {
         indicator.style.display = "none";
         text.style.display = "none";
+    }
+}
+
+//Validate input field
+function validateInput() {
+    if (password.value.length < 6) {
+        password.setCustomValidity("Password must be at least 6 characters");
+        return false;
+    } else {
+        password.setCustomValidity("");
+
+        if (confirmPassword != "") {
+            if (confirmPassword.value != password.value) {
+                confirmPassword.setCustomValidity("Password and Confirm Password do not match");
+                textComparePassword.style.display = "block";
+                iconChecked.style.display = "none";
+                return false;
+            } else {
+                confirmPassword.setCustomValidity("");
+                textComparePassword.style.display = "none";
+                iconChecked.style.display = "block";
+                return true;
+            }
+        }
     }
 }

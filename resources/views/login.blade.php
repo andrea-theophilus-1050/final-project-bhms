@@ -80,13 +80,16 @@
                                 </div>
                             </div>
                             <div class="input-group custom">
-                                <input type="email" class="form-control form-control-lg" placeholder="Email" autofocus autocomplete="on" required >
+                                <input type="email" class="form-control form-control-lg" placeholder="Email" autofocus
+                                    autocomplete="on" required>
                                 <div class="input-group-append custom">
-                                    <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
+                                    <span class="input-group-text"><i class="icon-copy dw dw-email"></i></span>
                                 </div>
                             </div>
                             <div class="input-group custom">
-                                <input type="password" class="form-control form-control-lg" placeholder="Password" id="password" required>
+                                <input type="password" class="form-control form-control-lg" placeholder="Password"
+                                    id="password" required minlength="6"
+                                    oninvalid="this.setCustomValidity('Password must be at least 6 characters')" oninput="this.setCustomValidity('')">
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="dw dw-eye" id="togglePassword"></i></span>
                                 </div>
