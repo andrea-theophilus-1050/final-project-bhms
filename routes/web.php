@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoggedinController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,25 +15,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('login')->with('title', 'Login');
-});
+Route::get('/', [UserController::class, 'login']);
 
-Route::get('/login', function () {
-    return view('login')->with('title', 'Login');
-});
+Route::get('login', [UserController::class, 'login'])->name('login');
 
-Route::get('/register', function () {
-    return view('register')->with('title', 'Registration');
-});
+Route::post('login', [UserController::class, 'login_action'])->name('login.action');
+
+Route::get('register', [UserController::class, 'register'])->name('register');
+
+Route::post('register', [UserController::class, 'register_action'])->name('register.action');
+
+Route::get('logout', [UserController::class, 'logout'])->name('logout');
+
+Route::get('home', [LoggedinController::class, 'index'])->name('home');
+
+
 
 Route::get('/forgot-password', function () {
-    return view('forgot-password')->with('title', 'Forgot Password');
+    return view('user.forgot-password')->with('title', 'Forgot Password');
 });
 
-Route::get('/home', function () {
-    return view('dashboard.index')->with('title', 'Dashboard');
-});
+// Route::get('/home', function () {
+//     return view('dashboard.index')->with('title', 'Dashboard');
+// });
 
 Route::fallback(function () {
     return view('errors.404')->with('title', '404 Error');

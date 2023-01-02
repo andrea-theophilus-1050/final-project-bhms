@@ -46,7 +46,7 @@
             </div>
             <div class="login-menu">
                 <ul>
-                    <li><a href="{{ url('login') }}">Login</a></li>
+                    <li><a href="{{ route('login') }}">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -62,17 +62,32 @@
                         <div class="login-title">
                             <h2 class="text-center text-primary">Register for Landlords</h2>
                         </div>
-                        <form>
+
+                        @if ($errors->any())
+                            @foreach ($errors->all() as $error)
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Error!</strong> {{ $error }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endforeach                            
+                        @endif
+
+                        <form method="POST" action="{{ route('register.action') }}">
+                            @csrf
                             <div class="input-group custom">
-                                <input type="email" class="form-control form-control-lg" placeholder="Email" autofocus
-                                    autocomplete="on" required>
+                                <input type="email" class="form-control form-control-lg" id="email" name="email"
+                                    placeholder="Email" autofocus autocomplete="on" required
+                                    value="{{ old('email') }}">
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="icon-copy dw dw-email"></i></span>
                                 </div>
                             </div>
                             <div class="input-group custom">
                                 <input type="password" class="form-control form-control-lg" placeholder="Password"
-                                    id="password" required onkeyup="trigger()">
+                                    id="password" name="password" required onkeyup="trigger()"
+                                    value={{ old('password') }}>
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="dw dw-eye" id="togglePassword"></i></span>
                                 </div>
@@ -87,8 +102,8 @@
 
                             <div class="input-group custom">
                                 <input type="password" class="form-control form-control-lg"
-                                    placeholder="Confirm Password" id="confirmPassword" required
-                                    onkeyup="comparePassword()">
+                                    placeholder="Confirm Password" id="confirmPassword" name="confirmPassword" required
+                                    onkeyup="comparePassword()" value="{{ old('confirmPassword') }}">
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="dw dw-checked" id="checkedPassword"></i><i
                                             class="dw dw-eye" id="toggleConfirmPassword"></i></span>
@@ -98,7 +113,8 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="input-group mb-0">
-                                        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Register" onclick="validateInput()">
+                                        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Register"
+                                            onclick="validateInput()">
                                     </div>
                                 </div>
                             </div>
@@ -108,16 +124,14 @@
                                 <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR
                                 </div>
                                 <div class="input-group mb-0">
-                                    <a class="btn btn-outline-primary btn-lg btn-block"
-                                        href="{{ url('register') }}"><img
+                                    <a class="btn btn-outline-primary btn-lg btn-block" href="#"><img
                                             src="{{ asset('vendors/images/google-logo.png') }}"
                                             style="height: 30px; width: 30px; margin-right: 10px" /> Log in with
                                         Google</a>
                                 </div>
 
                                 <div class="input-group mb-0" style="margin-top: 10px">
-                                    <a class="btn btn-outline-primary btn-lg btn-block"
-                                        href="{{ url('register') }}"><img
+                                    <a class="btn btn-outline-primary btn-lg btn-block" href="#"><img
                                             src="{{ asset('vendors/images/facebook-logo.png') }}"
                                             style="height: 30px; width: 30px; margin-right: 10px" /> Log in with
                                         Facebook</a>
