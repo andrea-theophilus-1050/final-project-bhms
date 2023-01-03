@@ -29,6 +29,18 @@ Route::get('logout', [UserController::class, 'logout'])->name('logout');
 
 Route::get('home', [LoggedinController::class, 'index'])->name('home');
 
+Route::get('/auth/github/redirect', [UserController::class, 'githubRedirect'])->name('auth.githubRedirect');
+
+Route::get('/auth/github/callback', [UserController::class, 'githubCallback'])->name('auth.githubCallback');
+
+Route::get('/auth/google/redirect', [UserController::class, 'googleRedirect'])->name('auth.googleRedirect');
+
+Route::get('/auth/google/callback', [UserController::class, 'googleCallback'])->name('auth.googleCallback');
+
+Route::get('/auth/facebook/redirect', [UserController::class, 'facebookRedirect'])->name('auth.facebookRedirect');
+
+Route::get('/auth/facebook/callback', [UserController::class, 'facebookCallback'])->name('auth.facebookCallback');
+
 
 
 Route::get('/forgot-password', function () {

@@ -60,18 +60,18 @@
                         <div class="login-title">
                             <h2 class="text-center text-primary">Login</h2>
                         </div>
-                        
+
                         {{-- alert success message after registration --}}
                         @if (session('success'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('success') }}
-                            </div>                            
+                            </div>
                         @endif
 
                         {{-- alert error message after registration --}}
-                        @if (session('fail'))
+                        @if (session('errors'))
                             <div class="alert alert-danger" role="alert">
-                                {{ session('fail') }}
+                                {{ session('errors') }}
                             </div>
                         @endif
 
@@ -96,9 +96,9 @@
                                 </div>
                             </div>
                             <div class="input-group custom">
-                                <input type="email" class="form-control form-control-lg"
-                                    placeholder="Email" name="email" id="email" autofocus
-                                    autocomplete="on" required value="{{ old('email') }}">
+                                <input type="email" class="form-control form-control-lg" placeholder="Email"
+                                    name="email" id="email" autofocus autocomplete="on" required
+                                    value="{{ old('email') }}">
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="icon-copy dw dw-email"></i></span>
                                 </div>
@@ -107,7 +107,7 @@
                                 <input type="password" class="form-control form-control-lg" placeholder="Password"
                                     id="password" name="password" required minlength="6"
                                     oninvalid="this.setCustomValidity('Password must be at least 6 characters')"
-                                    oninput="this.setCustomValidity('')">
+                                    oninput="this.setCustomValidity('')" value="{{ old('password') }}">
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="dw dw-eye" id="togglePassword"></i></span>
                                 </div>
@@ -115,8 +115,9 @@
                             <div class="row pb-30">
                                 <div class="col-6">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                        <label class="custom-control-label" for="customCheck1">Remember me</label>
+                                        <input type="checkbox" class="custom-control-input" id="remember_me"
+                                            name="remember_me">
+                                        <label class="custom-control-label" for="remember_me">Remember me</label>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -128,7 +129,8 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="input-group mb-0">
-                                        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In" onclick="checkEmail()">
+                                        <input class="btn btn-primary btn-lg btn-block" type="submit"
+                                            value="Sign In" onclick="checkEmail()">
                                     </div>
                                 </div>
                             </div>
@@ -138,16 +140,26 @@
                                 <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR
                                 </div>
                                 <div class="input-group mb-0">
-                                    <a class="btn btn-outline-primary btn-lg btn-block" href="#"><img
+                                    <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('auth.googleRedirect') }}"
+                                        style="display: flex; justify-content: flex-start"><img
                                             src="{{ asset('vendors/images/google-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 10px" /> Log in with
+                                            style="height: 30px; width: 30px; margin-right: 18%" /> Log in with
                                         Google</a>
                                 </div>
                                 <div class="input-group mb-0" style="margin-top: 10px">
-                                    <a class="btn btn-outline-primary btn-lg btn-block" href="#"><img
+                                    <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('auth.facebookRedirect') }}"
+                                        style="display: flex; justify-content: flex-start"><img
                                             src="{{ asset('vendors/images/facebook-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 10px" /> Log in with
+                                            style="height: 30px; width: 30px; margin-right: 18%" /> Log in with
                                         Facebook</a>
+                                </div>
+                                <div class="input-group mb-0" style="margin-top: 10px">
+                                    <a class="btn btn-outline-primary btn-lg btn-block"
+                                        href="{{ route('auth.githubRedirect') }}"
+                                        style="display: flex; justify-content: flex-start"><img
+                                            src="{{ asset('vendors/images/github-logo.png') }}"
+                                            style="height: 30px; width: 30px; margin-right: 18%" /> Log in with
+                                        GitHub</a>
                                 </div>
                             </div>
                         </div>

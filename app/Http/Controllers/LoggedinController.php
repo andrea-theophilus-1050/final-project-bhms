@@ -13,7 +13,7 @@ class LoggedinController extends Controller
             return redirect()->route('login')->with('fail', 'You must be logged in');
         }
         else{
-            return view('dashboard.index')->with('title', 'Logged In');
+            return view('dashboard.index')->with('title', 'Dashboard');
         }
 
     }

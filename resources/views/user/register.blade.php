@@ -63,15 +63,13 @@
                             <h2 class="text-center text-primary">Register for Landlords</h2>
                         </div>
 
-                        @if ($errors->any())
-                            @foreach ($errors->all() as $error)
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <strong>Error!</strong> {{ $error }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            @endforeach                            
+                        @if (session('errors'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Error!</strong> {{ session('errors') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
                         @endif
 
                         <form method="POST" action="{{ route('register.action') }}">
@@ -86,8 +84,7 @@
                             </div>
                             <div class="input-group custom">
                                 <input type="password" class="form-control form-control-lg" placeholder="Password"
-                                    id="password" name="password" required onkeyup="trigger()"
-                                    value={{ old('password') }}>
+                                    id="password" name="password" required onkeyup="trigger()">
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="dw dw-eye" id="togglePassword"></i></span>
                                 </div>
@@ -103,7 +100,7 @@
                             <div class="input-group custom">
                                 <input type="password" class="form-control form-control-lg"
                                     placeholder="Confirm Password" id="confirmPassword" name="confirmPassword" required
-                                    onkeyup="comparePassword()" value="{{ old('confirmPassword') }}">
+                                    onkeyup="comparePassword()">
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="dw dw-checked" id="checkedPassword"></i><i
                                             class="dw dw-eye" id="toggleConfirmPassword"></i></span>
