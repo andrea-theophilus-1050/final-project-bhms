@@ -68,14 +68,20 @@ class UserController extends Controller
     public function facebookCallback(Request $request)
     {
         $userData = Socialite::driver('facebook')->user();
-        $user = User::where('email', $userData->getEmail())->where('type_login', 'facebook')->first();
+        $user = User::where('email', $userData->getId() . '@facebook.com')->where('type_login', 'facebook')->first();
         if ($user) {
             Auth::login($user, true);
             return redirect()->route('home');
         } else {
             $user = new User();
             $user->name = $userData->getName();
-            $user->email = $userData->getEmail();
+
+            if ($userData->getEmail() == null) {
+                $user->email = $userData->getId() . '@facebook.com';
+            } else {
+                $user->email = $userData->getEmail();
+            }
+
             $user->password = Hash::make($userData->getId());
             $user->type_login = 'facebook';
             $user->save();

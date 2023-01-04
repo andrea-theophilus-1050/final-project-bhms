@@ -55,12 +55,12 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6 col-lg-7">
-                    <img src="{{ asset('vendors/images/register-page-img.png') }}" alt="">
+                    <img src="{{ asset('vendors/images/register-img-background.png') }}" alt="">
                 </div>
                 <div class="col-md-6 col-lg-5">
                     <div class="login-box bg-white box-shadow border-radius-10">
                         <div class="login-title">
-                            <h2 class="text-center text-primary">Register for Landlords</h2>
+                            <h2 class="text-center text-primary">Sign up for Landlords</h2>
                         </div>
 
                         @if (session('errors'))
@@ -121,17 +121,27 @@
                                 <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR
                                 </div>
                                 <div class="input-group mb-0">
-                                    <a class="btn btn-outline-primary btn-lg btn-block" href="#"><img
+                                    <a class="btn btn-outline-primary btn-lg btn-block" href="#"
+                                        style="display: flex; justify-content: flex-start"><img
                                             src="{{ asset('vendors/images/google-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 10px" /> Log in with
+                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" /> Sign up with
                                         Google</a>
                                 </div>
 
                                 <div class="input-group mb-0" style="margin-top: 10px">
-                                    <a class="btn btn-outline-primary btn-lg btn-block" href="#"><img
+                                    <a class="btn btn-outline-primary btn-lg btn-block" href="#"
+                                        style="display: flex; justify-content: flex-start"><img
                                             src="{{ asset('vendors/images/facebook-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 10px" /> Log in with
+                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" /> Sign up with
                                         Facebook</a>
+                                </div>
+
+                                <div class="input-group mb-0" style="margin-top: 10px">
+                                    <a class="btn btn-outline-primary btn-lg btn-block" href="#"
+                                        style="display: flex; justify-content: flex-start"><img
+                                            src="{{ asset('vendors/images/github-logo.png') }}"
+                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" /> Sign up with
+                                        GitHub</a>
                                 </div>
                             </div>
                         </div>

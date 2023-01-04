@@ -53,12 +53,12 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6 col-lg-7">
-                    <img src="{{ asset('vendors/images/login-page-img.png') }}" alt="">
+                    <img src="{{ asset('vendors/images/login-img-background.png') }}" alt="">
                 </div>
                 <div class="col-md-6 col-lg-5">
                     <div class="login-box bg-white box-shadow border-radius-10">
                         <div class="login-title">
-                            <h2 class="text-center text-primary">Login</h2>
+                            <h2 class="text-center text-primary">Sign in</h2>
                         </div>
 
                         {{-- alert success message after registration --}}
@@ -130,7 +130,7 @@
                                 <div class="col-sm-12">
                                     <div class="input-group mb-0">
                                         <input class="btn btn-primary btn-lg btn-block" type="submit"
-                                            value="Sign In" onclick="checkEmail()">
+                                            value="Log in" onclick="checkEmail()">
                                     </div>
                                 </div>
                             </div>
@@ -143,14 +143,14 @@
                                     <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('auth.googleRedirect') }}"
                                         style="display: flex; justify-content: flex-start"><img
                                             src="{{ asset('vendors/images/google-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 18%" /> Log in with
+                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" /> Sign in with
                                         Google</a>
                                 </div>
                                 <div class="input-group mb-0" style="margin-top: 10px">
                                     <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('auth.facebookRedirect') }}"
                                         style="display: flex; justify-content: flex-start"><img
                                             src="{{ asset('vendors/images/facebook-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 18%" /> Log in with
+                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" /> Sign in with
                                         Facebook</a>
                                 </div>
                                 <div class="input-group mb-0" style="margin-top: 10px">
@@ -158,7 +158,7 @@
                                         href="{{ route('auth.githubRedirect') }}"
                                         style="display: flex; justify-content: flex-start"><img
                                             src="{{ asset('vendors/images/github-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 18%" /> Log in with
+                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" /> Sign in with
                                         GitHub</a>
                                 </div>
                             </div>
