@@ -41,6 +41,8 @@ Route::get('/auth/facebook/callback', [UserController::class, 'facebookCallback'
 Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('home');
     Route::get('dashboard/room', [DashboardController::class, 'room'])->name('room');
+    Route::get('dashboard/profile', [DashboardController::class, 'profile'])->name('profile');
+    Route::post('dashboard/update-profile', [DashboardController::class, 'updateProfile'])->name('update-profile');
 });
 
 // 404 Error

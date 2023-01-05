@@ -6,12 +6,12 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            <h4>Basic Tables</h4>
+                            <h4>Rooms Management</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Basic Tables</li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Rooms Management</li>
                             </ol>
                         </nav>
                     </div>
@@ -21,14 +21,14 @@
                                 <input type="text" name="search" placeholder="Room number" class="form-control"
                                     style="margin-right: 5%">
                                 <select class="form-control" name="" style="margin-right: 5%">
-                                    <option value="">1</option>
+                                    <option value="">Room status</option>
                                     <option value="">1</option>
                                     <option value="">1</option>
                                     <option value="">1</option>
                                     <option value="">1</option>
                                 </select>
                                 <select class="form-control" name="" style="margin-right: 5%">
-                                    <option value="">1</option>
+                                    <option value="">Room billed</option>
                                     <option value="">1</option>
                                     <option value="">1</option>
                                     <option value="">1</option>
@@ -55,7 +55,7 @@
             <div class="pd-20 card-box mb-30">
                 <div class="clearfix mb-20">
                     <div class="pull-left">
-                        <h4 class="text-blue h4">Contextual classes</h4>
+                        <h4 class="text-blue h4">Contextual classes</h4>                        
                     </div>
                     <div class="pull-right">
                         <a href="#" class="btn btn-primary btn-sm" role="button"><i class="fa fa-plus"></i> Source
@@ -81,12 +81,12 @@
                         </thead>
                         <tbody>
                             @for ($i = 0; $i <= 4; $i++)
-                                <tr class="table-light">
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                    <td><span class="badge badge-success">Success</span></td>
+                                <tr class="table-light" >
+                                    <th style="background-color: red; width: 30px">3</th>
+                                    <td style="background-color: red">Larry</td>
+                                    <td style="background-color: red">the Bird</td>
+                                    <td style="background-color: red">@twitter</td>
+                                    <td style="background-color: red"><span class="badge badge-success">Success</span></td>
                                 </tr>
                             @endfor
                         </tbody>

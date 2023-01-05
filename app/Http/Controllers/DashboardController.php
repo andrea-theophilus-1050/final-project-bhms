@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -15,5 +16,20 @@ class DashboardController extends Controller
     public function room()
     {
         return view('dashboard.room')->with('title', 'Room');
+    }
+
+    public function profile()
+    {
+        return view('user.profile')->with('user', auth()->user())->with('title', 'Profile');
+    }
+
+    public function updateProfile(Request $request)
+    {
+        DB::table('tb_user')->where('id', auth()->user()->id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+        ]);
+        return redirect()->route('home');
     }
 }
