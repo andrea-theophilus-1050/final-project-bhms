@@ -75,11 +75,11 @@
                         <form method="POST" action="{{ route('register.action') }}">
                             @csrf
                             <div class="input-group custom">
-                                <input type="email" class="form-control form-control-lg" id="email" name="email"
-                                    placeholder="Email" autofocus autocomplete="on" required
-                                    value="{{ old('email') }}">
+                                <input type="text" class="form-control form-control-lg" id="username" name="username"
+                                    placeholder="Username" autofocus autocomplete="on" required
+                                    value="{{ old('username') }}">
                                 <div class="input-group-append custom">
-                                    <span class="input-group-text"><i class="icon-copy dw dw-email"></i></span>
+                                    <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
                                 </div>
                             </div>
                             <div class="input-group custom">

@@ -97,11 +97,11 @@ class UserController extends Controller
 
     public function login_action(Request $request)
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'type_login' => 'email'], $request->remember_me)) {
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password, 'type_login' => 'username'], $request->remember_me)) {
             $request->session()->regenerate();
             return redirect()->route('home')->with('success', 'Login successful!');
         }
-        return back()->with('errors', 'Incorrect email or password')->withInput($request->all());
+        return back()->with('errors', 'Incorrect username or password')->withInput($request->all());
     }
 
 
@@ -113,24 +113,22 @@ class UserController extends Controller
     public function register_action(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'username' => 'required',
             'password' => 'required|min:6',
             'confirmPassword' => 'required|same:password',
-        ], [
-            'email.unique' => 'Email already exists'
         ]);
 
-        $user = User::where('email', $request->email)->where('type_login', 'email')->first();
+        $user = User::where('username', $request->username)->where('type_login', 'username')->first();
         if (!$user) {
             $user = new User([
-                'email' => $request->email,
+                'username' => $request->username,
                 'password' => Hash::make($request->password)
             ]);
 
             $user->save();
             return redirect()->route('login')->with('success', 'Registration successful!');
         } else {
-            return back()->with('errors', 'Email already exists')->withInput($request->all());
+            return back()->with('errors', 'Username already exists')->withInput($request->all());
         }
     }
 

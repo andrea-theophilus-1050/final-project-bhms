@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\LoggedinController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,41 +16,34 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [UserController::class, 'login']);
-
 Route::get('login', [UserController::class, 'login'])->name('login');
-
 Route::post('login', [UserController::class, 'login_action'])->name('login.action');
-
 Route::get('register', [UserController::class, 'register'])->name('register');
-
 Route::post('register', [UserController::class, 'register_action'])->name('register.action');
-
 Route::get('logout', [UserController::class, 'logout'])->name('logout');
-
-Route::get('home', [LoggedinController::class, 'index'])->name('home');
-
-Route::get('/auth/github/redirect', [UserController::class, 'githubRedirect'])->name('auth.githubRedirect');
-
-Route::get('/auth/github/callback', [UserController::class, 'githubCallback'])->name('auth.githubCallback');
-
-Route::get('/auth/google/redirect', [UserController::class, 'googleRedirect'])->name('auth.googleRedirect');
-
-Route::get('/auth/google/callback', [UserController::class, 'googleCallback'])->name('auth.googleCallback');
-
-Route::get('/auth/facebook/redirect', [UserController::class, 'facebookRedirect'])->name('auth.facebookRedirect');
-
-Route::get('/auth/facebook/callback', [UserController::class, 'facebookCallback'])->name('auth.facebookCallback');
-
-
-
 Route::get('/forgot-password', function () {
     return view('user.forgot-password')->with('title', 'Forgot Password');
 });
 
-// Route::get('/home', function () {
-//     return view('dashboard.index')->with('title', 'Dashboard');
-// });
+// Login with Socialite GitHub
+Route::get('/auth/github/redirect', [UserController::class, 'githubRedirect'])->name('auth.githubRedirect');
+Route::get('/auth/github/callback', [UserController::class, 'githubCallback'])->name('auth.githubCallback');
 
+// Login with Socialite Google
+Route::get('/auth/google/redirect', [UserController::class, 'googleRedirect'])->name('auth.googleRedirect');
+Route::get('/auth/google/callback', [UserController::class, 'googleCallback'])->name('auth.googleCallback');
+
+// Login with Socialite Facebook
+Route::get('/auth/facebook/redirect', [UserController::class, 'facebookRedirect'])->name('auth.facebookRedirect');
+Route::get('/auth/facebook/callback', [UserController::class, 'facebookCallback'])->name('auth.facebookCallback');
+
+// Group Authenticated
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('home');
+    Route::get('dashboard/room', [DashboardController::class, 'room'])->name('room');
+});
+
+// 404 Error
 Route::fallback(function () {
     return view('errors.404')->with('title', '404 Error');
 });

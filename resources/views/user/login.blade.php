@@ -71,7 +71,10 @@
                         {{-- alert error message after registration --}}
                         @if (session('errors'))
                             <div class="alert alert-danger" role="alert">
-                                {{ session('errors') }}
+                                <strong>Error! </strong>{{ session('errors') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                         @endif
 
@@ -96,11 +99,11 @@
                                 </div>
                             </div>
                             <div class="input-group custom">
-                                <input type="email" class="form-control form-control-lg" placeholder="Email"
-                                    name="email" id="email" autofocus autocomplete="on" required
-                                    value="{{ old('email') }}">
+                                <input type="text" class="form-control form-control-lg" placeholder="Username"
+                                    name="username" id="username" autofocus autocomplete="on" required
+                                    value="{{ old('username') }}">
                                 <div class="input-group-append custom">
-                                    <span class="input-group-text"><i class="icon-copy dw dw-email"></i></span>
+                                    <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
                                 </div>
                             </div>
                             <div class="input-group custom">
@@ -129,8 +132,8 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="input-group mb-0">
-                                        <input class="btn btn-primary btn-lg btn-block" type="submit"
-                                            value="Log in" onclick="checkEmail()">
+                                        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Log in"
+                                            onclick="checkEmail()">
                                     </div>
                                 </div>
                             </div>
@@ -140,17 +143,21 @@
                                 <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR
                                 </div>
                                 <div class="input-group mb-0">
-                                    <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('auth.googleRedirect') }}"
+                                    <a class="btn btn-outline-primary btn-lg btn-block"
+                                        href="{{ route('auth.googleRedirect') }}"
                                         style="display: flex; justify-content: flex-start"><img
                                             src="{{ asset('vendors/images/google-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" /> Sign in with
+                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" />
+                                        Sign in with
                                         Google</a>
                                 </div>
                                 <div class="input-group mb-0" style="margin-top: 10px">
-                                    <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('auth.facebookRedirect') }}"
+                                    <a class="btn btn-outline-primary btn-lg btn-block"
+                                        href="{{ route('auth.facebookRedirect') }}"
                                         style="display: flex; justify-content: flex-start"><img
                                             src="{{ asset('vendors/images/facebook-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" /> Sign in with
+                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" />
+                                        Sign in with
                                         Facebook</a>
                                 </div>
                                 <div class="input-group mb-0" style="margin-top: 10px">
@@ -158,7 +165,8 @@
                                         href="{{ route('auth.githubRedirect') }}"
                                         style="display: flex; justify-content: flex-start"><img
                                             src="{{ asset('vendors/images/github-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" /> Sign in with
+                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" />
+                                        Sign in with
                                         GitHub</a>
                                 </div>
                             </div>
