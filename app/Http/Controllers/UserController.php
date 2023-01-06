@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Cookie;
 
 
 class UserController extends Controller
@@ -99,11 +100,14 @@ class UserController extends Controller
     {
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password, 'type_login' => 'username'], $request->remember_me)) {
             $request->session()->regenerate();
+            if ($request->remember_me) {
+                Cookie::queue('username', $request->username, 60 * 24 * 30);
+                Cookie::queue('password', $request->password, 60 * 24 * 30);
+            }
             return redirect()->route('home')->with('success', 'Login successful!');
         }
         return back()->with('errors', 'Incorrect username or password')->withInput($request->all());
     }
-
 
     public function register()
     {

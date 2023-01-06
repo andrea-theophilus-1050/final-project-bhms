@@ -101,7 +101,10 @@
                             <div class="input-group custom">
                                 <input type="text" class="form-control form-control-lg" placeholder="Username"
                                     name="username" id="username" autofocus autocomplete="on" required
-                                    value="{{ old('username') }}">
+                                    @if (Cookie::has('username')) value="{{ Cookie::get('username') }}"
+                                    @else
+                                    value="{{ old('username') }} @endif">
+
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
                                 </div>
@@ -110,7 +113,10 @@
                                 <input type="password" class="form-control form-control-lg" placeholder="Password"
                                     id="password" name="password" required minlength="6"
                                     oninvalid="this.setCustomValidity('Password must be at least 6 characters')"
-                                    oninput="this.setCustomValidity('')" value="{{ old('password') }}">
+                                    oninput="this.setCustomValidity('')"
+                                    @if (Cookie::has('password')) value="{{ Cookie::get('password') }}"
+                                    @else
+                                    value="{{ old('password') }}" @endif>
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="dw dw-eye" id="togglePassword"></i></span>
                                 </div>
@@ -119,7 +125,7 @@
                                 <div class="col-6">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="remember_me"
-                                            name="remember_me">
+                                            name="remember_me" @if (Cookie::has('username')) checked @endif>
                                         <label class="custom-control-label" for="remember_me">Remember me</label>
                                     </div>
                                 </div>

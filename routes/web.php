@@ -25,17 +25,20 @@ Route::get('/forgot-password', function () {
     return view('user.forgot-password')->with('title', 'Forgot Password');
 });
 
-// Login with Socialite GitHub
-Route::get('/auth/github/redirect', [UserController::class, 'githubRedirect'])->name('auth.githubRedirect');
-Route::get('/auth/github/callback', [UserController::class, 'githubCallback'])->name('auth.githubCallback');
+// Group Auth Socialite
+Route::group(['prefix' => '/auth'], function () {
+    // Login with Socialite GitHub
+    Route::get('/github/redirect', [UserController::class, 'githubRedirect'])->name('auth.githubRedirect');
+    Route::get('/github/callback', [UserController::class, 'githubCallback'])->name('auth.githubCallback');
 
-// Login with Socialite Google
-Route::get('/auth/google/redirect', [UserController::class, 'googleRedirect'])->name('auth.googleRedirect');
-Route::get('/auth/google/callback', [UserController::class, 'googleCallback'])->name('auth.googleCallback');
+    // Login with Socialite Google
+    Route::get('/google/redirect', [UserController::class, 'googleRedirect'])->name('auth.googleRedirect');
+    Route::get('/google/callback', [UserController::class, 'googleCallback'])->name('auth.googleCallback');
 
-// Login with Socialite Facebook
-Route::get('/auth/facebook/redirect', [UserController::class, 'facebookRedirect'])->name('auth.facebookRedirect');
-Route::get('/auth/facebook/callback', [UserController::class, 'facebookCallback'])->name('auth.facebookCallback');
+    // Login with Socialite Facebook
+    Route::get('/facebook/redirect', [UserController::class, 'facebookRedirect'])->name('auth.facebookRedirect');
+    Route::get('/facebook/callback', [UserController::class, 'facebookCallback'])->name('auth.facebookCallback');
+});
 
 // Group Authenticated
 Route::group(['middleware' => 'auth'], function () {
