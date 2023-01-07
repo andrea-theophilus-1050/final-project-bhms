@@ -33,7 +33,7 @@ class UserController extends Controller
             $user->type_login = 'github';
             $user->save();
             Auth::login($user, true);
-            return redirect()->route('home');
+            return redirect()->route('home', app()->getLocale());
         }
     }
 
@@ -57,7 +57,7 @@ class UserController extends Controller
             $user->type_login = 'google';
             $user->save();
             Auth::login($user, true);
-            return redirect()->route('home');
+            return redirect()->route('home', app()->getLocale());
         }
     }
 
@@ -87,7 +87,7 @@ class UserController extends Controller
             $user->type_login = 'facebook';
             $user->save();
             Auth::login($user, true);
-            return redirect()->route('home');
+            return redirect()->route('home', app()->getLocale());
         }
     }
 
@@ -104,7 +104,7 @@ class UserController extends Controller
                 Cookie::queue('username', $request->username, 60 * 24 * 30);
                 Cookie::queue('password', $request->password, 60 * 24 * 30);
             }
-            return redirect()->route('home')->with('success', 'Login successful!');
+            return redirect()->route('home', app()->getLocale())->with('success', 'Login successful!');
         }
         return back()->with('errors', 'Incorrect username or password')->withInput($request->all());
     }

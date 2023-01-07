@@ -75,8 +75,8 @@
                         <form method="POST" action="{{ route('register.action') }}">
                             @csrf
                             <div class="input-group custom">
-                                <input type="text" class="form-control form-control-lg" id="username" name="username"
-                                    placeholder="Username" autofocus autocomplete="on" required
+                                <input type="text" class="form-control form-control-lg" id="username"
+                                    name="username" placeholder="Username" autofocus autocomplete="on" required
                                     value="{{ old('username') }}">
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
@@ -121,26 +121,29 @@
                                 <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR
                                 </div>
                                 <div class="input-group mb-0">
-                                    <a class="btn btn-outline-primary btn-lg btn-block" href="#"
+                                    <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('auth.googleRedirect') }}"
                                         style="display: flex; justify-content: flex-start"><img
                                             src="{{ asset('vendors/images/google-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" /> Sign up with
+                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" />
+                                        Sign up with
                                         Google</a>
                                 </div>
 
                                 <div class="input-group mb-0" style="margin-top: 10px">
-                                    <a class="btn btn-outline-primary btn-lg btn-block" href="#"
+                                    <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('auth.facebookRedirect') }}"
                                         style="display: flex; justify-content: flex-start"><img
                                             src="{{ asset('vendors/images/facebook-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" /> Sign up with
+                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" />
+                                        Sign up with
                                         Facebook</a>
                                 </div>
 
                                 <div class="input-group mb-0" style="margin-top: 10px">
-                                    <a class="btn btn-outline-primary btn-lg btn-block" href="#"
+                                    <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('auth.githubRedirect') }} }}"
                                         style="display: flex; justify-content: flex-start"><img
                                             src="{{ asset('vendors/images/github-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" /> Sign up with
+                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" />
+                                        Sign up with
                                         GitHub</a>
                                 </div>
                             </div>

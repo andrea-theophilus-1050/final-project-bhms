@@ -152,37 +152,39 @@
                                     <div class="tab-pane fade height-100-p show active" id="setting" role="tabpanel">
                                         <div class="profile-setting">
                                             <form action="{{ route('update-profile') }}" method="post">
-                                                @csrf                                                
+                                                @csrf
                                                 <ul class="profile-edit-list row">
                                                     <li class="weight-500 col-md-12">
                                                         <h4 class="text-blue h5 mb-20">Edit Your Personal Setting</h4>
                                                         <div class="form-group">
                                                             @if ($user->type_login == 'username')
                                                                 <label>Username</label>
-                                                                <input class="form-control form-control-lg" type="text" id="username" name="username"
-                                                                    placeholder="Username" value="{{ $user->username }}"
-                                                                    readonly disabled>
+                                                                <input class="form-control form-control-lg" type="text"
+                                                                    id="username" name="username" placeholder="Username"
+                                                                    value="{{ $user->username }}" readonly disabled>
                                                             @endif
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Full name</label>
-                                                            <input class="form-control form-control-lg" type="text" id="name" name="name"
-                                                                placeholder="Full name" value="{{ $user->name }}"
+                                                            <input class="form-control form-control-lg" type="text"
+                                                                id="name" name="name" placeholder="Full name"
+                                                                value="{{ $user->name }}"
                                                                 onfocus="this.placeholder = ''"
                                                                 onblur="this.placeholder = 'Full name'">
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Email</label>
-                                                            <input class="form-control form-control-lg" type="email" id="email" name="email"
-                                                                placeholder="Email" value="{{ $user->email }}"
+                                                            <input class="form-control form-control-lg" type="email"
+                                                                id="email" name="email" placeholder="Email"
+                                                                value="{{ $user->email }}"
                                                                 onfocus="this.placeholder = ''"
                                                                 onblur="this.placeholder = 'Email'">
                                                         </div>
-
                                                         <div class="form-group">
                                                             <label>Phone number</label>
-                                                            <input class="form-control form-control-lg" type="text" id="phone" name="phone"
-                                                                placeholder="Phone number" value="{{ $user->phone }}"
+                                                            <input class="form-control form-control-lg" type="text"
+                                                                id="phone" name="phone" placeholder="Phone number"
+                                                                value="{{ $user->phone }}"
                                                                 onfocus="this.placeholder = ''"
                                                                 onblur="this.placeholder = 'Phone number'">
                                                         </div>

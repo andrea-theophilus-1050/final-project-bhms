@@ -19,15 +19,15 @@
                         <div class="dropdown">
                             <form action="" style="display: flex; justify-content: space-between">
                                 <input type="text" name="search" placeholder="Room number" class="form-control"
-                                    style="margin-right: 5%">
-                                <select class="form-control" name="" style="margin-right: 5%">
+                                    style="margin-right: 5%; font-size: 13px">
+                                <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
                                     <option value="">Room status</option>
                                     <option value="">1</option>
                                     <option value="">1</option>
                                     <option value="">1</option>
                                     <option value="">1</option>
                                 </select>
-                                <select class="form-control" name="" style="margin-right: 5%">
+                                <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
                                     <option value="">Room billed</option>
                                     <option value="">1</option>
                                     <option value="">1</option>
@@ -55,11 +55,11 @@
             <div class="pd-20 card-box mb-30">
                 <div class="clearfix mb-20">
                     <div class="pull-left">
-                        <h4 class="text-blue h4">Contextual classes</h4>                        
+                        <h4 class="text-blue h4">Contextual classes</h4>
                     </div>
                     <div class="pull-right">
-                        <a href="#" class="btn btn-primary btn-sm" role="button"><i class="fa fa-plus"></i> Source
-                            Code</a>
+                        <a href="{{ route('room.add_new_room') }}" class="btn btn-primary btn-sm" role="button"><i
+                                class="fa fa-plus"></i>Add new room</a>
                         <a href="#" class="btn btn-primary btn-sm" role="button"><i class="fa fa-minus"></i> Source
                             Code</a>
                         <a href="#" class="btn btn-primary btn-sm" role="button"><i class="fa fa-code"></i> Source
@@ -81,7 +81,7 @@
                         </thead>
                         <tbody>
                             @for ($i = 0; $i <= 4; $i++)
-                                <tr class="table-light" >
+                                <tr class="table-light">
                                     <th style="background-color: red; width: 30px">3</th>
                                     <td style="background-color: red">Larry</td>
                                     <td style="background-color: red">the Bird</td>

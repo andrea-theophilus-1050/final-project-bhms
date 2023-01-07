@@ -15,7 +15,7 @@ class DashboardController extends Controller
 
     public function room()
     {
-        return view('dashboard.room')->with('title', 'Room');
+        return view('dashboard.room')->with('title', 'Room Management');
     }
 
     public function profile()
@@ -31,5 +31,10 @@ class DashboardController extends Controller
             'phone' => $request->phone,
         ]);
         return redirect()->route('home');
+    }
+
+    public function addRoom()
+    {
+        return view('management.add-room')->with('title', 'Add New Room');
     }
 }

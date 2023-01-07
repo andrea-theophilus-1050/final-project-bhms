@@ -3,6 +3,8 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,11 +44,22 @@ Route::group(['prefix' => '/auth'], function () {
 
 // Group Authenticated
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('home');
-    Route::get('dashboard/room', [DashboardController::class, 'room'])->name('room');
-    Route::get('dashboard/profile', [DashboardController::class, 'profile'])->name('profile');
-    Route::post('dashboard/update-profile', [DashboardController::class, 'updateProfile'])->name('update-profile');
+    Route::group(['prefix' => '{locale}'], function () {
+        Route::group(['middleware' => 'setLocale'], function () {
+            Route::get('dashboard', [DashboardController::class, 'index'])->name('home');
+            Route::group(['prefix' => 'dashboard'], function () {
+                Route::get('room', [DashboardController::class, 'room'])->name('room');
+                Route::get('profile', [DashboardController::class, 'profile'])->name('profile');
+                Route::post('update-profile', [DashboardController::class, 'updateProfile'])->name('update-profile');
+                Route::group(['prefix' => 'room'], function () {
+                    Route::get('add', [DashboardController::class, 'addRoom'])->name('room.add_new_room');
+                });
+            });
+        });
+    });
 });
+
+
 
 // 404 Error
 Route::fallback(function () {

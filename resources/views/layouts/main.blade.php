@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>{{ $title }}</title>
+    <title>@lang('messages.title')</title>
 
     <!-- Site favicon -->
     <link rel="shortcut icon" type="image/png" href="{{ asset('vendors/images/System_Home_Icon_32.png') }}">
@@ -115,13 +115,13 @@
             </div>
         </div>
         <div class="header-right">
-            <div class="dashboard-setting user-notification">
+            {{-- <div class="dashboard-setting user-notification">
                 <div class="dropdown">
                     <a class="dropdown-toggle no-arrow" href="javascript:;" data-toggle="right-sidebar">
                         <i class="dw dw-settings2"></i>
                     </a>
                 </div>
-            </div>
+            </div> --}}
             <div class="user-notification">
                 <div class="dropdown">
                     <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
@@ -178,6 +178,47 @@
                     </div>
                 </div>
             </div>
+
+            <div class="user-info-dropdown" title="@lang('messages.titleHover')">
+                <div class="dropdown">
+                    <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <span class="user-icon">
+                            @if (app()->getLocale() == 'chn')
+                                <img src="{{ asset('vendors/images/Flag_China_square.png') }}" alt="">
+                            @elseif(app()->getLocale() == 'en')
+                                <img src="{{ asset('vendors/images/Flag_English_square.png') }}" alt="">
+                            @elseif(app()->getLocale() == 'fra')
+                                <img src="{{ asset('vendors/images/Flag_France_square.png') }}" alt="">
+                            @elseif(app()->getLocale() == 'vie')
+                                <img src="{{ asset('vendors/images/Flag_Vietnam_square.png') }}" alt="">
+                            @endif
+                        </span>
+                        <span class="user-name">
+                            @if (app()->getLocale() == 'chn')
+                                @lang('messages.langChinese')
+                            @elseif(app()->getLocale() == 'en')
+                                @lang('messages.langEnglish')
+                            @elseif(app()->getLocale() == 'fra')
+                                @lang('messages.langFrench')
+                            @elseif(app()->getLocale() == 'vie')
+                                @lang('messages.langVietnamese')
+                            @endif
+                        </span>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                        <a class="dropdown-item" href="{{ route('home', 'chn') }}">
+                            <img src="{{ asset('vendors/images/Flag_China.png') }}"> @lang('messages.langChinese')</a>
+                        <a class="dropdown-item" href="{{ route('home', 'en') }}">
+                            <img src="{{ asset('vendors/images/Flag_English.png') }}"> @lang('messages.langEnglish')</a>
+                        <a class="dropdown-item" href="{{ route('home', 'fra') }}">
+                            <img src="{{ asset('vendors/images/Flag_France.png') }}"> @lang('messages.langFrench')</a>
+                        <a class="dropdown-item" href="{{ route('home', 'vie') }}">
+                            <img src="{{ asset('vendors/images/Flag_Vietnam.png') }}"> @lang('messages.langVietnamese')</a>
+                    </div>
+                </div>
+            </div>
+
             <div class="user-info-dropdown">
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -186,17 +227,20 @@
                         </span>
                         <span class="user-name">
                             @auth
-                                {{ Auth::user()->email }}
+                                {{ Auth::user()->name }}
                             @endauth
                         </span>
                     </a>
+
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <a class="dropdown-item" href="{{ route('profile') }}"><i class="dw dw-user1"></i>
-                            Profile</a>
-                        <a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
-                        <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
-                        <a class="dropdown-item" href="{{ route('logout') }}"><i class="dw dw-logout"></i> Log
-                            Out</a>
+                        <a class="dropdown-item" href="{{ route('profile', app()->getLocale()) }}">
+                            <i class="dw dw-user1"></i> @lang('messages.navProfile')</a>
+                        <a class="dropdown-item" href="javascript:;" data-toggle="right-sidebar">
+                            <i class="dw dw-settings2"></i> @lang('messages.navLayoutSetting')</a>
+                        <a class="dropdown-item" href="faq.html">
+                            <i class="dw dw-help"></i> Help</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}">
+                            <i class="dw dw-logout"></i> @lang('messages.navLogout')</a>
                     </div>
                 </div>
             </div>
@@ -298,7 +342,7 @@
 
     <div class="left-side-bar">
         <div class="brand-logo">
-            <a href="{{ route('home') }}">
+            <a href="{{ route('home', app()->getLocale()) }}">
                 <img src="{{ asset('vendors/images/logo-boarding-house.png') }}" alt="" class="dark-logo">
                 <img src="{{ asset('vendors/images/logo-boarding-house-white.png') }}" alt=""
                     class="light-logo">
@@ -311,18 +355,18 @@
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
                     <li class="dropdown">
-                        <a href="{{ route('home') }}" class="dropdown-toggle no-arrow">
-                            <span class="micon fa fa-dashboard"></span><span class="mtext">Home</span>
+                        <a href="{{ route('home', app()->getLocale()) }}" class="dropdown-toggle no-arrow">
+                            <span class="micon fa fa-dashboard"></span><span class="mtext">@lang('messages.navHome')</span>
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="{{ route('room') }}" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-house-1"></span><span class="mtext">Rooms</span>
+                        <a href="{{ route('room', app()->getLocale()) }}" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-home"></span><span class="mtext">@lang('messages.navRoom')</span>
                         </a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-settings"></span><span class="mtext">Services</span>
+                            <span class="micon dw dw-suitcase"></span><span class="mtext">@lang('messages.navService')</span>
                         </a>
                     </li>
                     <li>

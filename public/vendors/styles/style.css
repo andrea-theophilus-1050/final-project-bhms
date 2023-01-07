@@ -1607,6 +1607,13 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th:first-child:before {
     transform: translate(0, -50%)
 }
 
+.dropdown-menu-icon-list .dropdown-item img {
+    height: 30%;
+    width: 30%;
+    margin-right: 10%;
+    margin-left: -20%
+}
+
 .user-notification {
     float: right;
     margin-right: 10px;
@@ -2236,7 +2243,8 @@ body.IE .register-page-wrap .container {
     max-width: 100px
 }
 
-.dw-eye, .dw-hide {
+.dw-eye,
+.dw-hide {
     cursor: pointer;
     color: blue;
 }
