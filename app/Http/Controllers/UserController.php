@@ -12,31 +12,6 @@ use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
 {
-
-    public function githubRedirect(Request $request)
-    {
-        return Socialite::driver('github')->redirect();
-    }
-
-    public function githubCallback(Request $request)
-    {
-        $userData = Socialite::driver('github')->user();
-        $user = User::where('email', $userData->getEmail())->where('type_login', 'github')->first();
-        if ($user) {
-            Auth::login($user, true);
-            return redirect()->route('home');
-        } else {
-            $user = new User();
-            $user->name = $userData->getName();
-            $user->email = $userData->getEmail();
-            $user->password = Hash::make($userData->getId());
-            $user->type_login = 'github';
-            $user->save();
-            Auth::login($user, true);
-            return redirect()->route('home', app()->getLocale());
-        }
-    }
-
     public function googleRedirect(Request $request)
     {
         return Socialite::driver('google')->redirect();
@@ -48,7 +23,7 @@ class UserController extends Controller
         $user = User::where('email', $userData->getEmail())->where('type_login', 'google')->first();
         if ($user) {
             Auth::login($user, true);
-            return redirect()->route('home');
+            return redirect()->route('home', app()->getLocale());
         } else {
             $user = new User();
             $user->name = $userData->getName();
@@ -72,7 +47,7 @@ class UserController extends Controller
         $user = User::where('email', $userData->getId() . '@facebook.com')->where('type_login', 'facebook')->first();
         if ($user) {
             Auth::login($user, true);
-            return redirect()->route('home');
+            return redirect()->route('home', app()->getLocale());
         } else {
             $user = new User();
             $user->name = $userData->getName();
@@ -143,4 +118,30 @@ class UserController extends Controller
         $request->session()->regenerateToken();
         return redirect()->route('login')->with('success', 'Logout successful!');
     }
+
+
+
+    // public function githubRedirect(Request $request)
+    // {
+    //     return Socialite::driver('github')->redirect();
+    // }
+
+    // public function githubCallback(Request $request)
+    // {
+    //     $userData = Socialite::driver('github')->user();
+    //     $user = User::where('email', $userData->getEmail())->where('type_login', 'github')->first();
+    //     if ($user) {
+    //         Auth::login($user, true);
+    //         return redirect()->route('home');
+    //     } else {
+    //         $user = new User();
+    //         $user->name = $userData->getName();
+    //         $user->email = $userData->getEmail();
+    //         $user->password = Hash::make($userData->getId());
+    //         $user->type_login = 'github';
+    //         $user->save();
+    //         Auth::login($user, true);
+    //         return redirect()->route('home', app()->getLocale());
+    //     }
+    // }
 }

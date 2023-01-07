@@ -81,7 +81,7 @@
                 <form>
                     <div class="form-group mb-0">
                         <i class="dw dw-search2 search-icon"></i>
-                        <input type="text" class="form-control search-input" placeholder="Search Here">
+                        <input type="text" class="form-control search-input" placeholder="@lang('messages.placeholderSearch')">
                         <div class="dropdown">
                             <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
                                 <i class="ion-arrow-down-c"></i>
@@ -225,14 +225,21 @@
                         <span class="user-icon">
                             <img src="{{ asset('vendors/images/photo1.jpg') }}" alt="">
                         </span>
-                        <span class="user-name">
+                        {{-- <span class="user-name">
                             @auth
                                 {{ Auth::user()->name }}
                             @endauth
-                        </span>
+                        </span> --}}
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                        {{-- <span class="dropdown-item">
+                            <b>
+                                @auth
+                                    {{ Auth::user()->name }}
+                                @endauth
+                            </b>
+                        </span> --}}
                         <a class="dropdown-item" href="{{ route('profile', app()->getLocale()) }}">
                             <i class="dw dw-user1"></i> @lang('messages.navProfile')</a>
                         <a class="dropdown-item" href="javascript:;" data-toggle="right-sidebar">

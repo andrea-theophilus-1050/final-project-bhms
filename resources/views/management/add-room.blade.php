@@ -6,13 +6,13 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            <h4>Add new room</h4>
+                            <h4>@lang('messages.titleAddRoom')</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('room') }}">Rooms Management</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Add new room</li>
+                                <li class="breadcrumb-item"><a href="{{ route('home', app()->getLocale()) }}">@lang('messages.navHome')</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('room', app()->getLocale()) }}">@lang('messages.navRoom')</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">@lang('messages.titleAddRoom')</li>
                             </ol>
                         </nav>
                     </div>                    
@@ -22,7 +22,7 @@
             <div class="pd-20 card-box mb-30">
                 <div class="clearfix" style="margin-bottom: 2%">                    
                     <div class="pull-right">
-                        <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Quickly add multiple rooms</a>
+                        <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> @lang('messages.btnQuickAdd')</a>
                     </div>
                 </div>
 

@@ -6,12 +6,13 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="title">
-                            <h4>Profile</h4>
+                            <h4>@lang('messages.navProfile')</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Profile</li>
+                                <li class="breadcrumb-item"><a
+                                        href="{{ route('home', app()->getLocale()) }}">@lang('messages.title')</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">@lang('messages.navProfile')</li>
                             </ol>
                         </nav>
                     </div>
@@ -21,26 +22,7 @@
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
                     <div class="pd-20 card-box height-100-p">
                         <div class="profile-photo">
-                            <a href="modal" data-toggle="modal" data-target="#modal" class="edit-avatar"><i
-                                    class="fa fa-pencil"></i></a>
-                            <img src="vendors/images/photo1.jpg" alt="" class="avatar-photo">
-                            <div class="modal fade" id="modal" tabindex="-1" role="dialog"
-                                aria-labelledby="modalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-body pd-5">
-                                            <div class="img-container">
-                                                <img id="image" src="vendors/images/photo2.jpg" alt="Picture">
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <input type="submit" value="Update" class="btn btn-primary">
-                                            <button type="button" class="btn btn-default"
-                                                data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <img src="{{ asset('vendors/images/photo1.jpg') }}" alt="" class="avatar-photo">
                         </div>
                         <h5 class="text-center h5 mb-0">
                             @if ($user->name == null)
@@ -51,10 +33,10 @@
                         </h5>
                         <p class="text-center text-muted font-14">Lorem ipsum dolor sit amet</p>
                         <div class="profile-info">
-                            <h5 class="mb-20 h5 text-blue">Contact Information</h5>
+                            <h5 class="mb-20 h5 text-blue">@lang('messages.contactInfo')</h5>
                             <ul>
                                 <li>
-                                    <span>Email Address:</span>
+                                    <span>@lang('messages.labelEmail')</span>
                                     @if ($user->email == null)
                                         Not provided
                                     @else
@@ -62,7 +44,7 @@
                                     @endif
                                 </li>
                                 <li>
-                                    <span>Phone Number:</span>
+                                    <span>@lang('messages.labelPhone')</span>
                                     @if ($user->phone == null)
                                         Not provided
                                     @else
@@ -137,81 +119,93 @@
                                 <ul class="nav nav-tabs customtab" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" data-toggle="tab" href="#setting"
-                                            role="tab">Settings</a>
+                                            role="tab">@lang('messages.tabSetting')</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" data-toggle="tab" href="#timeline"
-                                            role="tab">Timeline</a>
+                                            role="tab">@lang('messages.tabTimeline')</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#tasks" role="tab">Tasks</a>
+                                        <a class="nav-link" data-toggle="tab" href="#tasks"
+                                            role="tab">@lang('messages.tabTask')</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
                                     <!-- Setting Tab start -->
                                     <div class="tab-pane fade height-100-p show active" id="setting" role="tabpanel">
                                         <div class="profile-setting">
-                                            <form action="{{ route('update-profile') }}" method="post">
+                                            <form action="{{ route('update-profile', app()->getLocale()) }}"
+                                                method="post">
                                                 @csrf
                                                 <ul class="profile-edit-list row">
                                                     <li class="weight-500 col-md-12">
-                                                        <h4 class="text-blue h5 mb-20">Edit Your Personal Setting</h4>
+                                                        <h4 class="text-blue h5 mb-20">@lang('messages.titleSetting')</h4>
                                                         <div class="form-group">
                                                             @if ($user->type_login == 'username')
-                                                                <label>Username</label>
+                                                                <label>@lang('messages.labelUsername')</label>
                                                                 <input class="form-control form-control-lg" type="text"
-                                                                    id="username" name="username" placeholder="Username"
+                                                                    id="username" name="username"
+                                                                    placeholder="@lang('messages.labelUsername')"
                                                                     value="{{ $user->username }}" readonly disabled>
                                                             @endif
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Full name</label>
+                                                            <label>@lang('messages.labelName')</label>
                                                             <input class="form-control form-control-lg" type="text"
-                                                                id="name" name="name" placeholder="Full name"
+                                                                id="name" name="name"
+                                                                placeholder="@lang('messages.labelName')"
                                                                 value="{{ $user->name }}"
                                                                 onfocus="this.placeholder = ''"
-                                                                onblur="this.placeholder = 'Full name'">
+                                                                onblur="this.placeholder = '@lang('messages.labelName')'">
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Email</label>
+                                                            <label>@lang('messages.labelEmail')</label>
                                                             <input class="form-control form-control-lg" type="email"
-                                                                id="email" name="email" placeholder="Email"
+                                                                id="email" name="email"
+                                                                placeholder="@lang('messages.labelEmail')"
                                                                 value="{{ $user->email }}"
                                                                 onfocus="this.placeholder = ''"
-                                                                onblur="this.placeholder = 'Email'">
+                                                                onblur="this.placeholder = '@lang('messages.labelEmail')'">
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Phone number</label>
+                                                            <label>@lang('messages.labelPhone')</label>
                                                             <input class="form-control form-control-lg" type="text"
-                                                                id="phone" name="phone" placeholder="Phone number"
+                                                                id="phone" name="phone"
+                                                                placeholder="@lang('messages.labelPhone')"
                                                                 value="{{ $user->phone }}"
                                                                 onfocus="this.placeholder = ''"
-                                                                onblur="this.placeholder = 'Phone number'">
+                                                                onblur="this.placeholder = '@lang('messages.labelPhone')'">
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Date of birth</label>
+                                                            <label>@lang('messages.labelDoB')</label>
                                                             <input class="form-control form-control-lg date-picker"
-                                                                type="text" placeholder="Date of birth"
+                                                                type="text" placeholder="@lang('messages.labelDoB')"
                                                                 onfocus="this.placeholder = ''"
-                                                                onblur="this.placeholder = 'Date of birth'">
+                                                                onblur="this.placeholder = '@lang('messages.labelDoB')'">
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Gender</label>
+                                                            <label>@lang('messages.labelGender')</label>
                                                             <div class="d-flex">
                                                                 <div class="custom-control custom-radio mb-5 mr-20">
                                                                     <input type="radio" id="customRadio4"
                                                                         name="customRadio" class="custom-control-input"
                                                                         checked>
                                                                     <label class="custom-control-label weight-400"
-                                                                        for="customRadio4">Male</label>
+                                                                        for="customRadio4">@lang('messages.genderMale')</label>
                                                                 </div>
                                                                 <div class="custom-control custom-radio mb-5">
                                                                     <input type="radio" id="customRadio5"
                                                                         name="customRadio" class="custom-control-input">
                                                                     <label class="custom-control-label weight-400"
-                                                                        for="customRadio5">Female</label>
+                                                                        for="customRadio5">@lang('messages.genderFemale')</label>
                                                                 </div>
                                                             </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label>@lang('messages.labelGender')</label>
+                                                            <input type="file" class="form-control form-control-lg"
+                                                                id="">
                                                         </div>
                                                         {{-- <div class="form-group">
                                                             <label>Country</label>
@@ -258,7 +252,7 @@
                                                         </div> --}}
                                                         <div class="form-group mb-0">
                                                             <input type="submit" class="btn btn-primary"
-                                                                value="Update Information">
+                                                                value="@lang('messages.btnSave')">
                                                         </div>
                                                     </li>
                                                     {{-- <li class="weight-500 col-md-6">

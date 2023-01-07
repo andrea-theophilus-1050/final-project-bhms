@@ -44,10 +44,22 @@
                     <img src="{{ asset('vendors/images/logo-boarding-house.png') }}" alt="">
                 </a>
             </div>
-            <div class="login-menu">
+            {{-- <div class="login-menu">
                 <ul>
                     <li><a href="{{ route('login') }}">Login</a></li>
                 </ul>
+            </div> --}}
+            <div class="dropdown">
+                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                    <img src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
+                        alt=""> English
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="#"><img src="{{ asset('vendors/images/Flag_English.png') }}"
+                            height="30px" width="40px" alt=""> English</a>
+                    <a class="dropdown-item" href="#"><img src="{{ asset('vendors/images/Flag_English.png') }}"
+                            height="30px" width="40px" alt=""> Indonesia</a>
+                </div>
             </div>
         </div>
     </div>
@@ -116,6 +128,15 @@
                                 </div>
                             </div>
                         </form>
+                        <div class="row" style="margin-top: 5%">
+                            <div class="col-sm-12">
+                                <div class="input-group mb-0">
+                                    Already have an account?
+                                    <a href="{{ route('login') }}"
+                                        style="margin-left: 3%; color: blue">Sign in</a>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR
@@ -136,16 +157,7 @@
                                             style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" />
                                         Sign up with
                                         Facebook</a>
-                                </div>
-
-                                <div class="input-group mb-0" style="margin-top: 10px">
-                                    <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('auth.githubRedirect') }} }}"
-                                        style="display: flex; justify-content: flex-start"><img
-                                            src="{{ asset('vendors/images/github-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" />
-                                        Sign up with
-                                        GitHub</a>
-                                </div>
+                                </div>                                
                             </div>
                         </div>
                     </div>

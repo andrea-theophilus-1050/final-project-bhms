@@ -29,9 +29,9 @@ Route::get('/forgot-password', function () {
 
 // Group Auth Socialite
 Route::group(['prefix' => '/auth'], function () {
-    // Login with Socialite GitHub
-    Route::get('/github/redirect', [UserController::class, 'githubRedirect'])->name('auth.githubRedirect');
-    Route::get('/github/callback', [UserController::class, 'githubCallback'])->name('auth.githubCallback');
+    // // Login with Socialite GitHub
+    // Route::get('/github/redirect', [UserController::class, 'githubRedirect'])->name('auth.githubRedirect');
+    // Route::get('/github/callback', [UserController::class, 'githubCallback'])->name('auth.githubCallback');
 
     // Login with Socialite Google
     Route::get('/google/redirect', [UserController::class, 'googleRedirect'])->name('auth.googleRedirect');
