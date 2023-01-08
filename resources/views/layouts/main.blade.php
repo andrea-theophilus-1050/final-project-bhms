@@ -207,13 +207,13 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <a class="dropdown-item" href="{{ route('home', 'chn') }}">
+                        <a class="dropdown-item" href="{{ route(request()->route()->getName(),'chn') }}">
                             <img src="{{ asset('vendors/images/Flag_China.png') }}"> @lang('messages.langChinese')</a>
-                        <a class="dropdown-item" href="{{ route('home', 'en') }}">
+                        <a class="dropdown-item" href="{{ route(request()->route()->getName(),'en') }}">
                             <img src="{{ asset('vendors/images/Flag_English.png') }}"> @lang('messages.langEnglish')</a>
-                        <a class="dropdown-item" href="{{ route('home', 'fra') }}">
+                        <a class="dropdown-item" href="{{ route(request()->route()->getName(),'fra') }}">
                             <img src="{{ asset('vendors/images/Flag_France.png') }}"> @lang('messages.langFrench')</a>
-                        <a class="dropdown-item" href="{{ route('home', 'vie') }}">
+                        <a class="dropdown-item" href="{{ route(request()->route()->getName(),'vie') }}">
                             <img src="{{ asset('vendors/images/Flag_Vietnam.png') }}"> @lang('messages.langVietnamese')</a>
                     </div>
                 </div>
@@ -246,7 +246,7 @@
                             <i class="dw dw-settings2"></i> @lang('messages.navLayoutSetting')</a>
                         <a class="dropdown-item" href="faq.html">
                             <i class="dw dw-help"></i> Help</a>
-                        <a class="dropdown-item" href="{{ route('logout') }}">
+                        <a class="dropdown-item" href="{{ route('logout', app()->getLocale()) }}">
                             <i class="dw dw-logout"></i> @lang('messages.navLogout')</a>
                     </div>
                 </div>

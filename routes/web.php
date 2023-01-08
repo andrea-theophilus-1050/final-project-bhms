@@ -16,15 +16,21 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', [UserController::class, 'login']);
-Route::get('login', [UserController::class, 'login'])->name('login');
-Route::post('login', [UserController::class, 'login_action'])->name('login.action');
-Route::get('register', [UserController::class, 'register'])->name('register');
-Route::post('register', [UserController::class, 'register_action'])->name('register.action');
-Route::get('logout', [UserController::class, 'logout'])->name('logout');
-Route::get('/forgot-password', function () {
-    return view('user.forgot-password')->with('title', 'Forgot Password');
+Route::get('/', function () {
+    return redirect()->route('login', app()->getLocale());
+});
+Route::group(['prefix' => '{locale}'], function () {
+    Route::group(['middleware' => 'setLocale'], function () {
+        Route::get('/', [UserController::class, 'login']);
+        Route::get('login', [UserController::class, 'login'])->name('login');
+        Route::post('login', [UserController::class, 'login_action'])->name('login.action');
+        Route::get('register', [UserController::class, 'register'])->name('register');
+        Route::post('register', [UserController::class, 'register_action'])->name('register.action');
+        Route::get('logout', [UserController::class, 'logout'])->name('logout');
+        Route::get('/forgot-password', function () {
+            return view('user.forgot-password')->with('title', 'Forgot Password');
+        });
+    });
 });
 
 // Group Auth Socialite

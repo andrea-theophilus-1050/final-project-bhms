@@ -203,7 +203,7 @@
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label>@lang('messages.labelGender')</label>
+                                                            <label>@lang('messages.labelFile')</label>
                                                             <input type="file" class="form-control form-control-lg"
                                                                 id="">
                                                         </div>

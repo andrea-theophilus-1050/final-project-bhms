@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\App;
 
 
 class UserController extends Controller
@@ -105,9 +106,17 @@ class UserController extends Controller
             ]);
 
             $user->save();
-            return redirect()->route('login')->with('success', 'Registration successful!');
+            return redirect()->route('login', app()->getLocale())->with('success', 'Registration successful!')->withInput($request->all());
         } else {
-            return back()->with('errors', 'Username already exists')->withInput($request->all());
+            if (App::isLocale('en')) {
+                return back()->with('errors', 'Username already exists')->withInput($request->all());
+            } else if (App::isLocale('chn')) {
+                return back()->with('errors', '此用户名已存在')->withInput($request->all());
+            } else if (App::isLocale('fra')) {
+                return back()->with('errors', 'Ce nom d\'utilisateur existe déjà')->withInput($request->all());
+            } else {
+                return back()->with('errors', 'Tên đăng nhập đã tồn tại')->withInput($request->all());
+            }
         }
     }
 
@@ -116,7 +125,7 @@ class UserController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('login')->with('success', 'Logout successful!');
+        return redirect()->route('login', app()->getLocale())->with('success', 'Logout successful!');
     }
 
 

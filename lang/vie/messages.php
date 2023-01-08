@@ -1,6 +1,30 @@
 <?php
 
 return [
+    //Login page
+    'titleSignIn' => 'Đăng nhập',
+    'labelUsername' => 'Tên đăng nhập',
+    'labelPassword' => 'Mật khẩu',
+    'labelRemember' => 'Nhớ đăng nhập',
+    'labelForgot' => 'Quên mật khẩu?',
+    'btnLogin' => 'Đăng nhập',
+    'linkRegister' => 'Đăng ký tài khoản',
+    'textDonHaveAccount' => 'Bạn chưa có tài khoản?',
+    'textOr' => 'Hoặc',
+    'textLoginWithGoogle' => 'Đăng nhập bằng Google',
+    'textLoginWithFacebook' => 'Đăng nhập bằng Facebook',
+
+    //Register page
+    'titleTab' => 'Đăng ký tài khoản',
+    'titleRegister' => 'Đăng ký tài khoản chủ trọ',
+    'labelConfirmPassword' => 'Xác nhận mật khẩu',
+    'btnRegister' => 'Đăng ký',
+    'textAlreadyHaveAccount' => 'Bạn đã có tài khoản?',
+    'alertPasswordNotMatch' => 'Mật khẩu không khớp',
+    'passwordWeak' => 'Mật khẩu quá yếu',
+    'passwordMedium' => 'Mật khẩu trung bình',
+    'passwordStrong' => 'Mật khẩu mạnh',
+
     //Dashboard page and navigation
     'title' => 'Trang chủ',
     'titleHover' => 'Thay đổi ngôn ngữ',

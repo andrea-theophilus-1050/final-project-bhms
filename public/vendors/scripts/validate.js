@@ -43,6 +43,9 @@ const weak = document.querySelector(".weak");
 const medium = document.querySelector(".medium");
 const strong = document.querySelector(".strong");
 const text = document.querySelector(".text");
+const textWeak = document.querySelector("#weak");
+const textMedium = document.querySelector("#medium");
+const textStrong = document.querySelector("#strong");
 
 let regExpWeak = /[a-z]/;
 let regExpMedium = /\d+/;
@@ -62,13 +65,19 @@ function trigger() {
         if (no == 1) {
             weak.classList.add("active");
             text.style.display = "block";
-            text.textContent = "Your password is too week";
-            text.classList.add("weak");
+            // text.textContent = "Your password is too week";
+            textWeak.style.display = "block";
+            textMedium.style.display = "none";
+            textStrong.style.display = "none";
+            textWeak.classList.add("weak");
         }
         if (no == 2) {
             medium.classList.add("active");
-            text.textContent = "Your password is medium";
-            text.classList.add("medium");
+            // text.textContent = "Your password is medium";
+            textWeak.style.display = "none";
+            textMedium.style.display = "block";
+            textStrong.style.display = "none";
+            textMedium.classList.add("medium");
         } else {
             medium.classList.remove("active");
             text.classList.remove("medium");
@@ -77,8 +86,11 @@ function trigger() {
             weak.classList.add("active");
             medium.classList.add("active");
             strong.classList.add("active");
-            text.textContent = "Your password is strong";
-            text.classList.add("strong");
+            // text.textContent = "Your password is strong";
+            textWeak.style.display = "none";
+            textMedium.style.display = "none";
+            textStrong.style.display = "block";
+            textStrong.classList.add("strong");
         } else {
             strong.classList.remove("active");
             text.classList.remove("strong");
@@ -87,6 +99,9 @@ function trigger() {
     } else {
         indicator.style.display = "none";
         text.style.display = "none";
+        textWeak.style.display = "none";
+        textMedium.style.display = "none";
+        textStrong.style.display = "none";
     }
 }
 

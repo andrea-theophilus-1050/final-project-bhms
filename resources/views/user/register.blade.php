@@ -4,7 +4,7 @@
 <head>
     <!-- Basic Page Info -->
     <meta charset="utf-8">
-    <title>{{ $title }}</title>
+    <title>@lang('messages.titleTab')</title>
 
     <!-- Site favicon -->
     <link rel="shortcut icon" type="image/png" href="{{ asset('vendors/images/logo-login-register.png') }}">
@@ -51,14 +51,33 @@
             </div> --}}
             <div class="dropdown">
                 <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                    <img src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
-                        alt=""> English
+                    @if (app()->getLocale() == 'chn')
+                        <img src="{{ asset('vendors/images/Flag_China.png') }}" height="30px" width="40px"
+                            alt=""> @lang('messages.langChinese')
+                    @elseif (app()->getLocale() == 'en')
+                        <img src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
+                            alt=""> @lang('messages.langEnglish')
+                    @elseif (app()->getLocale() == 'fra')
+                        <img src="{{ asset('vendors/images/Flag_France.png') }}" height="30px" width="40px"
+                            alt=""> @lang('messages.langFrench')
+                    @elseif (app()->getLocale() == 'vie')
+                        <img src="{{ asset('vendors/images/Flag_Vietnam.png') }}" height="30px" width="40px"
+                            alt=""> @lang('messages.langVietnamese')
+                    @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#"><img src="{{ asset('vendors/images/Flag_English.png') }}"
-                            height="30px" width="40px" alt=""> English</a>
-                    <a class="dropdown-item" href="#"><img src="{{ asset('vendors/images/Flag_English.png') }}"
-                            height="30px" width="40px" alt=""> Indonesia</a>
+                    <a class="dropdown-item" href="{{ route(request()->route()->getName(),'chn') }}"><img
+                            src="{{ asset('vendors/images/Flag_China.png') }}" height="30px" width="40px"
+                            alt=""> @lang('messages.langChinese')</a>
+                    <a class="dropdown-item" href="{{ route(request()->route()->getName(),'en') }}"><img
+                            src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
+                            alt=""> @lang('messages.langEnglish')</a>
+                    <a class="dropdown-item" href="{{ route(request()->route()->getName(),'fra') }}"><img
+                            src="{{ asset('vendors/images/Flag_France.png') }}" height="30px" width="40px"
+                            alt=""> @lang('messages.langFrench')</a>
+                    <a class="dropdown-item" href="{{ route(request()->route()->getName(),'vie') }}"><img
+                            src="{{ asset('vendors/images/Flag_Vietnam.png') }}" height="30px" width="40px"
+                            alt=""> @lang('messages.langVietnamese')</a>
                 </div>
             </div>
         </div>
@@ -72,7 +91,7 @@
                 <div class="col-md-6 col-lg-5">
                     <div class="login-box bg-white box-shadow border-radius-10">
                         <div class="login-title">
-                            <h2 class="text-center text-primary">Sign up for Landlords</h2>
+                            <h2 class="text-center text-primary">@lang('messages.titleRegister')</h2>
                         </div>
 
                         @if (session('errors'))
@@ -84,21 +103,23 @@
                             </div>
                         @endif
 
-                        <form method="POST" action="{{ route('register.action') }}">
+                        <form method="POST" action="{{ route('register.action', app()->getLocale()) }}">
                             @csrf
                             <div class="input-group custom">
                                 <input type="text" class="form-control form-control-lg" id="username"
-                                    name="username" placeholder="Username" autofocus autocomplete="on" required
-                                    value="{{ old('username') }}">
+                                    name="username" placeholder="@lang('messages.labelUsername')" autofocus autocomplete="on"
+                                    required value="{{ old('username') }}">
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
                                 </div>
                             </div>
                             <div class="input-group custom">
-                                <input type="password" class="form-control form-control-lg" placeholder="Password"
-                                    id="password" name="password" required onkeyup="trigger()">
+                                <input type="password" class="form-control form-control-lg"
+                                    placeholder="@lang('messages.labelPassword')" id="password" name="password" required
+                                    onkeyup="trigger()">
                                 <div class="input-group-append custom">
-                                    <span class="input-group-text"><i class="dw dw-eye" id="togglePassword"></i></span>
+                                    <span class="input-group-text"><i class="dw dw-eye"
+                                            id="togglePassword"></i></span>
                                 </div>
                             </div>
 
@@ -107,23 +128,26 @@
                                 <span class="medium"></span>
                                 <span class="strong"></span>
                             </div>
-                            <div class="text">Password Strength checker</div>
+                            <div class="text" id="weak">@lang('messages.passwordWeak')</div>
+                            <div class="text" id="medium">@lang('messages.passwordMedium')</div>
+                            <div class="text" id="strong">@lang('messages.passwordStrong')</div>
 
                             <div class="input-group custom">
                                 <input type="password" class="form-control form-control-lg"
-                                    placeholder="Confirm Password" id="confirmPassword" name="confirmPassword" required
-                                    onkeyup="comparePassword()">
+                                    placeholder="@lang('messages.labelConfirmPassword')" id="confirmPassword" name="confirmPassword"
+                                    required onkeyup="comparePassword()">
                                 <div class="input-group-append custom">
-                                    <span class="input-group-text"><i class="dw dw-checked" id="checkedPassword"></i><i
-                                            class="dw dw-eye" id="toggleConfirmPassword"></i></span>
+                                    <span class="input-group-text"><i class="dw dw-checked"
+                                            id="checkedPassword"></i><i class="dw dw-eye"
+                                            id="toggleConfirmPassword"></i></span>
                                 </div>
                             </div>
-                            <div class="textComparePassword">Password and Confirm password do not match</div>
+                            <div class="textComparePassword">@lang('messages.alertPasswordNotMatch')</div>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="input-group mb-0">
-                                        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Register"
-                                            onclick="validateInput()">
+                                        <input class="btn btn-primary btn-lg btn-block" type="submit"
+                                            value="@lang('messages.btnRegister')" onclick="validateInput()">
                                     </div>
                                 </div>
                             </div>
@@ -131,33 +155,52 @@
                         <div class="row" style="margin-top: 5%">
                             <div class="col-sm-12">
                                 <div class="input-group mb-0">
-                                    Already have an account?
-                                    <a href="{{ route('login') }}"
-                                        style="margin-left: 3%; color: blue">Sign in</a>
+                                    @lang('messages.textAlreadyHaveAccount')
+                                    <a href="{{ route('login', app()->getLocale()) }}"
+                                        style="margin-left: 3%; color: blue">@lang('messages.titleSignIn')</a>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
-                                <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR
+                                <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">
+                                    @lang('messages.textOr')
                                 </div>
-                                <div class="input-group mb-0">
-                                    <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('auth.googleRedirect') }}"
-                                        style="display: flex; justify-content: flex-start"><img
-                                            src="{{ asset('vendors/images/google-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" />
-                                        Sign up with
-                                        Google</a>
-                                </div>
-
-                                <div class="input-group mb-0" style="margin-top: 10px">
-                                    <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('auth.facebookRedirect') }}"
-                                        style="display: flex; justify-content: flex-start"><img
-                                            src="{{ asset('vendors/images/facebook-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 15%; margin-left: 5%" />
-                                        Sign up with
-                                        Facebook</a>
-                                </div>                                
+                                @if (app()->getLocale() != 'fra')
+                                    <div class="input-group mb-0">
+                                        <a class="btn btn-outline-primary btn-lg btn-block"
+                                            href="{{ route('auth.googleRedirect') }}"
+                                            style="display: flex; justify-content: flex-start"><img
+                                                src="{{ asset('vendors/images/google-logo.png') }}"
+                                                style="height: 30px; width: 30px; margin-right: 10%; margin-left: 5%" />
+                                            @lang('messages.textLoginWithGoogle')</a>
+                                    </div>
+                                    <div class="input-group mb-0" style="margin-top: 10px">
+                                        <a class="btn btn-outline-primary btn-lg btn-block"
+                                            href="{{ route('auth.facebookRedirect') }}"
+                                            style="display: flex; justify-content: flex-start"><img
+                                                src="{{ asset('vendors/images/facebook-logo.png') }}"
+                                                style="height: 30px; width: 30px; margin-right: 10%; margin-left: 5%" />
+                                            @lang('messages.textLoginWithFacebook')</a>
+                                    </div>
+                                @else
+                                    <div class="input-group mb-0">
+                                        <a class="btn btn-outline-primary btn-lg btn-block"
+                                            href="{{ route('auth.googleRedirect') }}"
+                                            style="display: flex; justify-content: flex-start; font-size: 15px"><img
+                                                src="{{ asset('vendors/images/google-logo.png') }}"
+                                                style="height: 30px; width: 30px; margin-right: 5%; margin-left: 5%" />
+                                            @lang('messages.textLoginWithGoogle')</a>
+                                    </div>
+                                    <div class="input-group mb-0" style="margin-top: 10px">
+                                        <a class="btn btn-outline-primary btn-lg btn-block"
+                                            href="{{ route('auth.facebookRedirect') }}"
+                                            style="display: flex; justify-content: flex-start; font-size: 15px"><img
+                                                src="{{ asset('vendors/images/facebook-logo.png') }}"
+                                                style="height: 30px; width: 30px; margin-right: 5%; margin-left: 5%" />
+                                            @lang('messages.textLoginWithFacebook')</a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
