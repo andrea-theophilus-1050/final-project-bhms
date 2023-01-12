@@ -20,6 +20,7 @@ return [
     'btnRegister' => '登记',
     'textAlreadyHaveAccount' => '已经有一个帐户？',
     'alertPasswordNotMatch' => '密码和确认密码不匹配',
+    'alertPasswordMatched' => '密码和确认密码匹配',
     'passwordWeak' => '你的密码太简单了',
     'passwordMedium' => '你的密码是中号',
     'passwordStrong' => '你的密码很安全',
@@ -42,8 +43,11 @@ return [
     //Profile page
     'contactInfo' => '联系信息',
     'tabSetting' => '个人信息',
+    'tabChangePassword' => '更改密码',
     'tabTimeline' => '时间线',
     'tabTask' => '任务',
+
+    //Tab personal information
     'titleSetting' => '编辑您的个人信息',
     'labelUsername' => '用户名',
     'labelName' => '全名',
@@ -55,6 +59,11 @@ return [
     'genderFemale' => '女性',
     'labelFile' => '化身',
     'btnSave' => '更新信息',
+    //tab Change password
+    'labelCurrentPass' => '当前密码',
+    'labelNewPass' => '新密码',
+    'labelConfirmPass' => '确认新密码',
+    'labelShowPass' => '显示密码',
 
     //Add new Room page
     'titleAddRoom' => '添加新房间',

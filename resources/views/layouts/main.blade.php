@@ -22,6 +22,10 @@
     <link rel="stylesheet" type="text/css"
         href="{{ asset('src/plugins/datatables/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/style.css') }}">
+    <!-- custom scrollbar CSS -->
+    <link rel="stylesheet" href="{{ asset('vendors/styles/scrollbar.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/passwordStrength.css') }}">
+
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
@@ -36,26 +40,7 @@
         gtag('config', 'UA-119386393-1');
     </script>
 
-    <!-- custom scrollbar CSS -->
-    <style>
-        /* width */
-        ::-webkit-scrollbar {
-            width: 15px;
-        }
 
-        /* Track */
-        ::-webkit-scrollbar-track {
-            box-shadow: inset 0 0 8px #c8c8e4;
-        }
-
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-            border: 4px solid transparent;
-            border-radius: 100px;
-            background-color: #8070d4;
-            background-clip: content-box;
-        }
-    </style>
 </head>
 
 <body>

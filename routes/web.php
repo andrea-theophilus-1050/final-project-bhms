@@ -57,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('room', [DashboardController::class, 'room'])->name('room');
                 Route::get('profile', [DashboardController::class, 'profile'])->name('profile');
                 Route::post('update-profile', [DashboardController::class, 'updateProfile'])->name('update-profile');
+                Route::post('change-password', [DashboardController::class, 'changePassword'])->name('change-password');
                 Route::group(['prefix' => 'room'], function () {
                     Route::get('add', [DashboardController::class, 'addRoom'])->name('room.add_new_room');
                 });

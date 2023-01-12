@@ -21,6 +21,7 @@ return [
     'btnRegister' => 'Đăng ký',
     'textAlreadyHaveAccount' => 'Bạn đã có tài khoản?',
     'alertPasswordNotMatch' => 'Mật khẩu không khớp',
+    'alertPasswordMatched' => 'Mật khẩu khớp',
     'passwordWeak' => 'Mật khẩu quá yếu',
     'passwordMedium' => 'Mật khẩu trung bình',
     'passwordStrong' => 'Mật khẩu mạnh',
@@ -43,8 +44,11 @@ return [
     //Profile page
     'contactInfo' => 'Thông tin liên hệ',
     'tabSetting' => 'Thông tin cá nhân',
+    'tabChangePassword' => 'Thay đổi mật khẩu',
     'tabTimeline' => 'Dòng thời gian',
     'tabTask' => 'Công việc',
+
+    //tab Personal information
     'titleSetting' => 'Chỉnh sửa thông tin cá nhân',
     'labelUsername' => 'Tên đăng nhập',
     'labelName' => 'Họ và tên',
@@ -56,6 +60,11 @@ return [
     'genderFemale' => 'Nữ',
     'labelFile' => 'Ảnh đại diện',
     'btnSave' => 'Cập nhật thông tin',
+    //tab Change password
+    'labelCurrentPass' => 'Mật khẩu hiện tại',
+    'labelNewPass' => 'Mật khẩu mới',
+    'labelConfirmPass' => 'Xác nhận mật khẩu mới',
+    'labelShowPass' => 'Hiển thị mật khẩu',
 
     //Add new Room page
     'titleAddRoom' => 'Thêm phòng mới',

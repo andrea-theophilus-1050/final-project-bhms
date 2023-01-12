@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/icon-font.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('src/plugins/jquery-steps/jquery.steps.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/styles/scrollbar.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/passwordStrength.css') }}">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -34,6 +35,9 @@
 
         gtag('config', 'UA-119386393-1');
     </script>
+
+
+    
 </head>
 
 <body class="login-page">

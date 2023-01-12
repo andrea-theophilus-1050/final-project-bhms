@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/core.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/icon-font.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/styles/scrollbar.css') }}">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
@@ -32,6 +33,9 @@
 
         gtag('config', 'UA-119386393-1');
     </script>
+
+    
+
 </head>
 
 <body class="login-page">

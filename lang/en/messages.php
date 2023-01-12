@@ -20,6 +20,7 @@ return [
     'btnRegister' => 'Register',
     'textAlreadyHaveAccount' => 'Already have an account?',
     'alertPasswordNotMatch' => 'Password and Confirm password do not match',
+    'alertPasswordMatched' => 'Password and Confirm password matched',
     'passwordWeak' => 'Your password is too weak',
     'passwordMedium' => 'Your password is medium',
     'passwordStrong' => 'Your password is strong',
@@ -43,8 +44,11 @@ return [
     //Profile page
     'contactInfo' => 'Contact information',
     'tabSetting' => 'Personal information',
+    'tabChangePassword' => 'Change password',
     'tabTimeline' => 'Timeline',
     'tabTask' => 'Tasks',
+
+    //tab Personal information
     'titleSetting' => 'Edit your personal information',
     'labelUsername' => 'Username',
     'labelName' => 'Full name',
@@ -56,6 +60,11 @@ return [
     'genderFemale' => 'Female',
     'labelFile' => 'Avatar',
     'btnSave' => 'Update information',
+    //tab Change password
+    'labelCurrentPass' => 'Current password',
+    'labelNewPass' => 'New password',
+    'labelConfirmPass' => 'Confirm new password',
+    'labelShowPass' => 'Show password',
 
     //Add new Room page
     'titleAddRoom' => 'Add new room',

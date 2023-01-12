@@ -20,6 +20,7 @@ return [
     'btnRegister' => 'S\'inscrire',
     'textAlreadyHaveAccount' => 'Vous avez déjà un compte?',
     'alertPasswordNotMatch' => 'Le mot de passe et la confirmation du mot de passe ne correspondent pas',
+    'alertPasswordMatched' => 'Le mot de passe et la confirmation du mot de passe correspondent',
     'passwordWeak' => 'Votre mot de passe est trop faible',
     'passwordMedium' => 'Votre mot de passe est moyen',
     'passwordStrong' => 'Votre mot de passe est fort',
@@ -42,8 +43,11 @@ return [
     //Profile page
     'contactInfo' => 'Informations de contact',
     'tabSetting' => 'Informations personnelles',
+    'tabChangePassword' => 'Changer le mot de passe',
     'tabTimeline' => 'Chronologie',
     'tabTask' => 'Tâches',
+
+    //tab Personal information
     'titleSetting' => 'Modifier vos informations personnelles',
     'labelUsername' => 'Nom d\'utilisateur',
     'labelName' => 'Nom et prénom',
@@ -55,6 +59,11 @@ return [
     'genderFemale' => 'Femelle',
     'labelFile' => 'Avatar',
     'btnSave' => 'Mettre à jour les informations',
+    //tab change Password
+    'labelCurrentPass' => 'Mot de passe actuel',
+    'labelNewPass' => 'Nouveau mot de passe',
+    'labelConfirmPass' => 'Confirmez le mot de passe',
+    'labelShowPass' => 'Afficher le mot de passe',
 
     //Add new Room page
     'titleAddRoom' => 'Ajouter une nouvelle chambre',

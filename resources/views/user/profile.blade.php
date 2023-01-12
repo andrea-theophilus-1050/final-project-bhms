@@ -122,6 +122,10 @@
                                             role="tab">@lang('messages.tabSetting')</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#changePassword"
+                                            role="tab">@lang('messages.tabChangePassword')</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link" data-toggle="tab" href="#timeline"
                                             role="tab">@lang('messages.tabTimeline')</a>
                                     </li>
@@ -317,6 +321,92 @@
                                         </div>
                                     </div>
                                     <!-- Setting Tab End -->
+
+                                    <!-- Change Password tab Start -->
+                                    <div class="tab-pane fade height-100-p show active" id="changePassword"
+                                        role="tabpanel">
+                                        <div class="profile-setting">
+                                            <form action="{{ route('change-password', app()->getLocale()) }}"
+                                                method="post">
+                                                @csrf
+                                                <ul class="profile-edit-list row">
+                                                    <li class="weight-500 col-md-12">
+                                                        <h4 class="text-blue h5 mb-20">@lang('messages.tabChangePassword')</h4>
+                                                        {{-- error display --}}
+                                                        @if ($errors->any())
+                                                            <div class="alert alert-danger">
+                                                                <ul>
+                                                                    @foreach ($errors->all() as $error)
+                                                                        <li>{{ $error }}</li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            </div>
+                                                        @endif
+                                                        <div class="form-group">
+                                                            <label>@lang('messages.labelCurrentPass')</label>
+                                                            <input class="form-control form-control-lg" type="password"
+                                                                id="currentPassword" name="currentPassword"
+                                                                placeholder="@lang('messages.labelCurrentPass')"
+                                                                value="{{ old('currentPassword') }}"
+                                                                onfocus="this.placeholder = ''"
+                                                                onblur="this.placeholder = '@lang('messages.labelCurrentPass')'" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>@lang('messages.labelNewPass')</label>
+                                                            <input class="form-control form-control-lg" type="password"
+                                                                id="newPassword" name="newPassword"
+                                                                placeholder="@lang('messages.labelNewPass')"
+                                                                value="{{ old('newPassword') }}"
+                                                                onfocus="this.placeholder = ''"
+                                                                onblur="this.placeholder = '@lang('messages.labelNewPass')'"
+                                                                onkeyup="trigger()" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="indicator">
+                                                                <span class="weak"></span>
+                                                                <span class="medium"></span>
+                                                                <span class="strong"></span>
+                                                            </div>
+                                                            <div class="text" id="weak">@lang('messages.passwordWeak')</div>
+                                                            <div class="text" id="medium">@lang('messages.passwordMedium')</div>
+                                                            <div class="text" id="strong">@lang('messages.passwordStrong')</div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>@lang('messages.labelConfirmPass')</label>
+                                                            <input class="form-control form-control-lg" type="password"
+                                                                id="confirmNewPassword" name="confirmNewPassword"
+                                                                placeholder="@lang('messages.labelConfirmPass')"
+                                                                value="{{ old('confirmNewPassword') }}"
+                                                                onfocus="this.placeholder = ''"
+                                                                onblur="this.placeholder = '@lang('messages.labelConfirmPass')'"
+                                                                onkeyup="comparePassword()" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="textComparePassword" id="notMatch">
+                                                                @lang('messages.alertPasswordNotMatch')</div>
+                                                            <div class="textComparePassword" id="match"
+                                                                style="color: blue;">@lang('messages.alertPasswordMatched')</div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="custom-control custom-checkbox mb-5">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="showPass" onclick="showPassword()">
+                                                                <label class="custom-control-label"
+                                                                    for="showPass">@lang('messages.labelShowPass')</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group mb-0">
+                                                            <input type="submit" class="btn btn-primary"
+                                                                value="@lang('messages.tabChangePassword')" onclick="validate()">
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- Change Password tab End -->
+
                                     <!-- Timeline Tab start -->
                                     <div class="tab-pane fade" id="timeline" role="tabpanel">
                                         <div class="pd-20">
@@ -706,4 +796,6 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ asset('vendors/scripts/changePasswordValidate.js') }}"></script>
 @endsection
