@@ -10,19 +10,23 @@
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home', app()->getLocale()) }}">@lang('messages.navHome')</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('room', app()->getLocale()) }}">@lang('messages.navRoom')</a></li>
+                                <li class="breadcrumb-item"><a
+                                        href="{{ route('home', app()->getLocale()) }}">@lang('messages.navHome')</a></li>
+                                <li class="breadcrumb-item"><a
+                                        href="{{ route('room', app()->getLocale()) }}">@lang('messages.navRoom')</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">@lang('messages.titleAddRoom')</li>
                             </ol>
                         </nav>
-                    </div>                    
+                    </div>
                 </div>
             </div>
 
             <div class="pd-20 card-box mb-30">
-                <div class="clearfix" style="margin-bottom: 2%">                    
+                <div class="clearfix" style="margin-bottom: 2%">
                     <div class="pull-right">
-                        <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> @lang('messages.btnQuickAdd')</a>
+                        {{-- <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> @lang('messages.btnQuickAdd')</a> --}}
+                        <a href="javascript:;" data-toggle="modal" data-target="#task-add"
+                            class="btn btn-primary btn-sm"><i class="ion-plus-round"></i> @lang('messages.btnQuickAdd')</a>
                     </div>
                 </div>
 
@@ -53,7 +57,7 @@
                         <div class=" col-sm-12 col-md-3">
                             <input class="form-control" value="" type="email">
                         </div>
-                        
+
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">URL</label>
@@ -138,4 +142,124 @@
             </div>
         </div>
     </div>
+
+    <!-- add task popup start -->
+    <div class="modal fade customscroll" id="task-add" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Tasks
+                        Add</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-toggle="tooltip"
+                        data-placement="bottom" title="" data-original-title="Close Modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pd-0">
+                    <div class="task-list-form">
+                        <ul>
+                            <li>
+                                <form>
+                                    <div class="form-group row">
+                                        <label class="col-md-4">Task
+                                            Type</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4">Task
+                                            Message</label>
+                                        <div class="col-md-8">
+                                            <textarea class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4">Assigned
+                                            to</label>
+                                        <div class="col-md-8">
+                                            <select class="selectpicker form-control" data-style="btn-outline-primary"
+                                                title="Not Chosen" multiple="" data-selected-text-format="count"
+                                                data-count-selected-text="{0} people selected">
+                                                <option>Ferdinand M.</option>
+                                                <option>Don H. Rabon</option>
+                                                <option>Ann P. Harris</option>
+                                                <option>Katie D. Verdin</option>
+                                                <option>Christopher S. Fulghum
+                                                </option>
+                                                <option>Matthew C. Porter
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-0">
+                                        <label class="col-md-4">Due
+                                            Date</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control date-picker">
+                                        </div>
+                                    </div>
+                                </form>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="remove-task" data-toggle="tooltip" data-placement="bottom"
+                                    title="" data-original-title="Remove Task"><i
+                                        class="ion-minus-circled"></i></a>
+                                <form>
+                                    <div class="form-group row">
+                                        <label class="col-md-4">Task
+                                            Type</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4">Task
+                                            Message</label>
+                                        <div class="col-md-8">
+                                            <textarea class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4">Assigned
+                                            to</label>
+                                        <div class="col-md-8">
+                                            <select class="selectpicker form-control" data-style="btn-outline-primary"
+                                                title="Not Chosen" multiple="" data-selected-text-format="count"
+                                                data-count-selected-text="{0} people selected">
+                                                <option>Ferdinand M.</option>
+                                                <option>Don H. Rabon</option>
+                                                <option>Ann P. Harris</option>
+                                                <option>Katie D. Verdin</option>
+                                                <option>Christopher S. Fulghum
+                                                </option>
+                                                <option>Matthew C. Porter
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-0">
+                                        <label class="col-md-4">Due
+                                            Date</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control date-picker">
+                                        </div>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="add-more-task">
+                        <a href="#" data-toggle="tooltip" data-placement="bottom" title=""
+                            data-original-title="Add Task"><i class="ion-plus-circled"></i> Add More Task</a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- add task popup End -->
 @endsection

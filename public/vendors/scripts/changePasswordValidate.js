@@ -105,6 +105,25 @@ function comparePassword() {
 
 
 function validate() {
+    if (currentPass.value === "") {
+        currentPass.setCustomValidity('Current password is required');
+        return false;
+    } else {
+        currentPass.setCustomValidity('');
+    }
+    if (newPass.value === "") {
+        newPass.setCustomValidity('New password is required');
+        return false;
+    } else {
+        newPass.setCustomValidity('');
+    }
+    if (confirmNewPass.value === "") {
+        confirmNewPass.setCustomValidity('Confirm password is required');
+        return false;
+    } else {
+        confirmNewPass.setCustomValidity('');
+    }
+
     if (newPass.value.length < 6) {
         newPass.setCustomValidity('Password must be at least 6 characters');
         return false;
@@ -119,3 +138,24 @@ function validate() {
         }
     }
 }
+
+currentPass.addEventListener("keypress", function (event) {
+    if (event.key == "Enter") {
+        event.preventDefault();
+        document.getElementById("btnSubmitChangePassword").click();
+    }
+});
+
+newPass.addEventListener("keypress", function (event) {
+    if (event.key == "Enter") {
+        event.preventDefault();
+        document.getElementById("btnSubmitChangePassword").click();
+    }
+});
+
+confirmNewPass.addEventListener("keypress", function (event) {
+    if (event.key == "Enter") {
+        event.preventDefault();
+        document.getElementById("btnSubmitChangePassword").click();
+    }
+});

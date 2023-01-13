@@ -16,7 +16,7 @@
                 </div>
                 {{-- button go to edit profile page --}}
                 <div class="col-md-2">
-                    <a href="" class="btn btn-outline-primary"><i class="dw dw-edit-2"></i> Edit profile</a>
+                    <a href="{{ route('profile', app()->getLocale()) }}" class="btn btn-outline-primary"><i class="dw dw-edit-2"></i> Edit profile</a>
                 </div>
             </div>
         </div>

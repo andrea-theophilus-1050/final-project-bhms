@@ -22,7 +22,7 @@
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
                     <div class="pd-20 card-box height-100-p">
                         <div class="profile-photo">
-                            <img src="{{ asset('vendors/images/photo1.jpg') }}" alt="" class="avatar-photo">
+                            <img src="{{ asset('avatar/' . auth()->user()->avatar) }}" alt="" class="avatar-photo">
                         </div>
                         <h5 class="text-center h5 mb-0">
                             @if ($user->name == null)
@@ -122,10 +122,6 @@
                                             role="tab">@lang('messages.tabSetting')</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#changePassword"
-                                            role="tab">@lang('messages.tabChangePassword')</a>
-                                    </li>
-                                    <li class="nav-item">
                                         <a class="nav-link" data-toggle="tab" href="#timeline"
                                             role="tab">@lang('messages.tabTimeline')</a>
                                     </li>
@@ -139,11 +135,32 @@
                                     <div class="tab-pane fade height-100-p show active" id="setting" role="tabpanel">
                                         <div class="profile-setting">
                                             <form action="{{ route('update-profile', app()->getLocale()) }}"
-                                                method="post">
+                                                method="post" enctype="multipart/form-data">
                                                 @csrf
                                                 <ul class="profile-edit-list row">
+                                                    {{-- Edit personal information start --}}
                                                     <li class="weight-500 col-md-6">
                                                         <h4 class="text-blue h5 mb-20">@lang('messages.titleSetting')</h4>
+                                                        @if (session('successProfile'))
+                                                            <div class="alert alert-success alert-dismissible fade show"
+                                                                role="alert">
+                                                                <strong>Success! </strong>{{ session('successProfile') }}
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="alert" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                        @endif
+                                                        @if (session('errorProfile'))
+                                                            <div class="alert alert-success alert-dismissible fade show"
+                                                                role="alert">
+                                                                <strong>Error! </strong>{{ session('errorProfile') }}
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="alert" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                        @endif
                                                         <div class="form-group">
                                                             @if ($user->type_login == 'username')
                                                                 <label>@lang('messages.labelUsername')</label>
@@ -160,7 +177,7 @@
                                                                 placeholder="@lang('messages.labelName')"
                                                                 value="{{ $user->name }}"
                                                                 onfocus="this.placeholder = ''"
-                                                                onblur="this.placeholder = '@lang('messages.labelName')'">
+                                                                onblur="this.placeholder = '@lang('messages.labelName')'" required>
                                                         </div>
                                                         <div class="form-group">
                                                             <label>@lang('messages.labelEmail')</label>
@@ -169,7 +186,7 @@
                                                                 placeholder="@lang('messages.labelEmail')"
                                                                 value="{{ $user->email }}"
                                                                 onfocus="this.placeholder = ''"
-                                                                onblur="this.placeholder = '@lang('messages.labelEmail')'">
+                                                                onblur="this.placeholder = '@lang('messages.labelEmail')'" required>
                                                         </div>
                                                         <div class="form-group">
                                                             <label>@lang('messages.labelPhone')</label>
@@ -178,28 +195,32 @@
                                                                 placeholder="@lang('messages.labelPhone')"
                                                                 value="{{ $user->phone }}"
                                                                 onfocus="this.placeholder = ''"
-                                                                onblur="this.placeholder = '@lang('messages.labelPhone')'">
+                                                                onblur="this.placeholder = '@lang('messages.labelPhone')'" required>
                                                         </div>
                                                         <div class="form-group">
                                                             <label>@lang('messages.labelDoB')</label>
                                                             <input class="form-control form-control-lg date-picker"
                                                                 type="text" placeholder="@lang('messages.labelDoB')"
-                                                                onfocus="this.placeholder = ''"
-                                                                onblur="this.placeholder = '@lang('messages.labelDoB')'">
+                                                                name="dob" onfocus="this.placeholder = ''"
+                                                                value="{{ $user->dob }}"
+                                                                onblur="this.placeholder = '@lang('messages.labelDoB')'" required>
                                                         </div>
                                                         <div class="form-group">
                                                             <label>@lang('messages.labelGender')</label>
                                                             <div class="d-flex">
                                                                 <div class="custom-control custom-radio mb-5 mr-20">
                                                                     <input type="radio" id="customRadio4"
-                                                                        name="customRadio" class="custom-control-input"
-                                                                        checked>
+                                                                        name="gender" class="custom-control-input"
+                                                                        @if ($user->gender == 'Male') checked @endif
+                                                                        value="Male">
                                                                     <label class="custom-control-label weight-400"
                                                                         for="customRadio4">@lang('messages.genderMale')</label>
                                                                 </div>
                                                                 <div class="custom-control custom-radio mb-5">
                                                                     <input type="radio" id="customRadio5"
-                                                                        name="customRadio" class="custom-control-input">
+                                                                        name="gender" class="custom-control-input"
+                                                                        value="Female"
+                                                                        @if ($user->gender == 'Female') checked @endif>
                                                                     <label class="custom-control-label weight-400"
                                                                         for="customRadio5">@lang('messages.genderFemale')</label>
                                                                 </div>
@@ -209,7 +230,7 @@
                                                         <div class="form-group">
                                                             <label>@lang('messages.labelFile')</label>
                                                             <input type="file" class="form-control form-control-lg"
-                                                                id="">
+                                                                id="avatar" name="avatar">
                                                         </div>
                                                         {{-- <div class="form-group">
                                                             <label>Country</label>
@@ -255,22 +276,17 @@
                                                             </div>
                                                         </div> --}}
                                                         <div class="form-group mb-0">
-                                                            <button type="submit" class="btn btn-primary" id="btnSubmit" name="btnSubmit"
+                                                            <button type="submit" class="btn btn-primary" id="btnSubmit"
+                                                                name="btnSubmit"
                                                                 value="updateInformation">@lang('messages.btnSave')</button>
                                                         </div>
                                                     </li>
+                                                    {{-- Edit personal information end --}}
+
+                                                    {{-- Change password start --}}
                                                     <li class="weight-500 col-md-6">
                                                         <h4 class="text-blue h5 mb-20">@lang('messages.tabChangePassword')</h4>
-                                                        {{-- <div class="form-group">
-                                                            <label>Facebook URL:</label>
-                                                            <input class="form-control form-control-lg" type="text"
-                                                                placeholder="Paste your link here">
-                                                        </div>
-                                                        
-                                                        <div class="form-group mb-0">
-                                                            <input type="submit" class="btn btn-primary"
-                                                                value="Save & Update">
-                                                        </div> --}}
+                                                        {{-- display error message --}}
                                                         @if (session('error'))
                                                             <div class="alert alert-danger alert-dismissible fade show"
                                                                 role="alert">
@@ -281,6 +297,18 @@
                                                                 </button>
                                                             </div>
                                                         @endif
+                                                        {{-- display success message --}}
+                                                        @if (session('success'))
+                                                            <div class="alert alert-success alert-dismissible fade show"
+                                                                role="alert">
+                                                                <strong>Success!</strong> {{ session('success') }}
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="alert" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                        @endif
+
                                                         <div class="form-group">
                                                             <label>@lang('messages.labelCurrentPass')</label>
                                                             <input class="form-control form-control-lg" type="password"
@@ -288,7 +316,7 @@
                                                                 placeholder="@lang('messages.labelCurrentPass')"
                                                                 value="{{ old('currentPassword') }}"
                                                                 onfocus="this.placeholder = ''"
-                                                                onblur="this.placeholder = '@lang('messages.labelCurrentPass')'" required>
+                                                                onblur="this.placeholder = '@lang('messages.labelCurrentPass')'">
                                                         </div>
                                                         <div class="form-group">
                                                             <label>@lang('messages.labelNewPass')</label>
@@ -297,7 +325,7 @@
                                                                 placeholder="@lang('messages.labelNewPass')"
                                                                 onfocus="this.placeholder = ''"
                                                                 onblur="this.placeholder = '@lang('messages.labelNewPass')'"
-                                                                onkeyup="trigger()" required>
+                                                                onkeyup="trigger()">
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="indicator">
@@ -316,7 +344,7 @@
                                                                 placeholder="@lang('messages.labelConfirmPass')"
                                                                 onfocus="this.placeholder = ''"
                                                                 onblur="this.placeholder = '@lang('messages.labelConfirmPass')'"
-                                                                onkeyup="comparePassword()" required>
+                                                                onkeyup="comparePassword()">
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="textComparePassword" id="notMatch">
@@ -334,100 +362,18 @@
                                                         </div>
 
                                                         <div class="form-group mb-0">
-                                                            <button type="submit" class="btn btn-primary" id="btnSubmit" name="btnSubmit"
-                                                                value="changePassword" onclick="validate()">@lang('messages.tabChangePassword')</button>
+                                                            <button type="submit" class="btn btn-primary"
+                                                                id="btnSubmitChangePassword" name="btnSubmit"
+                                                                value="changePassword"
+                                                                onclick="validate()">@lang('messages.tabChangePassword')</button>
                                                         </div>
                                                     </li>
+                                                    {{-- Change password end --}}
                                                 </ul>
                                             </form>
                                         </div>
                                     </div>
                                     <!-- Setting Tab End -->
-
-                                    <!-- Change Password tab Start -->
-                                    <div class="tab-pane fade height-100-p show active" id="changePassword"
-                                        role="tabpanel">
-                                        <div class="profile-setting">
-                                            <form action="{{ route('change-password', app()->getLocale()) }}"
-                                                method="post">
-                                                @csrf
-                                                <ul class="profile-edit-list row">
-                                                    <li class="weight-500 col-md-12">
-                                                        <h4 class="text-blue h5 mb-20">@lang('messages.tabChangePassword')</h4>
-                                                        {{-- error display --}}
-                                                        @if (session('error'))
-                                                            <div class="alert alert-danger alert-dismissible fade show"
-                                                                role="alert">
-                                                                <strong>Error!</strong> {{ session('error') }}
-                                                                <button type="button" class="close"
-                                                                    data-dismiss="alert" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                        @endif
-                                                        <div class="form-group">
-                                                            <label>@lang('messages.labelCurrentPass')</label>
-                                                            <input class="form-control form-control-lg" type="password"
-                                                                id="currentPassword" name="currentPassword"
-                                                                placeholder="@lang('messages.labelCurrentPass')"
-                                                                value="{{ old('currentPassword') }}"
-                                                                onfocus="this.placeholder = ''"
-                                                                onblur="this.placeholder = '@lang('messages.labelCurrentPass')'" required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>@lang('messages.labelNewPass')</label>
-                                                            <input class="form-control form-control-lg" type="password"
-                                                                id="newPassword" name="newPassword"
-                                                                placeholder="@lang('messages.labelNewPass')"
-                                                                onfocus="this.placeholder = ''"
-                                                                onblur="this.placeholder = '@lang('messages.labelNewPass')'"
-                                                                onkeyup="trigger()" required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="indicator">
-                                                                <span class="weak"></span>
-                                                                <span class="medium"></span>
-                                                                <span class="strong"></span>
-                                                            </div>
-                                                            <div class="text" id="weak">@lang('messages.passwordWeak')</div>
-                                                            <div class="text" id="medium">@lang('messages.passwordMedium')</div>
-                                                            <div class="text" id="strong">@lang('messages.passwordStrong')</div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>@lang('messages.labelConfirmPass')</label>
-                                                            <input class="form-control form-control-lg" type="password"
-                                                                id="confirmNewPassword" name="confirmNewPassword"
-                                                                placeholder="@lang('messages.labelConfirmPass')"
-                                                                onfocus="this.placeholder = ''"
-                                                                onblur="this.placeholder = '@lang('messages.labelConfirmPass')'"
-                                                                onkeyup="comparePassword()" required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="textComparePassword" id="notMatch">
-                                                                @lang('messages.alertPasswordNotMatch')</div>
-                                                            <div class="textComparePassword" id="match"
-                                                                style="color: blue;">@lang('messages.alertPasswordMatched')</div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox mb-5">
-                                                                <input type="checkbox" class="custom-control-input"
-                                                                    id="showPass" onclick="showPassword()">
-                                                                <label class="custom-control-label"
-                                                                    for="showPass">@lang('messages.labelShowPass')</label>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group mb-0">
-                                                            <input type="submit" class="btn btn-primary"
-                                                                value="@lang('messages.tabChangePassword')" onclick="validate()">
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <!-- Change Password tab End -->
-
                                     <!-- Timeline Tab start -->
                                     <div class="tab-pane fade" id="timeline" role="tabpanel">
                                         <div class="pd-20">

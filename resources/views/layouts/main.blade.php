@@ -208,7 +208,7 @@
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                         <span class="user-icon">
-                            <img src="{{ asset('vendors/images/photo1.jpg') }}" alt="">
+                            <img src="{{ asset('avatar/' . auth()->user()->avatar) }}" alt="">
                         </span>
                         {{-- <span class="user-name">
                             @auth
