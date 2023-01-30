@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>@lang('messages.title')</title>
+    <title>{{ $title }}</title>
 
     <!-- Site favicon -->
     <link rel="shortcut icon" type="image/png" href="{{ asset('vendors/images/System_Home_Icon_32.png') }}">
