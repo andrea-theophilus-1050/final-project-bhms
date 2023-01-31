@@ -28,7 +28,7 @@ class DashboardController extends Controller
     public function updateProfile(Request $request)
     {
         switch ($request->btnSubmit) {
-            case 'updateInformation':
+            case 'updateInformation': // if user click button update information
                 // check email unique
                 $email = DB::table('tb_user')->where('email', $request->email)->where('id', '!=', auth()->user()->id)->first();
                 // check phone unique
@@ -67,7 +67,8 @@ class DashboardController extends Controller
                 }
                 return redirect()->route('profile', app()->getLocale())->with('successProfile', 'Profile updated successfully');
                 break;
-            case 'changePassword':
+
+            case 'changePassword': // if user click button change password
                 $request->validate([
                     'currentPassword' => 'required',
                     'newPassword' => 'required',
@@ -87,6 +88,7 @@ class DashboardController extends Controller
         }
     }
 
+    // return view add room
     public function addRoom()
     {
         return view('management.add-room')->with('title', 'Add New Room');

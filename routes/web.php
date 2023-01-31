@@ -3,8 +3,6 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', function () {
     return redirect()->route('login', app()->getLocale());
 });
@@ -35,10 +34,6 @@ Route::group(['prefix' => '{locale}'], function () {
 
 // Group Auth Socialite
 Route::group(['prefix' => '/auth'], function () {
-    // // Login with Socialite GitHub
-    // Route::get('/github/redirect', [UserController::class, 'githubRedirect'])->name('auth.githubRedirect');
-    // Route::get('/github/callback', [UserController::class, 'githubCallback'])->name('auth.githubCallback');
-
     // Login with Socialite Google
     Route::get('/google/redirect', [UserController::class, 'googleRedirect'])->name('auth.googleRedirect');
     Route::get('/google/callback', [UserController::class, 'googleCallback'])->name('auth.googleCallback');
@@ -49,18 +44,24 @@ Route::group(['prefix' => '/auth'], function () {
 });
 
 // Group Authenticated
-Route::group(['middleware' => 'auth'], function () {
+// Landlords role
+Route::middleware(['auth', 'userRole:landlords'])->group(function () {
     Route::group(['prefix' => '{locale}'], function () {
-        Route::group(['middleware' => 'setLocale'], function () {
-            Route::get('dashboard', [DashboardController::class, 'index'])->name('home');
-            Route::group(['prefix' => 'dashboard'], function () {
-                Route::get('room', [DashboardController::class, 'room'])->name('room');
-                Route::get('profile', [DashboardController::class, 'profile'])->name('profile');
-                Route::post('update-profile', [DashboardController::class, 'updateProfile'])->name('update-profile');
-                Route::post('change-password', [DashboardController::class, 'changePassword'])->name('change-password');
-                Route::group(['prefix' => 'room'], function () {
-                    Route::get('add', [DashboardController::class, 'addRoom'])->name('room.add_new_room');
+        Route::group(['prefix' => 'landlords'], function () {
+            // Route::group(['middleware' => 'setLocale'], function () {
+            Route::middleware('setLocale')->group(function () {
+                Route::middleware('checkProfile')->group(function () {
+                    Route::get('dashboard', [DashboardController::class, 'index'])->name('home');
+                    Route::group(['prefix' => 'dashboard'], function () {
+                        Route::get('room', [DashboardController::class, 'room'])->name('room');
+                        Route::post('change-password', [DashboardController::class, 'changePassword'])->name('change-password');
+                        Route::group(['prefix' => 'room'], function () {
+                            Route::get('add', [DashboardController::class, 'addRoom'])->name('room.add_new_room');
+                        });
+                    });
                 });
+                Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->name('profile');
+                Route::post('/dashboard/update-profile', [DashboardController::class, 'updateProfile'])->name('update-profile');
             });
         });
     });

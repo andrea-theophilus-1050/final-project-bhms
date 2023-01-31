@@ -18,6 +18,19 @@
                     </div>
                 </div>
             </div>
+
+            @if (session('msg'))
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="title">
+                                <h4 style="color:red">{{ session('msg') }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             <div class="row">
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
                     <div class="pd-20 card-box height-100-p">

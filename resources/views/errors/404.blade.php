@@ -3,7 +3,7 @@
 <head>
 	<!-- Basic Page Info -->
 	<meta charset="utf-8">
-	<title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
+	<title>{{ $title }}</title>
 
 	<!-- Site favicon -->
 	<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('vendors/images/apple-touch-icon.png') }}">
@@ -38,7 +38,7 @@
 				<h3>Error: 404 Page Not Found</h3>
 				<p>Sorry, the page you’re looking for cannot be accessed.<br>Either check the URL</p>
 				<div class="pt-20 mx-auto max-width-200">
-					<a href="{{ url('home') }}" class="btn btn-primary btn-block btn-lg">Back To Home</a>
+					<a href="{{ route('home', app()->getLocale()) }}" class="btn btn-primary btn-block btn-lg">Back To Home</a>
 				</div>
 			</div>
 		</div>

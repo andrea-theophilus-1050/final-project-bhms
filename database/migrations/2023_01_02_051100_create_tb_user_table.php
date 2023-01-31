@@ -25,8 +25,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->integer('role')->nullable()->default('0');
-            $table->string('type_login')->nullable()->default('username');
+            $table->string('role')->default('landlords'); //landlords, admin, tenants
+            $table->string('type_login')->default('username');
             $table->timestamps();
         });
     }

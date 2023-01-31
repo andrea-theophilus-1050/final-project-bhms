@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -21,6 +22,7 @@ class User extends Authenticatable
         'gender',
         'avatar',
         'password',
+        'role',
     ];
 
     protected $hidden = [
@@ -31,4 +33,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // protected function role(): Attribute{
+    //     return new Attribute(
+    //         get: fn($value) => ["landlords", "admin", "tenants"][$value],
+    //     );
+    // }
 }

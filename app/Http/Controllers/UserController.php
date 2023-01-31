@@ -31,9 +31,15 @@ class UserController extends Controller
             $user->email = $userData->getEmail();
             $user->password = Hash::make($userData->getId());
             $user->type_login = 'google';
+            $user->role = 'landlords';
             $user->save();
             Auth::login($user, true);
-            return redirect()->route('home', app()->getLocale());
+            // return redirect()->route('home', app()->getLocale());
+            if (Auth::user()->role == 'landlords') {
+                return redirect()->route('home', app()->getLocale())->with('success', 'Login successful!');
+            } else {
+                return back()->with('errors', 'You cannot access the system')->withInput($request->all());
+            }
         }
     }
 
@@ -45,7 +51,7 @@ class UserController extends Controller
     public function facebookCallback(Request $request)
     {
         $userData = Socialite::driver('facebook')->user();
-        $user = User::where('email', $userData->getId() . '@facebook.com')->where('type_login', 'facebook')->first();
+        $user = User::where('email', $userData->getEmail())->where('type_login', 'facebook')->first();
         if ($user) {
             Auth::login($user, true);
             return redirect()->route('home', app()->getLocale());
@@ -61,17 +67,25 @@ class UserController extends Controller
 
             $user->password = Hash::make($userData->getId());
             $user->type_login = 'facebook';
+            $user->role = 'landlords';
             $user->save();
             Auth::login($user, true);
-            return redirect()->route('home', app()->getLocale());
+            // return redirect()->route('home', app()->getLocale());
+            if (Auth::user()->role == 'landlords') {
+                return redirect()->route('home', app()->getLocale())->with('success', 'Login successful!');
+            } else {
+                return back()->with('errors', 'You cannot access the system')->withInput($request->all());
+            }
         }
     }
 
+    //function return view login
     public function login()
     {
         return view('user.login')->with('title', 'Login');
     }
 
+    //function handle login
     public function login_action(Request $request)
     {
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password, 'type_login' => 'username'], $request->remember_me)) {
@@ -80,16 +94,22 @@ class UserController extends Controller
                 Cookie::queue('username', $request->username, 60 * 24 * 30);
                 Cookie::queue('password', $request->password, 60 * 24 * 30);
             }
-            return redirect()->route('home', app()->getLocale())->with('success', 'Login successful!');
+            if (Auth::user()->role == 'landlords') {
+                return redirect()->route('home', app()->getLocale())->with('success', 'Login successful!');
+            } else {
+                return back()->with('errors', 'You cannot access the system')->withInput($request->all());
+            }
         }
         return back()->with('errors', 'Incorrect username or password')->withInput($request->all());
     }
 
+    //function return view register
     public function register()
     {
         return view('user.register')->with('title', 'Registration');
     }
 
+    //function handle register
     public function register_action(Request $request)
     {
         $request->validate([
@@ -120,6 +140,7 @@ class UserController extends Controller
         }
     }
 
+    //function handle logout
     public function logout(Request $request)
     {
         Auth::logout();
