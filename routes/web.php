@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\House\HouseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,6 +57,9 @@ Route::middleware(['auth', 'userRole:landlords'])->group(function () {
                         Route::get('house', [DashboardController::class, 'houseArea'])->name('house-area');
                         Route::group(['prefix' => 'house'], function () {
                             Route::get('add', [DashboardController::class, 'addHouse'])->name('house.add_new_house');
+                            Route::post('add-house', [HouseController::class, 'addNewHouseAction'])->name('add-house.action');
+                            Route::post('update-house', [HouseController::class, 'UpdateHouseAction'])->name('update-house.action');
+                            
                         });
                         Route::get('room', [DashboardController::class, 'room'])->name('room');
                         Route::post('change-password', [DashboardController::class, 'changePassword'])->name('change-password');

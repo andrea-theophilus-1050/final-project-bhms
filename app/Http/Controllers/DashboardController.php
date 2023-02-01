@@ -14,27 +14,30 @@ class DashboardController extends Controller
     {
         return view('dashboard.index')->with('title', 'Dashboard');
     }
-    
+
     public function profile()
     {
         return view('user.profile')->with('user', auth()->user())->with('title', 'Profile');
     }
 
-    public function houseArea(){
-        return view('dashboard.house-area')->with('title', 'House Management');
+    public function houseArea()
+    {
+        $houses = DB::table('tb_house')->where('user_id', auth()->user()->id)->get();
+        return view('dashboard.house-area')->with('houses', $houses)->with('title', 'House Management');
     }
 
     public function room()
     {
         return view('dashboard.room')->with('title', 'Room Management');
     }
-    
+
     public function addRoom()
     {
         return view('management.add-room')->with('title', 'Add New Room');
     }
 
-    public function addHouse(){
-        return view('management.add-house')->with('title','Add new house');
+    public function addHouse()
+    {
+        return view('management.add-house')->with('title', 'Add new house');
     }
 }
