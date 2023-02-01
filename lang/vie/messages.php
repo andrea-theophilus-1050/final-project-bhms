@@ -31,6 +31,7 @@ return [
     'titleHover' => 'Thay đổi ngôn ngữ',
     'placeholderSearch' => 'Tìm kiếm...',
     'navHome' => 'Trang chủ',
+    'navHouse' => 'Quản lý nhà, khu vực',
     'navRoom' => 'Quản lý phòng',
     'navService' => 'Quản lý dịch vụ',
     'navProfile' => 'Hồ sơ',

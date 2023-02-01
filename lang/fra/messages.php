@@ -30,6 +30,7 @@ return [
     'titleHover' => 'Changer de langue',
     'placeholderSearch' => 'Rechercher...',
     'navHome' => 'Page d\'accueil',
+    'navHouse' => 'Gestion de la maison et de la zone',
     'navRoom' => 'Gestion des chambres',
     'navService' => 'Gestion des services',
     'navProfile' => 'Profil',

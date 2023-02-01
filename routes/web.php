@@ -53,6 +53,10 @@ Route::middleware(['auth', 'userRole:landlords'])->group(function () {
                 Route::middleware('checkProfile')->group(function () {
                     Route::get('dashboard', [DashboardController::class, 'index'])->name('home');
                     Route::group(['prefix' => 'dashboard'], function () {
+                        Route::get('house', [DashboardController::class, 'houseArea'])->name('house-area');
+                        Route::group(['prefix' => 'house'], function () {
+                            Route::get('add', [DashboardController::class, 'addHouse'])->name('house.add_new_house');
+                        });
                         Route::get('room', [DashboardController::class, 'room'])->name('room');
                         Route::post('change-password', [DashboardController::class, 'changePassword'])->name('change-password');
                         Route::group(['prefix' => 'room'], function () {
@@ -61,7 +65,7 @@ Route::middleware(['auth', 'userRole:landlords'])->group(function () {
                     });
                 });
                 Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->name('profile');
-                Route::post('/dashboard/update-profile', [DashboardController::class, 'updateProfile'])->name('update-profile');
+                Route::post('/dashboard/update-profile', [UserController::class, 'updateProfile'])->name('update-profile');
             });
         });
     });

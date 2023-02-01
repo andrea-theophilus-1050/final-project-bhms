@@ -31,6 +31,7 @@ return [
     'titleHover' => 'Change Language',
     'placeholderSearch' => 'Search...',
     'navHome' => 'Home',
+    'navHouse' => 'House Management',
     'navRoom' => 'Rooms Management',
     'navService' => 'Services Management',
     'navProfile' => 'Profile',

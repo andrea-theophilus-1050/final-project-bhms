@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 
 
 class UserController extends Controller
@@ -58,7 +59,7 @@ class UserController extends Controller
         } else {
             $user = new User();
             $user->name = $userData->getName();
-
+            
             if ($userData->getEmail() == null) {
                 $user->email = $userData->getId() . '@facebook.com';
             } else {
@@ -137,6 +138,70 @@ class UserController extends Controller
             } else {
                 return back()->with('errors', 'Tên đăng nhập đã tồn tại')->withInput($request->all());
             }
+        }
+    }
+
+    // handle update profile
+    public function updateProfile(Request $request)
+    {
+        switch ($request->btnSubmit) {
+            case 'updateInformation': // if user click button update information
+                // check email unique
+                $email = DB::table('tb_user')->where('email', $request->email)->where('id', '!=', auth()->user()->id)->first();
+                // check phone unique
+                $phone = DB::table('tb_user')->where('phone', $request->phone)->where('id', '!=', auth()->user()->id)->first();
+
+                if ($phone) {
+                    return redirect()->back()->with('errorProfile', 'Phone already exists')->withInput($request->all());
+                } else if ($email) {
+                    return redirect()->back()->with('errorProfile', 'Email already exists')->withInput($request->all());
+                } else {
+                    if ($request->avatar == "") {
+                        DB::table('tb_user')->where('id', auth()->user()->id)->update([
+                            'name' => $request->name,
+                            'email' => $request->email,
+                            'phone' => $request->phone,
+                            'dob' => $request->dob,
+                            'gender' => $request->gender
+                        ]);
+                    } else {
+                        $request->validate([
+                            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
+                        ]);
+
+                        $generatedAvatarName = 'avatar-' . time() . '.' . $request->avatar->extension();
+                        $request->avatar->move(public_path('avatar'), $generatedAvatarName);
+
+                        DB::table('tb_user')->where('id', auth()->user()->id)->update([
+                            'name' => $request->name,
+                            'email' => $request->email,
+                            'phone' => $request->phone,
+                            'dob' => $request->dob,
+                            'gender' => $request->gender,
+                            'avatar' => $generatedAvatarName
+                        ]);
+                    }
+                }
+                return redirect()->route('profile', app()->getLocale())->with('successProfile', 'Profile updated successfully');
+                break;
+
+            case 'changePassword': // if user click button change password
+                $request->validate([
+                    'currentPassword' => 'required',
+                    'newPassword' => 'required',
+                    'confirmNewPassword' => 'required|same:newPassword',
+                ]);
+
+                $currentPassword = Hash::check($request->currentPassword, auth()->user()->password);
+                if ($currentPassword) {
+                    User::findOrFail(Auth::user()->id)->update([
+                        'password' => Hash::make($request->newPassword)
+                    ]);
+                    return redirect()->route('profile', app()->getLocale())->with('success', 'Password changed successfully');
+                } else {
+                    return redirect()->back()->with('error', 'Current password is incorrect')->withInput($request->all());
+                }
+                break;
         }
     }
 

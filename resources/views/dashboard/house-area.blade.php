@@ -6,16 +6,16 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            <h4>@lang('messages.navRoom')</h4>
+                            <h4>@lang('messages.navHouse')</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('home', app()->getLocale()) }}">@lang('messages.navHome')</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">@lang('messages.navRoom')</li>
+                                <li class="breadcrumb-item active" aria-current="page">@lang('messages.navHouse')</li>
                             </ol>
                         </nav>
                     </div>
-                    <div class="col-md-6 col-sm-12">
+                    {{-- <div class="col-md-6 col-sm-12">
                         <div class="dropdown">
                             <form action="" style="display: flex; justify-content: space-between">
                                 <input type="text" name="search" placeholder="Room number" class="form-control"
@@ -37,46 +37,7 @@
                                 <button type="submit" class="btn btn-primary btn-sm">Search</button>
                             </form>
                         </div>
-                        {{-- <div class="dropdown">
-                            <label style="font-size: 15px; font-weight: bold">Area: </label>
-                            <a class="btn btn-success btn-sm dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                January 2018
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Export List</a>
-                                <a class="dropdown-item" href="#">Policies</a>
-                                <a class="dropdown-item" href="#">View Assets</a>
-                            </div>
-                        </div> --}}
-                    </div>
-                </div>
-            </div>
-
-            <div class="page-header">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
                         <div class="dropdown">
-                            <form action="" style="display: flex; justify-content: space-between">
-                                <input type="text" name="search" placeholder="Room number" class="form-control"
-                                    style="margin-right: 5%; font-size: 13px">
-                                <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
-                                    <option value="">Room status</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                </select>
-                                <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
-                                    <option value="">Room billed</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                </select>
-                                <button type="submit" class="btn btn-primary btn-sm">Search</button>
-                            </form>
-                        </div>
-                        {{-- <div class="dropdown">
                             <label style="font-size: 15px; font-weight: bold">Area: </label>
                             <a class="btn btn-success btn-sm dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                                 January 2018
@@ -86,8 +47,8 @@
                                 <a class="dropdown-item" href="#">Policies</a>
                                 <a class="dropdown-item" href="#">View Assets</a>
                             </div>
-                        </div> --}}
-                    </div>
+                        </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -97,7 +58,7 @@
                         <h4 class="text-blue h4">Contextual classes</h4>
                     </div>
                     <div class="pull-right">
-                        <a href="{{ route('room.add_new_room', app()->getLocale()) }}" class="btn btn-primary btn-sm" role="button"><i
+                        <a href="{{ route('house.add_new_house', app()->getLocale()) }}" class="btn btn-primary btn-sm" role="button"><i
                                 class="fa fa-plus"></i>Add new room</a>
                         <a href="#" class="btn btn-primary btn-sm" role="button"><i class="fa fa-minus"></i> Source
                             Code</a>

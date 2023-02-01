@@ -12,7 +12,7 @@ class User extends Authenticatable
 
     protected $table = 'tb_user';
     protected $primaryKey = 'id';
-    
+
     protected $fillable = [
         'username',
         'name',
@@ -39,4 +39,9 @@ class User extends Authenticatable
     //         get: fn($value) => ["landlords", "admin", "tenants"][$value],
     //     );
     // }
+
+    public function houses()
+    {
+        return $this->hasMany('App\Models\House');
+    }
 }

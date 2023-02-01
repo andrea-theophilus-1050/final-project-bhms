@@ -352,6 +352,11 @@
                         </a>
                     </li>
                     <li class="dropdown">
+                        <a href="{{ route('house-area', app()->getLocale()) }}" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-house1"></span><span class="mtext">@lang('messages.navHouse')</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
                         <a href="{{ route('room', app()->getLocale()) }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-home"></span><span class="mtext">@lang('messages.navRoom')</span>
                         </a>

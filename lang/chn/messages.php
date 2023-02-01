@@ -30,6 +30,7 @@ return [
     'titleHover' => '改变语言',
     'placeholderSearch' => '搜索...',
     'navHome' => '主页',
+    'navHouse' => '房屋和区域管理',
     'navRoom' => '客房管理',
     'navService' => '服务管理',
     'navProfile' => '个人信息',
