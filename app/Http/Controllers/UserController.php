@@ -25,7 +25,7 @@ class UserController extends Controller
         $user = User::where('email', $userData->getEmail())->where('type_login', 'google')->first();
         if ($user) {
             Auth::login($user, true);
-            return redirect()->route('home', app()->getLocale());
+            return redirect()->route('home');
         } else {
             $user = new User();
             $user->name = $userData->getName();
@@ -35,9 +35,9 @@ class UserController extends Controller
             $user->role = 'landlords';
             $user->save();
             Auth::login($user, true);
-            // return redirect()->route('home', app()->getLocale());
+            // return redirect()->route('home');
             if (Auth::user()->role == 'landlords') {
-                return redirect()->route('home', app()->getLocale())->with('success', 'Login successful!');
+                return redirect()->route('home')->with('success', 'Login successful!');
             } else {
                 return back()->with('errors', 'You cannot access the system')->withInput($request->all());
             }
@@ -55,7 +55,7 @@ class UserController extends Controller
         $user = User::where('email', $userData->getEmail())->where('type_login', 'facebook')->first();
         if ($user) {
             Auth::login($user, true);
-            return redirect()->route('home', app()->getLocale());
+            return redirect()->route('home');
         } else {
             $user = new User();
             $user->name = $userData->getName();
@@ -71,9 +71,9 @@ class UserController extends Controller
             $user->role = 'landlords';
             $user->save();
             Auth::login($user, true);
-            // return redirect()->route('home', app()->getLocale());
+            // return redirect()->route('home');
             if (Auth::user()->role == 'landlords') {
-                return redirect()->route('home', app()->getLocale())->with('success', 'Login successful!');
+                return redirect()->route('home')->with('success', 'Login successful!');
             } else {
                 return back()->with('errors', 'You cannot access the system')->withInput($request->all());
             }
@@ -96,7 +96,7 @@ class UserController extends Controller
                 Cookie::queue('password', $request->password, 60 * 24 * 30);
             }
             if (Auth::user()->role == 'landlords') {
-                return redirect()->route('home', app()->getLocale())->with('success', 'Login successful!');
+                return redirect()->route('home')->with('success', 'Login successful!');
             } else {
                 return back()->with('errors', 'You cannot access the system')->withInput($request->all());
             }
@@ -127,7 +127,7 @@ class UserController extends Controller
             ]);
 
             $user->save();
-            return redirect()->route('login', app()->getLocale())->with('success', 'Registration successful!')->withInput($request->all());
+            return redirect()->route('login')->with('success', 'Registration successful!')->withInput($request->all());
         } else {
             if (App::isLocale('en')) {
                 return back()->with('errors', 'Username already exists')->withInput($request->all());
@@ -182,7 +182,7 @@ class UserController extends Controller
                         ]);
                     }
                 }
-                return redirect()->route('profile', app()->getLocale())->with('successProfile', 'Profile updated successfully');
+                return redirect()->route('profile')->with('successProfile', 'Profile updated successfully');
                 break;
 
             case 'changePassword': // if user click button change password
@@ -197,7 +197,7 @@ class UserController extends Controller
                     User::findOrFail(Auth::user()->id)->update([
                         'password' => Hash::make($request->newPassword)
                     ]);
-                    return redirect()->route('profile', app()->getLocale())->with('success', 'Password changed successfully');
+                    return redirect()->route('profile')->with('success', 'Password changed successfully');
                 } else {
                     return redirect()->back()->with('error', 'Current password is incorrect')->withInput($request->all());
                 }
@@ -211,7 +211,7 @@ class UserController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('login', app()->getLocale())->with('success', 'Logout successful!');
+        return redirect()->route('login')->with('success', 'Logout successful!');
     }
 
 
@@ -236,7 +236,7 @@ class UserController extends Controller
     //         $user->type_login = 'github';
     //         $user->save();
     //         Auth::login($user, true);
-    //         return redirect()->route('home', app()->getLocale());
+    //         return redirect()->route('home');
     //     }
     // }
 }

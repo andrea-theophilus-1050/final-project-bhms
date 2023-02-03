@@ -11,9 +11,9 @@
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a
-                                        href="{{ route('home', app()->getLocale()) }}">@lang('messages.navHome')</a></li>
+                                        href="{{ route('home') }}">@lang('messages.navHome')</a></li>
                                 <li class="breadcrumb-item"><a
-                                        href="{{ route('room', app()->getLocale()) }}">@lang('messages.navRoom')</a></li>
+                                        href="{{ route('room') }}">@lang('messages.navRoom')</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">@lang('messages.titleAddRoom')</li>
                             </ol>
                         </nav>

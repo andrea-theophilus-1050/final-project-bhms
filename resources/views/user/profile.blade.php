@@ -11,7 +11,7 @@
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a
-                                        href="{{ route('home', app()->getLocale()) }}">@lang('messages.title')</a></li>
+                                        href="{{ route('home') }}">@lang('messages.title')</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">@lang('messages.navProfile')</li>
                             </ol>
                         </nav>
@@ -147,7 +147,7 @@
                                     <!-- Setting Tab start -->
                                     <div class="tab-pane fade height-100-p show active" id="setting" role="tabpanel">
                                         <div class="profile-setting">
-                                            <form action="{{ route('update-profile', app()->getLocale()) }}"
+                                            <form action="{{ route('update-profile') }}"
                                                 method="post" enctype="multipart/form-data">
                                                 @csrf
                                                 <ul class="profile-edit-list row">

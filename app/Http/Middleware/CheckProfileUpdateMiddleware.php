@@ -22,13 +22,13 @@ class CheckProfileUpdateMiddleware
             return $next($request);
         } else {
             if (App::isLocale('en')) {
-                return redirect()->route('profile', app()->getLocale())->with("msg", "You must provide enough personal information before using the system");
+                return redirect()->route('profile')->with("msg", "You must provide enough personal information before using the system");
             } else if (App::getLocale() == 'fra') {
-                return redirect()->route('profile', app()->getLocale())->with("msg", "Vous devez fournir suffisamment d'informations personnelles avant d'utiliser le système");
+                return redirect()->route('profile')->with("msg", "Vous devez fournir suffisamment d'informations personnelles avant d'utiliser le système");
             } else if (App::isLocale('vie')) {
-                return redirect()->route('profile', app()->getLocale())->with("msg", "Bạn phải cung cấp đủ thông tin cá nhân trước khi sử dụng hệ thống");
+                return redirect()->route('profile')->with("msg", "Bạn phải cung cấp đủ thông tin cá nhân trước khi sử dụng hệ thống");
             } else {
-                return redirect()->route('profile', app()->getLocale())->with("msg", "您必须在使用系统前提供足够的个人信息");
+                return redirect()->route('profile')->with("msg", "您必须在使用系统前提供足够的个人信息");
             }
         }
     }

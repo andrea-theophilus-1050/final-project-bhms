@@ -5,10 +5,18 @@ namespace App\Http\Controllers\House;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\House;
+use Illuminate\Support\Facades\DB;
 
 class HouseController extends Controller
 {
-    public function addNewHouseAction(Request $request)
+
+    public function index()
+    {
+        $houses = DB::table('tb_house')->where('user_id', auth()->user()->id)->get();
+        return view('house.index')->with('houses', $houses)->with('title', 'House Management');
+    }
+
+    public function store(Request $request)
     {
         // add new house to database
         $house = new House();
@@ -17,26 +25,23 @@ class HouseController extends Controller
         $house->house_description = $request->house_description;
         $house->user_id = auth()->user()->id;
         $house->save();
-        return redirect()->route('house-area', app()->getLocale());
+        return redirect()->route('house.index');
     }
 
     //Update house with house id
-    public function updateHouseAction(Request $request)
+    public function update(Request $request, $id)
     {
-        $id = $request->house_id;
         $house = House::find($id);
         $house->house_name = $request->house_name;
         $house->house_address = $request->house_address;
         $house->house_description = $request->house_description;
         $house->save();
-        return redirect()->route('house-area', app()->getLocale());
+        return redirect()->route('house.index');
+    }
 
-        
-        // $house = House::find($id);
-        // $house->house_name = $request->house_name;
-        // $house->house_address = $request->house_address;
-        // $house->house_description = $request->house_description;
-        // $house->save();
-        // return redirect()->route('house-area', app()->getLocale());
+    public function destroy(House $house)
+    {
+        $house->delete();
+        return redirect()->route('house.index')->with('success', 'House has been deleted successfully');
     }
 }

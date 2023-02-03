@@ -70,16 +70,16 @@
                     @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{{ route(request()->route()->getName(),'chn') }}"><img
+                    <a class="dropdown-item" href="{{ route('lang-chinese') }}"><img
                             src="{{ asset('vendors/images/Flag_China.png') }}" height="30px" width="40px"
                             alt=""> @lang('messages.langChinese')</a>
-                    <a class="dropdown-item" href="{{ route(request()->route()->getName(),'en') }}"><img
+                    <a class="dropdown-item" href="{{ route('lang-english') }}"><img
                             src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
                             alt=""> @lang('messages.langEnglish')</a>
-                    <a class="dropdown-item" href="{{ route(request()->route()->getName(),'fra') }}"><img
+                    <a class="dropdown-item" href="{{ route('lang-french') }}"><img
                             src="{{ asset('vendors/images/Flag_France.png') }}" height="30px" width="40px"
                             alt=""> @lang('messages.langFrench')</a>
-                    <a class="dropdown-item" href="{{ route(request()->route()->getName(),'vie') }}"><img
+                    <a class="dropdown-item" href="{{ route('lang-vietnamese') }}"><img
                             src="{{ asset('vendors/images/Flag_Vietnam.png') }}" height="30px" width="40px"
                             alt=""> @lang('messages.langVietnamese')</a>
                 </div>
@@ -107,7 +107,7 @@
                             </div>
                         @endif
 
-                        <form method="POST" action="{{ route('register.action', app()->getLocale()) }}">
+                        <form method="POST" action="{{ route('register.action') }}">
                             @csrf
                             <div class="input-group custom">
                                 <input type="text" class="form-control form-control-lg" id="username"
@@ -160,7 +160,7 @@
                             <div class="col-sm-12">
                                 <div class="input-group mb-0">
                                     @lang('messages.textAlreadyHaveAccount')
-                                    <a href="{{ route('login', app()->getLocale()) }}"
+                                    <a href="{{ route('login') }}"
                                         style="margin-left: 3%; color: blue">@lang('messages.titleSignIn')</a>
                                 </div>
                             </div>

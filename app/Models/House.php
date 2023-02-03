@@ -23,4 +23,9 @@ class House extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    public function areas()
+    {
+        return $this->hasMany('App\Models\Area');
+    }
 }

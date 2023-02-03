@@ -192,13 +192,13 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <a class="dropdown-item" href="{{ route(request()->route()->getName(),'chn') }}">
+                        <a class="dropdown-item" href="{{ route('lang-chinese') }}">
                             <img src="{{ asset('vendors/images/Flag_China.png') }}"> @lang('messages.langChinese')</a>
-                        <a class="dropdown-item" href="{{ route(request()->route()->getName(),'en') }}">
+                        <a class="dropdown-item" href="{{ route('lang-english') }}">
                             <img src="{{ asset('vendors/images/Flag_English.png') }}"> @lang('messages.langEnglish')</a>
-                        <a class="dropdown-item" href="{{ route(request()->route()->getName(),'fra') }}">
+                        <a class="dropdown-item" href="{{ route('lang-french') }}">
                             <img src="{{ asset('vendors/images/Flag_France.png') }}"> @lang('messages.langFrench')</a>
-                        <a class="dropdown-item" href="{{ route(request()->route()->getName(),'vie') }}">
+                        <a class="dropdown-item" href="{{ route('lang-vietnamese') }}">
                             <img src="{{ asset('vendors/images/Flag_Vietnam.png') }}"> @lang('messages.langVietnamese')</a>
                     </div>
                 </div>
@@ -225,13 +225,13 @@
                                 @endauth
                             </b>
                         </span> --}}
-                        <a class="dropdown-item" href="{{ route('profile', app()->getLocale()) }}">
+                        <a class="dropdown-item" href="{{ route('profile') }}">
                             <i class="dw dw-user1"></i> @lang('messages.navProfile')</a>
                         <a class="dropdown-item" href="javascript:;" data-toggle="right-sidebar">
                             <i class="dw dw-settings2"></i> @lang('messages.navLayoutSetting')</a>
                         <a class="dropdown-item" href="faq.html">
                             <i class="dw dw-help"></i> Help</a>
-                        <a class="dropdown-item" href="{{ route('logout', app()->getLocale()) }}">
+                        <a class="dropdown-item" href="{{ route('logout') }}">
                             <i class="dw dw-logout"></i> @lang('messages.navLogout')</a>
                     </div>
                 </div>
@@ -334,7 +334,7 @@
 
     <div class="left-side-bar">
         <div class="brand-logo">
-            <a href="{{ route('home', app()->getLocale()) }}">
+            <a href="{{ route('home') }}">
                 <img src="{{ asset('vendors/images/logo-boarding-house.png') }}" alt="" class="dark-logo">
                 <img src="{{ asset('vendors/images/logo-boarding-house-white.png') }}" alt=""
                     class="light-logo">
@@ -347,17 +347,17 @@
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
                     <li class="dropdown">
-                        <a href="{{ route('home', app()->getLocale()) }}" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('home') }}" class="dropdown-toggle no-arrow">
                             <span class="micon fa fa-dashboard"></span><span class="mtext">@lang('messages.navHome')</span>
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="{{ route('house-area', app()->getLocale()) }}" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('house.index') }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-house1"></span><span class="mtext">@lang('messages.navHouse')</span>
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="{{ route('room', app()->getLocale()) }}" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('room') }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-home"></span><span class="mtext">@lang('messages.navRoom')</span>
                         </a>
                     </li>

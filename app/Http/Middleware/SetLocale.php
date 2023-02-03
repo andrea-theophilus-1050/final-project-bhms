@@ -14,9 +14,29 @@ class SetLocale
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    // public function handle(Request $request, Closure $next)
+    // {
+    //     app()->setLocale($request->segment(1));
+    //     return $next($request);
+    // }
+
+    protected $supported_languages = ['chn', 'en', 'fra', 'vie'];
+
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
     {
-        app()->setLocale($request->segment(1));
+        if (!session()->has('locale')) {
+            session(['locale' => $request->getPreferredLanguage($this->supported_languages)]);
+        }
+
+        app()->setLocale(session('locale'));
+
         return $next($request);
     }
 }

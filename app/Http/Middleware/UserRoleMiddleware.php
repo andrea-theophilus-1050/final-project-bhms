@@ -20,7 +20,7 @@ class UserRoleMiddleware
         if(Auth::check() && Auth::user()->role == $role){
             return $next($request);
         }
-        return redirect()->route('login', app()->getLocale());
+        return redirect()->route('login');
         
     }
 }

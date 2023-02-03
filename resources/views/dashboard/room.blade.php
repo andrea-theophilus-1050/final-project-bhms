@@ -10,7 +10,7 @@
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home', app()->getLocale()) }}">@lang('messages.navHome')</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">@lang('messages.navRoom')</li>
                             </ol>
                         </nav>
@@ -97,7 +97,7 @@
                         <h4 class="text-blue h4">Contextual classes</h4>
                     </div>
                     <div class="pull-right">
-                        <a href="{{ route('room.add_new_room', app()->getLocale()) }}" class="btn btn-primary btn-sm" role="button"><i
+                        <a href="{{ route('room.add_new_room') }}" class="btn btn-primary btn-sm" role="button"><i
                                 class="fa fa-plus"></i>Add new room</a>
                         <a href="#" class="btn btn-primary btn-sm" role="button"><i class="fa fa-minus"></i> Source
                             Code</a>

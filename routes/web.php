@@ -3,6 +3,7 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\House\HouseController;
+use App\Http\Controllers\House\Area\AreaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,22 +17,93 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('login', app()->getLocale());
-});
-Route::group(['prefix' => '{locale}'], function () {
-    Route::group(['middleware' => 'setLocale'], function () {
-        Route::get('/', [UserController::class, 'login']);
-        Route::get('login', [UserController::class, 'login'])->name('login');
-        Route::post('login', [UserController::class, 'login_action'])->name('login.action');
-        Route::get('register', [UserController::class, 'register'])->name('register');
-        Route::post('register', [UserController::class, 'register_action'])->name('register.action');
-        Route::get('logout', [UserController::class, 'logout'])->name('logout');
-        Route::get('/forgot-password', function () {
-            return view('user.forgot-password')->with('title', 'Forgot Password');
+Route::middleware('setLocale')->group(function () {
+    //Set locale means set language
+    Route::get('en', function () {
+        session(['locale' => 'en']);
+        return back();
+    })->name('lang-english');
+
+    Route::get('chn', function () {
+        session(['locale' => 'chn']);
+        return back();
+    })->name('lang-chinese');
+
+    Route::get('fra', function () {
+        session(['locale' => 'fra']);
+        return back();
+    })->name('lang-french');
+
+    Route::get('vie', function () {
+        session(['locale' => 'vie']);
+        return back();
+    })->name('lang-vietnamese');
+
+    //Route
+    Route::get('/', [UserController::class, 'login']);
+    Route::get('login', [UserController::class, 'login'])->name('login');
+    Route::post('login', [UserController::class, 'login_action'])->name('login.action');
+    Route::get('register', [UserController::class, 'register'])->name('register');
+    Route::post('register', [UserController::class, 'register_action'])->name('register.action');
+    Route::get('logout', [UserController::class, 'logout'])->name('logout');
+    Route::get('/forgot-password', function () {
+        return view('user.forgot-password')->with('title', 'Forgot Password');
+    });
+
+
+    //Route auth
+    Route::middleware(['auth', 'userRole:landlords'])->group(function () {
+        Route::group(['prefix' => 'landlords'], function () {
+            Route::middleware('checkProfile')->group(function () {
+                Route::get('dashboard', [DashboardController::class, 'index'])->name('home');
+                Route::group(['prefix' => 'dashboard'], function () {
+                    // Route::get('house', [DashboardController::class, 'houseArea'])->name('house-area');
+                    // Route::group(['prefix' => 'house'], function () {
+                    //     Route::get('add', [DashboardController::class, 'addHouse'])->name('house.add_new_house');
+                    //     Route::post('add-house', [HouseController::class, 'addNewHouseAction'])->name('add-house.action');
+                    //     Route::post('update-house', [HouseController::class, 'UpdateHouseAction'])->name('update-house.action');
+                    //     Route::post('delete/{id?}', [HouseController::class, 'deleteHouse'])->name('deletehouse.action');
+
+                    // });
+
+                    Route::resource('house', HouseController::class);
+                    Route::group(['prefix' => 'house'], function(){
+                        Route::get('area/{id}', [AreaController::class, 'index'])->name('area.index');
+                    });
+
+
+                    Route::get('room', [DashboardController::class, 'room'])->name('room');
+                    Route::post('change-password', [DashboardController::class, 'changePassword'])->name('change-password');
+                    Route::group(['prefix' => 'room'], function () {
+                        Route::get('add', [DashboardController::class, 'addRoom'])->name('room.add_new_room');
+                    });
+                });
+            });
+            Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->name('profile');
+            Route::post('/dashboard/update-profile', [UserController::class, 'updateProfile'])->name('update-profile');
         });
     });
 });
+
+
+
+
+// Route::get('/', function () {
+//     return redirect()->route('login');
+// });
+// // Route::group(['prefix' => '{locale}'], function () {
+// //     Route::group(['middleware' => 'setLocale'], function () {
+// Route::get('/', [UserController::class, 'login']);
+// Route::get('login', [UserController::class, 'login'])->name('login');
+// Route::post('login', [UserController::class, 'login_action'])->name('login.action');
+// Route::get('register', [UserController::class, 'register'])->name('register');
+// Route::post('register', [UserController::class, 'register_action'])->name('register.action');
+// Route::get('logout', [UserController::class, 'logout'])->name('logout');
+// Route::get('/forgot-password', function () {
+//     return view('user.forgot-password')->with('title', 'Forgot Password');
+// });
+// //     });
+// // });
 
 // Group Auth Socialite
 Route::group(['prefix' => '/auth'], function () {
@@ -46,34 +118,39 @@ Route::group(['prefix' => '/auth'], function () {
 
 // Group Authenticated
 // Landlords role
-Route::middleware(['auth', 'userRole:landlords'])->group(function () {
-    Route::group(['prefix' => '{locale}'], function () {
-        Route::group(['prefix' => 'landlords'], function () {
-            // Route::group(['middleware' => 'setLocale'], function () {
-            Route::middleware('setLocale')->group(function () {
-                Route::middleware('checkProfile')->group(function () {
-                    Route::get('dashboard', [DashboardController::class, 'index'])->name('home');
-                    Route::group(['prefix' => 'dashboard'], function () {
-                        Route::get('house', [DashboardController::class, 'houseArea'])->name('house-area');
-                        Route::group(['prefix' => 'house'], function () {
-                            Route::get('add', [DashboardController::class, 'addHouse'])->name('house.add_new_house');
-                            Route::post('add-house', [HouseController::class, 'addNewHouseAction'])->name('add-house.action');
-                            Route::post('update-house', [HouseController::class, 'UpdateHouseAction'])->name('update-house.action');
-                            
-                        });
-                        Route::get('room', [DashboardController::class, 'room'])->name('room');
-                        Route::post('change-password', [DashboardController::class, 'changePassword'])->name('change-password');
-                        Route::group(['prefix' => 'room'], function () {
-                            Route::get('add', [DashboardController::class, 'addRoom'])->name('room.add_new_room');
-                        });
-                    });
-                });
-                Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->name('profile');
-                Route::post('/dashboard/update-profile', [UserController::class, 'updateProfile'])->name('update-profile');
-            });
-        });
-    });
-});
+// Route::middleware(['auth', 'userRole:landlords'])->group(function () {
+//     Route::group(['prefix' => '{locale}'], function () {
+//         Route::group(['prefix' => 'landlords'], function () {
+//             // Route::group(['middleware' => 'setLocale'], function () {
+//             Route::middleware('setLocale')->group(function () {
+//                 Route::middleware('checkProfile')->group(function () {
+//                     Route::get('dashboard', [DashboardController::class, 'index'])->name('home');
+//                     Route::group(['prefix' => 'dashboard'], function () {
+//                         // Route::get('house', [DashboardController::class, 'houseArea'])->name('house-area');
+//                         // Route::group(['prefix' => 'house'], function () {
+//                         //     Route::get('add', [DashboardController::class, 'addHouse'])->name('house.add_new_house');
+//                         //     Route::post('add-house', [HouseController::class, 'addNewHouseAction'])->name('add-house.action');
+//                         //     Route::post('update-house', [HouseController::class, 'UpdateHouseAction'])->name('update-house.action');
+//                         //     Route::post('delete/{id?}', [HouseController::class, 'deleteHouse'])->name('deletehouse.action');
+
+//                         // });
+
+//                         Route::resource('house', HouseController::class);
+
+
+//                         Route::get('room', [DashboardController::class, 'room'])->name('room');
+//                         Route::post('change-password', [DashboardController::class, 'changePassword'])->name('change-password');
+//                         Route::group(['prefix' => 'room'], function () {
+//                             Route::get('add', [DashboardController::class, 'addRoom'])->name('room.add_new_room');
+//                         });
+//                     });
+//                 });
+//                 Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->name('profile');
+//                 Route::post('/dashboard/update-profile', [UserController::class, 'updateProfile'])->name('update-profile');
+//             });
+//         });
+//     });
+// });
 
 
 
