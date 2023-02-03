@@ -10,8 +10,7 @@
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a
-                                        href="{{ route('home') }}">@lang('messages.title')</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.title')</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">@lang('messages.navProfile')</li>
                             </ol>
                         </nav>
@@ -35,7 +34,12 @@
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
                     <div class="pd-20 card-box height-100-p">
                         <div class="profile-photo">
-                            <img src="{{ asset('avatar/' . auth()->user()->avatar) }}" alt="" class="avatar-photo">
+                            @if ($user->avatar == null)
+                                <img src="{{ asset('avatar/default_avt.png') }}" alt="" class="avatar-photo">
+                            @else
+                                <img src="{{ asset('avatar/' . auth()->user()->avatar) }}" alt=""
+                                    class="avatar-photo">
+                            @endif
                         </div>
                         <h5 class="text-center h5 mb-0">
                             @if ($user->name == null)
@@ -147,8 +151,8 @@
                                     <!-- Setting Tab start -->
                                     <div class="tab-pane fade height-100-p show active" id="setting" role="tabpanel">
                                         <div class="profile-setting">
-                                            <form action="{{ route('update-profile') }}"
-                                                method="post" enctype="multipart/form-data">
+                                            <form action="{{ route('update-profile') }}" method="post"
+                                                enctype="multipart/form-data">
                                                 @csrf
                                                 <ul class="profile-edit-list row">
                                                     {{-- Edit personal information start --}}
@@ -174,6 +178,8 @@
                                                                 </button>
                                                             </div>
                                                         @endif
+                                                        <label style="color:red; font-size: 14px"><i>(*)
+                                                                Required</i></label>
                                                         <div class="form-group">
                                                             @if ($user->type_login == 'username')
                                                                 <label>@lang('messages.labelUsername')</label>
@@ -184,7 +190,7 @@
                                                             @endif
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>@lang('messages.labelName')</label>
+                                                            <label>(*) @lang('messages.labelName')</label>
                                                             <input class="form-control form-control-lg" type="text"
                                                                 id="name" name="name"
                                                                 placeholder="@lang('messages.labelName')"
@@ -193,7 +199,7 @@
                                                                 onblur="this.placeholder = '@lang('messages.labelName')'" required>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>@lang('messages.labelEmail')</label>
+                                                            <label>(*) @lang('messages.labelEmail')</label>
                                                             <input class="form-control form-control-lg" type="email"
                                                                 id="email" name="email"
                                                                 placeholder="@lang('messages.labelEmail')"
@@ -202,7 +208,7 @@
                                                                 onblur="this.placeholder = '@lang('messages.labelEmail')'" required>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>@lang('messages.labelPhone')</label>
+                                                            <label>(*) @lang('messages.labelPhone')</label>
                                                             <input class="form-control form-control-lg" type="text"
                                                                 id="phone" name="phone"
                                                                 placeholder="@lang('messages.labelPhone')"
@@ -211,7 +217,7 @@
                                                                 onblur="this.placeholder = '@lang('messages.labelPhone')'" required>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>@lang('messages.labelDoB')</label>
+                                                            <label>(*) @lang('messages.labelDoB')</label>
                                                             <input class="form-control form-control-lg date-picker"
                                                                 type="text" placeholder="@lang('messages.labelDoB')"
                                                                 name="dob" onfocus="this.placeholder = ''"
@@ -219,7 +225,7 @@
                                                                 onblur="this.placeholder = '@lang('messages.labelDoB')'" required>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>@lang('messages.labelGender')</label>
+                                                            <label>(*) @lang('messages.labelGender')</label>
                                                             <div class="d-flex">
                                                                 <div class="custom-control custom-radio mb-5 mr-20">
                                                                     <input type="radio" id="customRadio4"

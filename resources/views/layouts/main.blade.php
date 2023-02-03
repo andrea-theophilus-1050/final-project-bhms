@@ -208,7 +208,14 @@
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                         <span class="user-icon">
-                            <img src="{{ asset('avatar/' . auth()->user()->avatar) }}" alt="">
+                            @if (auth()->user()->avatar == null)
+                                <img src="{{ asset('avatar/default_avt.png') }}" alt=""
+                                    class="avatar-photo">
+                            @else
+                                <img src="{{ asset('avatar/' . auth()->user()->avatar) }}" alt=""
+                                    class="avatar-photo">
+                            @endif
+                            {{-- <img src="{{ asset('avatar/' . auth()->user()->avatar) }}" alt=""> --}}
                         </span>
                         {{-- <span class="user-name">
                             @auth

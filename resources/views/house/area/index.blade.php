@@ -6,12 +6,13 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            <h4>@lang('messages.navHouse')</h4>
+                            <h4>Area Management</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">@lang('messages.navHouse')</li>
+                                <li class="breadcrumb-item"><a href="{{ route('house.index') }}">@lang('messages.navHouse')</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Area management</li>
                             </ol>
                         </nav>
                     </div>
@@ -29,7 +30,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table" id="house-table">
+                    <table class="table" id="area-table">
                         <thead>
                             <tr>
                                 <th style="display: none" scope="col">Area ID</th>
@@ -47,18 +48,22 @@
                                     <td>{{ $item->area_name }}</td>
                                     <td>{{ $item->area_description }}</td>
                                     <td>
-                                        {{-- <form action="{{ route('house.destroy', $house->house_id) }}" method="Post">
-                                            <a href="{{ route('area.index', $house->house_id) }}"
+                                        <form id="delete-area" action="{{ route('area.delete', $item->area_id) }}"
+                                            method="Post">
+                                            {{-- <a href="{{ route('area.index', $item->area_id) }}"
                                                 class="btn btn-primary" role="button" title="Show details"><i
-                                                    class="fa fa-eye"></i></a>
-                                            <a href="javascript:;" data-toggle="modal" data-target="#house-edit"
-                                                class="btn btn-secondary" title="Edit house"><i class="fa fa-edit"></i></a>
+                                                    class="fa fa-eye"></i></a> --}}
+                                            <a href="javascript:;" data-toggle="modal" data-target="#area-edit"
+                                                class="btn btn-secondary" title="Edit area"><i class="fa fa-edit"></i></a>
                                             @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"
+                                            {{-- <button type="submit" class="btn btn-danger"
                                                 onclick="return confirm('Are you sure to delete?')"><i
-                                                    class="fa fa-trash"></i></button>
-                                        </form> --}}
+                                                    class="fa fa-trash"></i></button> --}}
+
+                                            <button class="btn btn-danger" type="button" id="confirm-delete-modal-btn"
+                                                data-toggle="modal" data-target="#confirm-delete-modal"
+                                                data-backdrop="static"><i class="fa fa-trash"></i></button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -84,24 +89,18 @@
                     <div class="task-list-form">
                         <ul>
                             <li>
-                                <form name="formAddHouse" method="post" action="{{ route('house.store') }}">
+                                <form name="formAddArea" method="post" action="{{ route('area.add', $id) }}">
                                     @csrf
                                     <div class="form-group row">
-                                        <label class="col-md-4">House name</label>
+                                        <label class="col-md-4">Area name</label>
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control" name="house_name">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4">House address</label>
-                                        <div class="col-md-8">
-                                            <textarea class="form-control" name="house_address"></textarea>
+                                            <input type="text" class="form-control" name="area_name">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-md-4">Description</label>
                                         <div class="col-md-8">
-                                            <textarea class="form-control" name="house_description"></textarea>
+                                            <textarea class="form-control" name="area_description"></textarea>
                                         </div>
                                     </div>
                                 </form>
@@ -117,13 +116,13 @@
         </div>
     </div>
     <!-- add task popup End -->
-    {{-- 
+
     <!-- add task popup start -->
-    <div class="modal fade customscroll" id="house-edit" tabindex="-1" role="dialog">
+    <div class="modal fade customscroll" id="area-edit" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Update house</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Update area</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-toggle="tooltip"
                         data-placement="bottom" title="" data-original-title="Close Modal">
                         <span aria-hidden="true">&times;</span>
@@ -133,26 +132,19 @@
                     <div class="task-list-form">
                         <ul>
                             <li>
-                                <form name="formUpdateHouse" method="post" action="{{ route('house.update', 'a') }}">
+                                <form name="formUpdateArea" method="post">
                                     @csrf
-                                    @method('PUT')
                                     <div class="form-group row">
-                                        <label class="col-md-4">House name</label>
+                                        <label class="col-md-4">Area name</label>
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control" name="house_name"
-                                                id="house_name_edit">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4">House address</label>
-                                        <div class="col-md-8">
-                                            <textarea class="form-control" name="house_address" id="house_address_edit"></textarea>
+                                            <input type="text" class="form-control" name="area_name"
+                                                id="area_name_edit">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-md-4">Description</label>
                                         <div class="col-md-8">
-                                            <textarea class="form-control" name="house_description" id="house_description_edit"></textarea>
+                                            <textarea class="form-control" name="area_description" id="area_description_edit"></textarea>
                                         </div>
                                     </div>
                                 </form>
@@ -161,33 +153,66 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" onclick="updateHouse()">Update</button>
+                    <button type="submit" class="btn btn-primary" onclick="updateArea()">Update</button>
                     <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- add task popup End -->
---}}
+
+    <!-- Delete confirm Popup html Start -->
+    <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered max-width-400" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center font-18">
+                    <h3 class="mb-20">Confirm!</h3>
+                    <div class="mb-30 text-center"><img src="{{ asset('vendors/images/deleteee.jpg') }}" height="100px"
+                            width="120px"></div>
+                    <div id="msg-delete">Are you sure to delete this area?</div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-danger" onclick="deleteArea()">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- success Popup html End -->
+
     <script>
         function submit() {
-            document.formAddHouse.submit();
+            document.formAddArea.submit();
         }
 
-        function updateHouse() {
-            document.formUpdateHouse.submit();
+        function updateArea() {
+            document.formUpdateArea.submit();
         }
 
         //Show data in edit modal
-        var table = document.getElementById("house-table");
+        var table = document.getElementById("area-table");
+        var id = null;
         for (var i = 1; i < table.rows.length; i++) {
             table.rows[i].addEventListener("click", function() {
-                document.getElementById('house_name_edit').value = this.cells[2].innerHTML;
-                document.getElementById('house_address_edit').value = this.cells[3].innerHTML;
-                document.getElementById('house_description_edit').value = this.cells[4].innerHTML;
-                document.formUpdateHouse.action =
-                    "{{ route('house.update', ':id') }}".replace(':id', this.cells[0].innerHTML);
+                document.getElementById('area_name_edit').value = this.cells[2].innerHTML;
+                document.getElementById('area_description_edit').value = this.cells[3].innerHTML;
+
+                document.getElementById('msg-delete').innerHTML = "Are you sure to delete " + this.cells[2]
+                    .innerHTML + "?";
+
+                id = this.cells[0].innerHTML;
+
+                document.formUpdateArea.action =
+                    "{{ route('area.update', ':id') }}".replace(':id', this.cells[0].innerHTML);
+
             });
+        }
+
+        function deleteArea() {
+            document.getElementById('delete-area').action =
+                "{{ route('area.delete', ':id') }}".replace(':id', id);
+            document.getElementById('delete-area').submit();
         }
     </script>
 @endsection

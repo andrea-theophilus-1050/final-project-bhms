@@ -50,9 +50,8 @@
                                     <td>{{ $house->house_description }}</td>
                                     <td>
                                         <form action="{{ route('house.destroy', $house->house_id) }}" method="Post">
-                                            <a href="{{ route('area.index', $house->house_id) }}"
-                                                class="btn btn-primary" role="button" title="Show details"><i
-                                                    class="fa fa-eye"></i></a>
+                                            <a href="{{ route('area.index', $house->house_id) }}" class="btn btn-primary"
+                                                role="button" title="Show details"><i class="fa fa-eye"></i></a>
                                             <a href="javascript:;" data-toggle="modal" data-target="#house-edit"
                                                 class="btn btn-secondary" title="Edit house"><i class="fa fa-edit"></i></a>
                                             @csrf
@@ -135,7 +134,7 @@
                     <div class="task-list-form">
                         <ul>
                             <li>
-                                <form name="formUpdateHouse" method="post" action="{{ route('house.update', 'a') }}">
+                                <form name="formUpdateHouse" method="post">
                                     @csrf
                                     @method('PUT')
                                     <div class="form-group row">
