@@ -50,9 +50,9 @@
                                     <td>
                                         <form id="delete-area" action="{{ route('area.delete', $item->area_id) }}"
                                             method="Post">
-                                            {{-- <a href="{{ route('area.index', $item->area_id) }}"
+                                            <a href="{{ route('room.index', $item->area_id) }}"
                                                 class="btn btn-primary" role="button" title="Show details"><i
-                                                    class="fa fa-eye"></i></a> --}}
+                                                    class="fa fa-eye"></i></a>
                                             <a href="javascript:;" data-toggle="modal" data-target="#area-edit"
                                                 class="btn btn-secondary" title="Edit area"><i class="fa fa-edit"></i></a>
                                             @csrf
@@ -161,25 +161,8 @@
     </div>
     <!-- add task popup End -->
 
-    <!-- Delete confirm Popup html Start -->
-    <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered max-width-400" role="document">
-            <div class="modal-content">
-                <div class="modal-body text-center font-18">
-                    <h3 class="mb-20">Confirm!</h3>
-                    <div class="mb-30 text-center"><img src="{{ asset('vendors/images/deleteee.jpg') }}" height="100px"
-                            width="120px"></div>
-                    <div id="msg-delete">Are you sure to delete this area?</div>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-danger" onclick="deleteArea()">Yes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- success Popup html End -->
+    {{-- confirm delete popup --}}
+    @include('layouts.confirm-popup')
 
     <script>
         function submit() {
@@ -209,7 +192,7 @@
             });
         }
 
-        function deleteArea() {
+        function actionDelete() {
             document.getElementById('delete-area').action =
                 "{{ route('area.delete', ':id') }}".replace(':id', id);
             document.getElementById('delete-area').submit();

@@ -21,11 +21,11 @@ class House extends Model
 
     public function users()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 
     public function areas()
     {
-        return $this->hasMany('App\Models\Area');
+        return $this->hasMany('App\Models\Area', 'house_id');
     }
 }

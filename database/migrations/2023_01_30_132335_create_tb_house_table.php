@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('house_address');
             $table->string('house_description');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('tb_user');
+            $table->foreign('user_id')->references('id')->on('tb_user')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

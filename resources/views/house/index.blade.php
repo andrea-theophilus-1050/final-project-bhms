@@ -49,16 +49,20 @@
                                     <td>{{ $house->house_address }}</td>
                                     <td>{{ $house->house_description }}</td>
                                     <td>
-                                        <form action="{{ route('house.destroy', $house->house_id) }}" method="Post">
+                                        <form id="delete-house" action="{{ route('house.destroy', $house->house_id) }}"
+                                            method="Post">
                                             <a href="{{ route('area.index', $house->house_id) }}" class="btn btn-primary"
                                                 role="button" title="Show details"><i class="fa fa-eye"></i></a>
                                             <a href="javascript:;" data-toggle="modal" data-target="#house-edit"
                                                 class="btn btn-secondary" title="Edit house"><i class="fa fa-edit"></i></a>
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"
+                                            {{-- <button type="submit" class="btn btn-danger"
                                                 onclick="return confirm('Are you sure to delete?')"><i
-                                                    class="fa fa-trash"></i></button>
+                                                    class="fa fa-trash"></i></button> --}}
+                                            <button class="btn btn-danger" type="button" id="confirm-delete-modal-btn"
+                                                data-toggle="modal" data-target="#confirm-delete-modal"
+                                                data-backdrop="static"><i class="fa fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -170,6 +174,9 @@
     </div>
     <!-- add task popup End -->
 
+    {{-- confirm delete popup --}}
+    @include('layouts.confirm-popup')
+
     <script>
         function submit() {
             document.formAddHouse.submit();
@@ -181,6 +188,8 @@
 
         //Show data in edit modal
         var table = document.getElementById("house-table");
+        var id = null;
+
         for (var i = 1; i < table.rows.length; i++) {
             table.rows[i].addEventListener("click", function() {
                 document.getElementById('house_name_edit').value = this.cells[2].innerHTML;
@@ -188,7 +197,17 @@
                 document.getElementById('house_description_edit').value = this.cells[4].innerHTML;
                 document.formUpdateHouse.action =
                     "{{ route('house.update', ':id') }}".replace(':id', this.cells[0].innerHTML);
+
+                document.getElementById('msg-delete').innerHTML = "Are you sure to delete " + this.cells[2]
+                    .innerHTML + "?";
+                id = this.cells[0].innerHTML;
             });
+        }
+
+        function actionDelete() {
+            document.getElementById('delete-house').action =
+                "{{ route('house.destroy', ':id') }}".replace(':id', id);
+            document.getElementById('delete-house').submit();
         }
     </script>
 @endsection

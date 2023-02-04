@@ -20,6 +20,11 @@ class Area extends Model
 
     public function houses()
     {
-        return $this->belongsTo('App\Models\House');
+        return $this->belongsTo('App\Models\House', 'house_id');
+    }
+
+    public function rooms()
+    {
+        return $this->hasMany('App\Models\Room', 'area_id');
     }
 }

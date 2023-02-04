@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('status');
             $table->string('room_description');
             $table->unsignedBigInteger('area_id');
-            $table->foreign('area_id')->references('area_id')->on('tb_area');
+            $table->foreign('area_id')->references('area_id')->on('tb_area')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

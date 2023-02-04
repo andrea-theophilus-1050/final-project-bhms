@@ -1,10 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\House\HouseController;
 use App\Http\Controllers\House\Area\AreaController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\House\Room\RoomController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +76,10 @@ Route::middleware('setLocale')->group(function () {
                         Route::post('area/{id}/add-action', [AreaController::class, 'add_action'])->name('area.add');
                         Route::post('area/{id}/update-action', [AreaController::class, 'update_action'])->name('area.update');
                         Route::post('area/{id}/delete-action', [AreaController::class, 'delete_action'])->name('area.delete');
+                        
+                        Route::group(['prefix'=>'area'], function(){
+                            Route::get('room/{id}', [RoomController::class, 'index'])->name('room.index');
+                        });
                     });
 
 

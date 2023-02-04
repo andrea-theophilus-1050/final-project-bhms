@@ -42,6 +42,6 @@ class User extends Authenticatable
 
     public function houses()
     {
-        return $this->hasMany('App\Models\House');
+        return $this->hasMany('App\Models\House', 'user_id');
     }
 }
