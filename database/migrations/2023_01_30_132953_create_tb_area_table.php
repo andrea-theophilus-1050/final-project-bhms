@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('tb_area', function (Blueprint $table) {
             $table->id('area_id');
             $table->string('area_name');
-            $table->string('area_description');
+            $table->string('area_description')->nullable();
             $table->unsignedBigInteger('house_id');
             $table->foreign('house_id')->references('house_id')->on('tb_house')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

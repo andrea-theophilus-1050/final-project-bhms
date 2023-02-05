@@ -17,9 +17,8 @@ return new class extends Migration
             $table->id('room_id');
             $table->string('room_name');
             $table->string('price');
-            $table->integer('number_of_people');
-            $table->string('status');
-            $table->string('room_description');
+            $table->tinyInteger('status')->default('0'); // 0: available, 1: Already have a tenant, 2: Already have a deposit
+            $table->string('room_description')->nullable();
             $table->unsignedBigInteger('area_id');
             $table->foreign('area_id')->references('area_id')->on('tb_area')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

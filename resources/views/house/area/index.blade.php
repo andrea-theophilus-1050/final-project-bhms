@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table" id="area-table">
+                    <table class="table table-striped" id="area-table">
                         <thead>
                             <tr>
                                 <th style="display: none" scope="col">Area ID</th>
@@ -42,7 +42,7 @@
                         </thead>
                         <tbody>
                             @foreach ($area as $item)
-                                <tr class="table-light">
+                                <tr>
                                     <td style="display: none">{{ $item->area_id }}</td>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $item->area_name }}</td>

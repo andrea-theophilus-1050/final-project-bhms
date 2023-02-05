@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table" id="house-table">
+                    <table class="table table-striped" id="house-table">
                         <thead>
                             <tr>
                                 <th style="display: none" scope="col">House ID</th>
@@ -42,7 +42,7 @@
                         </thead>
                         <tbody>
                             @foreach ($houses as $house)
-                                <tr class="table-light">
+                                <tr {{-- class="table-success" --}}>
                                     <td style="display: none">{{ $house->house_id }}</td>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $house->house_name }}</td>

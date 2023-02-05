@@ -18,6 +18,12 @@ class HouseController extends Controller
 
     public function store(Request $request)
     {
+        // validate request
+        $request->validate([
+            'house_name' => 'required',
+            'house_address' => 'required',
+        ]);
+
         // add new house to database
         $house = new House();
         $house->house_name = $request->house_name;

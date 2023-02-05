@@ -79,6 +79,8 @@ Route::middleware('setLocale')->group(function () {
                         
                         Route::group(['prefix'=>'area'], function(){
                             Route::get('room/{id}', [RoomController::class, 'index'])->name('room.index');
+                            Route::post('room/{id}/add-action', [RoomController::class, 'addSingleRoom'])->name('room.add');
+                            Route::post('room/{id}/add-multiple-room-action', [RoomController::class, 'addMultipleRooms'])->name('room.add.multiple');
                         });
                     });
 
