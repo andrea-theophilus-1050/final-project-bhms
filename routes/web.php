@@ -85,7 +85,7 @@ Route::middleware('setLocale')->group(function () {
                     });
 
 
-                    Route::get('room', [DashboardController::class, 'room'])->name('room');
+                    Route::get('room', [RoomController::class, 'room'])->name('room');
                     Route::post('change-password', [DashboardController::class, 'changePassword'])->name('change-password');
                     Route::group(['prefix' => 'room'], function () {
                         Route::get('add', [DashboardController::class, 'addRoom'])->name('room.add_new_room');

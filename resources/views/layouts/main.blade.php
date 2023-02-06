@@ -555,6 +555,9 @@
     <script src="{{ asset('src/plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('vendors/scripts/dashboard.js') }}"></script>
+    
+    <script src="{{ asset('vendors/scripts/statistic-room.js') }}"></script>
+
 </body>
 
 </html>

@@ -60,11 +60,15 @@
                                 <input type="text" name="search" placeholder="Room number" class="form-control"
                                     style="margin-right: 5%; font-size: 13px">
                                 <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
-                                    <option value="">Room status</option>
+                                   
+                                    @foreach($house as $item)
+                                        <option value="{{ $item->house_id }}">{{ $item->house_name }}</option>
+                                    @endforeach
+                                    {{-- <option value="">Room status</option>
                                     <option value="">1</option>
                                     <option value="">1</option>
                                     <option value="">1</option>
-                                    <option value="">1</option>
+                                    <option value="">1</option> --}}
                                 </select>
                                 <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
                                     <option value="">Room billed</option>

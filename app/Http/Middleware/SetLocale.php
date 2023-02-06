@@ -20,7 +20,7 @@ class SetLocale
     //     return $next($request);
     // }
 
-    protected $supported_languages = ['chn', 'en', 'fra', 'vie'];
+    protected $supported_languages = ['en'];
 
     /**
      * Handle an incoming request.

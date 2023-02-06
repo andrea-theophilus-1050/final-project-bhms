@@ -1,5 +1,6 @@
+var s1 = document.getElementById("s1");
 var options = {
-    series: [80],
+    series: [s1.innerHTML],
     grid: {
         padding: {
             top: 0,
@@ -68,8 +69,9 @@ var options = {
     }
 };
 
+var s2 = document.getElementById("s2");
 var options2 = {
-    series: [70],
+    series: [s2.innerHTML],
     grid: {
         padding: {
             top: 0,
@@ -138,8 +140,9 @@ var options2 = {
     }
 };
 
+var s3 = document.getElementById("s3");
 var options3 = {
-    series: [75],
+    series: [s3.innerHTML],
     grid: {
         padding: {
             top: 0,
@@ -208,8 +211,9 @@ var options3 = {
     }
 };
 
+var s4 = document.getElementById("s4");
 var options4 = {
-    series: [85],
+    series: [s4.innerHTML],
     grid: {
         padding: {
             top: 0,
@@ -278,166 +282,166 @@ var options4 = {
     }
 };
 
-var options5 = {
-    chart: {
-        height: 350,
-        type: 'bar',
-        parentHeightOffset: 0,
-        fontFamily: 'Poppins, sans-serif',
-        toolbar: {
-            show: false,
-        },
-    },
-    colors: ['#1b00ff', '#f56767'],
-    grid: {
-        borderColor: '#c7d2dd',
-        strokeDashArray: 5,
-    },
-    plotOptions: {
-        bar: {
-            horizontal: false,
-            columnWidth: '25%',
-            endingShape: 'rounded'
-        },
-    },
-    dataLabels: {
-        enabled: false
-    },
-    stroke: {
-        show: true,
-        width: 2,
-        colors: ['transparent']
-    },
-    series: [{
-        name: 'In Progress',
-        data: [40, 28, 47, 22, 34, 25]
-    }, {
-        name: 'Complete',
-        data: [30, 20, 37, 10, 28, 11]
-    }],
-    xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        labels: {
-            style: {
-                colors: ['#353535'],
-                fontSize: '16px',
-            },
-        },
-        axisBorder: {
-            color: '#8fa6bc',
-        }
-    },
-    yaxis: {
-        title: {
-            text: ''
-        },
-        labels: {
-            style: {
-                colors: '#353535',
-                fontSize: '16px',
-            },
-        },
-        axisBorder: {
-            color: '#f00',
-        }
-    },
-    legend: {
-        horizontalAlign: 'right',
-        position: 'top',
-        fontSize: '16px',
-        offsetY: 0,
-        labels: {
-            colors: '#353535',
-        },
-        markers: {
-            width: 10,
-            height: 10,
-            radius: 15,
-        },
-        itemMargin: {
-            vertical: 0
-        },
-    },
-    fill: {
-        opacity: 1
+// var options5 = {
+//     chart: {
+//         height: 350,
+//         type: 'bar',
+//         parentHeightOffset: 0,
+//         fontFamily: 'Poppins, sans-serif',
+//         toolbar: {
+//             show: false,
+//         },
+//     },
+//     colors: ['#1b00ff', '#f56767'],
+//     grid: {
+//         borderColor: '#c7d2dd',
+//         strokeDashArray: 5,
+//     },
+//     plotOptions: {
+//         bar: {
+//             horizontal: false,
+//             columnWidth: '25%',
+//             endingShape: 'rounded'
+//         },
+//     },
+//     dataLabels: {
+//         enabled: false
+//     },
+//     stroke: {
+//         show: true,
+//         width: 2,
+//         colors: ['transparent']
+//     },
+//     series: [{
+//         name: 'In Progress',
+//         data: [40, 28, 47, 22, 34, 25]
+//     }, {
+//         name: 'Complete',
+//         data: [30, 20, 37, 10, 28, 11]
+//     }],
+//     xaxis: {
+//         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+//         labels: {
+//             style: {
+//                 colors: ['#353535'],
+//                 fontSize: '16px',
+//             },
+//         },
+//         axisBorder: {
+//             color: '#8fa6bc',
+//         }
+//     },
+//     yaxis: {
+//         title: {
+//             text: ''
+//         },
+//         labels: {
+//             style: {
+//                 colors: '#353535',
+//                 fontSize: '16px',
+//             },
+//         },
+//         axisBorder: {
+//             color: '#f00',
+//         }
+//     },
+//     legend: {
+//         horizontalAlign: 'right',
+//         position: 'top',
+//         fontSize: '16px',
+//         offsetY: 0,
+//         labels: {
+//             colors: '#353535',
+//         },
+//         markers: {
+//             width: 10,
+//             height: 10,
+//             radius: 15,
+//         },
+//         itemMargin: {
+//             vertical: 0
+//         },
+//     },
+//     fill: {
+//         opacity: 1
 
-    },
-    tooltip: {
-        style: {
-            fontSize: '15px',
-            fontFamily: 'Poppins, sans-serif',
-        },
-        y: {
-            formatter: function (val) {
-                return val
-            }
-        }
-    }
-}
+//     },
+//     tooltip: {
+//         style: {
+//             fontSize: '15px',
+//             fontFamily: 'Poppins, sans-serif',
+//         },
+//         y: {
+//             formatter: function (val) {
+//                 return val
+//             }
+//         }
+//     }
+// }
 
-var options6 = {
-    series: [73],
-    chart: {
-        height: 350,
-        type: 'radialBar',
-        offsetY: 0
-    },
-    colors: ['#0B132B', '#222222'],
-    plotOptions: {
-        radialBar: {
-            startAngle: -135,
-            endAngle: 135,
-            dataLabels: {
-                name: {
-                    fontSize: '16px',
-                    color: undefined,
-                    offsetY: 120
-                },
-                value: {
-                    offsetY: 76,
-                    fontSize: '22px',
-                    color: undefined,
-                    formatter: function (val) {
-                        return val + "%";
-                    }
-                }
-            }
-        }
-    },
-    fill: {
-        type: 'gradient',
-        gradient: {
-            shade: 'dark',
-            shadeIntensity: 0.15,
-            inverseColors: false,
-            opacityFrom: 1,
-            opacityTo: 1,
-            stops: [0, 50, 65, 91]
-        },
-    },
-    stroke: {
-        dashArray: 4
-    },
-    labels: ['Achieve Goals'],
-};
+// var options6 = {
+//     series: [73],
+//     chart: {
+//         height: 350,
+//         type: 'radialBar',
+//         offsetY: 0
+//     },
+//     colors: ['#0B132B', '#222222'],
+//     plotOptions: {
+//         radialBar: {
+//             startAngle: -135,
+//             endAngle: 135,
+//             dataLabels: {
+//                 name: {
+//                     fontSize: '16px',
+//                     color: undefined,
+//                     offsetY: 120
+//                 },
+//                 value: {
+//                     offsetY: 76,
+//                     fontSize: '22px',
+//                     color: undefined,
+//                     formatter: function (val) {
+//                         return val + "%";
+//                     }
+//                 }
+//             }
+//         }
+//     },
+//     fill: {
+//         type: 'gradient',
+//         gradient: {
+//             shade: 'dark',
+//             shadeIntensity: 0.15,
+//             inverseColors: false,
+//             opacityFrom: 1,
+//             opacityTo: 1,
+//             stops: [0, 50, 65, 91]
+//         },
+//     },
+//     stroke: {
+//         dashArray: 4
+//     },
+//     labels: ['Achieve Goals'],
+// };
 
-var chart = new ApexCharts(document.querySelector("#chart"), options);
+var chart = new ApexCharts(document.querySelector("#statistic1"), options);
 chart.render();
 
-var chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
+var chart2 = new ApexCharts(document.querySelector("#statistic2"), options2);
 chart2.render();
 
-var chart3 = new ApexCharts(document.querySelector("#chart3"), options3);
+var chart3 = new ApexCharts(document.querySelector("#statistic3"), options3);
 chart3.render();
 
-var chart4 = new ApexCharts(document.querySelector("#chart4"), options4);
+var chart4 = new ApexCharts(document.querySelector("#statistic4"), options4);
 chart4.render();
 
-var chart5 = new ApexCharts(document.querySelector("#chart5"), options5);
-chart5.render();
+// var chart5 = new ApexCharts(document.querySelector("#chart5"), options5);
+// chart5.render();
 
-var chart6 = new ApexCharts(document.querySelector("#chart6"), options6);
-chart6.render();
+// var chart6 = new ApexCharts(document.querySelector("#chart6"), options6);
+// chart6.render();
 
 
 // datatable init

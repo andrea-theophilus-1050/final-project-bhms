@@ -4,24 +4,83 @@
         <div class="min-height-200px">
             <div class="page-header">
                 <div class="row">
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
                         <div class="title">
                             <h4>Room Management</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('house.index') }}">@lang('messages.navHouse')</a></li>
-                                <li class="breadcrumb-item" aria-current="page"><a href="{{-- route('area.index',$id) --}}">Area
-                                        management</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Room management ->>>>>>> {{ $countAvailable }}</li>
+                                <li class="breadcrumb-item">
+                                    <a href="{{ route('home') }}">@lang('messages.navHome')</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="{{ route('house.index') }}">@lang('messages.navHouse')</a>
+                                </li>
+                                <li class="breadcrumb-item" aria-current="page">
+                                    <a href="{{-- route('area.index',$id) --}}">Area management</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Room management</li>
                             </ol>
                         </nav>
                     </div>
                 </div>
             </div>
-            
-            <div class="container px-0">
+
+            <div class="row">
+                <div class="col-xl-3 mb-30">
+                    <div class="card-box height-100-p widget-style1">
+                        <div class="d-flex flex-wrap align-items-center">
+                            <div class="progress-data">
+                                <div id="statistic1"><span id="s1" hidden>100</span></div>
+                            </div>
+                            <div class="widget-data">
+                                <div class="h4 mb-0">{{ $countAvailable }}</div>
+                                <div class="weight-600 font-14">Number of rooms</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 mb-30">
+                    <div class="card-box height-100-p widget-style1">
+                        <div class="d-flex flex-wrap align-items-center">
+                            <div class="progress-data">
+                                <div id="statistic2"><span id="s2" hidden>{{ $countAvailable }}</span></div>
+                            </div>
+                            <div class="widget-data">
+                                <div class="h4 mb-0">{{ $countAvailable }}</div>
+                                <div class="weight-600 font-14">Available room</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 mb-30">
+                    <div class="card-box height-100-p widget-style1">
+                        <div class="d-flex flex-wrap align-items-center">
+                            <div class="progress-data">
+                                <div id="statistic3"><span id="s3" hidden>{{ $countAvailable }}</span></div>
+                            </div>
+                            <div class="widget-data">
+                                <div class="h4 mb-0">350</div>
+                                <div class="weight-600 font-14">Rented room</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 mb-30">
+                    <div class="card-box height-100-p widget-style1">
+                        <div class="d-flex flex-wrap align-items-center">
+                            <div class="progress-data">
+                                <div id="statistic4"><span id="s4" hidden>{{ $countAvailable }}</span></div>
+                            </div>
+                            <div class="widget-data">
+                                <div class="h4 mb-0">$6060</div>
+                                <div class="weight-600 font-14">Worth</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="container px-0">
                 <div class="row">
                     <div class="col-md-4 mb-30">
                         <div class="card-box pricing-card mt-30 mb-30">
@@ -34,7 +93,7 @@
                             <div class="pricing-price">
                                 10
                             </div>
-                           
+
                         </div>
                     </div>
                     <div class="col-md-4 mb-30">
@@ -48,7 +107,7 @@
                             <div class="pricing-price">
                                 <sup>$</sup>199<sub>/mo</sub>
                             </div>
-                            
+
                         </div>
                     </div>
                     <div class="col-md-4 mb-30">
@@ -62,23 +121,20 @@
                             <div class="pricing-price">
                                 <sup>$</sup>599<sub>/yr</sub>
                             </div>
-                            
+
                         </div>
                     </div>
-                </div>                
-            </div>
+                </div>
+            </div> --}}
 
             <div class="pd-20 card-box mb-30">
                 <div class="clearfix mb-20">
-                    <div class="pull-left">
-                        <h4 class="text-blue h4"></h4>
-                    </div>
                     <div class="pull-right">
                         <a href="javascript:;" data-toggle="modal" data-target="#room-add" class="btn btn-success btn-sm"><i
                                 class="ion-plus-round"></i> Add new area for the house</a>
 
-                        <a href="javascript:;" data-toggle="modal" data-target="#room-add-multiple" class="btn btn-success btn-sm"><i
-                                class="ion-plus-round"></i> Add multiple</a>
+                        <a href="javascript:;" data-toggle="modal" data-target="#room-add-multiple"
+                            class="btn btn-success btn-sm"><i class="ion-plus-round"></i> Add multiple</a>
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -134,8 +190,9 @@
                                         <td>
                                             <form id="delete-area" action="{{ route('area.delete', $item->room_id) }}"
                                                 method="Post">
-                                                <a href="{{ route('room.index', $item->room_id) }}" class="btn btn-primary"
-                                                    role="button" title="Show details"><i class="fa fa-eye"></i></a>
+                                                <a href="{{ route('room.index', $item->room_id) }}"
+                                                    class="btn btn-primary" role="button" title="Show details"><i
+                                                        class="fa fa-eye"></i></a>
                                                 <a href="javascript:;" data-toggle="modal" data-target="#room-edit"
                                                     class="btn btn-secondary" title="Edit area"><i
                                                         class="fa fa-edit"></i></a>
@@ -144,9 +201,10 @@
                                                 onclick="return confirm('Are you sure to delete?')"><i
                                                     class="fa fa-trash"></i></button> --}}
 
-                                                <button class="btn btn-danger" type="button" id="confirm-delete-modal-btn"
-                                                    data-toggle="modal" data-target="#confirm-delete-modal"
-                                                    data-backdrop="static"><i class="fa fa-trash"></i></button>
+                                                <button class="btn btn-danger" type="button"
+                                                    id="confirm-delete-modal-btn" data-toggle="modal"
+                                                    data-target="#confirm-delete-modal" data-backdrop="static"><i
+                                                        class="fa fa-trash"></i></button>
                                             </form>
                                         </td>
                                     </tr>
@@ -154,6 +212,12 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    <div class="pull-right">
+                        {{-- pagination --}}
+                        {{ $rooms->links() }}
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -223,7 +287,8 @@
                     <div class="task-list-form">
                         <ul>
                             <li>
-                                <form name="formAddMultipleRoom" method="post" action="{{ route('room.add.multiple', $id) }}">
+                                <form name="formAddMultipleRoom" method="post"
+                                    action="{{ route('room.add.multiple', $id) }}">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-md-4">How many rooms do you want to create?</label>
