@@ -44,4 +44,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\House', 'user_id');
     }
+
+    public function tenants()
+    {
+        return $this->hasMany('App\Models\Tenant', 'user_id');
+    }
 }

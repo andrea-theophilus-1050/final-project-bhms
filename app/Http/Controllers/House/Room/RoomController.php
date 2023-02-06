@@ -45,7 +45,7 @@ class RoomController extends Controller
 
     public function room()
     {
-        $house = DB::table('tb_house')->where('user_id', auth()->user()->id)->get();
+        $house = DB::table('tb_rooms')->where('area_id', 2)->get();
 
         return view('house.room.room', compact(['house']))->with('title', 'Room Management');
     }

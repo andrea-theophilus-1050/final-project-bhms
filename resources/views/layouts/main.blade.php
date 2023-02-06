@@ -363,6 +363,11 @@
                             <span class="micon dw dw-house1"></span><span class="mtext">@lang('messages.navHouse')</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('tenant.index') }}" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-user-2"></span><span class="mtext">Tenants Management</span>
+                        </a>
+                    </li>
                     <li class="dropdown">
                         <a href="{{ route('room') }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-home"></span><span class="mtext">@lang('messages.navRoom')</span>
@@ -373,12 +378,7 @@
                             <span class="micon dw dw-suitcase"></span><span class="mtext">@lang('messages.navService')</span>
                         </a>
                     </li>
-                    {{-- <li>
-                        <a href="calendar.html" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-save-water"></span><span class="mtext">Water bill</span>
-                        </a>
-                    </li>
-                    <li class="dropdown">
+                    {{-- <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
                             <span class="micon dw dw-apartment"></span><span class="mtext"> UI Elements </span>
                         </a>
@@ -541,7 +541,7 @@
         </div>
     </div>
 
-    
+
 
 
     <!-- js -->
@@ -555,7 +555,7 @@
     <script src="{{ asset('src/plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('src/plugins/datatables/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('vendors/scripts/dashboard.js') }}"></script>
-    
+
     <script src="{{ asset('vendors/scripts/statistic-room.js') }}"></script>
 
 </body>

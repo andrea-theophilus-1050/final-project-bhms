@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('hometown');
             $table->string('preResidence');
             $table->string('status');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('tb_user')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

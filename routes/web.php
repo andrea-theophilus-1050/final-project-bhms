@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\House\HouseController;
 use App\Http\Controllers\House\Area\AreaController;
 use App\Http\Controllers\House\Room\RoomController;
+use App\Http\Controllers\Tenants\TenantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +91,8 @@ Route::middleware('setLocale')->group(function () {
                     Route::group(['prefix' => 'room'], function () {
                         Route::get('add', [DashboardController::class, 'addRoom'])->name('room.add_new_room');
                     });
+
+                    Route::get('tenant', [TenantController::class, 'index'])->name('tenant.index');
                 });
             });
             Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->name('profile');
