@@ -24,7 +24,7 @@ class DashboardController extends Controller
 
     public function room()
     {
-        return view('dashboard.room')->with('title', 'Room Management');
+        return view('dashboard.room.room')->with('title', 'Room Management');
     }
 
     public function addRoom()

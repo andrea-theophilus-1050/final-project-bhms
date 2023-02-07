@@ -13,7 +13,7 @@ class HouseController extends Controller
     public function index()
     {
         $houses = DB::table('tb_house')->where('user_id', auth()->user()->id)->get();
-        return view('house.index')->with('houses', $houses)->with('title', 'House Management');
+        return view('dashboard.house.index')->with('houses', $houses)->with('title', 'House Management');
     }
 
     public function store(Request $request)

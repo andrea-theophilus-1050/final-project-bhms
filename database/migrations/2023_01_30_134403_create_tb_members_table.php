@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id('member_id');
             $table->string('fullname');
             $table->string('gender');
-            $table->date('dob');
+            $table->string('dob');
             $table->string('id_card');
             $table->string('phone_number');
             $table->string('email');

@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\House\HouseController;
-use App\Http\Controllers\House\Area\AreaController;
-use App\Http\Controllers\House\Room\RoomController;
+use App\Http\Controllers\Area\AreaController;
+use App\Http\Controllers\Room\RoomController;
 use App\Http\Controllers\Tenants\TenantController;
 
 /*
@@ -93,6 +93,8 @@ Route::middleware('setLocale')->group(function () {
                     });
 
                     Route::get('tenant', [TenantController::class, 'index'])->name('tenant.index');
+                    Route::get('tenant/add', [TenantController::class, 'add'])->name('tenant.view.add');
+                    Route::post('tenant/add-action', [TenantController::class, 'store'])->name('tenant.add');
                 });
             });
             Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->name('profile');

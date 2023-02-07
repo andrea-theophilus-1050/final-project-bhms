@@ -190,5 +190,71 @@ class CreateUserSeeder extends Seeder
         foreach ($room as $item) {
             DB::table('tb_rooms')->insert($item);
         }
+
+        $tenant = [
+            [
+                'fullname' => 'Tenant 1',
+                'gender' => 'Male',
+                'dob' => '01 March 2001',
+                'id_card' => '123456789',
+                'phone_number' => '0123456789',
+                'email' => 'tenant1@gmail.com',
+                'hometown' => 'Hometown 1',
+                'status' => 0,
+                'user_id' => 1,
+            ],
+            [
+                'fullname' => 'Tenant 2',
+                'gender' => 'Male',
+                'dob' => '01 March 2001',
+                'id_card' => '123456789',
+                'phone_number' => '0123456789',
+                'email' => 'tenant1@gmail.com',
+                'hometown' => 'Hometown 1',
+                'status' => 0,
+                'user_id' => 1,
+
+            ],
+            [
+                'fullname' => 'Tenant 3',
+                'gender' => 'Male',
+                'dob' => '01 March 2001',
+                'id_card' => '123456789',
+                'phone_number' => '0123456789',
+                'email' => 'tenant1@gmail.com',
+                'hometown' => 'Hometown 1',
+                'status' => 0,
+                'user_id' => 1,
+
+            ],
+            [
+                'fullname' => 'Tenant 4',
+                'gender' => 'Male',
+                'dob' => '01 March 2001',
+                'id_card' => '123456789',
+                'phone_number' => '0123456789',
+                'email' => 'tenant1@gmail.com',
+                'hometown' => 'Hometown 1',
+                'status' => 0,
+                'user_id' => 1,
+
+            ],
+            [
+                'fullname' => 'Tenant 5',
+                'gender' => 'Male',
+                'dob' => '01 March 2001',
+                'id_card' => '123456789',
+                'phone_number' => '0123456789',
+                'email' => 'tenant1@gmail.com',
+                'hometown' => 'Hometown 1',
+                'status' => 0,
+                'user_id' => 1,
+
+            ],
+        ];
+
+        foreach ($tenant as $item) {
+            DB::table('tb_main_tenants')->insert($item);
+        }
     }
 }

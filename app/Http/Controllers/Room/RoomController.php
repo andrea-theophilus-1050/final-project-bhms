@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\House\Room;
+namespace App\Http\Controllers\Room;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class RoomController extends Controller
         $rooms = DB::table('tb_rooms')->where('area_id', $id)->paginate(10);
         $roomAvailable = DB::table('tb_rooms')->where('area_id', $id)->where('status', 0)->get();
         $countAvailable = count($roomAvailable);
-        return view('house.room.index', compact(['rooms', 'id', 'countAvailable']))->with('title', 'Room Management');
+        return view('dashboard.room.index', compact(['rooms', 'id', 'countAvailable']))->with('title', 'Room Management');
         // dd($rooms);
     }
 
@@ -47,6 +47,6 @@ class RoomController extends Controller
     {
         $house = DB::table('tb_rooms')->where('area_id', 2)->get();
 
-        return view('house.room.room', compact(['house']))->with('title', 'Room Management');
+        return view('dashboard.room.room', compact(['house']))->with('title', 'Room Management');
     }
 }

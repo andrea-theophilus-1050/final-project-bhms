@@ -17,13 +17,12 @@ return new class extends Migration
             $table->id('tenant_id');
             $table->string('fullname');
             $table->string('gender');
-            $table->date('dob');
+            $table->string('dob');
             $table->string('id_card');
             $table->string('phone_number');
             $table->string('email');
             $table->string('hometown');
-            $table->string('preResidence');
-            $table->string('status');
+            $table->string('status')->default(0);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('tb_user')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

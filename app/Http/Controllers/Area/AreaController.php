@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\House\Area;
+namespace App\Http\Controllers\Area;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class AreaController extends Controller
     {
         // $area = DB::table('tb_area')->where('house_id', $id)->get();
         $area = Area::where('house_id', $id)->get();
-        return view('house.area.index', compact(['area', 'id']))->with('title', 'Area Management');
+        return view('dashboard.area.index', compact(['area', 'id']))->with('title', 'Area Management');
     }
 
     public function add_action(Request $request, $id)
