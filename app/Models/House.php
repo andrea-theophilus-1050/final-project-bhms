@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Area;
 
 class House extends Model
 {
@@ -21,11 +23,11 @@ class House extends Model
 
     public function users()
     {
-        return $this->belongsTo('App\Models\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function areas()
     {
-        return $this->hasMany('App\Models\Area', 'house_id');
+        return $this->hasMany(Area::class, 'house_id');
     }
 }

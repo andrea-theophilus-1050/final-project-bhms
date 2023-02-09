@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\House;
+use App\Models\Tenant;
 
 class User extends Authenticatable
 {
@@ -42,11 +43,11 @@ class User extends Authenticatable
 
     public function houses()
     {
-        return $this->hasMany('App\Models\House', 'user_id');
+        return $this->hasMany(House::class, 'user_id');
     }
 
     public function tenants()
     {
-        return $this->hasMany('App\Models\Tenant', 'user_id');
+        return $this->hasMany(Tenant::class, 'user_id');
     }
 }

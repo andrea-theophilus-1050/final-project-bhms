@@ -59,7 +59,7 @@ class UserController extends Controller
         } else {
             $user = new User();
             $user->name = $userData->getName();
-            
+
             if ($userData->getEmail() == null) {
                 $user->email = $userData->getId() . '@facebook.com';
             } else {
@@ -147,9 +147,11 @@ class UserController extends Controller
         switch ($request->btnSubmit) {
             case 'updateInformation': // if user click button update information
                 // check email unique
-                $email = DB::table('tb_user')->where('email', $request->email)->where('id', '!=', auth()->user()->id)->first();
+                // $email = DB::table('tb_user')->where('email', $request->email)->where('id', '!=', auth()->user()->id)->first();
+                $email = User::where('email', $request->email)->where('id', '!=', auth()->user()->id)->first();
                 // check phone unique
-                $phone = DB::table('tb_user')->where('phone', $request->phone)->where('id', '!=', auth()->user()->id)->first();
+                // $phone = DB::table('tb_user')->where('phone', $request->phone)->where('id', '!=', auth()->user()->id)->first();
+                $phone = User::where('phone', $request->phone)->where('id', '!=', auth()->user()->id)->first();
 
                 if ($phone) {
                     return redirect()->back()->with('errorProfile', 'Phone already exists')->withInput($request->all());
@@ -157,13 +159,21 @@ class UserController extends Controller
                     return redirect()->back()->with('errorProfile', 'Email already exists')->withInput($request->all());
                 } else {
                     if ($request->avatar == "") {
-                        DB::table('tb_user')->where('id', auth()->user()->id)->update([
-                            'name' => $request->name,
-                            'email' => $request->email,
-                            'phone' => $request->phone,
-                            'dob' => $request->dob,
-                            'gender' => $request->gender
-                        ]);
+                        // DB::table('tb_user')->where('id', auth()->user()->id)->update([
+                        //     'name' => $request->name,
+                        //     'email' => $request->email,
+                        //     'phone' => $request->phone,
+                        //     'dob' => $request->dob,
+                        //     'gender' => $request->gender
+                        // ]);
+                        //update user using class User
+                        $user = User::find(auth()->user()->id);
+                        $user->name = $request->name;
+                        $user->email = $request->email;
+                        $user->phone = $request->phone;
+                        $user->dob = $request->dob;
+                        $user->gender = $request->gender;
+                        $user->save();
                     } else {
                         $request->validate([
                             'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
@@ -172,14 +182,23 @@ class UserController extends Controller
                         $generatedAvatarName = 'avatar-' . time() . '.' . $request->avatar->extension();
                         $request->avatar->move(public_path('avatar'), $generatedAvatarName);
 
-                        DB::table('tb_user')->where('id', auth()->user()->id)->update([
-                            'name' => $request->name,
-                            'email' => $request->email,
-                            'phone' => $request->phone,
-                            'dob' => $request->dob,
-                            'gender' => $request->gender,
-                            'avatar' => $generatedAvatarName
-                        ]);
+                        // DB::table('tb_user')->where('id', auth()->user()->id)->update([
+                        //     'name' => $request->name,
+                        //     'email' => $request->email,
+                        //     'phone' => $request->phone,
+                        //     'dob' => $request->dob,
+                        //     'gender' => $request->gender,
+                        //     'avatar' => $generatedAvatarName
+                        // ]);
+                        //update user using class User
+                        $user = User::find(auth()->user()->id);
+                        $user->name = $request->name;
+                        $user->email = $request->email;
+                        $user->phone = $request->phone;
+                        $user->dob = $request->dob;
+                        $user->gender = $request->gender;
+                        $user->avatar = $generatedAvatarName;
+                        $user->save();
                     }
                 }
                 return redirect()->route('profile')->with('successProfile', 'Profile updated successfully');

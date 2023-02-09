@@ -12,7 +12,8 @@ class HouseController extends Controller
 
     public function index()
     {
-        $houses = DB::table('tb_house')->where('user_id', auth()->user()->id)->get();
+        // $houses = DB::table('tb_house')->where('user_id', auth()->user()->id)->get();
+        $houses = House::where('user_id', auth()->user()->id)->get();
         return view('dashboard.house.index')->with('houses', $houses)->with('title', 'House Management');
     }
 

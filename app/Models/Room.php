@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Area;
 
 class Room extends Model
 {
@@ -22,6 +23,6 @@ class Room extends Model
 
     public function areas()
     {
-        return $this->belongsTo('App\Models\Area', 'area_id');
+        return $this->belongsTo(Area::class, 'area_id');
     }
 }

@@ -12,6 +12,7 @@ class AreaController extends Controller
 {
     public function index($id)
     {
+        // $area = DB::table('tb_area')->join('tb_house', 'tb_area.house_id', '=', 'tb_house.house_id')->where('tb_house.house_id', $id)->get();
         // $area = DB::table('tb_area')->where('house_id', $id)->get();
         $area = Area::where('house_id', $id)->get();
         return view('dashboard.area.index', compact(['area', 'id']))->with('title', 'Area Management');
