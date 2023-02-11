@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Area;
+use App\Models\House;
 
 class Room extends Model
 {
@@ -21,8 +21,8 @@ class Room extends Model
         'area_id'
     ];
 
-    public function areas()
+    public function houses()
     {
-        return $this->belongsTo(Area::class, 'area_id');
+        return $this->belongsTo(House::class, 'house_id');
     }
 }

@@ -51,7 +51,7 @@
                                     <td>
                                         <form id="delete-house" action="{{ route('house.destroy', $house->house_id) }}"
                                             method="Post">
-                                            <a href="{{ route('area.index', $house->house_id) }}" class="btn btn-primary"
+                                            <a href="{{ route('room.index', $house->house_id) }}" class="btn btn-primary"
                                                 role="button" title="Show details"><i class="fa fa-eye"></i></a>
                                             <a href="javascript:;" data-toggle="modal" data-target="#house-edit"
                                                 class="btn btn-secondary" title="Edit house"><i class="fa fa-edit"></i></a>

@@ -18,9 +18,7 @@ class DashboardController extends Controller
     public function profile()
     {
         return view('user.profile')->with('user', auth()->user())->with('title', 'Profile');
-    }
-
-    
+    }    
 
     public function room()
     {

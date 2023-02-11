@@ -73,16 +73,16 @@ Route::middleware('setLocale')->group(function () {
 
                     Route::resource('house', HouseController::class);
                     Route::group(['prefix' => 'house'], function () {
-                        Route::get('area/{id}', [AreaController::class, 'index'])->name('area.index');
-                        Route::post('area/{id}/add-action', [AreaController::class, 'add_action'])->name('area.add');
-                        Route::post('area/{id}/update-action', [AreaController::class, 'update_action'])->name('area.update');
-                        Route::post('area/{id}/delete-action', [AreaController::class, 'delete_action'])->name('area.delete');
-                        
-                        Route::group(['prefix'=>'area'], function(){
-                            Route::get('room/{id}', [RoomController::class, 'index'])->name('room.index');
-                            Route::post('room/{id}/add-action', [RoomController::class, 'addSingleRoom'])->name('room.add');
-                            Route::post('room/{id}/add-multiple-room-action', [RoomController::class, 'addMultipleRooms'])->name('room.add.multiple');
-                        });
+                        // Route::get('area/{id}', [AreaController::class, 'index'])->name('area.index');
+                        // Route::post('area/{id}/add-action', [AreaController::class, 'add_action'])->name('area.add');
+                        // Route::post('area/{id}/update-action', [AreaController::class, 'update_action'])->name('area.update');
+                        // Route::post('area/{id}/delete-action', [AreaController::class, 'delete_action'])->name('area.delete');
+
+                        // Route::group(['prefix'=>'area'], function(){
+                        Route::get('{id}/list-room/', [RoomController::class, 'index'])->name('room.index');
+                        Route::post('room/{id}/add-action', [RoomController::class, 'addSingleRoom'])->name('room.add');
+                        Route::post('room/{id}/add-multiple-room-action', [RoomController::class, 'addMultipleRooms'])->name('room.add.multiple');
+                        // });
                     });
 
 

@@ -11,10 +11,10 @@ class RoomController extends Controller
 {
     public function index($id)
     {
-        $rooms = DB::table('tb_rooms')->where('area_id', $id)->paginate(10);
-        $roomAvailable = DB::table('tb_rooms')->where('area_id', $id)->where('status', 0)->get();
-        $countAvailable = count($roomAvailable);
-        return view('dashboard.room.index', compact(['rooms', 'id', 'countAvailable']))->with('title', 'Room Management');
+        $rooms = Room::where('house_id', $id)->paginate(10);
+        // $roomAvailable = DB::table('tb_rooms')->where('area_id', $id)->where('status', 0)->get();
+        // $countAvailable = count($roomAvailable);
+        return view('dashboard.room.index', compact(['rooms', 'id']))->with('title', 'Room Management');
         // dd($rooms);
     }
 
@@ -25,7 +25,7 @@ class RoomController extends Controller
         $room->room_name = $request->room_name;
         $room->price = $request->price;
         $room->room_description = $request->room_description;
-        $room->area_id = $id;
+        $room->house_id = $id;
         $room->save();
         return redirect()->route('room.index', $id);
     }
@@ -37,7 +37,7 @@ class RoomController extends Controller
             $room->room_name = $request->room_name . ' ' . ($i + 1);
             $room->price = $request->price;
             $room->room_description = $request->room_description;
-            $room->area_id = $id;
+            $room->house_id = $id;
             $room->save();
         }
         return redirect()->route('room.index', $id);

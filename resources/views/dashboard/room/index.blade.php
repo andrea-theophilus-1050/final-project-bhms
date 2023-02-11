@@ -4,6 +4,311 @@
         <div class="min-height-200px">
             <div class="page-header">
                 <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="title">
+                            <h4>@lang('messages.navRoom')</h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">@lang('messages.navRoom')</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="dropdown">
+                            <form action="" style="display: flex; justify-content: space-between">
+                                <input type="text" name="search" placeholder="Room number" class="form-control"
+                                    style="margin-right: 5%; font-size: 13px">
+                                <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
+                                    <option value="">Room status</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                </select>
+                                <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
+                                    <option value="">Room billed</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="dropdown">
+                            <form action="" style="display: flex; justify-content: space-between">
+                                <input type="text" name="search" placeholder="Room number" class="form-control"
+                                    style="margin-right: 5%; font-size: 13px">
+                                <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
+
+                                    {{-- @foreach ($house as $item)
+                                        <option value="{{ $item->house_id }}">{{ $item->house_name }}</option>
+                                    @endforeach --}}
+                                    {{-- <option value="">Room status</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option> --}}
+                                </select>
+                                <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
+                                    <option value="">Room billed</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                    <option value="">1</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                            </form>
+                        </div>
+                        {{-- <div class="dropdown">
+                            <label style="font-size: 15px; font-weight: bold">Area: </label>
+                            <a class="btn btn-success btn-sm dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                January 2018
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Export List</a>
+                                <a class="dropdown-item" href="#">Policies</a>
+                                <a class="dropdown-item" href="#">View Assets</a>
+                            </div>
+                        </div> --}}
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 mb-30">
+                    <div class="pd-20 card-box">
+
+                        <div class="clearfix mb-10">
+                            <div class="pull-right">
+                                <a href="javascript:;" data-toggle="modal" data-target="#room-add"
+                                    class="btn btn-success btn-sm" style="width: fix-content"><i
+                                        class="icon-copy fa fa-plus" aria-hidden="true"></i>
+                                    Add a new room</a>
+                                <a href="javascript:;" data-toggle="modal" data-target="#room-add-multiple"
+                                    class="btn btn-info btn-sm"><i class="icon-copy fa fa-plus" aria-hidden="true"></i>
+                                    Add
+                                    multiple new rooms</a>
+                            </div>
+                        </div>
+
+
+                        <div class="tab">
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel">
+                                    <div class="pd-20">
+                                        <div class="row clearfix">
+                                            @foreach ($rooms as $room)
+                                                <div class="col-sm-12 col-md-3 mb-30">
+                                                    <div class="card card-box">
+                                                        <div class="card-header" style="background-color: #B3DBF8">
+                                                            <i class="icon-copy dw dw-house"></i>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;{{ $room->room_name }}
+                                                        </div>
+                                                        <div class="card-body">
+                                                            {{-- <h5 class="card-title">Special title treatment</h5> --}}
+                                                            <p class="card-text">
+                                                                <i class="icon-copy dw dw-user-3"></i>
+                                                                Luu Hoai Phong
+                                                            </p>
+                                                            <p class="card-text">
+                                                                <i class="icon-copy dw dw-money-1"></i>
+                                                                2000000
+                                                            </p>
+
+                                                            <div class="pull-left">
+                                                                <a href="#" class="btn btn-secondary btn-sm"><i
+                                                                        class="icon-copy dw dw-add"></i></a>
+                                                            </div>
+                                                            <div class="pull-right">
+                                                                <a href="#" class="btn btn-primary btn-sm">
+                                                                    <i class="icon-copy dw dw-edit"></i>
+                                                                </a>
+                                                                <a href="#" class="btn btn-danger btn-sm">
+                                                                    <i class="icon-copy dw dw-trash"></i>
+                                                                </a>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div style="display: flex;justify-content: center;align-items: center;">
+                                            {{ $rooms->links() }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- add task popup start -->
+    <div class="modal fade" id="room-add" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">Add a new room</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <form name="formAddRoom" method="post" action="{{ route('room.add', $id) }}">
+                        @csrf
+                        <div class="form-group row">
+                            <label class="col-md-4">Room name</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" name="room_name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">Price</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" name="price">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">Description</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" name="room_description"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- add task popup end -->
+
+    <!-- add task popup start -->
+    <div class="modal fade bs-example-modal-lg" id="room-add-multiple" tabindex="-1" role="dialog"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">Add multiple new rooms</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <form name="formAddMultipleRoom" method="post" action="{{ route('room.add.multiple', $id) }}">
+                        @csrf
+                        <div class="form-group row">
+                            <label class="col-md-4">How many rooms do you want to create?</label>
+                            <div class="col-md-8">
+                                <input type="number" class="form-control" name="quantity">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">Room name</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" name="room_name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">Price</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" name="price">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">Description</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" name="room_description"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- add task popup end -->
+
+
+
+    @include('layouts.confirm-popup')
+
+    <script>
+        function submit() {
+            document.formAddRoom.submit();
+        }
+
+        function multipleSubmit() {
+            document.formAddMultipleRoom.submit();
+        }
+
+        function updateArea() {
+            document.formUpdateArea.submit();
+        }
+
+        //Show data in edit modal
+        var table = document.getElementById("area-table");
+        var id = null;
+        for (var i = 1; i < table.rows.length; i++) {
+            table.rows[i].addEventListener("click", function() {
+                document.getElementById('area_name_edit').value = this.cells[2].innerHTML;
+                document.getElementById('area_description_edit').value = this.cells[3].innerHTML;
+
+                document.getElementById('msg-delete').innerHTML = "Are you sure to delete " + this.cells[2]
+                    .innerHTML + "?";
+
+                id = this.cells[0].innerHTML;
+
+                document.formUpdateArea.action = null;
+
+            });
+        }
+
+        function actionDelete() {
+            document.getElementById('delete-area').action =
+                null;
+            document.getElementById('delete-area').submit();
+        }
+    </script>
+@endsection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@extends('layouts.main')
+@section('content')
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="title">
                             <h4>Room Management</h4>
@@ -34,7 +339,7 @@
                                 <div id="statistic1"><span id="s1" hidden>100</span></div>
                             </div>
                             <div class="widget-data">
-                                <div class="h4 mb-0">{{ $countAvailable }}</div>
+                                <div class="h4 mb-0">111111111</div>
                                 <div class="weight-600 font-14">Number of rooms</div>
                             </div>
                         </div>
@@ -44,10 +349,10 @@
                     <div class="card-box height-100-p widget-style1">
                         <div class="d-flex flex-wrap align-items-center">
                             <div class="progress-data">
-                                <div id="statistic2"><span id="s2" hidden>{{ $countAvailable }}</span></div>
+                                <div id="statistic2"><span id="s2" hidden>111111111</span></div>
                             </div>
                             <div class="widget-data">
-                                <div class="h4 mb-0">{{ $countAvailable }}</div>
+                                <div class="h4 mb-0">11111111111</div>
                                 <div class="weight-600 font-14">Available room</div>
                             </div>
                         </div>
@@ -57,7 +362,7 @@
                     <div class="card-box height-100-p widget-style1">
                         <div class="d-flex flex-wrap align-items-center">
                             <div class="progress-data">
-                                <div id="statistic3"><span id="s3" hidden>{{ $countAvailable }}</span></div>
+                                <div id="statistic3"><span id="s3" hidden>111111111111</span></div>
                             </div>
                             <div class="widget-data">
                                 <div class="h4 mb-0">350</div>
@@ -70,7 +375,7 @@
                     <div class="card-box height-100-p widget-style1">
                         <div class="d-flex flex-wrap align-items-center">
                             <div class="progress-data">
-                                <div id="statistic4"><span id="s4" hidden>{{ $countAvailable }}</span></div>
+                                <div id="statistic4"><span id="s4" hidden>111111111111</span></div>
                             </div>
                             <div class="widget-data">
                                 <div class="h4 mb-0">$6060</div>
@@ -130,8 +435,8 @@
             <div class="pd-20 card-box mb-30">
                 <div class="clearfix mb-20">
                     <div class="pull-right">
-                        <a href="javascript:;" data-toggle="modal" data-target="#room-add" class="btn btn-success btn-sm"><i
-                                class="ion-plus-round"></i> Add new area for the house</a>
+                        <a href="javascript:;" data-toggle="modal" data-target="#room-add"
+                            class="btn btn-success btn-sm"><i class="ion-plus-round"></i> Add new area for the house</a>
 
                         <a href="javascript:;" data-toggle="modal" data-target="#room-add-multiple"
                             class="btn btn-success btn-sm"><i class="ion-plus-round"></i> Add multiple</a>
@@ -161,10 +466,10 @@
                                         <td>Available</td>
                                         <td>{{ $item->room_description }}</td>
                                         <td>
-                                            <form id="delete-area" action="{{ route('area.delete', $item->room_id) }}"
-                                                method="Post">
-                                                <a href="{{ route('room.index', $item->room_id) }}" class="btn btn-primary"
-                                                    role="button" title="Show details"><i class="fa fa-eye"></i></a>
+                                            <form id="delete-area" action="" method="Post">
+                                                <a href="{{ route('room.index', $item->room_id) }}"
+                                                    class="btn btn-primary" role="button" title="Show details"><i
+                                                        class="fa fa-eye"></i></a>
                                                 <a href="javascript:;" data-toggle="modal" data-target="#room-edit"
                                                     class="btn btn-secondary" title="Edit area"><i
                                                         class="fa fa-edit"></i></a>
@@ -173,9 +478,10 @@
                                                 onclick="return confirm('Are you sure to delete?')"><i
                                                     class="fa fa-trash"></i></button> --}}
 
-                                                <button class="btn btn-danger" type="button" id="confirm-delete-modal-btn"
-                                                    data-toggle="modal" data-target="#confirm-delete-modal"
-                                                    data-backdrop="static"><i class="fa fa-trash"></i></button>
+                                                <button class="btn btn-danger" type="button"
+                                                    id="confirm-delete-modal-btn" data-toggle="modal"
+                                                    data-target="#confirm-delete-modal" data-backdrop="static"><i
+                                                        class="fa fa-trash"></i></button>
                                             </form>
                                         </td>
                                     </tr>
@@ -188,8 +494,7 @@
                                         <td><b>Rented out</b></td>
                                         <td>{{ $item->room_description }}</td>
                                         <td>
-                                            <form id="delete-area" action="{{ route('area.delete', $item->room_id) }}"
-                                                method="Post">
+                                            <form id="delete-area" action="" method="Post">
                                                 <a href="{{ route('room.index', $item->room_id) }}"
                                                     class="btn btn-primary" role="button" title="Show details"><i
                                                         class="fa fa-eye"></i></a>
@@ -401,15 +706,14 @@
 
                 id = this.cells[0].innerHTML;
 
-                document.formUpdateArea.action =
-                    "{{ route('area.update', ':id') }}".replace(':id', this.cells[0].innerHTML);
+                document.formUpdateArea.action = null;
 
             });
         }
 
         function actionDelete() {
             document.getElementById('delete-area').action =
-                "{{ route('area.delete', ':id') }}".replace(':id', id);
+                null;
             document.getElementById('delete-area').submit();
         }
     </script>

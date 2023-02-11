@@ -24,7 +24,7 @@ class CreateUserSeeder extends Seeder
                 'username' => 'admin',
                 'name' => 'admin',
                 'email' => 'admin@gmail.com',
-                'phone' => '0123456789',
+                'phone' => '01233456789',
                 'dob' => '01 March 2001',
                 'gender' => 'Male',
                 'password' => Hash::make('admin@123'),
@@ -39,20 +39,20 @@ class CreateUserSeeder extends Seeder
 
         $house = [
             [
-                'house_name' => 'House 1',
-                'house_address' => 'Address 1',
+                'house_name' => 'Trọ Hoàn Hảo 1',
+                'house_address' => 'Đường 3/2, Phường 12, Quận 10, Tp. Hồ Chí Minh',
                 'house_description' => 'Description 1',
                 'user_id' => 1,
             ],
             [
-                'house_name' => 'House 2',
-                'house_address' => 'Address 2',
+                'house_name' => 'Trọ Hoàn Hảo 2',
+                'house_address' => '225/12/47, Đường 30/4 Phường Hưng Lợi, Quận Ninh Kiều, Cần Thơ',
                 'house_description' => 'Description 2',
                 'user_id' => 1,
             ],
             [
-                'house_name' => 'House 3',
-                'house_address' => 'Address 3',
+                'house_name' => 'Trọ Hoàn Hảo 3',
+                'house_address' => 'Nguyễn Văn Cừ, Phường 6, Quận 5, Tp. Hồ Chí Minh',
                 'house_description' => 'Description 3',
                 'user_id' => 1,
             ],
@@ -62,57 +62,57 @@ class CreateUserSeeder extends Seeder
             DB::table('tb_house')->insert($item);
         }
 
-        $area = [
-            [
-                'area_name' => 'Area 1',
-                'area_description' => 'Description 1',
-                'house_id' => 1,
-            ],
-            [
-                'area_name' => 'Area 2',
-                'area_description' => 'Description 2',
-                'house_id' => 1,
-            ],
-            [
-                'area_name' => 'Area 3',
-                'area_description' => 'Description 3',
-                'house_id' => 1,
-            ],
-            [
-                'area_name' => 'Area 4',
-                'area_description' => 'Description 4',
-                'house_id' => 2,
-            ],
-            [
-                'area_name' => 'Area 5',
-                'area_description' => 'Description 5',
-                'house_id' => 2,
-            ],
-            [
-                'area_name' => 'Area 6',
-                'area_description' => 'Description 6',
-                'house_id' => 2,
-            ],
-            [
-                'area_name' => 'Area 7',
-                'area_description' => 'Description 7',
-                'house_id' => 3,
-            ],
-            [
-                'area_name' => 'Area 8',
-                'area_description' => 'Description 8',
-                'house_id' => 3,
-            ],
-            [
-                'area_name' => 'Area 9',
-                'area_description' => 'Description 9',
-                'house_id' => 3,
-            ],
-        ];
+        // $area = [
+        //     [
+        //         'area_name' => 'Area 1',
+        //         'area_description' => 'Description 1',
+        //         'house_id' => 1,
+        //     ],
+        //     [
+        //         'area_name' => 'Area 2',
+        //         'area_description' => 'Description 2',
+        //         'house_id' => 1,
+        //     ],
+        //     [
+        //         'area_name' => 'Area 3',
+        //         'area_description' => 'Description 3',
+        //         'house_id' => 1,
+        //     ],
+        //     [
+        //         'area_name' => 'Area 4',
+        //         'area_description' => 'Description 4',
+        //         'house_id' => 2,
+        //     ],
+        //     [
+        //         'area_name' => 'Area 5',
+        //         'area_description' => 'Description 5',
+        //         'house_id' => 2,
+        //     ],
+        //     [
+        //         'area_name' => 'Area 6',
+        //         'area_description' => 'Description 6',
+        //         'house_id' => 2,
+        //     ],
+        //     [
+        //         'area_name' => 'Area 7',
+        //         'area_description' => 'Description 7',
+        //         'house_id' => 3,
+        //     ],
+        //     [
+        //         'area_name' => 'Area 8',
+        //         'area_description' => 'Description 8',
+        //         'house_id' => 3,
+        //     ],
+        //     [
+        //         'area_name' => 'Area 9',
+        //         'area_description' => 'Description 9',
+        //         'house_id' => 3,
+        //     ],
+        // ];
 
-        foreach ($area as $item) {
-            DB::table('tb_area')->insert($item);
-        }
+        // foreach ($area as $item) {
+        //     DB::table('tb_area')->insert($item);
+        // }
 
         $room = [
             [
@@ -120,70 +120,63 @@ class CreateUserSeeder extends Seeder
                 'price' => '1000000',
                 'status' => 0,
                 'room_description' => 'Description 1',
-                'area_id' => 1,
+                'house_id' => 1,
             ],
             [
                 'room_name' => 'Room 2',
                 'price' => '2000000',
                 'status' => 0,
                 'room_description' => 'Description 2',
-                'area_id' => 1,
+                'house_id' => 1,
             ],
             [
                 'room_name' => 'Room 3',
                 'price' => '3000000',
                 'status' => 0,
                 'room_description' => 'Description 3',
-                'area_id' => 1,
+                'house_id' => 1,
             ],
             [
                 'room_name' => 'Room 4',
                 'price' => '4000000',
                 'status' => 0,
                 'room_description' => 'Description 4',
-                'area_id' => 2,
+                'house_id' => 2,
             ],
             [
                 'room_name' => 'Room 5',
                 'price' => '5000000',
                 'status' => 0,
                 'room_description' => 'Description 5',
-                'area_id' => 2,
+                'house_id' => 2,
             ],
             [
                 'room_name' => 'Room 6',
                 'price' => '6000000',
                 'status' => 0,
                 'room_description' => 'Description 6',
-                'area_id' => 2,
+                'house_id' => 2,
             ],
             [
                 'room_name' => 'Room 7',
                 'price' => '7000000',
                 'status' => 0,
                 'room_description' => 'Description 7',
-                'area_id' => 3,
+                'house_id' => 3,
             ],
             [
                 'room_name' => 'Room 8',
                 'price' => '8000000',
                 'status' => 0,
                 'room_description' => 'Description 8',
-                'area_id' => 3,
+                'house_id' => 3,
             ],
             [
                 'room_name' => 'Room 9',
                 'price' => '9000000',
                 'status' => 0,
                 'room_description' => 'Description 9',
-                'area_id' => 3,
-            ],
-            [
-                'room_name' => 'Room 10',
-                'price' => '10000000',
-                'status' => 0,
-                'room_description' => 'Description 10',
-                'area_id' => 4,
+                'house_id' => 3,
             ],
         ];
 
