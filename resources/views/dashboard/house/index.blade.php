@@ -198,7 +198,7 @@
                 document.formUpdateHouse.action =
                     "{{ route('house.update', ':id') }}".replace(':id', this.cells[0].innerHTML);
 
-                document.getElementById('msg-delete').innerHTML = "Are you sure to delete " + this.cells[2]
+                document.getElementById('msg-delete-confirm').innerHTML = "Are you sure to delete " + this.cells[2]
                     .innerHTML + "?";
                 id = this.cells[0].innerHTML;
             });
