@@ -136,12 +136,15 @@
                                                                     {{ $room->price }}
                                                                 </p>
 
-                                                                <div class="pull-left">
-                                                                    <a href="javascript:;" data-toggle="modal"
-                                                                        data-target="#tenant-list" type="button"
-                                                                        class="btn btn-secondary btn-sm"><i
-                                                                            class="icon-copy dw dw-add"></i></a>
-                                                                </div>
+                                                                @if ($room->status == 0)
+                                                                    <div class="pull-left">
+                                                                        <a href="javascript:;" data-toggle="modal"
+                                                                            data-target="#tenant-list" type="button"
+                                                                            class="btn btn-secondary btn-sm"><i
+                                                                                class="icon-copy dw dw-add"></i></a>
+                                                                    </div>
+                                                                @endif
+
                                                                 <div class="pull-right">
                                                                     {{-- <a href="#" class="btn btn-primary btn-sm">
                                                                     <i class="icon-copy dw dw-edit"></i>
@@ -336,17 +339,22 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <form class="col-md-12 mb-20"
+                    <form class="col-md-12 mb-10"
                         style="display: flex; justify-content: space-between; align-items:center">
-                        <input type="text" class="form-control col-md-10" placeholder="Search tenant">
+                        <input type="text" class="form-control col-md-10" placeholder="Search tenant"
+                            id="search-tenant">
                         <button class="btn btn-primary btn-sm"><i class="icon-copy dw dw-search">
                             </i> &nbsp;&nbsp;Search
                         </button>
                     </form>
 
+                    <div class="mb-20">
+                        <a href="{{ route('tenant.view.add') }}" class="btn btn-success btn-sm">Add a new tenant</a>
+                    </div>
+
                     <div class="table-responsive">
                         <table class="table table-striped" id="house-table">
-                            <thead>
+                            <thead style="white-space: nowrap;">
                                 <tr>
 
                                     <th scope="col"></th>
@@ -359,9 +367,13 @@
                             </thead>
                             <tbody>
                                 @foreach ($tenants as $tenant)
-                                    <tr>
+                                    <tr style="white-space: nowrap;">
                                         <th scope="row">
-                                            <input type="checkbox" class="form-control" id="checkbox">
+                                            <form id="room-assign-tenant" action="" method="POST">
+                                                @csrf
+                                                <input type="checkbox" class="form-control" id="checkbox"
+                                                    name="tenant_id" value="{{ $tenant->tenant_id }}">
+                                            </form>
                                         </th>
                                         <td>{{ $tenant->fullname }}</td>
                                         <td>{{ $tenant->id_card }}</td>
@@ -373,11 +385,12 @@
                                 @endforeach
                             </tbody>
                         </table>
+
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" onclick="assignTenantSubmit()">Assign Tenant</button>
                 </div>
             </div>
         </div>
@@ -416,7 +429,6 @@
     </div> --}}
 
     @include('layouts.confirm-popup')
-
 
     <script>
         // passing value to delete room confirm modal
@@ -506,6 +518,35 @@
                 }
             });
         });
+
+        //Search tenants in table of List of Tenants
+        const searchInput = document.querySelector('#tenant-list #search-tenant');
+        searchInput.addEventListener('input', (event) => {
+            const searchTerm = event.target.value.toLowerCase();
+
+            rows.forEach((row) => {
+                const cells = row.querySelectorAll('td');
+                let match = false;
+
+                cells.forEach((cell) => {
+                    if (cell.textContent.toLowerCase().indexOf(searchTerm) !== -1) {
+                        match = true;
+                    }
+                });
+
+                if (match) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+
+            });
+        });
+
+        function assignTenantSubmit() {
+            const tenantForm = document.querySelector('#room-assign-tenant');
+            tenantForm.submit();
+        }
     </script>
 
     <script>

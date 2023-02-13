@@ -264,29 +264,6 @@
             document.formUpdateTenant.submit();
         }
 
-        //Show data in edit modal
-        var table = document.getElementById("tenant-table");
-        var id = null;
-        for (var i = 1; i < table.rows.length; i++) {
-            table.rows[i].addEventListener("click", function() {
-                document.getElementById('tenant_name_edit').value = this.cells[2].innerHTML;
-                document.getElementById('tenant_description_edit').value = this.cells[3].innerHTML;
-
-                document.getElementById('msg-delete').innerHTML = "Are you sure to delete " + this.cells[2]
-                    .innerHTML + "?";
-
-                id = this.cells[0].innerHTML;
-
-                document.formUpdateTenant.action =
-                    "{{ route('area.update', ':id') }}".replace(':id', this.cells[0].innerHTML);
-
-            });
-        }
-
-        function actionDelete() {
-            document.getElementById('delete-area').action =
-                "{{ route('area.delete', ':id') }}".replace(':id', id);
-            document.getElementById('delete-area').submit();
-        }
+        //send bản nháp qua zalo
     </script>
 @endsection

@@ -13,11 +13,9 @@ class RoomController extends Controller
     public function index($id)
     {
         $rooms = Room::where('house_id', $id)->paginate(20);
-        $tenants = Tenant::where('user_id', auth()->user()->id)->get();
-        // $roomAvailable = DB::table('tb_rooms')->where('area_id', $id)->where('status', 0)->get();
-        // $countAvailable = count($roomAvailable);
+        $tenants = Tenant::where('user_id', auth()->user()->id)->where('status', 0)->get();
+
         return view('dashboard.room.index', compact(['rooms', 'tenants', 'id']))->with('title', 'Room Management');
-        // dd($rooms);
     }
 
     public function addSingleRoom(Request $request, $id)
@@ -62,6 +60,8 @@ class RoomController extends Controller
         $room->delete();
         return redirect()->route('room.index', $house_id)->with('success', 'Room has been deleted successfully');
     }
+
+    
 
     // public function room()
     // {
