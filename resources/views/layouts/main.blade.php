@@ -558,6 +558,7 @@
 
     <script src="{{ asset('vendors/scripts/statistic-room.js') }}"></script>
 
+
 </body>
 
 </html>

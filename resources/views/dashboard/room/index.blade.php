@@ -108,64 +108,82 @@
                                 <div class="tab-pane fade show active" id="home" role="tabpanel">
                                     <div class="pd-20">
                                         <div class="row clearfix">
-                                            @foreach ($rooms as $room)
-                                                <div class="col-sm-12 col-md-3 mb-30">
-                                                    <div class="card card-box">
-                                                        <div class="card-header" style="background-color: #B3DBF8">
-                                                            <i class="icon-copy dw dw-house"></i>
-                                                            &nbsp;&nbsp;&nbsp;&nbsp;{{ $room->room_name }}
-                                                        </div>
-                                                        <div class="card-body">
-                                                            {{-- <h5 class="card-title">Special title treatment</h5> --}}
-                                                            <p class="card-text">
-                                                                <i class="icon-copy dw dw-user-3"></i>
-                                                                Luu Hoai Phong
-                                                            </p>
-                                                            <p class="card-text">
-                                                                <i class="icon-copy dw dw-money-1"></i>
-                                                                2000000
-                                                            </p>
-
-                                                            <div class="pull-left">
-                                                                <a href="#" class="btn btn-secondary btn-sm"><i
-                                                                        class="icon-copy dw dw-add"></i></a>
+                                            @if (count($rooms) == 0)
+                                                <div>No data found</div>
+                                            @else
+                                                @foreach ($rooms as $room)
+                                                    <div class="col-sm-12 col-md-3 mb-30">
+                                                        <div class="card card-box">
+                                                            <div class="card-header"
+                                                                @if ($room->status == 0) style="background-color: #B3DBF8"
+                                                                @else style="background-color: #1899F5" @endif>
+                                                                <i class="icon-copy dw dw-house"></i>
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;{{ $room->room_name }}
                                                             </div>
-                                                            <div class="pull-right">
-                                                                {{-- <a href="#" class="btn btn-primary btn-sm">
+                                                            <div class="card-body">
+                                                                {{-- <h5 class="card-title">Special title treatment</h5> --}}
+                                                                <p class="card-text">
+                                                                    <i class="icon-copy dw dw-user-3"></i>
+                                                                    @if ($room->status == 0)
+                                                                        <span style="color: red">Not yet rented</span>
+                                                                    @else
+                                                                        <span
+                                                                            style="color: green">{{ $room->rentals->tenants->fullname }}</span>
+                                                                    @endif
+                                                                </p>
+                                                                <p class="card-text">
+                                                                    <i class="icon-copy dw dw-money-1"></i>
+                                                                    {{ $room->price }}
+                                                                </p>
+
+                                                                <div class="pull-left">
+                                                                    <a href="javascript:;" data-toggle="modal"
+                                                                        data-target="#tenant-list" type="button"
+                                                                        class="btn btn-secondary btn-sm"><i
+                                                                            class="icon-copy dw dw-add"></i></a>
+                                                                </div>
+                                                                <div class="pull-right">
+                                                                    {{-- <a href="#" class="btn btn-primary btn-sm">
                                                                     <i class="icon-copy dw dw-edit"></i>
                                                                 </a>
                                                                 <a href="#" class="btn btn-danger btn-sm">
                                                                     <i class="icon-copy dw dw-trash"></i>
                                                                 </a> --}}
 
-                                                                <form id="delete-room"
-                                                                    action="{{ route('room.delete', $room->room_id) }}"
-                                                                    method="Post">
-                                                                    <a href="#" class="btn btn-primary btn-sm"
-                                                                        role="button" title="Show details"><i
-                                                                            class="fa fa-eye"></i></a>
-                                                                    <a href="javascript:;" data-toggle="modal"
-                                                                        data-target="#house-edit"
-                                                                        class="btn btn-secondary btn-sm"
-                                                                        title="Edit house"><i class="fa fa-edit"></i></a>
-                                                                    @csrf
-                                                                    {{-- <button type="submit" class="btn btn-danger"
+                                                                    <form id="delete-room"
+                                                                        action="{{ route('room.delete', $room->room_id) }}"
+                                                                        method="Post">
+                                                                        <a href="#" class="btn btn-primary btn-sm"
+                                                                            role="button" title="Show details"><i
+                                                                                class="fa fa-eye"></i></a>
+                                                                        <a href="javascript:;" data-toggle="modal"
+                                                                            id="edit-room-modal-btn"
+                                                                            data-id="{{ $room->room_id }}"
+                                                                            data-roomName="{{ $room->room_name }}"
+                                                                            data-price="{{ $room->price }}"
+                                                                            data-description="{{ $room->room_description }}"
+                                                                            class="btn btn-secondary btn-sm"
+                                                                            title="Edit Room"><i
+                                                                                class="fa fa-edit"></i></a>
+                                                                        @csrf
+                                                                        {{-- <button type="submit" class="btn btn-danger"
                                                                         onclick="return confirm('Are you sure to delete?')"><i
                                                                             class="fa fa-trash"></i></button> --}}
 
-                                                                    <button class="btn btn-danger btn-sm" type="button"
-                                                                        id="confirm-delete-modal-btn"
-                                                                        data-id="{{ $room->room_id }}"
-                                                                        data-roomName="{{ $room->room_name }}"
-                                                                        data-houseID="{{ $id }}"><i
-                                                                            class="fa fa-trash"></i></button>
-                                                                </form>
-                                                            </div>
+                                                                        <button class="btn btn-danger btn-sm"
+                                                                            type="button" id="confirm-delete-modal-btn"
+                                                                            data-id="{{ $room->room_id }}"
+                                                                            data-roomName="{{ $room->room_name }}"
+                                                                            data-houseID="{{ $id }}"><i
+                                                                                class="fa fa-trash"></i></button>
+                                                                    </form>
+                                                                </div>
 
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            @endforeach
+                                                @endforeach
+                                            @endif
                                         </div>
                                         <div style="display: flex;justify-content: center;align-items: center;">
                                             {{ $rooms->links() }}
@@ -268,56 +286,104 @@
     </div>
     <!-- add task popup end -->
 
-    <!-- add task popup start -->
-    <div class="modal fade customscroll" id="house-edit" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal fade" id="room-edit" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Update house</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-toggle="tooltip"
-                        data-placement="bottom" title="" data-original-title="Close Modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h4 class="modal-title" id="myLargeModalLabel">Update room</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
-                <div class="modal-body pd-0">
-                    <div class="task-list-form">
-                        <ul>
-                            <li>
-                                <form name="formUpdateHouse" method="post">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="form-group row">
-                                        <label class="col-md-4">House name</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" name="house_name"
-                                                id="house_name_edit">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4">House address</label>
-                                        <div class="col-md-8">
-                                            <textarea class="form-control" name="house_address" id="house_address_edit"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4">Description</label>
-                                        <div class="col-md-8">
-                                            <textarea class="form-control" name="house_description" id="house_description_edit"></textarea>
-                                        </div>
-                                    </div>
-                                </form>
-                            </li>
-                        </ul>
+                <div class="modal-body">
+                    <form name="formUpdateRoom" method="post">
+                        @csrf
+                        <div class="form-group row">
+                            <label class="col-md-4">Room name</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" name="room_name_edit" id="room_name_edit">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">Price</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" name="price_edit" id="price_edit">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">Description</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" name="room_description_edit" id="room_description_edit"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- add task popup End -->
+    <!-- Large modal -->
+    <div class="modal fade bs-example-modal-lg" id="tenant-list" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">List of Tenants</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <form class="col-md-12 mb-20"
+                        style="display: flex; justify-content: space-between; align-items:center">
+                        <input type="text" class="form-control col-md-10" placeholder="Search tenant">
+                        <button class="btn btn-primary btn-sm"><i class="icon-copy dw dw-search">
+                            </i> &nbsp;&nbsp;Search
+                        </button>
+                    </form>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="house-table">
+                            <thead>
+                                <tr>
+
+                                    <th scope="col"></th>
+                                    <th scope="col">Full name </th>
+                                    <th scope="col">ID card </th>
+                                    <th scope="col">Phone number</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Hometown</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($tenants as $tenant)
+                                    <tr>
+                                        <th scope="row">
+                                            <input type="checkbox" class="form-control" id="checkbox">
+                                        </th>
+                                        <td>{{ $tenant->fullname }}</td>
+                                        <td>{{ $tenant->id_card }}</td>
+                                        <td>{{ $tenant->phone_number }}</td>
+                                        <td>{{ $tenant->email }}</td>
+                                        <td>{{ $tenant->hometown }}</td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" onclick="updateHouse()">Update</button>
-                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- add task popup End -->
+    <!-- Large modal end-->
+
 
     {{-- <!-- Confirmation modal -->
 
@@ -353,7 +419,7 @@
 
 
     <script>
-        // script handle delete room modal
+        // passing value to delete room confirm modal
         document.addEventListener('DOMContentLoaded', function() {
             var deleteButtons = document.querySelectorAll('#confirm-delete-modal-btn');
             deleteButtons.forEach(function(e) {
@@ -365,7 +431,8 @@
                     var cardIDInput = document.querySelector(
                         '#confirm-delete-modal input[name="id"]');
                     var formDelete = document.querySelector('#delete-form');
-                    formDelete.action = "{{ route('room.delete', ':id') }}".replace(':id', houseID);
+                    formDelete.action = "{{ route('room.delete', ':id') }}".replace(':id',
+                        houseID);
 
                     msg.innerHTML = 'Are you sure you want to delete room ' + name + '?';
                     cardIDInput.value = roomID;
@@ -373,20 +440,86 @@
                 });
             });
         });
+
+        // passing value to edit room modal
+        document.addEventListener('DOMContentLoaded', function() {
+            var editButtons = document.querySelectorAll('#edit-room-modal-btn');
+            editButtons.forEach(function(e) {
+                e.addEventListener('click', function() {
+
+                    var roomID = e.getAttribute('data-id');
+                    var roomName = e.getAttribute('data-roomName');
+                    var roomDescription = e.getAttribute('data-description');
+                    var price = e.getAttribute('data-price');
+
+                    var formUpdate = document.querySelector(
+                        '#room-edit form[name="formUpdateRoom"]');
+                    formUpdate.action = "{{ route('room.update', ':id') }}".replace(':id',
+                        roomID);
+
+
+                    var roomNameInput = document.querySelector(
+                        '#room-edit input[name="room_name_edit"]');
+                    var roomDescriptionInput = document.querySelector(
+                        '#room-edit textarea[name="room_description_edit"]');
+                    var priceInput = document.querySelector('#room-edit input[name="price_edit"]');
+
+                    roomNameInput.value = roomName;
+                    roomDescriptionInput.value = roomDescription;
+                    priceInput.value = price;
+
+                    $('#room-edit').modal('show');
+                });
+            });
+        });
+
+        // handle click on row in table of List of Tenants
+        // checked => hide other row
+        // unchecked => show all row
+        const tbody = document.querySelector('#tenant-list tbody');
+        const rows = tbody.querySelectorAll('#tenant-list tr');
+        rows.forEach((row) => {
+            row.addEventListener('mouseenter', (event) => {
+                event.currentTarget.style.backgroundColor = '#f2f2f2';
+                event.currentTarget.style.cursor = 'pointer';
+            });
+
+            row.addEventListener('mouseleave', (event) => {
+                event.currentTarget.style.backgroundColor = '';
+            });
+
+            row.addEventListener('click', (event) => {
+                const tableRow = event.currentTarget;
+                const checkbox = row.querySelector('#tenant-list #checkbox');
+
+                checkbox.checked = !checkbox.checked;
+                if (checkbox.checked) {
+                    rows.forEach((otherRow) => {
+                        if (otherRow !== tableRow) {
+                            otherRow.style.display = 'none';
+                        }
+                    });
+                } else {
+                    rows.forEach((otherRow) => {
+                        otherRow.style.display = '';
+                    });
+                }
+            });
+        });
     </script>
 
     <script>
-        function submit() {
-            document.formAddRoom.submit();
-        }
+        // function submit() {
+        //     document.formAddRoom.submit();
+        // }
 
-        function multipleSubmit() {
-            document.formAddMultipleRoom.submit();
-        }
+        // function multipleSubmit() {
+        //     document.formAddMultipleRoom.submit();
+        // }
 
-        function updateArea() {
-            document.formUpdateArea.submit();
-        }
+        // function updateRoom() {
+        //     document.formUpdateRoom.submit();
+        // }
 
         // //Show data in edit modal
         // // var table = document.getElementById("area-table");

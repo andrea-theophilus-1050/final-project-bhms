@@ -47,7 +47,14 @@
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $house->house_name }}</td>
                                     <td>{{ $house->house_address }}</td>
-                                    <td>{{ $house->house_description }}</td>
+                                    <td id="house-description"
+                                        style=" max-width: 200px; 
+                                                overflow: hidden; 
+                                                text-overflow: ellipsis; 
+                                                white-space: nowrap;"
+                                        title="{{ $house->house_description }}">
+                                        {{ $house->house_description }}
+                                    </td>
                                     <td>
                                         <form id="delete-house" action="{{ route('house.destroy', $house->house_id) }}"
                                             method="Post">
@@ -75,117 +82,96 @@
     </div>
 
     <!-- add task popup start -->
-    <div class="modal fade customscroll" id="house-add" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal fade" id="house-add" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Add new house</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-toggle="tooltip"
-                        data-placement="bottom" title="" data-original-title="Close Modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h4 class="modal-title" id="myLargeModalLabel">Add a new house</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
-                <div class="modal-body pd-0">
-                    <div class="task-list-form">
-                        <ul>
-                            <li>
-                                <form name="formAddHouse" method="post" action="{{ route('house.store') }}">
-                                    @csrf
-                                    <div class="form-group row">
-                                        <label class="col-md-4">House name</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" name="house_name">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4">House address</label>
-                                        <div class="col-md-8">
-                                            <textarea class="form-control" name="house_address"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4">Description</label>
-                                        <div class="col-md-8">
-                                            <textarea class="form-control" name="house_description"></textarea>
-                                        </div>
-                                    </div>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" onclick="submit()">Add</button>
-                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <div class="modal-body">
+                    <form name="formAddHouse" method="post" action="{{ route('house.store') }}">
+                        @csrf
+                        <div class="form-group row">
+                            <label class="col-md-4">House name</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" name="house_name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">House address</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" name="house_address"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">Description</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" name="house_description"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
+
         </div>
     </div>
+
     <!-- add task popup End -->
 
     <!-- add task popup start -->
-    <div class="modal fade customscroll" id="house-edit" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal fade" id="house-edit" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Update house</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-toggle="tooltip"
-                        data-placement="bottom" title="" data-original-title="Close Modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h4 class="modal-title" id="myLargeModalLabel">Update house</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
-                <div class="modal-body pd-0">
-                    <div class="task-list-form">
-                        <ul>
-                            <li>
-                                <form name="formUpdateHouse" method="post">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="form-group row">
-                                        <label class="col-md-4">House name</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" name="house_name"
-                                                id="house_name_edit">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4">House address</label>
-                                        <div class="col-md-8">
-                                            <textarea class="form-control" name="house_address" id="house_address_edit"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4">Description</label>
-                                        <div class="col-md-8">
-                                            <textarea class="form-control" name="house_description" id="house_description_edit"></textarea>
-                                        </div>
-                                    </div>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" onclick="updateHouse()">Update</button>
-                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <div class="modal-body">
+                    <form name="formUpdateHouse" method="post">
+                        @csrf
+                        @method('PUT')
+                        <div class="form-group row">
+                            <label class="col-md-4">House name</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" name="house_name" id="house_name_edit">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">House address</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" name="house_address" id="house_address_edit"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">Description</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" name="house_description" id="house_description_edit"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
+
         </div>
     </div>
+
     <!-- add task popup End -->
 
     {{-- confirm delete popup --}}
     @include('layouts.confirm-popup')
 
     <script>
-        function submit() {
-            document.formAddHouse.submit();
-        }
-
-        function updateHouse() {
-            document.formUpdateHouse.submit();
-        }
-
         //Show data in edit modal
         var table = document.getElementById("house-table");
         var id = null;

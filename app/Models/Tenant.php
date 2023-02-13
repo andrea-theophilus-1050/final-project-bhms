@@ -29,4 +29,9 @@ class Tenant extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function rentals()
+    {
+        return $this->hasOne(RentalRoom::class, 'tenant_id');
+    }
 }

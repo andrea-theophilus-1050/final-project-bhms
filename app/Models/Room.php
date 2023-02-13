@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\House;
+use App\Models\RentalRoom;
 
 class Room extends Model
 {
@@ -24,5 +25,9 @@ class Room extends Model
     public function houses()
     {
         return $this->belongsTo(House::class, 'house_id');
+    }
+    public function rentals()
+    {
+        return $this->hasOne(RentalRoom::class, 'room_id');
     }
 }

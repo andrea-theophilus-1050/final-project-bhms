@@ -6,15 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Room;
+use App\Models\Tenant;
 
 class RoomController extends Controller
 {
     public function index($id)
     {
         $rooms = Room::where('house_id', $id)->paginate(20);
+        $tenants = Tenant::where('user_id', auth()->user()->id)->get();
         // $roomAvailable = DB::table('tb_rooms')->where('area_id', $id)->where('status', 0)->get();
         // $countAvailable = count($roomAvailable);
-        return view('dashboard.room.index', compact(['rooms', 'id']))->with('title', 'Room Management');
+        return view('dashboard.room.index', compact(['rooms', 'tenants', 'id']))->with('title', 'Room Management');
         // dd($rooms);
     }
 
@@ -41,6 +43,16 @@ class RoomController extends Controller
             $room->save();
         }
         return redirect()->route('room.index', $id);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $room = Room::find($id);
+        $room->room_name = $request->room_name_edit;
+        $room->price = $request->price_edit;
+        $room->room_description = $request->room_description_edit;
+        $room->save();
+        return redirect()->route('room.index', $room->house_id)->with('success', 'Room has been updated successfully');
     }
 
     public function delete(Request $request, $house_id)
