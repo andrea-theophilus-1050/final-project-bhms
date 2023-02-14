@@ -35,7 +35,7 @@
                     <table class="table table-striped hover" id="tenant-table">
                         <thead>
                             <tr>
-                                <th style="display: none" scope="col">Tenant ID</th>
+                                <th hidden scope="col">Tenant ID</th>
                                 <th scope="col">No. </th>
                                 <th scope="col">Full name</th>
                                 <th scope="col">ID Card</th>
@@ -51,7 +51,7 @@
                         <tbody>
                             @foreach ($tenants as $tenant)
                                 <tr>
-                                    <td style="display: none">{{ $tenant->tenant_id }}</td>
+                                    <td hidden>{{ $tenant->tenant_id }}</td>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $tenant->fullname }}</td>
                                     <td>{{ $tenant->id_card }}</td>
@@ -60,7 +60,13 @@
                                     <td><a href="tel:{{ $tenant->phone_number }}">{{ $tenant->phone_number }}</a></td>
                                     <td><a href="mailto:{{ $tenant->email }}">{{ $tenant->email }}</a></td>
                                     <td>{{ $tenant->hometown }}</td>
-                                    <td>{{ $tenant->status }}</td>
+                                    <td>
+                                        @if ($tenant->status != 0)
+                                            <span class="badge badge-pill badge-success">Rented</span>
+                                        @else
+                                            <span class="badge badge-pill badge-danger">Not Rented</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <div class="dropdown">
                                             <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"

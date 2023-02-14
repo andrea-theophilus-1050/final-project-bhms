@@ -1,6 +1,5 @@
-var s1 = document.getElementById("s1");
 var options = {
-    series: [s1.innerHTML],
+    series: [100],
     grid: {
         padding: {
             top: 0,
@@ -68,10 +67,10 @@ var options = {
         },
     }
 };
-
+var s1Total = document.getElementById("s1");
 var s2 = document.getElementById("s2");
 var options2 = {
-    series: [s2.innerHTML],
+    series: [Math.round((s2.innerHTML / s1Total.innerHTML) * 100)],
     grid: {
         padding: {
             top: 0,
@@ -142,7 +141,7 @@ var options2 = {
 
 var s3 = document.getElementById("s3");
 var options3 = {
-    series: [s3.innerHTML],
+    series: [Math.round((s3.innerHTML / s1Total.innerHTML) * 100)],
     grid: {
         padding: {
             top: 0,

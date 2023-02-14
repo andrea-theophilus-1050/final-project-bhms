@@ -79,7 +79,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="profile-social">
+                        {{-- <div class="profile-social">
                             <h5 class="mb-20 h5 text-blue">Social Links</h5>
                             <ul class="clearfix">
                                 <li><a href="#" class="btn" data-bgcolor="#3b5998" data-color="#ffffff"><i
@@ -103,8 +103,8 @@
                                 <li><a href="#" class="btn" data-bgcolor="#00b489" data-color="#ffffff"><i
                                             class="fa fa-vine"></i></a></li>
                             </ul>
-                        </div>
-                        <div class="profile-skills">
+                        </div> --}}
+                        {{-- <div class="profile-skills">
                             <h5 class="mb-20 h5 text-blue">Key Skills</h5>
                             <h6 class="mb-5 font-14">HTML</h6>
                             <div class="progress mb-20" style="height: 6px;">
@@ -126,7 +126,7 @@
                                 <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="0"
                                     aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 mb-30">

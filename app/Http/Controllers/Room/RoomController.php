@@ -15,7 +15,11 @@ class RoomController extends Controller
         $rooms = Room::where('house_id', $id)->paginate(20);
         $tenants = Tenant::where('user_id', auth()->user()->id)->where('status', 0)->get();
 
-        return view('dashboard.room.index', compact(['rooms', 'tenants', 'id']))->with('title', 'Room Management');
+        $countTotal = Room::where('house_id', $id)->count();
+        $countRentedRoom = Room::where('house_id', $id)->where('status', 1)->count();
+        $countAvailableRoom = Room::where('house_id', $id)->where('status', 0)->count();
+
+        return view('dashboard.room.index', compact(['rooms', 'tenants', 'id', 'countTotal', 'countRentedRoom', 'countAvailableRoom']))->with('title', 'Room Management');
     }
 
     public function addSingleRoom(Request $request, $id)
@@ -61,7 +65,14 @@ class RoomController extends Controller
         return redirect()->route('room.index', $house_id)->with('success', 'Room has been deleted successfully');
     }
 
-    
+    public function assignTenant($id)
+    {
+        $room = Room::find($id);
+        $tenants = Tenant::where('user_id', auth()->user()->id)->where('status', 0)->get();
+        // dd($room);
+        return view('dashboard.room.assign-tenant', compact(['room', 'tenants']))->with('title', 'Assign Tenant');
+    }
+
 
     // public function room()
     // {

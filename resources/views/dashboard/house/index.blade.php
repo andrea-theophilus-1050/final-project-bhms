@@ -32,7 +32,7 @@
                     <table class="table table-striped" id="house-table">
                         <thead>
                             <tr>
-                                <th style="display: none" scope="col">House ID</th>
+                                <th hidden scope="col">House ID</th>
                                 <th scope="col">No. </th>
                                 <th scope="col">House name</th>
                                 <th scope="col">House address</th>
@@ -43,7 +43,7 @@
                         <tbody>
                             @foreach ($houses as $house)
                                 <tr {{-- class="table-success" --}}>
-                                    <td style="display: none">{{ $house->house_id }}</td>
+                                    <td hidden>{{ $house->house_id }}</td>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $house->house_name }}</td>
                                     <td>{{ $house->house_address }}</td>

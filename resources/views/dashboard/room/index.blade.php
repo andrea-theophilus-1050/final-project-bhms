@@ -11,11 +11,12 @@
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('house.index') }}">House management</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">@lang('messages.navRoom')</li>
                             </ol>
                         </nav>
                     </div>
-                    <div class="col-md-6 col-sm-12">
+                    {{-- <div class="col-md-6 col-sm-12">
                         <div class="dropdown">
                             <form action="" style="display: flex; justify-content: space-between">
                                 <input type="text" name="search" placeholder="Room number" class="form-control"
@@ -37,28 +38,28 @@
                                 <button type="submit" class="btn btn-primary btn-sm">Search</button>
                             </form>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
-            <div class="page-header">
+            {{-- <div class="page-header">
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="dropdown">
                             <form action="" style="display: flex; justify-content: space-between">
                                 <input type="text" name="search" placeholder="Room number" class="form-control"
                                     style="margin-right: 5%; font-size: 13px">
-                                <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
+                                <select class="form-control" name="" style="margin-right: 5%; font-size: 13px"> --}}
 
-                                    {{-- @foreach ($house as $item)
+            {{-- @foreach ($house as $item)
                                         <option value="{{ $item->house_id }}">{{ $item->house_name }}</option>
                                     @endforeach --}}
-                                    {{-- <option value="">Room status</option>
+            {{-- <option value="">Room status</option>
                                     <option value="">1</option>
                                     <option value="">1</option>
                                     <option value="">1</option>
                                     <option value="">1</option> --}}
-                                </select>
+            {{-- </select>
                                 <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
                                     <option value="">Room billed</option>
                                     <option value="">1</option>
@@ -68,8 +69,8 @@
                                 </select>
                                 <button type="submit" class="btn btn-primary btn-sm">Search</button>
                             </form>
-                        </div>
-                        {{-- <div class="dropdown">
+                        </div> --}}
+            {{-- <div class="dropdown">
                             <label style="font-size: 15px; font-weight: bold">Area: </label>
                             <a class="btn btn-success btn-sm dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                                 January 2018
@@ -80,10 +81,63 @@
                                 <a class="dropdown-item" href="#">View Assets</a>
                             </div>
                         </div> --}}
+            {{-- </div>
+                </div>
+            </div> --}}
+            <div class="row">
+                <div class="col-xl-3 mb-30">
+                    <div class="card-box height-100-p widget-style1">
+                        <div class="d-flex flex-wrap align-items-center">
+                            <div class="progress-data">
+                                <div id="statistic1"></div>
+                            </div>
+                            <div class="widget-data">
+                                <div class="h4 mb-0" id="s1">{{ $countTotal }}</div>
+                                <div class="weight-600 font-14">Total room</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 mb-30">
+                    <div class="card-box height-100-p widget-style1">
+                        <div class="d-flex flex-wrap align-items-center">
+                            <div class="progress-data">
+                                <div id="statistic2"></div>
+                            </div>
+                            <div class="widget-data">
+                                <div class="h4 mb-0" id="s2">{{ $countRentedRoom }}</div>
+                                <div class="weight-600 font-14">Rented room</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 mb-30">
+                    <div class="card-box height-100-p widget-style1">
+                        <div class="d-flex flex-wrap align-items-center">
+                            <div class="progress-data">
+                                <div id="statistic3"></div>
+                            </div>
+                            <div class="widget-data">
+                                <div class="h4 mb-0" id="s3">{{ $countAvailableRoom }}</div>
+                                <div class="weight-600 font-14">Available</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 mb-30">
+                    <div class="card-box height-100-p widget-style1">
+                        <div class="d-flex flex-wrap align-items-center">
+                            <div class="progress-data">
+                                <div id="statistic4"></div>
+                            </div>
+                            <div class="widget-data">
+                                <div class="h4 mb-0" id="s4">0</div>
+                                <div class="weight-600 font-14">Unknown</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
 
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 mb-30">
@@ -109,26 +163,38 @@
                                     <div class="pd-20">
                                         <div class="row clearfix">
                                             @if (count($rooms) == 0)
-                                                <div>No data found</div>
+                                                <h4>No data found</h4>
                                             @else
                                                 @foreach ($rooms as $room)
                                                     <div class="col-sm-12 col-md-3 mb-30">
                                                         <div class="card card-box">
-                                                            <div class="card-header"
-                                                                @if ($room->status == 0) style="background-color: #B3DBF8"
-                                                                @else style="background-color: #1899F5" @endif>
-                                                                <i class="icon-copy dw dw-house"></i>
-                                                                &nbsp;&nbsp;&nbsp;&nbsp;{{ $room->room_name }}
-                                                            </div>
+                                                            @if ($room->status == 0)
+                                                                <div class="card-header" style="background-color: #B3DBF8">
+                                                                    <i class="icon-copy dw dw-house"></i>
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;{{ $room->room_name }}
+                                                                </div>
+                                                            @else
+                                                                <div class="card-header" style="background-color: #1899F5">
+                                                                    <i class="icon-copy dw dw-house"></i>
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;{{ $room->room_name }}
+                                                                    <span class="badge badge-pill badge-success">
+                                                                        Rented
+                                                                    </span>
+                                                                </div>
+                                                            @endif
+
                                                             <div class="card-body">
                                                                 {{-- <h5 class="card-title">Special title treatment</h5> --}}
                                                                 <p class="card-text">
                                                                     <i class="icon-copy dw dw-user-3"></i>
                                                                     @if ($room->status == 0)
-                                                                        <span style="color: red">Not yet rented</span>
+                                                                        <span class="badge badge-pill badge-danger">
+                                                                            Available
+                                                                        </span>
                                                                     @else
-                                                                        <span
-                                                                            style="color: green">{{ $room->rentals->tenants->fullname }}</span>
+                                                                        <b style="color: green">
+                                                                            {{ $room->rentals->tenants->fullname }}
+                                                                        </b>
                                                                     @endif
                                                                 </p>
                                                                 <p class="card-text">
@@ -138,8 +204,7 @@
 
                                                                 @if ($room->status == 0)
                                                                     <div class="pull-left">
-                                                                        <a href="javascript:;" data-toggle="modal"
-                                                                            data-target="#tenant-list" type="button"
+                                                                        <a href="{{ route('room.assign-tenant', $room->room_id) }}"
                                                                             class="btn btn-secondary btn-sm"><i
                                                                                 class="icon-copy dw dw-add"></i></a>
                                                                     </div>
@@ -329,73 +394,7 @@
         </div>
     </div>
     <!-- add task popup End -->
-    <!-- Large modal -->
-    <div class="modal fade bs-example-modal-lg" id="tenant-list" tabindex="-1" role="dialog"
-        aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myLargeModalLabel">List of Tenants</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                </div>
-                <div class="modal-body">
-                    <form class="col-md-12 mb-10"
-                        style="display: flex; justify-content: space-between; align-items:center">
-                        <input type="text" class="form-control col-md-10" placeholder="Search tenant"
-                            id="search-tenant">
-                        <button class="btn btn-primary btn-sm"><i class="icon-copy dw dw-search">
-                            </i> &nbsp;&nbsp;Search
-                        </button>
-                    </form>
 
-                    <div class="mb-20">
-                        <a href="{{ route('tenant.view.add') }}" class="btn btn-success btn-sm">Add a new tenant</a>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="house-table">
-                            <thead style="white-space: nowrap;">
-                                <tr>
-
-                                    <th scope="col"></th>
-                                    <th scope="col">Full name </th>
-                                    <th scope="col">ID card </th>
-                                    <th scope="col">Phone number</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Hometown</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($tenants as $tenant)
-                                    <tr style="white-space: nowrap;">
-                                        <th scope="row">
-                                            <form id="room-assign-tenant" action="" method="POST">
-                                                @csrf
-                                                <input type="checkbox" class="form-control" id="checkbox"
-                                                    name="tenant_id" value="{{ $tenant->tenant_id }}">
-                                            </form>
-                                        </th>
-                                        <td>{{ $tenant->fullname }}</td>
-                                        <td>{{ $tenant->id_card }}</td>
-                                        <td>{{ $tenant->phone_number }}</td>
-                                        <td>{{ $tenant->email }}</td>
-                                        <td>{{ $tenant->hometown }}</td>
-
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="assignTenantSubmit()">Assign Tenant</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Large modal end-->
 
 
     {{-- <!-- Confirmation modal -->
@@ -485,63 +484,7 @@
             });
         });
 
-        // handle click on row in table of List of Tenants
-        // checked => hide other row
-        // unchecked => show all row
-        const tbody = document.querySelector('#tenant-list tbody');
-        const rows = tbody.querySelectorAll('#tenant-list tr');
-        rows.forEach((row) => {
-            row.addEventListener('mouseenter', (event) => {
-                event.currentTarget.style.backgroundColor = '#f2f2f2';
-                event.currentTarget.style.cursor = 'pointer';
-            });
 
-            row.addEventListener('mouseleave', (event) => {
-                event.currentTarget.style.backgroundColor = '';
-            });
-
-            row.addEventListener('click', (event) => {
-                const tableRow = event.currentTarget;
-                const checkbox = row.querySelector('#tenant-list #checkbox');
-
-                checkbox.checked = !checkbox.checked;
-                if (checkbox.checked) {
-                    rows.forEach((otherRow) => {
-                        if (otherRow !== tableRow) {
-                            otherRow.style.display = 'none';
-                        }
-                    });
-                } else {
-                    rows.forEach((otherRow) => {
-                        otherRow.style.display = '';
-                    });
-                }
-            });
-        });
-
-        //Search tenants in table of List of Tenants
-        const searchInput = document.querySelector('#tenant-list #search-tenant');
-        searchInput.addEventListener('input', (event) => {
-            const searchTerm = event.target.value.toLowerCase();
-
-            rows.forEach((row) => {
-                const cells = row.querySelectorAll('td');
-                let match = false;
-
-                cells.forEach((cell) => {
-                    if (cell.textContent.toLowerCase().indexOf(searchTerm) !== -1) {
-                        match = true;
-                    }
-                });
-
-                if (match) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-
-            });
-        });
 
         function assignTenantSubmit() {
             const tenantForm = document.querySelector('#room-assign-tenant');
@@ -586,4 +529,5 @@
         //     document.getElementById('delete-room').submit();
         // }
     </script>
+
 @endsection

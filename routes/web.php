@@ -84,7 +84,8 @@ Route::middleware('setLocale')->group(function () {
                         Route::post('room/{id}/add-multiple-room-action', [RoomController::class, 'addMultipleRooms'])->name('room.add.multiple');
                         Route::post('room/{id}/update-action', [RoomController::class, 'update'])->name('room.update');
                         Route::post('room/{id}/room-delete', [RoomController::class, 'delete'])->name('room.delete');
-                        // Route::post('room/{id}/assignTenant', [RoomController::class, 'assignTenant'])->name('room.assign-tenant');
+                        
+                        Route::get('room/{id}/assignTenant', [RoomController::class, 'assignTenant'])->name('room.assign-tenant');
                         // });
                     });
 
