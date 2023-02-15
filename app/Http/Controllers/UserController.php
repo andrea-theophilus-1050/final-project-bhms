@@ -83,18 +83,25 @@ class UserController extends Controller
     //function return view login
     public function login()
     {
-        return view('user.login')->with('title', 'Login');
+        if (Auth::check()) {
+            return redirect()->route('home')->with('success', 'Login successful!');
+        } else {
+            return view('user.login')->with('title', 'Login');
+        }
     }
 
     //function handle login
     public function login_action(Request $request)
     {
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password, 'type_login' => 'username'], $request->remember_me)) {
+        $remember = $request->has('remember_me') || Cookie::has('remember_me');
+        $credentials = $request->only('username', 'password');
+
+        if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
-            if ($request->remember_me) {
-                Cookie::queue('username', $request->username, 60 * 24 * 30);
-                Cookie::queue('password', $request->password, 60 * 24 * 30);
-            }
+            // if ($request->remember_me) {
+            //     Cookie::queue('username', $request->username, 60 * 24 * 30);
+            //     Cookie::queue('password', $request->password, 60 * 24 * 30);
+            // }
             if (Auth::user()->role == 'landlords') {
                 return redirect()->route('home')->with('success', 'Login successful!');
             } else {

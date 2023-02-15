@@ -73,6 +73,10 @@ class RoomController extends Controller
         return view('dashboard.room.assign-tenant', compact(['room', 'tenants']))->with('title', 'Assign Tenant');
     }
 
+    public function getMembers(Request $request)
+    {
+        dd($request->all());
+    }
 
     // public function room()
     // {

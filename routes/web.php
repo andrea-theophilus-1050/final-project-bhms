@@ -8,6 +8,7 @@ use App\Http\Controllers\House\HouseController;
 use App\Http\Controllers\Area\AreaController;
 use App\Http\Controllers\Room\RoomController;
 use App\Http\Controllers\Tenants\TenantController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +45,10 @@ Route::middleware('setLocale')->group(function () {
 
     //Route user account
     Route::get('/', function () {
-        return redirect()->route('login');
+        if (Auth::check())
+            return redirect()->route('home');
+        else
+            return redirect()->route('login');
     });
     Route::get('login', [UserController::class, 'login'])->name('login');
     Route::post('login', [UserController::class, 'login_action'])->name('login.action');
@@ -84,8 +88,10 @@ Route::middleware('setLocale')->group(function () {
                         Route::post('room/{id}/add-multiple-room-action', [RoomController::class, 'addMultipleRooms'])->name('room.add.multiple');
                         Route::post('room/{id}/update-action', [RoomController::class, 'update'])->name('room.update');
                         Route::post('room/{id}/room-delete', [RoomController::class, 'delete'])->name('room.delete');
-                        
+
                         Route::get('room/{id}/assignTenant', [RoomController::class, 'assignTenant'])->name('room.assign-tenant');
+
+                        Route::post('room/members', [RoomController::class, 'getMembers'])->name('room.get-members');
                         // });
                     });
 

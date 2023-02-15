@@ -197,9 +197,9 @@
                                                                         </b>
                                                                     @endif
                                                                 </p>
-                                                                <p class="card-text">
-                                                                    <i class="icon-copy dw dw-money-1"></i>
-                                                                    {{ $room->price }}
+                                                                <p class="card-text" style="display: flex; align-items: center">
+                                                                    <i class="icon-copy dw dw-money-2" style="font-size: 20px"></i>
+                                                                    &nbsp;{{ $room->price }}
                                                                 </p>
 
                                                                 @if ($room->status == 0)

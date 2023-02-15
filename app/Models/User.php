@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\House;
 use App\Models\Tenant;
 
+
 class User extends Authenticatable
 {
     use HasFactory;

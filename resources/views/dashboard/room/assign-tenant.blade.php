@@ -67,17 +67,18 @@
                                         data-toggle="modal">Get tenants</a>
                                     <form method="post" action="{{ route('tenant.add') }}">
                                         @csrf
+                                        <input type="text" id="tenant_id">
                                         <div class="form-group row">
                                             <label class="col-sm-12 col-md-2 col-form-label">Full name</label>
                                             <div class="col-sm-6 col-md-4">
                                                 <input class="form-control" type="text" placeholder="Full name"
-                                                    name="fullname">
+                                                    name="fullname" id="tenant_name">
                                             </div>
 
                                             <label class="col-sm-12 col-md-2 col-form-label">ID Card Number</label>
                                             <div class="col-sm-6 col-md-4">
                                                 <input class="form-control" placeholder="ID Card number" type="text"
-                                                    name="id_card">
+                                                    name="id_card" id="tenant_id_card">
                                             </div>
                                         </div>
                                         {{-- <div class="form-group row">
@@ -95,7 +96,7 @@
                                             <label class="col-sm-12 col-md-2 col-form-label">Date of birth</label>
                                             <div class="col-sm-12 col-md-4">
                                                 <input class="form-control date-picker" placeholder="Date of birth"
-                                                    type="text" name="dob">
+                                                    type="text" name="dob" id="dob">
                                             </div>
 
                                             <label class="col-sm-12 col-md-2 col-form-label">Gender</label>
@@ -120,20 +121,20 @@
                                             <label class="col-sm-12 col-md-2 col-form-label">Phone number</label>
                                             <div class="col-sm-12 col-md-4">
                                                 <input class="form-control" placeholder="Phone number" type="text"
-                                                    name="phone">
+                                                    name="phone" id="phone_number">
                                             </div>
 
                                             <label class="col-sm-12 col-md-2 col-form-label">Email</label>
                                             <div class="col-sm-12 col-md-4">
                                                 <input class="form-control" placeholder="Email" type="text"
-                                                    name="id_card">
+                                                    name="email" id="email">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-12 col-md-2 col-form-label">Hometown</label>
                                             <div class="col-sm-12 col-md-10">
                                                 <input class="form-control" placeholder="Hometown address" type="text"
-                                                    name="phone">
+                                                    name="hometown" id="hometown">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -229,6 +230,11 @@
                             <div class="tab-pane fade" id="contact" role="tabpanel">
                                 <div class="pd-20">
                                     <div class="table-responsive">
+                                        <div class="pull-right mb-20">
+                                            <button class="btn btn-primary" onclick="saveMember()">Save</button>
+                                            <button class="btn btn-danger">Cancel</button>
+
+                                        </div>
                                         <table class="table table-striped" id="tenant-member-table">
                                             <thead>
                                                 <tr>
@@ -240,39 +246,53 @@
                                                     <th scope="col">Email</th>
                                                     <th scope="col">Hometown</th>
                                                     <th scope="col"></th>
-
                                                 </tr>
                                             </thead>
                                             <tbody id="table-body">
 
                                                 <tr>
-                                                    <td>
-                                                        <input type='text' class='form-control' name=''>
-                                                    </td>
-                                                    <td>
-                                                        <input type='text' class='form-control' name=''>
-                                                    </td>
-                                                    <td>
-                                                        <input type='text' class='form-control' name=''>
-                                                    </td>
-                                                    <td>
-                                                        <input type='text' class='form-control' name=''>
-                                                    </td>
-                                                    <td>
-                                                        <input type='text' class='form-control' name=''>
-                                                    </td>
-                                                    <td>
-                                                        <input type='text' class='form-control' name=''>
-                                                    </td>
-                                                    <td>
-                                                        <input type='text' class='form-control' name=''>
-                                                    </td>
-                                                    <td>
-                                                        <button type='button' class='btn btn-danger btn-sm'
-                                                            onclick='deleteRow(this)'><i
-                                                                class='icon-copy fa fa-minus-circle'
-                                                                aria-hidden='true'></i></button>
-                                                    </td>
+                                                    <form id="room-members" action="{{ route('room.get-members') }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <td>
+                                                            <input type='text' class='form-control' name='fullname'>
+                                                        </td>
+                                                        <td>
+                                                            <input type='text' class='form-control' name='id_card'>
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control" type="text" name="dob">
+                                                        </td>
+                                                        <td>
+                                                            <div class="custom-control custom-radio mb-5 mr-20">
+                                                                <input type="radio" id="male" name="gender[0]"
+                                                                    class="custom-control-input" value="Male" checked>
+                                                                <label class="custom-control-label weight-400"
+                                                                    for="male">Male</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio mb-5">
+                                                                <input type="radio" id="female" name="gender[0]"
+                                                                    class="custom-control-input" value="Female">
+                                                                <label class="custom-control-label weight-400"
+                                                                    for="female">Female</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <input type='text' class='form-control' name='phone'>
+                                                        </td>
+                                                        <td>
+                                                            <input type='text' class='form-control' name='email'>
+                                                        </td>
+                                                        <td>
+                                                            <input type='text' class='form-control' name='hometown'>
+                                                        </td>
+                                                        <td>
+                                                            <button type='button' class='btn btn-danger btn-sm'
+                                                                onclick='deleteRow(this)'><i
+                                                                    class='icon-copy fa fa-minus-circle'
+                                                                    aria-hidden='true'></i></button>
+                                                        </td>
+                                                    </form>
                                                 </tr>
                                             </tbody>
                                             <tfoot>
@@ -433,8 +453,10 @@
         //add new row to table button
         const addRowButton = document.getElementById("add-new-row");
         const tableBody = document.getElementById("table-body");
+        let clickCount = 0;
 
         addRowButton.addEventListener("click", function() {
+            clickCount++;
             // Create a new row
             const newRow = document.createElement("tr");
 
@@ -455,9 +477,17 @@
             cell2.innerHTML =
                 "<input type='text' class='form-control'>";
             cell3.innerHTML =
-                "<input type='text' class='form-control'>";
+                "<input class='form-control' type='text' name='dob'>";
             cell4.innerHTML =
-                "<input type='text' class='form-control'>";
+                "<div class='custom-control custom-radio mb-5 mr-20'>" +
+                "<input type='radio' id='male" + clickCount +
+                "' name='gender[" + clickCount + "]' class='custom-control-input' value='Male' checked>" +
+                "<label class='custom-control-label weight-400' for='male" + clickCount + "'>Male</label>" +
+                "</div> <div class='custom-control custom-radio mb-5'>" +
+                "<input type='radio' id='female" + clickCount +
+                "' name='gender[" + clickCount + "]' class='custom-control-input' value='Female'>" +
+                "<label class='custom-control-label weight-400' for='female" + clickCount +
+                "'>Female</label> </div>";
             cell5.innerHTML =
                 "<input type='text' class='form-control'>";
             cell6.innerHTML =
@@ -479,12 +509,18 @@
 
             // Append the new row to the table body
             tableBody.appendChild(newRow);
+
         });
 
         //delete row in table
         function deleteRow(btn) {
             const row = btn.parentNode.parentNode;
             row.parentNode.removeChild(row);
+        }
+
+        function saveMember() {
+            const form = document.getElementById('room-members');
+            form.submit();
         }
     </script>
 @endsection
