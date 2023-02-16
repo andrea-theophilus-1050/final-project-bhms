@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id('rental_room_id');
             $table->unsignedBigInteger('room_id');
             $table->unsignedBigInteger('tenant_id');
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
-            $table->integer('status')->default(0);
+            $table->string('start_date')->nullable();
+            $table->string('end_date')->nullable();
+            // $table->integer('status')->default(0);
             $table->foreign('room_id')->references('room_id')->on('tb_rooms');
             $table->foreign('tenant_id')->references('tenant_id')->on('tb_main_tenants');
             $table->timestamps();

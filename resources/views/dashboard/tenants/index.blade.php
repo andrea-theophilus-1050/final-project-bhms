@@ -33,7 +33,7 @@
 
                 <div class="table-responsive">
                     <table class="table table-striped hover" id="tenant-table">
-                        <thead>
+                        <thead style="white-space: nowrap;">
                             <tr>
                                 <th hidden scope="col">Tenant ID</th>
                                 <th scope="col">No. </th>
@@ -57,8 +57,8 @@
                                     <td>{{ $tenant->id_card }}</td>
                                     <td>{{ $tenant->gender }}</td>
                                     <td>{{ $tenant->dob }}</td>
-                                    <td><a href="tel:{{ $tenant->phone_number }}">{{ $tenant->phone_number }}</a></td>
-                                    <td><a href="mailto:{{ $tenant->email }}">{{ $tenant->email }}</a></td>
+                                    <td style="white-space: nowrap;"><a href="tel:{{ $tenant->phone_number }}"><i class="icon-copy dw dw-phone-call"></i> {{ $tenant->phone_number }}</a></td>
+                                    <td style="white-space: nowrap;"><a href="mailto:{{ $tenant->email }}"><i class="icon-copy dw dw-email1"></i> {{ $tenant->email }}</a></td>
                                     <td>{{ $tenant->hometown }}</td>
                                     <td>
                                         @if ($tenant->status != 0)

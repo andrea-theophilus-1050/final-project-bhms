@@ -52,9 +52,7 @@
                                                 overflow: hidden; 
                                                 text-overflow: ellipsis; 
                                                 white-space: nowrap;"
-                                        title="{{ $house->house_description }}">
-                                        {{ $house->house_description }}
-                                    </td>
+                                        title="{{ $house->house_description }}">{{ $house->house_description }}</td>
                                     <td>
                                         <form id="delete-house" action="{{ route('house.destroy', $house->house_id) }}"
                                             method="Post">

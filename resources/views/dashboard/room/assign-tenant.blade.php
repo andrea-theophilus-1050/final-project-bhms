@@ -65,10 +65,12 @@
                                 <div class="pd-20">
                                     <a href="javascript:;" class="btn btn-primary btn-sm mb-20" data-target="#tenant-list"
                                         data-toggle="modal">Get tenants</a>
-                                    <form method="post" action="{{ route('tenant.add') }}">
+                                    <form method="post" action="{{ route('room.assign-tenant-action', $room->room_id) }}">
                                         @csrf
-                                        <input type="text" id="tenant_id">
+
                                         <div class="form-group row">
+                                            <input type="hidden" id="tenant_id" name="tenant_id">
+
                                             <label class="col-sm-12 col-md-2 col-form-label">Full name</label>
                                             <div class="col-sm-6 col-md-4">
                                                 <input class="form-control" type="text" placeholder="Full name"
@@ -141,20 +143,20 @@
                                             <label class="col-sm-12 col-md-2 col-form-label">Rental room</label>
                                             <div class="col-sm-12 col-md-4">
                                                 <input class="form-control" value="{{ $room->room_name }}" type="text"
-                                                    name="email" readonly>
+                                                    name="room_rental" readonly>
                                             </div>
 
                                             <label class="col-sm-12 col-md-2 col-form-label">Room price</label>
                                             <div class="col-sm-12 col-md-4">
                                                 <input class="form-control" value="{{ $room->price }}" type="text"
-                                                    name="email" readonly>
+                                                    name="room_price" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-12 col-md-2 col-form-label">Start date</label>
                                             <div class="col-sm-12 col-md-4">
                                                 <input class="form-control date-picker" placeholder="Start date"
-                                                    type="text" name="dob">
+                                                    type="text" name="start_date">
                                             </div>
                                         </div>
                                         {{-- <div class="form-group row">
@@ -233,8 +235,8 @@
                                         <div class="pull-right mb-20">
                                             <button class="btn btn-primary" onclick="saveMember()">Save</button>
                                             <button class="btn btn-danger">Cancel</button>
-
                                         </div>
+
                                         <table class="table table-striped" id="tenant-member-table">
                                             <thead>
                                                 <tr>
@@ -249,10 +251,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="table-body">
-
                                                 <tr>
-                                                    <form id="room-members" action="{{ route('room.get-members') }}"
-                                                        method="POST">
+                                                    <form id="room-members" action="" method="POST">
                                                         @csrf
                                                         <td>
                                                             <input type='text' class='form-control' name='fullname'>
@@ -338,12 +338,18 @@
                     {{-- <div class="mb-20">
                         <a href="{{ route('tenant.view.add') }}" class="btn btn-success btn-sm">Add a new tenant</a>
                     </div> --}}
-
+                    {{-- error alert --}}
+                    <div class="alert alert-success alert-dismissible fade show" id="alert-error" role="alert"
+                        style="display: none">
+                        Please select a person
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     <div class="table-responsive">
-                        <table class="table table-striped" id="house-table">
+                        <table class="table table-striped" id="tenant-list-table">
                             <thead style="white-space: nowrap;">
                                 <tr>
-
                                     <th scope="col"></th>
                                     <th scope="col" hidden>Tenant ID</th>
                                     <th scope="col">Full name </th>
@@ -353,7 +359,6 @@
                                     <th scope="col">Hometown</th>
                                     <th scope="col" hidden>Date of birth</th>
                                     <th scope="col" hidden>Gender</th>
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -362,7 +367,7 @@
                                         <th scope="row">
                                             <form id="room-assign-tenant" action="" method="POST">
                                                 @csrf
-                                                <input type="checkbox" class="form-control" id="checkbox"
+                                                <input type="checkbox" class="form-control" id="checkboxTenant"
                                                     name="tenant_id" value="{{ $tenant->tenant_id }}">
                                             </form>
                                         </th>
@@ -374,17 +379,15 @@
                                         <td>{{ $tenant->hometown }}</td>
                                         <td hidden>{{ $tenant->dob }}</td>
                                         <td hidden>{{ $tenant->gender }}</td>
-
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="assignTenantSubmit()">Assign Tenant</button>
+                    <button type="button" class="btn btn-primary" onclick="getTenant()">Assign Tenant</button>
                 </div>
             </div>
         </div>
@@ -409,7 +412,7 @@
 
             row.addEventListener('click', (event) => {
                 const tableRow = event.currentTarget;
-                const checkbox = row.querySelector('#tenant-list #checkbox');
+                const checkbox = row.querySelector('#tenant-list #checkboxTenant');
 
                 checkbox.checked = !checkbox.checked;
                 if (checkbox.checked) {
@@ -449,6 +452,43 @@
 
             });
         });
+
+        //Get tenant info from table of List of Tenants and assign to form
+        function getTenant() {
+            const checkbox = document.querySelector('table #checkboxTenant:checked');
+            if (checkbox) {
+
+                const row = checkbox.closest('tr');
+                const tenantId = row.cells[1].textContent;
+                const name = row.cells[2].textContent;
+                const idCard = row.cells[3].textContent;
+                const phoneNumber = row.cells[4].textContent;
+                const email = row.cells[5].textContent;
+                const hometown = row.cells[6].textContent;
+                const dob = row.cells[7].textContent;
+                const gender = row.cells[8].textContent;
+
+                document.getElementById('alert-error').style.display = 'none';
+
+                document.getElementById('tenant_id').value = tenantId;
+                document.getElementById('tenant_name').value = name;
+                document.getElementById('tenant_id_card').value = idCard;
+                document.getElementById('phone_number').value = phoneNumber;
+                document.getElementById('dob').value = dob;
+                document.getElementById('email').value = email;
+                document.getElementById('hometown').value = hometown;
+
+                if (gender === "Male") {
+                    document.getElementById('gender1').checked = true;
+                } else {
+                    document.getElementById('gender2').checked = true;
+                }
+
+                $('#tenant-list').modal('hide');
+            } else {
+                document.getElementById('alert-error').style.display = '';
+            }
+        }
 
         //add new row to table button
         const addRowButton = document.getElementById("add-new-row");

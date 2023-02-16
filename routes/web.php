@@ -90,8 +90,9 @@ Route::middleware('setLocale')->group(function () {
                         Route::post('room/{id}/room-delete', [RoomController::class, 'delete'])->name('room.delete');
 
                         Route::get('room/{id}/assignTenant', [RoomController::class, 'assignTenant'])->name('room.assign-tenant');
+                        Route::post('room/{id}/assignTenant', [RoomController::class, 'assignTenant_action'])->name('room.assign-tenant-action');
 
-                        Route::post('room/members', [RoomController::class, 'getMembers'])->name('room.get-members');
+                        // Route::post('room/members', [RoomController::class, 'getMembers'])->name('room.get-members');
                         // });
                     });
 
