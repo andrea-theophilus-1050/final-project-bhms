@@ -347,7 +347,7 @@
                         tenantID);
 
                     msg.innerHTML = 'Are you sure you want to delete "' + name + '"?';
-                    
+
                     $('#confirm-delete-modal').modal('show');
                 });
             });

@@ -58,7 +58,10 @@
                                             method="Post">
                                             <a href="{{ route('room.index', $house->house_id) }}" class="btn btn-primary"
                                                 role="button" title="Show details"><i class="fa fa-eye"></i></a>
-                                            <a href="javascript:;" data-toggle="modal" data-target="#house-edit"
+                                            <a id="edit-house" href="javascript:;" data-houseID="{{ $house->house_id }}"
+                                                data-houseName="{{ $house->house_name }}"
+                                                data-houseAddress="{{ $house->house_address }}"
+                                                data-houseDescription="{{ $house->house_description }}"
                                                 class="btn btn-secondary" title="Edit house"><i class="fa fa-edit"></i></a>
                                             @csrf
                                             @method('DELETE')
@@ -66,8 +69,9 @@
                                                 onclick="return confirm('Are you sure to delete?')"><i
                                                     class="fa fa-trash"></i></button> --}}
                                             <button class="btn btn-danger" type="button" id="confirm-delete-modal-btn"
-                                                data-toggle="modal" data-target="#confirm-delete-modal"
-                                                data-backdrop="static"><i class="fa fa-trash"></i></button>
+                                                data-houseID="{{ $house->house_id }}"
+                                                data-houseName="{{ $house->house_name }}" data-backdrop="static">
+                                                <i class="fa fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -113,10 +117,8 @@
                             <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </form>
-
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -131,7 +133,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <form name="formUpdateHouse" method="post">
+                    <form name="formUpdateHouse" method="post" id="formUpdateHouse">
                         @csrf
                         @method('PUT')
                         <div class="form-group row">
@@ -157,41 +159,111 @@
                             <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </form>
-
                 </div>
             </div>
-
         </div>
     </div>
-
     <!-- add task popup End -->
 
     {{-- confirm delete popup --}}
-    @include('layouts.confirm-popup')
+    <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center font-18">
+                    <h4 class="padding-top-30 mb-30 weight-500" id="msg-delete-confirm">Are you sure you want to continue?
+                    </h4>
+                    <form id="delete-form" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+                            <div class="col-6">
+                                <button type="button"
+                                    class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+                                    data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                NO
+                            </div>
+                            <div class="col-6">
+                                <button type="submit"
+                                    class="btn btn-primary border-radius-100 btn-block confirmation-btn"><i
+                                        class="fa fa-check"></i></button>
+                                YES
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
-        //Show data in edit modal
-        var table = document.getElementById("house-table");
-        var id = null;
+        // //Show data in edit modal
+        // var table = document.getElementById("house-table");
+        // var id = null;
 
-        for (var i = 1; i < table.rows.length; i++) {
-            table.rows[i].addEventListener("click", function() {
-                document.getElementById('house_name_edit').value = this.cells[2].innerHTML;
-                document.getElementById('house_address_edit').value = this.cells[3].innerHTML;
-                document.getElementById('house_description_edit').value = this.cells[4].innerHTML;
-                document.formUpdateHouse.action =
-                    "{{ route('house.update', ':id') }}".replace(':id', this.cells[0].innerHTML);
+        // for (var i = 1; i < table.rows.length; i++) {
+        //     table.rows[i].addEventListener("click", function() {
+        //         document.getElementById('house_name_edit').value = this.cells[2].innerHTML;
+        //         document.getElementById('house_address_edit').value = this.cells[3].innerHTML;
+        //         document.getElementById('house_description_edit').value = this.cells[4].innerHTML;
+        //         document.formUpdateHouse.action =
+        //             "{{ route('house.update', ':id') }}".replace(':id', this.cells[0].innerHTML);
 
-                document.getElementById('msg-delete-confirm').innerHTML = "Are you sure to delete " + this.cells[2]
-                    .innerHTML + "?";
-                id = this.cells[0].innerHTML;
+        //         document.getElementById('msg-delete-confirm').innerHTML = "Are you sure to delete " + this.cells[2]
+        //             .innerHTML + "?";
+        //         id = this.cells[0].innerHTML;
+        //     });
+        // }
+
+        // function actionDelete() {
+        //     document.getElementById('delete-house').action =
+        //         "{{ route('house.destroy', ':id') }}".replace(':id', id);
+        //     document.getElementById('delete-house').submit();
+        // }
+
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // passing value to update house modal
+            var editHouseBtn = document.querySelectorAll('#edit-house');
+            editHouseBtn.forEach(function(e) {
+                e.addEventListener('click', function() {
+                    var houseID = e.getAttribute('data-houseID');
+                    var houseName = e.getAttribute('data-houseName');
+                    var houseAddress = e.getAttribute('data-houseAddress');
+                    var houseDescription = e.getAttribute('data-houseDescription');
+
+                    var inputName = document.querySelector('#house_name_edit');
+                    var inputAddress = document.querySelector('#house_address_edit');
+                    var inputDescription = document.querySelector('#house_description_edit');
+                    var formUpdate = document.querySelector('#formUpdateHouse');
+
+                    inputName.value = houseName;
+                    inputAddress.value = houseAddress;
+                    inputDescription.value = houseDescription;
+                    formUpdate.action = "{{ route('house.update', ':id') }}".replace(':id',
+                        houseID);
+
+                    $('#house-edit').modal('show');
+                });
             });
-        }
 
-        function actionDelete() {
-            document.getElementById('delete-house').action =
-                "{{ route('house.destroy', ':id') }}".replace(':id', id);
-            document.getElementById('delete-house').submit();
-        }
+            // passing value to delete house modal
+            var deleteHouseBtn = document.querySelectorAll('#confirm-delete-modal-btn');
+            deleteHouseBtn.forEach(function(e) {
+                e.addEventListener('click', function() {
+                    var houseID = e.getAttribute('data-houseID');
+                    var houseName = e.getAttribute('data-houseName');
+
+                    var msg = document.querySelector('#msg-delete-confirm');
+                    var formDelete = document.querySelector('#delete-form');
+
+                    msg.innerHTML = "Are you sure to delete " + houseName + "?";
+
+                    formDelete.action = "{{ route('house.destroy', ':id') }}".replace(':id',
+                        houseID);
+
+                    $('#confirm-delete-modal').modal('show');
+                });
+            });
+        });
     </script>
 @endsection

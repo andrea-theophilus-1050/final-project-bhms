@@ -197,8 +197,10 @@
                                                                         </b>
                                                                     @endif
                                                                 </p>
-                                                                <p class="card-text" style="display: flex; align-items: center">
-                                                                    <i class="icon-copy dw dw-money-2" style="font-size: 20px"></i>
+                                                                <p class="card-text"
+                                                                    style="display: flex; align-items: center">
+                                                                    <i class="icon-copy dw dw-money-2"
+                                                                        style="font-size: 20px"></i>
                                                                     &nbsp;{{ $room->price }}
                                                                 </p>
 
@@ -430,8 +432,9 @@
     @include('layouts.confirm-popup')
 
     <script>
-        // passing value to delete room confirm modal
         document.addEventListener('DOMContentLoaded', function() {
+
+            // passing value to delete room confirm modal
             var deleteButtons = document.querySelectorAll('#confirm-delete-modal-btn');
             deleteButtons.forEach(function(e) {
                 e.addEventListener('click', function() {
@@ -450,10 +453,8 @@
                     $('#confirm-delete-modal').modal('show');
                 });
             });
-        });
 
-        // passing value to edit room modal
-        document.addEventListener('DOMContentLoaded', function() {
+            // passing value to edit room modal
             var editButtons = document.querySelectorAll('#edit-room-modal-btn');
             editButtons.forEach(function(e) {
                 e.addEventListener('click', function() {
@@ -467,7 +468,6 @@
                         '#room-edit form[name="formUpdateRoom"]');
                     formUpdate.action = "{{ route('room.update', ':id') }}".replace(':id',
                         roomID);
-
 
                     var roomNameInput = document.querySelector(
                         '#room-edit input[name="room_name_edit"]');
@@ -484,50 +484,9 @@
             });
         });
 
-
-
         function assignTenantSubmit() {
             const tenantForm = document.querySelector('#room-assign-tenant');
             tenantForm.submit();
         }
     </script>
-
-    <script>
-        // function submit() {
-        //     document.formAddRoom.submit();
-        // }
-
-        // function multipleSubmit() {
-        //     document.formAddMultipleRoom.submit();
-        // }
-
-        // function updateRoom() {
-        //     document.formUpdateRoom.submit();
-        // }
-
-        // //Show data in edit modal
-        // // var table = document.getElementById("area-table");
-        // // var id = null;
-        // // for (var i = 1; i < table.rows.length; i++) {
-        // //     table.rows[i].addEventListener("click", function() {
-        // //         document.getElementById('area_name_edit').value = this.cells[2].innerHTML;
-        // //         document.getElementById('area_description_edit').value = this.cells[3].innerHTML;
-
-        // //         document.getElementById('msg-delete').innerHTML = "Are you sure to delete " + this.cells[2]
-        // //             .innerHTML + "?";
-
-        // //         id = this.cells[0].innerHTML;
-
-        // //         document.formUpdateArea.action = null;
-
-        // //     });
-        // // }
-
-        // function actionDelete() {
-        //     // document.getElementById('delete-room').action =
-        //     //     "{{ route('room.delete', ':id') }}".replace(':id', id);
-        //     document.getElementById('delete-room').submit();
-        // }
-    </script>
-
 @endsection
