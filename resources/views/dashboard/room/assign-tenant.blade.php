@@ -3,14 +3,16 @@
     <div class="pd-ltr-20 xs-pd-20-10">
         <div class="page-header">
             <div class="row">
-                <div class="col-md-6 col-sm-12">
+                <div class="col-md-12 col-sm-12">
                     <div class="title">
                         <h4>@lang('messages.navRoom')</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">@lang('messages.navRoom')</li>
+                                <li class="breadcrumb-item"><a href="{{ route('house.index') }}">House management</a></li>
+                                <li class="breadcrumb-item" aria-current="page"><a href="{{ route('room.index', $room->house_id) }}">@lang('messages.navRoom')</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Assign tenant</li>
                         </ol>
                     </nav>
                 </div>
@@ -236,32 +238,31 @@
                                             <button class="btn btn-primary" onclick="saveMember()">Save</button>
                                             <button class="btn btn-danger">Cancel</button>
                                         </div>
-
-                                        <table class="table table-striped" id="tenant-member-table">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Full name </th>
-                                                    <th scope="col">ID Card</th>
-                                                    <th scope="col">Data of birth</th>
-                                                    <th scope="col">Gender</th>
-                                                    <th scope="col">Phone</th>
-                                                    <th scope="col">Email</th>
-                                                    <th scope="col">Hometown</th>
-                                                    <th scope="col"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="table-body">
-                                                <tr>
-                                                    <form id="room-members" action="" method="POST">
-                                                        @csrf
+                                        <form id="room-members" action="{{ route('assign-members') }}" method="POST">
+                                            @csrf
+                                            <table class="table table-striped" id="tenant-member-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Full name </th>
+                                                        <th scope="col">ID Card</th>
+                                                        <th scope="col">Data of birth</th>
+                                                        <th scope="col">Gender</th>
+                                                        <th scope="col">Phone</th>
+                                                        <th scope="col">Email</th>
+                                                        <th scope="col">Hometown</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="table-body">
+                                                    <tr>
                                                         <td>
-                                                            <input type='text' class='form-control' name='fullname'>
+                                                            <input type='text' class='form-control' name='fullname[]'>
                                                         </td>
                                                         <td>
-                                                            <input type='text' class='form-control' name='id_card'>
+                                                            <input type='text' class='form-control' name='id_card[]'>
                                                         </td>
                                                         <td>
-                                                            <input class="form-control" type="text" name="dob">
+                                                            <input class="form-control" type="text" name="dob[]">
                                                         </td>
                                                         <td>
                                                             <div class="custom-control custom-radio mb-5 mr-20">
@@ -278,13 +279,13 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <input type='text' class='form-control' name='phone'>
+                                                            <input type='text' class='form-control' name='phone[]'>
                                                         </td>
                                                         <td>
-                                                            <input type='text' class='form-control' name='email'>
+                                                            <input type='text' class='form-control' name='email[]'>
                                                         </td>
                                                         <td>
-                                                            <input type='text' class='form-control' name='hometown'>
+                                                            <input type='text' class='form-control' name='hometown[]'>
                                                         </td>
                                                         <td>
                                                             <button type='button' class='btn btn-danger btn-sm'
@@ -292,20 +293,22 @@
                                                                     class='icon-copy fa fa-minus-circle'
                                                                     aria-hidden='true'></i></button>
                                                         </td>
-                                                    </form>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td colspan="7"></td>
-                                                    <td>
-                                                        <button class="btn btn-success btn-sm" id="add-new-row">
-                                                            <i class="icon-copy fa fa-plus-circle" aria-hidden="true"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="7"></td>
+                                                        <td>
+                                                            <button class="btn btn-success btn-sm" type="button"
+                                                                id="add-new-row">
+                                                                <i class="icon-copy fa fa-plus-circle"
+                                                                    aria-hidden="true"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -513,11 +516,11 @@
 
             // Add content to the cells
             cell1.innerHTML =
-                "<input type='text' class='form-control'>";
+                "<input type='text' class='form-control' name='fullname[]'>";
             cell2.innerHTML =
-                "<input type='text' class='form-control'>";
+                "<input type='text' class='form-control' name='id_card[]'>";
             cell3.innerHTML =
-                "<input class='form-control' type='text' name='dob'>";
+                "<input class='form-control' type='text' name='dob[]'>";
             cell4.innerHTML =
                 "<div class='custom-control custom-radio mb-5 mr-20'>" +
                 "<input type='radio' id='male" + clickCount +
@@ -529,11 +532,11 @@
                 "<label class='custom-control-label weight-400' for='female" + clickCount +
                 "'>Female</label> </div>";
             cell5.innerHTML =
-                "<input type='text' class='form-control'>";
+                "<input type='text' class='form-control' name='phone[]'>";
             cell6.innerHTML =
-                "<input type='text' class='form-control'>";
+                "<input type='text' class='form-control' name='email[]'>";
             cell7.innerHTML =
-                "<input type='text' class='form-control'>";
+                "<input type='text' class='form-control' name='hometown[]'>";
             cell8.innerHTML =
                 "<button type='button' class='btn btn-danger btn-sm' onclick='deleteRow(this)'><i class='icon-copy fa fa-minus-circle' aria-hidden='true'></i></button>";
 

@@ -369,7 +369,7 @@
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="{{ route('room') }}" class="dropdown-toggle no-arrow">
+                        <a href="#" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-home"></span><span class="mtext">@lang('messages.navRoom')</span>
                         </a>
                     </li>
@@ -540,8 +540,6 @@
                 target="_blank">Luu Hoai Phong</a>
         </div>
     </div>
-
-
 
 
     <!-- js -->

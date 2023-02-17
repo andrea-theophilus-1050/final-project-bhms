@@ -135,6 +135,11 @@ class RoomController extends Controller
         // dd($request->all());
     }
 
+    public function assignMembers(Request $request)
+    {
+        dd($request->all());
+    }
+
     // public function getMembers(Request $request)
     // {
     //     dd($request->all());

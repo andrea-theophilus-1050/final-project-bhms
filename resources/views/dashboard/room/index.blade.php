@@ -310,7 +310,7 @@
     <!-- add task popup start -->
     <div class="modal fade bs-example-modal-lg" id="room-add-multiple" tabindex="-1" role="dialog"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myLargeModalLabel">Add multiple new rooms</h4>

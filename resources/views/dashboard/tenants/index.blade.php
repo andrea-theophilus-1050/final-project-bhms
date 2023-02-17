@@ -26,8 +26,8 @@
                     <div class="pull-right">
                         {{-- <a id="test" href="javascript:;" data-toggle="modal" data-target="#tenant-add"
                             class="btn btn-success btn-sm"><i class="ion-plus-round"></i> Add new tenant</a> --}}
-                        <a href="{{ route('tenant.view.add') }}" class="btn btn-success btn-sm"><i
-                                class="ion-plus-round"></i> Add new tenant</a>
+                        <a href="{{ route('tenant.create') }}" class="btn btn-success btn-sm"><i class="ion-plus-round"></i>
+                            Add new tenant</a>
                     </div>
                 </div>
 
@@ -35,6 +35,7 @@
                     <table class="table table-striped hover" id="tenant-table">
                         <thead style="white-space: nowrap;">
                             <tr>
+                                <th scope="col"></th>
                                 <th hidden scope="col">Tenant ID</th>
                                 <th scope="col">No. </th>
                                 <th scope="col">Full name</th>
@@ -45,28 +46,12 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Hometown</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Action</th>
+
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($tenants as $tenant)
-                                <tr>
-                                    <td hidden>{{ $tenant->tenant_id }}</td>
-                                    <th>{{ $loop->iteration }}</th>
-                                    <td>{{ $tenant->fullname }}</td>
-                                    <td>{{ $tenant->id_card }}</td>
-                                    <td>{{ $tenant->gender }}</td>
-                                    <td>{{ $tenant->dob }}</td>
-                                    <td style="white-space: nowrap;"><a href="tel:{{ $tenant->phone_number }}"><i class="icon-copy dw dw-phone-call"></i> {{ $tenant->phone_number }}</a></td>
-                                    <td style="white-space: nowrap;"><a href="mailto:{{ $tenant->email }}"><i class="icon-copy dw dw-email1"></i> {{ $tenant->email }}</a></td>
-                                    <td>{{ $tenant->hometown }}</td>
-                                    <td>
-                                        @if ($tenant->status != 0)
-                                            <span class="badge badge-pill badge-success">Rented</span>
-                                        @else
-                                            <span class="badge badge-pill badge-danger">Not Rented</span>
-                                        @endif
-                                    </td>
+                                <tr style="white-space: nowrap">
                                     <td>
                                         <div class="dropdown">
                                             <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
@@ -77,7 +62,7 @@
                                                 <form id="delete-tenant" method="Post">
                                                     <a href="" class="dropdown-item"><i class="dw dw-eye"></i>
                                                         View</a>
-                                                    <a href="javascript:;" data-toggle="modal" data-target="#tenant-edit"
+                                                    <a href="{{ route('tenant.edit', $tenant->tenant_id) }}"
                                                         class="dropdown-item" title="Edit tenant"><i
                                                             class="dw dw-edit2"></i>
                                                         Edit</a>
@@ -88,7 +73,9 @@
 
                                                     <a class="dropdown-item" type="button" id="confirm-delete-modal-btn"
                                                         data-toggle="modal" data-target="#confirm-delete-modal"
-                                                        data-backdrop="static"><i class="dw dw-delete-3"></i> Delete</a>
+                                                        data-tenantID="{{ $tenant->tenant_id }}"
+                                                        data-tenantName="{{ $tenant->fullname }}" data-backdrop="static"><i
+                                                            class="dw dw-delete-3"></i> Delete</a>
                                                 </form>
                                                 {{-- <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
 												<a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
@@ -96,6 +83,26 @@
                                             </div>
                                         </div>
                                     </td>
+                                    <td hidden>{{ $tenant->tenant_id }}</td>
+                                    <th>{{ $loop->iteration }}</th>
+                                    <td>{{ $tenant->fullname }}</td>
+                                    <td>{{ $tenant->id_card }}</td>
+                                    <td>{{ $tenant->gender }}</td>
+                                    <td>{{ $tenant->dob }}</td>
+                                    <td style="white-space: nowrap;"><a href="tel:{{ $tenant->phone_number }}"><i
+                                                class="icon-copy dw dw-phone-call"></i> {{ $tenant->phone_number }}</a>
+                                    </td>
+                                    <td style="white-space: nowrap;"><a href="mailto:{{ $tenant->email }}"><i
+                                                class="icon-copy dw dw-email1"></i> {{ $tenant->email }}</a></td>
+                                    <td>{{ $tenant->hometown }}</td>
+                                    <td>
+                                        @if ($tenant->status != 0)
+                                            <span class="badge badge-pill badge-success">Rented</span>
+                                        @else
+                                            <span class="badge badge-pill badge-danger">Not Rented</span>
+                                        @endif
+                                    </td>
+
                                     {{-- <td>
                                         <form id="delete-area" 
                                             method="Post">
@@ -128,9 +135,9 @@
         </div>
     </div>
 
-    <!-- add task popup start -->
-    <div class="modal fade customscroll" id="tenant-add" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    {{-- <!-- add task popup start -->
+    <div class="modal fade bs-example-modal-lg" id="tenant-add" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Add new tenant</h5>
@@ -139,83 +146,78 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body pd-0">
+                <div class="modal-body">
                     <div class="task-list-form">
-                        <ul>
-                            <li>
-                                <form name="formAddTenant" method="post" action="{{ route('tenant.add') }}">
-                                    @csrf
-                                    <div class="form-group row">
-                                        <label class="col-md-4">Full name</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" name="fullname">
+                        <form name="formAddTenant" method="post" action="{{ route('tenant.add') }}">
+                            @csrf
+                            <div class="form-group row">
+                                <label class="col-md-4">Full name</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="fullname">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Gender</label>
+                                <div class="col-md-8">
+                                    <div class="d-flex">
+                                        <div class="custom-control custom-radio mb-5 mr-20">
+                                            <input type="radio" id="gender1" name="gender"
+                                                class="custom-control-input" value="Male" checked>
+                                            <label class="custom-control-label weight-400" for="gender1">Male</label>
+                                        </div>
+                                        <div class="custom-control custom-radio mb-5">
+                                            <input type="radio" id="gender2" name="gender"
+                                                class="custom-control-input" value="Female">
+                                            <label class="custom-control-label weight-400" for="gender2">Female</label>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4">Gender</label>
-                                        <div class="col-md-8">
-                                            <div class="d-flex">
-                                                <div class="custom-control custom-radio mb-5 mr-20">
-                                                    <input type="radio" id="gender1" name="gender"
-                                                        class="custom-control-input" value="Male">
-                                                    <label class="custom-control-label weight-400"
-                                                        for="gender1">Male</label>
-                                                </div>
-                                                <div class="custom-control custom-radio mb-5">
-                                                    <input type="radio" id="gender2" name="gender"
-                                                        class="custom-control-input" value="Female">
-                                                    <label class="custom-control-label weight-400"
-                                                        for="gender2">Female</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4">Date of birth</label>
-                                        <div class="col-md-8">
-                                            <input class="form-control date-picker" name="dob" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4">ID Card Number</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" name="id_card">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4">Phone number</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" name="phone">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4">Email</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" name="email">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4">Hometown</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" name="hometown">
-                                        </div>
-                                    </div>
-                                </form>
-                            </li>
-                        </ul>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Date of birth</label>
+                                <div class="col-md-8">
+                                    <input class="form-control date-picker" name="dob" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">ID Card Number</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="id_card">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Phone number</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="phone">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Email</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="email">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Hometown</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="hometown">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" onclick="submit()">Add</button>
-                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+
             </div>
         </div>
     </div>
-    <!-- add task popup End -->
+    <!-- add task popup End --> --}}
 
-    <!-- add task popup start -->
-    <div class="modal fade customscroll" id="tenant-edit" tabindex="-1" role="dialog">
+    {{-- <!-- add task popup start -->
+    <div class="modal fade" id="tenant-edit" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -225,51 +227,130 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body pd-0">
+                <div class="modal-body">
                     <div class="task-list-form">
-                        <ul>
-                            <li>
-                                <form name="formUpdateTenant" method="post">
-                                    @csrf
-                                    <div class="form-group row">
-                                        <label class="col-md-4">tenant name</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" name="tenant_name"
-                                                id="tenant_name_edit">
+
+                        <form name="formUpdateTenant" method="post">
+                            @csrf
+                            <div class="form-group row">
+                                <label class="col-md-4">Full name</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="tenant_name" id="tenant_name_edit">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">ID Card</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="tenant_name" id="tenant_name_edit">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Gender</label>
+                                <div class="col-sm-12 col-md-8">
+                                    <div class="d-flex">
+                                        <div class="custom-control custom-radio mb-5 mr-20">
+                                            <input type="radio" id="gender1" name="gender"
+                                                class="custom-control-input" value="Male" checked>
+                                            <label class="custom-control-label weight-400" for="gender1">Male</label>
+                                        </div>
+                                        <div class="custom-control custom-radio mb-5">
+                                            <input type="radio" id="gender2" name="gender"
+                                                class="custom-control-input" value="Female">
+                                            <label class="custom-control-label weight-400" for="gender2">Female</label>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4">Description</label>
-                                        <div class="col-md-8">
-                                            <textarea class="form-control" name="tenant_description" id="tenant_description_edit"></textarea>
-                                        </div>
-                                    </div>
-                                </form>
-                            </li>
-                        </ul>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Date of birth</label>
+                                <div class="col-sm-12 col-md-8">
+                                    <input class="form-control date-picker" type="text" name="dob">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Phone number</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="tenant_name" id="tenant_name_edit">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Email</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="tenant_name" id="tenant_name_edit">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-4">Hometown</label>
+                                <div class="col-md-8">
+                                    <textarea class="form-control" name="tenant_description" id="tenant_description_edit"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" onclick="updateTenant()">Update</button>
+                                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" onclick="updateTenant()">Update</button>
-                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+    <!-- add task popup End --> --}}
+
+    {{-- confirm delete popup --}}
+    <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center font-18">
+                    <h4 class="padding-top-30 mb-30 weight-500" id="msg-delete-confirm">Are you sure you want to continue?
+                    </h4>
+
+                    <form id="delete-form" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+                            <div class="col-6">
+                                <button type="button"
+                                    class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+                                    data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                NO
+                            </div>
+                            <div class="col-6">
+                                <button type="submit"
+                                    class="btn btn-primary border-radius-100 btn-block confirmation-btn"><i
+                                        class="fa fa-check"></i></button>
+                                YES
+                            </div>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
     </div>
-    <!-- add task popup End -->
-
-    {{-- confirm delete popup --}}
-    @include('layouts.confirm-popup')
 
     <script>
-        function submit() {
-            document.formAddTenant.submit();
-        }
+        // passing value to delete room confirm modal
+        document.addEventListener('DOMContentLoaded', function() {
+            var deleteButtons = document.querySelectorAll('#confirm-delete-modal-btn');
+            deleteButtons.forEach(function(e) {
+                e.addEventListener('click', function() {
+                    var tenantID = e.getAttribute('data-tenantID');
+                    var name = e.getAttribute('data-tenantName');
+                    var msg = document.querySelector('#msg-delete-confirm');
 
-        function updateTenant() {
-            document.formUpdateTenant.submit();
-        }
+                    var formDelete = document.querySelector('#delete-form');
+                    formDelete.action = "{{ route('tenant.destroy', ':id') }}".replace(':id',
+                        tenantID);
 
-        //send bản nháp qua zalo
+                    msg.innerHTML = 'Are you sure you want to delete "' + name + '"?';
+                    
+                    $('#confirm-delete-modal').modal('show');
+                });
+            });
+        });
     </script>
 @endsection

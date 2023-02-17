@@ -76,6 +76,7 @@ Route::middleware('setLocale')->group(function () {
                     // });
 
                     Route::resource('house', HouseController::class);
+                    
                     Route::group(['prefix' => 'house'], function () {
                         // Route::get('area/{id}', [AreaController::class, 'index'])->name('area.index');
                         // Route::post('area/{id}/add-action', [AreaController::class, 'add_action'])->name('area.add');
@@ -92,6 +93,8 @@ Route::middleware('setLocale')->group(function () {
                         Route::get('room/{id}/assignTenant', [RoomController::class, 'assignTenant'])->name('room.assign-tenant');
                         Route::post('room/{id}/assignTenant', [RoomController::class, 'assignTenant_action'])->name('room.assign-tenant-action');
 
+                        Route::post('room/assignMembers', [RoomController::class, 'assignMembers'])->name('assign-members');
+
                         // Route::post('room/members', [RoomController::class, 'getMembers'])->name('room.get-members');
                         // });
                     });
@@ -103,9 +106,13 @@ Route::middleware('setLocale')->group(function () {
                         Route::get('add', [DashboardController::class, 'addRoom'])->name('room.add_new_room');
                     });
 
-                    Route::get('tenant', [TenantController::class, 'index'])->name('tenant.index');
-                    Route::get('tenant/add', [TenantController::class, 'add'])->name('tenant.view.add');
-                    Route::post('tenant/add-action', [TenantController::class, 'store'])->name('tenant.add');
+                    
+                    Route::resource('tenant', TenantController::class);
+
+                    // Route::get('tenant', [TenantController::class, 'index'])->name('tenant.index');
+                    // Route::get('tenant/add', [TenantController::class, 'add'])->name('tenant.view.add');
+                    // Route::get('tenant/{id}/edit', [TenantController::class, 'edit'])->name('tenant.view.edit');
+                    // Route::post('tenant/add-action', [TenantController::class, 'store'])->name('tenant.add');
                 });
             });
             Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->name('profile');
