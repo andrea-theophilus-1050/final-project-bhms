@@ -60,7 +60,7 @@
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                 <form id="delete-tenant" method="Post">
-                                                    <a href="" class="dropdown-item"><i class="dw dw-eye"></i>
+                                                    <a href="#" class="dropdown-item"><i class="dw dw-eye"></i>
                                                         View</a>
                                                     <a href="{{ route('tenant.edit', $tenant->tenant_id) }}"
                                                         class="dropdown-item" title="Edit tenant"><i
@@ -351,6 +351,6 @@
                     $('#confirm-delete-modal').modal('show');
                 });
             });
-        });
+        });     
     </script>
 @endsection

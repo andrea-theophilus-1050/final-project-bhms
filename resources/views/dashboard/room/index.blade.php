@@ -201,7 +201,7 @@
                                                                     style="display: flex; align-items: center">
                                                                     <i class="icon-copy dw dw-money-2"
                                                                         style="font-size: 20px"></i>
-                                                                    &nbsp;{{ $room->price }}
+                                                                    &nbsp;{{ number_format($room->price, 0, ',', ','); }}
                                                                 </p>
 
                                                                 @if ($room->status == 0)
@@ -289,7 +289,7 @@
                         <div class="form-group row">
                             <label class="col-md-4">Price</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="price">
+                                <input type="text" class="form-control" name="price" id="price">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -336,7 +336,7 @@
                         <div class="form-group row">
                             <label class="col-md-4">Price</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="price">
+                                <input type="text" class="form-control" name="price" id="price">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -484,9 +484,33 @@
             });
         });
 
-        function assignTenantSubmit() {
-            const tenantForm = document.querySelector('#room-assign-tenant');
-            tenantForm.submit();
+        // function assignTenantSubmit() {
+        //     const tenantForm = document.querySelector('#room-assign-tenant');
+        //     tenantForm.submit();
+        // }
+
+        // Format number input with commas as thousands separators
+        const numberInput = document.querySelector("#room-add #price");
+        const numberInputMultiple = document.querySelector("#room-add-multiple #price");
+        const numberInputEdit = document.querySelector("#room-edit #price_edit");
+
+
+        // Add event listener for when input value changes
+        numberInput.addEventListener("input", formatNumber);
+        numberInputMultiple.addEventListener("input", formatNumber);
+        numberInputEdit.addEventListener("input", formatNumber);
+
+        function formatNumber() {
+
+            if (this.value.length === 0) return;
+            // Get the input value and remove any non-numeric characters except for the decimal point
+            let input = this.value.replace(/[^0-9.]/g, "");
+
+            // Parse the input as a float and format it with commas as thousands separators
+            let formatted = parseFloat(input).toLocaleString();
+
+            // Update the input value with the formatted value
+            this.value = formatted;
         }
     </script>
 @endsection

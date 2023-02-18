@@ -37,7 +37,7 @@ class RoomController extends Controller
         //add room to database
         $room = new Room();
         $room->room_name = $request->room_name;
-        $room->price = $request->price;
+        $room->price = intval(str_replace(",", "", $request->price));
         $room->room_description = $request->room_description;
         $room->house_id = $id;
         $room->save();
@@ -49,7 +49,7 @@ class RoomController extends Controller
         for ($i = 0; $i < $request->quantity; $i++) {
             $room = new Room();
             $room->room_name = $request->room_name . ' ' . ($i + 1);
-            $room->price = $request->price;
+            $room->price = intval(str_replace(",", "", $request->price));
             $room->room_description = $request->room_description;
             $room->house_id = $id;
             $room->save();
@@ -61,7 +61,7 @@ class RoomController extends Controller
     {
         $room = Room::find($id);
         $room->room_name = $request->room_name_edit;
-        $room->price = $request->price_edit;
+        $room->price = intval(str_replace(",", "", $request->price_edit));
         $room->room_description = $request->room_description_edit;
         $room->save();
         return redirect()->route('room.index', $room->house_id)->with('success', 'Room has been updated successfully');

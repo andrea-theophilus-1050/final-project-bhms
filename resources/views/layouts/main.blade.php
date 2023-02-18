@@ -39,8 +39,6 @@
 
         gtag('config', 'UA-119386393-1');
     </script>
-
-
 </head>
 
 <body>
@@ -535,12 +533,16 @@
 
         @yield('content')
 
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            Boarding House Management System - Developed by <a href="https://github.com/luuhoaiphong"
-                target="_blank">Luu Hoai Phong</a>
+        <div class="pd-ltr-20 xs-pd-20-10">
+            <div class="footer-wrap pd-20 mb-20 card-box">
+                Boarding House Management System - Developed by <a href="https://github.com/luuhoaiphong"
+                    target="_blank">Luu Hoai Phong</a> - Banner ID: 001272728
+            </div>
         </div>
     </div>
 
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="icon-copy fa fa-arrow-up"
+            aria-hidden="true"></i></button>
 
     <!-- js -->
     <script src="{{ asset('vendors/scripts/core.js') }}"></script>
@@ -555,6 +557,9 @@
     <script src="{{ asset('vendors/scripts/dashboard.js') }}"></script>
 
     <script src="{{ asset('vendors/scripts/statistic-room.js') }}"></script>
+    <script src="{{ asset('vendors/scripts/scroll-to-top.js') }}"></script>
+
+
 </body>
 
 </html>
