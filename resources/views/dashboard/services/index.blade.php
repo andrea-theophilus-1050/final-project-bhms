@@ -24,8 +24,8 @@
                         <h4 class="text-blue h4"></h4>
                     </div>
                     <div class="pull-right">
-                        <a href="javascript:;" data-toggle="modal" data-target="#house-add"
-                            class="btn btn-success btn-sm"><i class="ion-plus-round"></i> Add new house</a>
+                        <a href="javascript:;" data-toggle="modal" data-target="#service-add"
+                            class="btn btn-success btn-sm"><i class="ion-plus-round"></i> Add a new service</a>
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -34,36 +34,35 @@
                             <tr>
                                 <th hidden scope="col">House ID</th>
                                 <th scope="col">No. </th>
-                                <th scope="col">House name</th>
-                                <th scope="col">House address</th>
+                                <th scope="col">Service name</th>
+                                <th scope="col">Price</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($houses as $house)
+                            @foreach ($services as $service)
                                 <tr {{-- class="table-success" --}}>
-                                    <td hidden>{{ $house->house_id }}</td>
+                                    <td hidden>{{ $service->service_id }}</td>
                                     <th>{{ $loop->iteration }}</th>
-                                    <td>{{ $house->house_name }}</td>
-                                    <td>{{ $house->house_address }}</td>
+                                    <td>{{ $service->service_name }}</td>
+                                    <td>{{ $service->price }}</td>
                                     <td id="house-description"
                                         style=" max-width: 200px; 
-                                                overflow: hidden; 
-                                                text-overflow: ellipsis; 
-                                                white-space: nowrap;"
-                                        title="{{ $house->house_description }}">{{ $house->house_description }}</td>
+                                            overflow: hidden; 
+                                            text-overflow: ellipsis; 
+                                            white-space: nowrap;"
+                                        title="{{ $service->description }}">{{ $service->description }}</td>
                                     <td>
-                                        <a href="{{ route('room.index', $house->house_id) }}" class="btn btn-primary"
-                                            role="button" title="Show details"><i class="fa fa-eye"></i></a>
-                                        <a id="edit-house" href="javascript:;" data-houseID="{{ $house->house_id }}"
-                                            data-houseName="{{ $house->house_name }}"
-                                            data-houseAddress="{{ $house->house_address }}"
-                                            data-houseDescription="{{ $house->house_description }}"
-                                            class="btn btn-secondary" title="Edit house"><i class="fa fa-edit"></i></a>
+                                        <a id="edit-service" href="javascript:;" data-serviceID="{{ $service->service_id }}"
+                                            data-serviceName="{{ $service->service_name }}"
+                                            data-price="{{ $service->price }}"
+                                            data-description="{{ $service->description }}" class="btn btn-secondary"
+                                            title="Edit service"><i class="fa fa-edit"></i></a>
+
                                         <button class="btn btn-danger" type="button" id="confirm-delete-modal-btn"
-                                            data-houseID="{{ $house->house_id }}"
-                                            data-houseName="{{ $house->house_name }}" data-backdrop="static">
+                                            data-serviceID="{{ $service->service_id }}"
+                                            data-serviceName="{{ $service->service_name }}" data-backdrop="static">
                                             <i class="fa fa-trash"></i></button>
                                         </form>
                                     </td>
@@ -77,32 +76,32 @@
     </div>
 
     <!-- add task popup start -->
-    <div class="modal fade" id="house-add" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="service-add" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myLargeModalLabel">Add a new house</h4>
+                    <h4 class="modal-title" id="myLargeModalLabel">Add a new service</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <form name="formAddHouse" method="post" action="{{ route('house.store') }}">
+                    <form name="formAddHouse" method="post" action="{{ route('services.store') }}">
                         @csrf
                         <div class="form-group row">
-                            <label class="col-md-4">House name</label>
+                            <label class="col-md-4">Service name</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="house_name">
+                                <input type="text" class="form-control" name="service_name">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-4">House address</label>
+                            <label class="col-md-4">Pirce</label>
                             <div class="col-md-8">
-                                <textarea class="form-control" name="house_address"></textarea>
+                                <input type="number" class="form-control" name="price">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4">Description</label>
                             <div class="col-md-8">
-                                <textarea class="form-control" name="house_description"></textarea>
+                                <textarea class="form-control" name="description"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -118,33 +117,33 @@
     <!-- add task popup End -->
 
     <!-- add task popup start -->
-    <div class="modal fade" id="house-edit" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="service-edit" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myLargeModalLabel">Update house</h4>
+                    <h4 class="modal-title" id="myLargeModalLabel">Update service</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <form name="formUpdateHouse" method="post" id="formUpdateHouse">
+                    <form name="formUpdateService" method="post" id="formUpdateService">
                         @csrf
                         @method('PUT')
                         <div class="form-group row">
-                            <label class="col-md-4">House name</label>
+                            <label class="col-md-4">Service name</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="house_name" id="house_name_edit">
+                                <input type="text" class="form-control" name="service_name" id="service_name_edit">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-4">House address</label>
+                            <label class="col-md-4">Price</label>
                             <div class="col-md-8">
-                                <textarea class="form-control" name="house_address" id="house_address_edit"></textarea>
+                                <input type="number" class="form-control" name="price" id="price_edit">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4">Description</label>
                             <div class="col-md-8">
-                                <textarea class="form-control" name="house_description" id="house_description_edit"></textarea>
+                                <textarea class="form-control" name="description" id="description_edit"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -189,70 +188,44 @@
     </div>
 
     <script>
-        // //Show data in edit modal
-        // var table = document.getElementById("house-table");
-        // var id = null;
-
-        // for (var i = 1; i < table.rows.length; i++) {
-        //     table.rows[i].addEventListener("click", function() {
-        //         document.getElementById('house_name_edit').value = this.cells[2].innerHTML;
-        //         document.getElementById('house_address_edit').value = this.cells[3].innerHTML;
-        //         document.getElementById('house_description_edit').value = this.cells[4].innerHTML;
-        //         document.formUpdateHouse.action =
-        //             "{{ route('house.update', ':id') }}".replace(':id', this.cells[0].innerHTML);
-
-        //         document.getElementById('msg-delete-confirm').innerHTML = "Are you sure to delete " + this.cells[2]
-        //             .innerHTML + "?";
-        //         id = this.cells[0].innerHTML;
-        //     });
-        // }
-
-        // function actionDelete() {
-        //     document.getElementById('delete-house').action =
-        //         "{{ route('house.destroy', ':id') }}".replace(':id', id);
-        //     document.getElementById('delete-house').submit();
-        // }
-
-
         document.addEventListener('DOMContentLoaded', function() {
             // passing value to update house modal
-            var editHouseBtn = document.querySelectorAll('#edit-house');
-            editHouseBtn.forEach(function(e) {
+            var editServiceBtn = document.querySelectorAll('#edit-service');
+            editServiceBtn.forEach(function(e) {
                 e.addEventListener('click', function() {
-                    var houseID = e.getAttribute('data-houseID');
-                    var houseName = e.getAttribute('data-houseName');
-                    var houseAddress = e.getAttribute('data-houseAddress');
-                    var houseDescription = e.getAttribute('data-houseDescription');
+                    var serviceID = e.getAttribute('data-serviceID');
+                    var serviceName = e.getAttribute('data-serviceName');
+                    var price = e.getAttribute('data-price');
+                    var description = e.getAttribute('data-description');
 
-                    var inputName = document.querySelector('#house_name_edit');
-                    var inputAddress = document.querySelector('#house_address_edit');
-                    var inputDescription = document.querySelector('#house_description_edit');
-                    var formUpdate = document.querySelector('#formUpdateHouse');
+                    var inputName = document.querySelector('#service_name_edit');
+                    var inputPrice = document.querySelector('#price_edit');
+                    var inputDescription = document.querySelector('#description_edit');
+                    var formUpdate = document.querySelector('#formUpdateService');
 
-                    inputName.value = houseName;
-                    inputAddress.value = houseAddress;
-                    inputDescription.value = houseDescription;
-                    formUpdate.action = "{{ route('house.update', ':id') }}".replace(':id',
-                        houseID);
+                    inputName.value = serviceName;
+                    inputPrice.value = price;
+                    inputDescription.value = description;
+                    formUpdate.action = "{{ route('services.update', ':id') }}".replace(':id',
+                        serviceID);
 
-                    $('#house-edit').modal('show');
+                    $('#service-edit').modal('show');
+                    console.log('test');
                 });
             });
 
             // passing value to delete house modal
-            var deleteHouseBtn = document.querySelectorAll('#confirm-delete-modal-btn');
-            deleteHouseBtn.forEach(function(e) {
+            var deleteServiceBtn = document.querySelectorAll('#confirm-delete-modal-btn');
+            deleteServiceBtn.forEach(function(e) {
                 e.addEventListener('click', function() {
-                    var houseID = e.getAttribute('data-houseID');
-                    var houseName = e.getAttribute('data-houseName');
-
-                    var msg = document.querySelector('#msg-delete-confirm');
+                    var serviceID = e.getAttribute('data-serviceID');
+                    var serviceName = e.getAttribute('data-serviceName');
                     var formDelete = document.querySelector('#delete-form');
+                    var msg = document.querySelector('#msg-delete-confirm');
 
-                    msg.innerHTML = "Are you sure to delete " + houseName + "?";
-
-                    formDelete.action = "{{ route('house.destroy', ':id') }}".replace(':id',
-                        houseID);
+                    msg.innerHTML = "Are you sure to delete " + serviceName + "?";
+                    formDelete.action = "{{ route('services.destroy', ':id') }}".replace(':id',
+                        serviceID);
 
                     $('#confirm-delete-modal').modal('show');
                 });

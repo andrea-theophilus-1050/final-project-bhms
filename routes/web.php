@@ -8,6 +8,7 @@ use App\Http\Controllers\House\HouseController;
 use App\Http\Controllers\Area\AreaController;
 use App\Http\Controllers\Room\RoomController;
 use App\Http\Controllers\Tenants\TenantController;
+use App\Http\Controllers\Service\ServicesController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -113,6 +114,8 @@ Route::middleware('setLocale')->group(function () {
                     // Route::get('tenant/add', [TenantController::class, 'add'])->name('tenant.view.add');
                     // Route::get('tenant/{id}/edit', [TenantController::class, 'edit'])->name('tenant.view.edit');
                     // Route::post('tenant/add-action', [TenantController::class, 'store'])->name('tenant.add');
+
+                    Route::resource('services', ServicesController::class);
                 });
             });
             Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->name('profile');

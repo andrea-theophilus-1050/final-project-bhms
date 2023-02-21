@@ -372,7 +372,7 @@
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('services.index') }}" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-suitcase"></span><span class="mtext">@lang('messages.navService')</span>
                         </a>
                     </li>
