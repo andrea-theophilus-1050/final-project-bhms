@@ -166,23 +166,15 @@
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                         <span class="user-icon">
-                            @if (app()->getLocale() == 'chn')
-                                <img src="{{ asset('vendors/images/Flag_China_square.png') }}" alt="">
-                            @elseif(app()->getLocale() == 'en')
+                            @if (app()->getLocale() == 'en')
                                 <img src="{{ asset('vendors/images/Flag_English_square.png') }}" alt="">
-                            @elseif(app()->getLocale() == 'fra')
-                                <img src="{{ asset('vendors/images/Flag_France_square.png') }}" alt="">
                             @elseif(app()->getLocale() == 'vie')
                                 <img src="{{ asset('vendors/images/Flag_Vietnam_square.png') }}" alt="">
                             @endif
                         </span>
                         <span class="user-name">
-                            @if (app()->getLocale() == 'chn')
-                                @lang('messages.langChinese')
-                            @elseif(app()->getLocale() == 'en')
+                            @if (app()->getLocale() == 'en')
                                 @lang('messages.langEnglish')
-                            @elseif(app()->getLocale() == 'fra')
-                                @lang('messages.langFrench')
                             @elseif(app()->getLocale() == 'vie')
                                 @lang('messages.langVietnamese')
                             @endif
@@ -190,12 +182,8 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <a class="dropdown-item" href="{{ route('lang-chinese') }}">
-                            <img src="{{ asset('vendors/images/Flag_China.png') }}"> @lang('messages.langChinese')</a>
                         <a class="dropdown-item" href="{{ route('lang-english') }}">
                             <img src="{{ asset('vendors/images/Flag_English.png') }}"> @lang('messages.langEnglish')</a>
-                        <a class="dropdown-item" href="{{ route('lang-french') }}">
-                            <img src="{{ asset('vendors/images/Flag_France.png') }}"> @lang('messages.langFrench')</a>
                         <a class="dropdown-item" href="{{ route('lang-vietnamese') }}">
                             <img src="{{ asset('vendors/images/Flag_Vietnam.png') }}"> @lang('messages.langVietnamese')</a>
                     </div>
@@ -523,6 +511,31 @@
                                     alt="" width="25"></span>
                         </a>
                     </li> --}}
+
+                    {{-- put element to the bottom of the sidebar --}}
+                    {{-- <li style="margin-top: 30%">
+                        <div class="dropdown-divider"></div>
+                    </li>
+                    <li class="dropdown" style="display: flex; justify-content: space-around; align-items: center">
+                        <a href="{{ route('profile') }}" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-user1"></span><span class="mtext">Profile</span>
+                        </a>
+                        <a class="dropdown-toggle no-arrow" href="javascript:;" data-toggle="right-sidebar">
+                            <span class="micon dw dw-settings2"></span><span class="mtext">Settings</span>
+                        </a>
+
+                    </li>
+                    <li class="dropdown" style="display: flex; justify-content: space-around; align-items: center">
+                        <a href="" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-help"></span><span class="mtext">Help</span>
+                        </a>
+
+                        <a href="{{ route('logout') }}" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-logout"></span><span class="mtext">Logout</span>
+                        </a>
+                    </li> --}}
+
+
                 </ul>
             </div>
         </div>

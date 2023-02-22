@@ -42,6 +42,26 @@
                 </div>
             </div>
 
+            @if (session('hasOneHouse'))
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="title">
+                                <h4>{{ $rooms[0]->houses->house_name }}</h4>
+                            </div>
+                            {{-- <nav aria-label="breadcrumb" role="navigation">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
+                                    <li class="breadcrumb-item"><a href="{{ route('house.index') }}">House management</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">@lang('messages.navRoom')</li>
+                                </ol>
+                            </nav> --}}
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             {{-- <div class="page-header">
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
@@ -201,7 +221,7 @@
                                                                     style="display: flex; align-items: center">
                                                                     <i class="icon-copy dw dw-money-2"
                                                                         style="font-size: 20px"></i>
-                                                                    &nbsp;{{ number_format($room->price, 0, ',', ','); }}
+                                                                    &nbsp;{{ number_format($room->price, 0, ',', ',') }}
                                                                 </p>
 
                                                                 @if ($room->status == 0)
@@ -209,6 +229,13 @@
                                                                         <a href="{{ route('room.assign-tenant', $room->room_id) }}"
                                                                             class="btn btn-secondary btn-sm"><i
                                                                                 class="icon-copy dw dw-add"></i></a>
+                                                                    </div>
+                                                                @else
+                                                                    <div class="pull-left">
+                                                                        <a href="#"
+                                                                            class="btn btn-outline-secondary btn-sm"
+                                                                            title="Return"><i
+                                                                                class="icon-copy dw dw-refresh2"></i></a>
                                                                     </div>
                                                                 @endif
 

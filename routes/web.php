@@ -29,16 +29,6 @@ Route::middleware('setLocale')->group(function () {
         return back();
     })->name('lang-english');
 
-    Route::get('chn', function () {
-        session(['locale' => 'chn']);
-        return back();
-    })->name('lang-chinese');
-
-    Route::get('fra', function () {
-        session(['locale' => 'fra']);
-        return back();
-    })->name('lang-french');
-
     Route::get('vie', function () {
         session(['locale' => 'vie']);
         return back();
@@ -77,7 +67,7 @@ Route::middleware('setLocale')->group(function () {
                     // });
 
                     Route::resource('house', HouseController::class);
-                    
+
                     Route::group(['prefix' => 'house'], function () {
                         // Route::get('area/{id}', [AreaController::class, 'index'])->name('area.index');
                         // Route::post('area/{id}/add-action', [AreaController::class, 'add_action'])->name('area.add');
@@ -107,7 +97,7 @@ Route::middleware('setLocale')->group(function () {
                         Route::get('add', [DashboardController::class, 'addRoom'])->name('room.add_new_room');
                     });
 
-                    
+
                     Route::resource('tenant', TenantController::class);
 
                     // Route::get('tenant', [TenantController::class, 'index'])->name('tenant.index');

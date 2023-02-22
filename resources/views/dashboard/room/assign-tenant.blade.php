@@ -10,9 +10,10 @@
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('house.index') }}">House management</a></li>
-                                <li class="breadcrumb-item" aria-current="page"><a href="{{ route('room.index', $room->house_id) }}">@lang('messages.navRoom')</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Assign tenant</li>
+                            <li class="breadcrumb-item"><a href="{{ route('house.index') }}">House management</a></li>
+                            <li class="breadcrumb-item" aria-current="page"><a
+                                    href="{{ route('room.index', $room->house_id) }}">@lang('messages.navRoom')</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Assign tenant</li>
                         </ol>
                     </nav>
                 </div>
@@ -158,8 +159,22 @@
                                             <label class="col-sm-12 col-md-2 col-form-label">Start date</label>
                                             <div class="col-sm-12 col-md-4">
                                                 <input class="form-control date-picker" placeholder="Start date"
-                                                    type="text" name="start_date">
+                                                    type="text" name="start_date" required>
                                             </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-12 col-md-2 col-form-label">Start date</label>
+                                            <div class="col-sm-12 col-md-4">
+                                                <div class="input-group custom">
+                                                    <div class="input-group-prepend custom">
+                                                        <div class="input-group-text" id="btnGroupAddon">@</div>
+                                                    </div>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Input group example" aria-label="Input group example"
+                                                        aria-describedby="btnGroupAddon">
+                                                </div>
+                                            </div>
+
                                         </div>
                                         {{-- <div class="form-group row">
                                                 <label for="example-datetime-local-input" class="col-sm-12 col-md-2 col-form-label">Date and
@@ -221,14 +236,57 @@
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel">
                                 <div class="pd-20">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                    incididunt
-                                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                    ullamco
-                                    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                                    in
-                                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                                    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" id="house-table">
+                                            <thead>
+                                                <tr>
+                                                    <th hidden scope="col">House ID</th>
+                                                    <th scope="col">No. </th>
+                                                    <th scope="col">Service name</th>
+                                                    <th scope="col">Price</th>
+                                                    {{-- <th scope="col">Description</th>
+                                                    <th scope="col">Actions</th> --}}
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($services as $service)
+                                                    <tr {{-- class="table-success" --}}>
+                                                        <td hidden>{{ $service->service_id }}</td>
+                                                        <th>{{ $loop->iteration }}</th>
+                                                        <td>{{ $service->service_name }}</td>
+                                                        <td>
+                                                            <input type="number" class="form-control"
+                                                                value="{{ $service->price }}">
+                                                        </td>
+                                                        {{-- <td id="house-description"
+                                                            style=" max-width: 200px; 
+                                                                overflow: hidden; 
+                                                                text-overflow: ellipsis; 
+                                                                white-space: nowrap;"
+                                                            title="{{ $service->description }}">
+                                                            {{ $service->description }}</td>
+                                                        <td>
+                                                            <a id="edit-service" href="javascript:;"
+                                                                data-serviceID="{{ $service->service_id }}"
+                                                                data-serviceName="{{ $service->service_name }}"
+                                                                data-price="{{ $service->price }}"
+                                                                data-description="{{ $service->description }}"
+                                                                class="btn btn-secondary" title="Edit service"><i
+                                                                    class="fa fa-edit"></i></a>
+
+                                                            <button class="btn btn-danger" type="button"
+                                                                id="confirm-delete-modal-btn"
+                                                                data-serviceID="{{ $service->service_id }}"
+                                                                data-serviceName="{{ $service->service_name }}"
+                                                                data-backdrop="static">
+                                                                <i class="fa fa-trash"></i></button>
+                                                            </form>
+                                                        </td> --}}
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="contact" role="tabpanel">

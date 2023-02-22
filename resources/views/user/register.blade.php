@@ -37,7 +37,7 @@
     </script>
 
 
-    
+
 </head>
 
 <body class="login-page">
@@ -55,30 +55,18 @@
             </div> --}}
             <div class="dropdown">
                 <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                    @if (app()->getLocale() == 'chn')
-                        <img src="{{ asset('vendors/images/Flag_China.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langChinese')
-                    @elseif (app()->getLocale() == 'en')
+                    @if (app()->getLocale() == 'en')
                         <img src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
                             alt=""> @lang('messages.langEnglish')
-                    @elseif (app()->getLocale() == 'fra')
-                        <img src="{{ asset('vendors/images/Flag_France.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langFrench')
                     @elseif (app()->getLocale() == 'vie')
                         <img src="{{ asset('vendors/images/Flag_Vietnam.png') }}" height="30px" width="40px"
                             alt=""> @lang('messages.langVietnamese')
                     @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{{ route('lang-chinese') }}"><img
-                            src="{{ asset('vendors/images/Flag_China.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langChinese')</a>
                     <a class="dropdown-item" href="{{ route('lang-english') }}"><img
                             src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
                             alt=""> @lang('messages.langEnglish')</a>
-                    <a class="dropdown-item" href="{{ route('lang-french') }}"><img
-                            src="{{ asset('vendors/images/Flag_France.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langFrench')</a>
                     <a class="dropdown-item" href="{{ route('lang-vietnamese') }}"><img
                             src="{{ asset('vendors/images/Flag_Vietnam.png') }}" height="30px" width="40px"
                             alt=""> @lang('messages.langVietnamese')</a>
@@ -111,8 +99,8 @@
                             @csrf
                             <div class="input-group custom">
                                 <input type="text" class="form-control form-control-lg" id="username"
-                                    name="username" placeholder="@lang('messages.labelUsername')" autofocus autocomplete="on"
-                                    required value="{{ old('username') }}">
+                                    name="username" placeholder="@lang('messages.labelUsername')" autofocus autocomplete="on" required
+                                    value="{{ old('username') }}">
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
                                 </div>
@@ -122,8 +110,7 @@
                                     placeholder="@lang('messages.labelPassword')" id="password" name="password" required
                                     onkeyup="trigger()">
                                 <div class="input-group-append custom">
-                                    <span class="input-group-text"><i class="dw dw-eye"
-                                            id="togglePassword"></i></span>
+                                    <span class="input-group-text"><i class="dw dw-eye" id="togglePassword"></i></span>
                                 </div>
                             </div>
 
@@ -170,41 +157,23 @@
                                 <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">
                                     @lang('messages.textOr')
                                 </div>
-                                @if (app()->getLocale() != 'fra')
-                                    <div class="input-group mb-0">
-                                        <a class="btn btn-outline-primary btn-lg btn-block"
-                                            href="{{ route('auth.googleRedirect') }}"
-                                            style="display: flex; justify-content: flex-start"><img
-                                                src="{{ asset('vendors/images/google-logo.png') }}"
-                                                style="height: 30px; width: 30px; margin-right: 10%; margin-left: 5%" />
-                                            @lang('messages.textLoginWithGoogle')</a>
-                                    </div>
-                                    <div class="input-group mb-0" style="margin-top: 10px">
-                                        <a class="btn btn-outline-primary btn-lg btn-block"
-                                            href="{{ route('auth.facebookRedirect') }}"
-                                            style="display: flex; justify-content: flex-start"><img
-                                                src="{{ asset('vendors/images/facebook-logo.png') }}"
-                                                style="height: 30px; width: 30px; margin-right: 10%; margin-left: 5%" />
-                                            @lang('messages.textLoginWithFacebook')</a>
-                                    </div>
-                                @else
-                                    <div class="input-group mb-0">
-                                        <a class="btn btn-outline-primary btn-lg btn-block"
-                                            href="{{ route('auth.googleRedirect') }}"
-                                            style="display: flex; justify-content: flex-start; font-size: 15px"><img
-                                                src="{{ asset('vendors/images/google-logo.png') }}"
-                                                style="height: 30px; width: 30px; margin-right: 5%; margin-left: 5%" />
-                                            @lang('messages.textLoginWithGoogle')</a>
-                                    </div>
-                                    <div class="input-group mb-0" style="margin-top: 10px">
-                                        <a class="btn btn-outline-primary btn-lg btn-block"
-                                            href="{{ route('auth.facebookRedirect') }}"
-                                            style="display: flex; justify-content: flex-start; font-size: 15px"><img
-                                                src="{{ asset('vendors/images/facebook-logo.png') }}"
-                                                style="height: 30px; width: 30px; margin-right: 5%; margin-left: 5%" />
-                                            @lang('messages.textLoginWithFacebook')</a>
-                                    </div>
-                                @endif
+
+                                <div class="input-group mb-0">
+                                    <a class="btn btn-outline-primary btn-lg btn-block"
+                                        href="{{ route('auth.googleRedirect') }}"
+                                        style="display: flex; justify-content: flex-start"><img
+                                            src="{{ asset('vendors/images/google-logo.png') }}"
+                                            style="height: 30px; width: 30px; margin-right: 10%; margin-left: 5%" />
+                                        @lang('messages.textLoginWithGoogle')</a>
+                                </div>
+                                <div class="input-group mb-0" style="margin-top: 10px">
+                                    <a class="btn btn-outline-primary btn-lg btn-block"
+                                        href="{{ route('auth.facebookRedirect') }}"
+                                        style="display: flex; justify-content: flex-start"><img
+                                            src="{{ asset('vendors/images/facebook-logo.png') }}"
+                                            style="height: 30px; width: 30px; margin-right: 10%; margin-left: 5%" />
+                                        @lang('messages.textLoginWithFacebook')</a>
+                                </div>
                             </div>
                         </div>
                     </div>

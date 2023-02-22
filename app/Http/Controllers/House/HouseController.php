@@ -14,7 +14,13 @@ class HouseController extends Controller
     {
         // $houses = DB::table('tb_house')->where('user_id', auth()->user()->id)->get();
         $houses = House::where('user_id', auth()->user()->id)->get();
-        return view('dashboard.house.index')->with('houses', $houses)->with('title', 'House Management');
+        $count = count($houses);
+
+        if ($count > 1) {
+            return view('dashboard.house.index')->with('houses', $houses)->with('title', 'House Management');
+        } else {
+            return redirect()->route('room.index', $houses[0]->house_id)->with('hasOneHouse', $count);
+        }
     }
 
     public function store(Request $request)

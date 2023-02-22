@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Room;
 use App\Models\Tenant;
 use App\Models\RentalRoom;
+use App\Models\Services;
 
 class RoomController extends Controller
 {
@@ -79,8 +80,9 @@ class RoomController extends Controller
     {
         $room = Room::find($id);
         $tenants = Tenant::where('user_id', auth()->user()->id)->where('status', 0)->get();
+        $services = Services::where('user_id', auth()->user()->id)->get();
         // dd($room);
-        return view('dashboard.room.assign-tenant', compact(['room', 'tenants']))->with('title', 'Assign Tenant');
+        return view('dashboard.room.assign-tenant', compact(['room', 'tenants', 'services']))->with('title', 'Assign Tenant');
     }
 
     public function assignTenant_action(Request $request, $id)
