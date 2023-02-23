@@ -148,7 +148,7 @@
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    <!-- Setting Tab start -->
+                                    <!--SECTION-START: Setting Tab start -->
                                     <div class="tab-pane fade height-100-p show active" id="setting" role="tabpanel">
                                         <div class="profile-setting">
                                             <form action="{{ route('update-profile') }}" method="post"
@@ -162,8 +162,8 @@
                                                             <div class="alert alert-success alert-dismissible fade show"
                                                                 role="alert">
                                                                 <strong>Success! </strong>{{ session('successProfile') }}
-                                                                <button type="button" class="close"
-                                                                    data-dismiss="alert" aria-label="Close">
+                                                                <button type="button" class="close" data-dismiss="alert"
+                                                                    aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
@@ -172,8 +172,8 @@
                                                             <div class="alert alert-success alert-dismissible fade show"
                                                                 role="alert">
                                                                 <strong>Error! </strong>{{ session('errorProfile') }}
-                                                                <button type="button" class="close"
-                                                                    data-dismiss="alert" aria-label="Close">
+                                                                <button type="button" class="close" data-dismiss="alert"
+                                                                    aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
@@ -194,8 +194,7 @@
                                                             <input class="form-control form-control-lg" type="text"
                                                                 id="name" name="name"
                                                                 placeholder="@lang('messages.labelName')"
-                                                                value="{{ $user->name }}"
-                                                                onfocus="this.placeholder = ''"
+                                                                value="{{ $user->name }}" onfocus="this.placeholder = ''"
                                                                 onblur="this.placeholder = '@lang('messages.labelName')'" required>
                                                         </div>
                                                         <div class="form-group">
@@ -392,8 +391,8 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <!-- Setting Tab End -->
-                                    <!-- Timeline Tab start -->
+                                    <!--SECTION-END: Setting Tab End -->
+                                    <!-- SECTION-START: Timeline Tab start -->
                                     <div class="tab-pane fade" id="timeline" role="tabpanel">
                                         <div class="pd-20">
                                             <div class="profile-timeline">
@@ -484,8 +483,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Timeline Tab End -->
-                                    <!-- Tasks Tab start -->
+                                    <!-- SECTION-END: Timeline Tab End -->
+                                    <!-- SECTION-START: Tasks Tab start -->
                                     <div class="tab-pane fade" id="tasks" role="tabpanel">
                                         <div class="pd-20 profile-task-wrap">
                                             <div class="container pd-0">
@@ -773,7 +772,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Tasks Tab End -->
+                                    <!--SECTION-END: Tasks Tab End -->
                                 </div>
                             </div>
                         </div>

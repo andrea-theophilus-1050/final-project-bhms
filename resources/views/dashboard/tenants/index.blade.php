@@ -59,27 +59,16 @@
                                                 <i class="dw dw-more"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <form id="delete-tenant" method="Post">
-                                                    <a href="#" class="dropdown-item"><i class="dw dw-eye"></i>
-                                                        View</a>
-                                                    <a href="{{ route('tenant.edit', $tenant->tenant_id) }}"
-                                                        class="dropdown-item" title="Edit tenant"><i
-                                                            class="dw dw-edit2"></i>
-                                                        Edit</a>
-                                                    @csrf
-                                                    {{-- <a href="" class="dropdown-item"
-                                                        onclick="return confirm('Are you sure to delete?')"><i
-                                                            class="dw dw-delete-3"></i> Delete</a> --}}
-
-                                                    <a class="dropdown-item" type="button" id="confirm-delete-modal-btn"
-                                                        data-toggle="modal" data-target="#confirm-delete-modal"
-                                                        data-tenantID="{{ $tenant->tenant_id }}"
-                                                        data-tenantName="{{ $tenant->fullname }}" data-backdrop="static"><i
-                                                            class="dw dw-delete-3"></i> Delete</a>
-                                                </form>
-                                                {{-- <a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-												<a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a> --}}
+                                                <a href="#" class="dropdown-item"><i class="dw dw-eye"></i>
+                                                    View</a>
+                                                <a href="{{ route('tenant.edit', $tenant->tenant_id) }}"
+                                                    class="dropdown-item" title="Edit tenant"><i class="dw dw-edit2"></i>
+                                                    Edit</a>
+                                                <a class="dropdown-item" type="button" id="confirm-delete-modal-btn"
+                                                    data-toggle="modal" data-target="#confirm-delete-modal"
+                                                    data-tenantID="{{ $tenant->tenant_id }}"
+                                                    data-tenantName="{{ $tenant->fullname }}" data-backdrop="static"><i
+                                                        class="dw dw-delete-3"></i> Delete</a>
                                             </div>
                                         </div>
                                     </td>
@@ -300,7 +289,7 @@
     </div>
     <!-- add task popup End --> --}}
 
-    {{-- confirm delete popup --}}
+    {{-- SECTION-START: confirm delete popup --}}
     <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -331,9 +320,10 @@
             </div>
         </div>
     </div>
+    {{-- SECTION-END: confirm delete popup --}}
 
     <script>
-        // passing value to delete room confirm modal
+        //NOTE: passing value to delete room confirm modal
         document.addEventListener('DOMContentLoaded', function() {
             var deleteButtons = document.querySelectorAll('#confirm-delete-modal-btn');
             deleteButtons.forEach(function(e) {
@@ -351,6 +341,6 @@
                     $('#confirm-delete-modal').modal('show');
                 });
             });
-        });     
+        });
     </script>
 @endsection

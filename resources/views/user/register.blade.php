@@ -48,11 +48,8 @@
                     <img src="{{ asset('vendors/images/logo-boarding-house.png') }}" alt="">
                 </a>
             </div>
-            {{-- <div class="login-menu">
-                <ul>
-                    <li><a href="{{ route('login') }}">Login</a></li>
-                </ul>
-            </div> --}}
+
+            {{-- NOTE: dropdownlist for change language --}}
             <div class="dropdown">
                 <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                     @if (app()->getLocale() == 'en')
@@ -114,6 +111,7 @@
                                 </div>
                             </div>
 
+                            {{-- NOTE: check password strength --}}
                             <div class="indicator">
                                 <span class="weak"></span>
                                 <span class="medium"></span>
@@ -133,7 +131,9 @@
                                             id="toggleConfirmPassword"></i></span>
                                 </div>
                             </div>
-                            <div class="textComparePassword">@lang('messages.alertPasswordNotMatch')</div>
+
+                            <div class="textComparePassword">@lang('messages.alertPasswordNotMatch')</div> {{-- NOTE: alert password not match --}}
+
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="input-group mb-0">
@@ -181,26 +181,7 @@
             </div>
         </div>
     </div>
-    <!-- success Popup html Start -->
-    <button type="button" id="success-modal-btn" hidden data-toggle="modal" data-target="#success-modal"
-        data-backdrop="static">Launch modal</button>
-
-    <div class="modal fade" id="success-modal" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered max-width-400" role="document">
-            <div class="modal-content">
-                <div class="modal-body text-center font-18">
-                    <h3 class="mb-20">Form Submitted!</h3>
-                    <div class="mb-30 text-center"><img src="{{ asset('vendors/images/success.png') }}"></div>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <a href="{{ url('login') }}" class="btn btn-primary">Done</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- success Popup html End -->
+    
     <!-- js -->
     <script src="{{ asset('vendors/scripts/core.js') }}"></script>
     <script src="{{ asset('vendors/scripts/script.min.js') }}"></script>

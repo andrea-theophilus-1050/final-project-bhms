@@ -14,7 +14,7 @@
                             @endauth </div>
                     </h4>
                 </div>
-                {{-- button go to edit profile page --}}
+                {{-- NOTE: button go to edit profile page --}}
                 <div class="col-md-2">
                     <a href="{{ route('profile') }}" class="btn btn-outline-primary"><i class="dw dw-edit-2"></i> Edit profile</a>
                 </div>

@@ -75,7 +75,7 @@
         </div>
     </div>
 
-    <!-- add task popup start -->
+    <!-- SECTION-START: add new service popup -->
     <div class="modal fade" id="service-add" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -114,9 +114,9 @@
         </div>
     </div>
 
-    <!-- add task popup End -->
+    <!-- SECTION-END: add service popup -->
 
-    <!-- add task popup start -->
+    <!-- SECTION-START: update service popup -->
     <div class="modal fade" id="service-edit" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -155,9 +155,9 @@
             </div>
         </div>
     </div>
-    <!-- add task popup End -->
+    <!-- SECTION-END: update service popup -->
 
-    {{-- confirm delete popup --}}
+    {{-- SECTION-START: confirm delete popup --}}
     <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -186,10 +186,11 @@
             </div>
         </div>
     </div>
+    {{-- SECTION-END: confirm delete popup --}}
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // passing value to update house modal
+            //NOTE: passing value to update house modal
             var editServiceBtn = document.querySelectorAll('#edit-service');
             editServiceBtn.forEach(function(e) {
                 e.addEventListener('click', function() {
@@ -214,7 +215,7 @@
                 });
             });
 
-            // passing value to delete house modal
+            //NOTE: passing value to delete house modal
             var deleteServiceBtn = document.querySelectorAll('#confirm-delete-modal-btn');
             deleteServiceBtn.forEach(function(e) {
                 e.addEventListener('click', function() {

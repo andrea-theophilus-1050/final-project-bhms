@@ -154,7 +154,7 @@
                         <div class="col-sm-12 col-md-2"></div>
                         <div class="col-sm-12 col-md-10">
                             <button class="btn btn-primary" type="submit">Submit</button>
-                            <button class="btn btn-danger" type="reset">Cancel</button>
+                            <a href="{{ route('tenant.index') }}" class="btn btn-danger"> Cancel</a>
                         </div>
                     </div>
                 </form>

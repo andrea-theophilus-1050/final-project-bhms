@@ -9,6 +9,7 @@ use App\Http\Controllers\Area\AreaController;
 use App\Http\Controllers\Room\RoomController;
 use App\Http\Controllers\Tenants\TenantController;
 use App\Http\Controllers\Service\ServicesController;
+use App\Http\Controllers\Calculation\CalculationWaterElectricityController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -106,6 +107,10 @@ Route::middleware('setLocale')->group(function () {
                     // Route::post('tenant/add-action', [TenantController::class, 'store'])->name('tenant.add');
 
                     Route::resource('services', ServicesController::class);
+                    Route::get('water', [CalculationWaterElectricityController::class, 'water'])->name('water');
+                    Route::get('electric', [CalculationWaterElectricityController::class, 'electric'])->name('electric');
+                    Route::get('costs-incurred', [CalculationWaterElectricityController::class, 'costs_incurred'])->name('costs-incurred');
+                    Route::get('room-billing', [CalculationWaterElectricityController::class, 'room_billing'])->name('room-billing');
                 });
             });
             Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->name('profile');

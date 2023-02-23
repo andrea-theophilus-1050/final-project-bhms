@@ -162,20 +162,7 @@
                                                     type="text" name="start_date" required>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-12 col-md-2 col-form-label">Start date</label>
-                                            <div class="col-sm-12 col-md-4">
-                                                <div class="input-group custom">
-                                                    <div class="input-group-prepend custom">
-                                                        <div class="input-group-text" id="btnGroupAddon">@</div>
-                                                    </div>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Input group example" aria-label="Input group example"
-                                                        aria-describedby="btnGroupAddon">
-                                                </div>
-                                            </div>
 
-                                        </div>
                                         {{-- <div class="form-group row">
                                                 <label for="example-datetime-local-input" class="col-sm-12 col-md-2 col-form-label">Date and
                                                     time</label>
@@ -228,7 +215,8 @@
                                             <div class="col-sm-12 col-md-2"></div>
                                             <div class="col-sm-12 col-md-10">
                                                 <button class="btn btn-primary" type="submit">Submit</button>
-                                                <button class="btn btn-danger" type="reset">Cancel</button>
+                                                <a class="btn btn-danger"
+                                                    href="{{ route('room.index', $room->house_id) }}">Cancel</a>
                                             </div>
                                         </div>
                                     </form>
@@ -377,7 +365,7 @@
         </div>
     </div>
 
-    <!-- Large modal -->
+    <!-- SECTION-START: tenant list modal -->
     <div class="modal fade bs-example-modal-lg" id="tenant-list" tabindex="-1" role="dialog"
         aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -453,12 +441,13 @@
             </div>
         </div>
     </div>
-    <!-- Large modal end-->
+    <!-- SECTION-END: tenant list modal -->
 
     <script>
-        // handle click on row in table of List of Tenants
-        // checked => hide other row
-        // unchecked => show all row
+        /*NOTE: handle click on row in table of List of Tenants
+            - checked => hide other row
+            - unchecked => show all row 
+            */
         const tbody = document.querySelector('#tenant-list tbody');
         const rows = tbody.querySelectorAll('#tenant-list tr');
         rows.forEach((row) => {
@@ -490,7 +479,7 @@
             });
         });
 
-        //Search tenants in table of List of Tenants
+        //NOTE: Search tenants in table of List of Tenants
         const searchInput = document.querySelector('#tenant-list #search-tenant');
         searchInput.addEventListener('input', (event) => {
             const searchTerm = event.target.value.toLowerCase();
@@ -514,7 +503,7 @@
             });
         });
 
-        //Get tenant info from table of List of Tenants and assign to form
+        //NOTE: Get tenant info from table of List of Tenants and assign to form
         function getTenant() {
             const checkbox = document.querySelector('table #checkboxTenant:checked');
             if (checkbox) {
@@ -551,17 +540,17 @@
             }
         }
 
-        //add new row to table button
+        //NOTE: add new row to table button
         const addRowButton = document.getElementById("add-new-row");
         const tableBody = document.getElementById("table-body");
         let clickCount = 0;
 
         addRowButton.addEventListener("click", function() {
             clickCount++;
-            // Create a new row
+            // NOTE: Create a new row
             const newRow = document.createElement("tr");
 
-            // Create the cells for the new row
+            // NOTE: Create the cells for the new row
             const cell1 = document.createElement("td");
             const cell2 = document.createElement("td");
             const cell3 = document.createElement("td");
@@ -572,7 +561,7 @@
             const cell8 = document.createElement("td");
 
 
-            // Add content to the cells
+            // NOTE: Add content to the cells
             cell1.innerHTML =
                 "<input type='text' class='form-control' name='fullname[]'>";
             cell2.innerHTML =
@@ -598,7 +587,7 @@
             cell8.innerHTML =
                 "<button type='button' class='btn btn-danger btn-sm' onclick='deleteRow(this)'><i class='icon-copy fa fa-minus-circle' aria-hidden='true'></i></button>";
 
-            // Append the cells to the new row
+            // NOTE: Append the cells to the new row
             newRow.appendChild(cell1);
             newRow.appendChild(cell2);
             newRow.appendChild(cell3);
@@ -608,17 +597,18 @@
             newRow.appendChild(cell7);
             newRow.appendChild(cell8);
 
-            // Append the new row to the table body
+            // NOTE: Append the new row to the table body
             tableBody.appendChild(newRow);
 
         });
 
-        //delete row in table
+        // NOTE: delete row in table
         function deleteRow(btn) {
             const row = btn.parentNode.parentNode;
             row.parentNode.removeChild(row);
         }
 
+        // NOTE: save member to room
         function saveMember() {
             const form = document.getElementById('room-members');
             form.submit();

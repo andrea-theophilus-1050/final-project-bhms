@@ -173,7 +173,7 @@
                             @endif
                         </span>
                         <span class="user-name">
-                            @if (app()->getLocale() == 'en')
+                            @if (app()->getLocale() == 'en') 
                                 @lang('messages.langEnglish')
                             @elseif(app()->getLocale() == 'vie')
                                 @lang('messages.langVietnamese')
@@ -201,7 +201,7 @@
                                 <img src="{{ asset('avatar/' . auth()->user()->avatar) }}" alt=""
                                     class="avatar-photo">
                             @endif
-                            {{-- <img src="{{ asset('avatar/' . auth()->user()->avatar) }}" alt=""> --}}
+                            
                         </span>
                         {{-- <span class="user-name">
                             @auth
@@ -340,28 +340,63 @@
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
                     <li class="dropdown">
-                        <a href="{{ route('home') }}" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('home') }}"
+                            class="dropdown-toggle no-arrow {{ request()->routeIs('home') ? 'active' : '' }}">
                             <span class="micon fa fa-dashboard"></span><span class="mtext">@lang('messages.navHome')</span>
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="{{ route('house.index') }}" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('services.index') }}"
+                            class="dropdown-toggle no-arrow {{ request()->routeIs('services.index') ? 'active' : '' }}">
+                            <span class="micon dw dw-suitcase"></span><span class="mtext">@lang('messages.navService')</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="{{ route('house.index') }}"
+                            class="dropdown-toggle no-arrow {{ request()->routeIs('house.index') ? 'active' : '' }}">
                             <span class="micon dw dw-house1"></span><span class="mtext">@lang('messages.navHouse')</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('tenant.index') }}" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('tenant.index') }}"
+                            class="dropdown-toggle no-arrow {{ request()->routeIs('tenant.index') ? 'active' : '' }}">
                             <span class="micon dw dw-user-2"></span><span class="mtext">Tenants Management</span>
                         </a>
                     </li>
-                    <li class="dropdown">
+                    {{-- <li class="dropdown">
                         <a href="#" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-home"></span><span class="mtext">@lang('messages.navRoom')</span>
                         </a>
-                    </li>
+                    </li> --}}
+
+
                     <li class="dropdown">
-                        <a href="{{ route('services.index') }}" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-suitcase"></span><span class="mtext">@lang('messages.navService')</span>
+                        <a href="{{ route('electric') }}"
+                            class="dropdown-toggle no-arrow {{ request()->routeIs('electric') ? 'active' : '' }}">
+                            <span class="micon dw dw-flash1"></span><span class="mtext">Electricity
+                                Calculation</span>
+
+                        </a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="{{ route('water') }}"
+                            class="dropdown-toggle no-arrow {{ request()->routeIs('water') ? 'active' : '' }}">
+                            <span class="micon dw dw-save-water"></span><span class="mtext">Water Calculation</span>
+                        </a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="{{ route('costs-incurred') }}"
+                            class="dropdown-toggle no-arrow {{ request()->routeIs('costs-incurred') ? 'active' : '' }}">
+                            <span class="micon dw dw-notebook"></span><span class="mtext">Costs incurred</span>
+                        </a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="{{ route('room-billing') }}"
+                            class="dropdown-toggle no-arrow {{ request()->routeIs('room-billing') ? 'active' : '' }}">
+                            <span class="micon dw dw-calculator"></span><span class="mtext">Room billing</span>
                         </a>
                     </li>
                     {{-- <li class="dropdown">

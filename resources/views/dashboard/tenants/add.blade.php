@@ -11,7 +11,8 @@
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                                <li class="breadcrumb-item" aria-current="page"><a href="{{ route('tenant.index') }}">Tenants management</a></li>
+                                <li class="breadcrumb-item" aria-current="page"><a
+                                        href="{{ route('tenant.index') }}">Tenants management</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Add a new tenant</li>
                             </ol>
                         </nav>
@@ -25,7 +26,8 @@
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Full name</label>
                         <div class="col-sm-12 col-md-10">
-                            <input class="form-control" type="text" placeholder="Full name" name="fullname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Full name'">
+                            <input class="form-control" type="text" placeholder="Full name" name="fullname"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Full name'">
                         </div>
                     </div>
                     {{-- <div class="form-group row">
@@ -42,7 +44,8 @@
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Date of birth</label>
                         <div class="col-sm-12 col-md-5">
-                            <input class="form-control date-picker" placeholder="Date of birth" type="text" name="dob" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Date of birth'">
+                            <input class="form-control date-picker" placeholder="Date of birth" type="text"
+                                name="dob" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Date of birth'">
                         </div>
 
                         <label class="col-sm-12 col-md-1 col-form-label">Gender</label>
@@ -64,25 +67,29 @@
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">ID Card Number</label>
                         <div class="col-sm-12 col-md-10">
-                            <input class="form-control" placeholder="ID Card number" type="text" name="id_card" onfocus="this.placeholder = ''" onblur="this.placeholder = 'ID Card number'">
+                            <input class="form-control" placeholder="ID Card number" type="text" name="id_card"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'ID Card number'">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Phone number</label>
                         <div class="col-sm-12 col-md-10">
-                            <input class="form-control" placeholder="Phone number" type="text" name="phone" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone number'">
+                            <input class="form-control" placeholder="Phone number" type="text" name="phone"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone number'">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Email</label>
                         <div class="col-sm-12 col-md-10">
-                            <input class="form-control" placeholder="Email address" type="text" name="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
+                            <input class="form-control" placeholder="Email address" type="text" name="email"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Hometown</label>
                         <div class="col-sm-12 col-md-10">
-                            <input class="form-control" placeholder="Hometown" type="text" name="hometown" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Hometowm'">
+                            <input class="form-control" placeholder="Hometown" type="text" name="hometown"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Hometowm'">
                         </div>
                     </div>
                     {{-- <div class="form-group row">
@@ -137,7 +144,7 @@
                         <div class="col-sm-12 col-md-2"></div>
                         <div class="col-sm-12 col-md-10">
                             <button class="btn btn-primary" type="submit">Submit</button>
-                            <button class="btn btn-danger" type="reset">Cancel</button>
+                            <a href="{{ route('tenant.index') }}" class="btn btn-danger"> Cancel</a>
                         </div>
                     </div>
                 </form>

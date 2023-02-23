@@ -42,24 +42,50 @@
                 </div>
             </div>
 
-            @if (session('hasOneHouse'))
+            {{-- NOTE: if the landlords have only house, this appears for the user if they wanna add another new house --}}
+            @if (session('hasOneHouse') && count($rooms) > 0)
                 <div class="page-header">
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
                             <div class="title">
                                 <h4>{{ $rooms[0]->houses->house_name }}</h4>
+                                {{ $rooms[0]->houses->house_address }}
                             </div>
-                            {{-- <nav aria-label="breadcrumb" role="navigation">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                                    <li class="breadcrumb-item"><a href="{{ route('house.index') }}">House management</a>
-                                    </li>
-                                    <li class="breadcrumb-item active" aria-current="page">@lang('messages.navRoom')</li>
-                                </ol>
-                            </nav> --}}
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="pull-right" style="display: flex">
+                                <a class="btn btn-outline-primary btn-sm" id="toggle-btn">Hide </a>
+                                <div id="content">
+                                    &nbsp;&nbsp;&nbsp;You have another house?
+                                    <a href="javascript:;" data-toggle="modal" data-target="#house-add"
+                                        class="btn btn-success btn-sm"><i class="ion-plus-round"></i> Add new house</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                {{-- NOTE: script handle show hide above element --}}
+                <script>
+                    const toggleBtn = document.querySelector('#toggle-btn');
+                    const content = document.querySelector('#content');
+
+                    content.style.display = 'none';
+                    toggleBtn.innerHTML = 'Show';
+
+                    let isHidden = true;
+
+                    toggleBtn.addEventListener('click', () => {
+                        if (isHidden) {
+                            content.style.display = 'block';
+                            toggleBtn.innerHTML = 'Hide';
+                        } else {
+                            content.style.display = 'none';
+                            toggleBtn.innerHTML = 'Show';
+                        }
+                        isHidden = !isHidden;
+                    });
+                </script>
             @endif
 
             {{-- <div class="page-header">
@@ -296,7 +322,7 @@
     </div>
 
 
-    <!-- add task popup start -->
+    <!-- SECTION-START: add room popup -->
     <div class="modal fade" id="room-add" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -334,9 +360,9 @@
             </div>
         </div>
     </div>
-    <!-- add task popup end -->
+    <!-- SECTION-END: add room popup -->
 
-    <!-- add task popup start -->
+    <!-- SECTION-START: add multiple rooms popup -->
     <div class="modal fade bs-example-modal-lg" id="room-add-multiple" tabindex="-1" role="dialog"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -381,8 +407,9 @@
             </div>
         </div>
     </div>
-    <!-- add task popup end -->
+    <!-- SECTION-END: add multiple rooms popup -->
 
+    {{-- SECTION-START: update room popup --}}
     <div class="modal fade" id="room-edit" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -422,7 +449,47 @@
 
         </div>
     </div>
-    <!-- add task popup End -->
+    <!-- SECTION-END: update room popup -->
+
+    <!-- SECTION-START: add house popup -->
+    <div class="modal fade" id="house-add" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">Add a new house</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <form name="formAddHouse" method="post" action="{{ route('house.store') }}">
+                        @csrf
+                        <div class="form-group row">
+                            <label class="col-md-4">House name</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" name="house_name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">House address</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" name="house_address"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">Description</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" name="house_description"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SECTION-END: add house popup -->
 
 
 
@@ -456,7 +523,39 @@
         </div>
     </div> --}}
 
-    @include('layouts.confirm-popup')
+    {{-- @include('layouts.confirm-popup') --}}
+    {{-- SECTION-START: confirm delete popup --}}
+    <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center font-18">
+                    <h4 class="padding-top-30 mb-30 weight-500" id="msg-delete-confirm">Are you sure you want to continue?
+                    </h4>
+                    <form id="delete-form" method="post">
+                        @csrf
+                        <input type="hidden" name="id" id="id">
+
+                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+                            <div class="col-6">
+                                <button type="button"
+                                    class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+                                    data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                NO
+                            </div>
+                            <div class="col-6">
+                                <button type="submit"
+                                    class="btn btn-primary border-radius-100 btn-block confirmation-btn"><i
+                                        class="fa fa-check"></i></button>
+                                YES
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- SECTION-END: confirm delete popup --}}
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

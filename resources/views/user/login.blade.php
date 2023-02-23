@@ -33,29 +33,18 @@
 
         gtag('config', 'UA-119386393-1');
     </script>
-
-
-
 </head>
 
 <body class="login-page">
-
     <div class="login-header box-shadow">
-        {{-- dropdownlist for change language --}}
-
         <div class="container-fluid d-flex justify-content-between align-items-center">
-
             <div class="brand-logo">
                 <a href="#">
                     <img src="{{ asset('vendors/images/logo-boarding-house.png') }}" alt="">
                 </a>
             </div>
 
-            {{-- <div class="login-menu">
-                <ul>
-                    <li><a href="{{ route('register') }}">Register</a></li>
-                </ul>
-            </div> --}}
+            {{-- NOTE: dropdownlist for change language --}}
             <div class="dropdown">
                 <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                     @if (app()->getLocale() == 'en')
@@ -90,14 +79,14 @@
                             <h2 class="text-center text-primary">@lang('messages.titleSignIn')</h2>
                         </div>
 
-                        {{-- alert success message after registration --}}
+                        {{-- NOTE: alert success message after registration --}}
                         @if (session('success'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('success') }}
                             </div>
                         @endif
 
-                        {{-- alert error message after registration --}}
+                        {{-- NOTE: alert error message after registration --}}
                         @if (session('errors'))
                             <div class="alert alert-danger" role="alert">
                                 <strong>Error! </strong>{{ session('errors') }}

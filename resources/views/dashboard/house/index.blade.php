@@ -42,7 +42,7 @@
                         </thead>
                         <tbody>
                             @foreach ($houses as $house)
-                                <tr {{-- class="table-success" --}}>
+                                <tr {{-- class="table-success" --}} data-href="{{ route('room.index', $house->house_id) }}">
                                     <td hidden>{{ $house->house_id }}</td>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $house->house_name }}</td>
@@ -56,14 +56,15 @@
                                     <td>
                                         <a href="{{ route('room.index', $house->house_id) }}" class="btn btn-primary"
                                             role="button" title="Show details"><i class="fa fa-eye"></i></a>
-                                        <a id="edit-house" href="javascript:;" data-houseID="{{ $house->house_id }}"
+                                        <button id="edit-house" data-houseID="{{ $house->house_id }}"
                                             data-houseName="{{ $house->house_name }}"
                                             data-houseAddress="{{ $house->house_address }}"
                                             data-houseDescription="{{ $house->house_description }}"
-                                            class="btn btn-secondary" title="Edit house"><i class="fa fa-edit"></i></a>
+                                            class="btn btn-secondary" title="Edit house"><i class="fa fa-edit"></i></button>
                                         <button class="btn btn-danger" type="button" id="confirm-delete-modal-btn"
                                             data-houseID="{{ $house->house_id }}"
-                                            data-houseName="{{ $house->house_name }}" data-backdrop="static">
+                                            data-houseName="{{ $house->house_name }}" data-backdrop="static"
+                                            title="Detele house">
                                             <i class="fa fa-trash"></i></button>
                                         </form>
                                     </td>
@@ -106,7 +107,7 @@
         </div>
     </div>
 
-    <!-- add task popup start -->
+    <!-- SECTION-START: add house popup -->
     <div class="modal fade" id="house-add" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -145,9 +146,9 @@
         </div>
     </div>
 
-    <!-- add task popup End -->
+    <!-- SECTION-END: add house popup -->
 
-    <!-- add task popup start -->
+    <!-- SECTION-START: update house popup -->
     <div class="modal fade" id="house-edit" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -186,9 +187,9 @@
             </div>
         </div>
     </div>
-    <!-- add task popup End -->
+    <!-- SECTION-START: update house popup -->
 
-    {{-- confirm delete popup --}}
+    {{-- SECTION-START: confirm delete popup start --}}
     <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -217,35 +218,11 @@
             </div>
         </div>
     </div>
+    {{-- SECTION-END: confirm delete popup end --}}
 
     <script>
-        // //Show data in edit modal
-        // var table = document.getElementById("house-table");
-        // var id = null;
-
-        // for (var i = 1; i < table.rows.length; i++) {
-        //     table.rows[i].addEventListener("click", function() {
-        //         document.getElementById('house_name_edit').value = this.cells[2].innerHTML;
-        //         document.getElementById('house_address_edit').value = this.cells[3].innerHTML;
-        //         document.getElementById('house_description_edit').value = this.cells[4].innerHTML;
-        //         document.formUpdateHouse.action =
-        //             "{{ route('house.update', ':id') }}".replace(':id', this.cells[0].innerHTML);
-
-        //         document.getElementById('msg-delete-confirm').innerHTML = "Are you sure to delete " + this.cells[2]
-        //             .innerHTML + "?";
-        //         id = this.cells[0].innerHTML;
-        //     });
-        // }
-
-        // function actionDelete() {
-        //     document.getElementById('delete-house').action =
-        //         "{{ route('house.destroy', ':id') }}".replace(':id', id);
-        //     document.getElementById('delete-house').submit();
-        // }
-
-
         document.addEventListener('DOMContentLoaded', function() {
-            // passing value to update house modal
+            // NOTE: passing value to update house modal
             var editHouseBtn = document.querySelectorAll('#edit-house');
             editHouseBtn.forEach(function(e) {
                 e.addEventListener('click', function() {
@@ -269,7 +246,7 @@
                 });
             });
 
-            // passing value to delete house modal
+            // NOTE: passing value to delete house modal
             var deleteHouseBtn = document.querySelectorAll('#confirm-delete-modal-btn');
             deleteHouseBtn.forEach(function(e) {
                 e.addEventListener('click', function() {
@@ -286,6 +263,32 @@
 
                     $('#confirm-delete-modal').modal('show');
                 });
+            });
+        });
+
+        var rows = document.querySelectorAll('#house-table tbody tr');
+        rows.forEach(function(row) {
+            // NOTE: Add a mouseover event listener to change the background color and cursor style
+            row.addEventListener('mouseover', function() {
+                row.style.backgroundColor = '#f2f2f2';
+                row.style.cursor = 'pointer';
+            });
+
+            // NOTE: Add a mouseout event listener to reset the background color
+            row.addEventListener('mouseout', function() {
+                row.style.backgroundColor = '';
+            });
+
+            // NOTE: Add a click event listener to redirect to the URL in the data-href attribute
+            var cells = row.querySelectorAll('td');
+            var href = row.getAttribute('data-href');
+
+            cells.forEach(function(cell) {
+                if (!cell.querySelector('button')) {
+                    cell.addEventListener('click', function() {
+                        window.location.href = href;
+                    });
+                }
             });
         });
     </script>

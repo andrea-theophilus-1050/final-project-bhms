@@ -16,10 +16,16 @@ class HouseController extends Controller
         $houses = House::where('user_id', auth()->user()->id)->get();
         $count = count($houses);
 
-        if ($count > 1) {
+        if ($count > 1 || $count == 0) {
+            session()->forget('hasOneHouse');
             return view('dashboard.house.index')->with('houses', $houses)->with('title', 'House Management');
         } else {
-            return redirect()->route('room.index', $houses[0]->house_id)->with('hasOneHouse', $count);
+            if ($houses[0]->rooms->count() != 0) {
+                session()->put('hasOneHouse', $count);
+                return redirect()->route('room.index', $houses[0]->house_id);
+            } else {
+                return view('dashboard.house.index')->with('houses', $houses)->with('title', 'House Management');
+            }
         }
     }
 
