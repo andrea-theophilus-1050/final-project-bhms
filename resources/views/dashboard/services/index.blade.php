@@ -35,6 +35,7 @@
                                 <th hidden scope="col">House ID</th>
                                 <th scope="col">No. </th>
                                 <th scope="col">Service name</th>
+                                <th scope="col">Type Service</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Actions</th>
@@ -46,7 +47,8 @@
                                     <td hidden>{{ $service->service_id }}</td>
                                     <th>{{ $loop->iteration }}</th>
                                     <td>{{ $service->service_name }}</td>
-                                    <td>{{ $service->price }}</td>
+                                    <td>{{ $service->type->type_name }}</td>
+                                    <td>{{ number_format($service->price, 0, ',', ',') }}</td>
                                     <td id="house-description"
                                         style=" max-width: 200px; 
                                             overflow: hidden; 
@@ -57,6 +59,7 @@
                                         <a id="edit-service" href="javascript:;" data-serviceID="{{ $service->service_id }}"
                                             data-serviceName="{{ $service->service_name }}"
                                             data-price="{{ $service->price }}"
+                                            data-typeService="{{ $service->type->type_id }}"
                                             data-description="{{ $service->description }}" class="btn btn-secondary"
                                             title="Edit service"><i class="fa fa-edit"></i></a>
 
@@ -93,9 +96,20 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-4">Type of Service</label>
+                            <div class="col-md-8">
+                                <select name="typeService" id="typeService" class="form-control">
+                                    <option value="">-- Choose type of service --</option>
+                                    @foreach ($type as $t)
+                                        <option value="{{ $t->type_id }}">{{ $t->type_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-4">Pirce</label>
                             <div class="col-md-8">
-                                <input type="number" class="form-control" name="price">
+                                <input type="text" class="form-control" name="price" id="price">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -132,6 +146,18 @@
                             <label class="col-md-4">Service name</label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" name="service_name" id="service_name_edit">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">Type of Service</label>
+                            <div class="col-md-8">
+                                <select name="typeService" id="typeService" class="form-control">
+                                    <option value="">-- Choose type of service --</option>
+                                    @foreach ($type as $t)
+                                        <option value="{{ $t->type_id }}" id="{{ $t->type_id }}">
+                                            {{ $t->type_name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -196,6 +222,7 @@
                 e.addEventListener('click', function() {
                     var serviceID = e.getAttribute('data-serviceID');
                     var serviceName = e.getAttribute('data-serviceName');
+                    var typeService = e.getAttribute('data-typeService');
                     var price = e.getAttribute('data-price');
                     var description = e.getAttribute('data-description');
 
@@ -205,13 +232,13 @@
                     var formUpdate = document.querySelector('#formUpdateService');
 
                     inputName.value = serviceName;
+                    document.getElementById(typeService).selected = true;
                     inputPrice.value = price;
                     inputDescription.value = description;
                     formUpdate.action = "{{ route('services.update', ':id') }}".replace(':id',
                         serviceID);
 
                     $('#service-edit').modal('show');
-                    console.log('test');
                 });
             });
 
@@ -232,5 +259,21 @@
                 });
             });
         });
+
+        const numberInput = document.querySelector("#service-add #price");
+        numberInput.addEventListener("input", formatNumber);
+
+        function formatNumber() {
+
+            if (this.value.length === 0) return;
+            // Get the input value and remove any non-numeric characters except for the decimal point
+            let input = this.value.replace(/[^0-9.]/g, "");
+
+            // Parse the input as a float and format it with commas as thousands separators
+            let formatted = parseFloat(input).toLocaleString();
+
+            // Update the input value with the formatted value
+            this.value = formatted;
+        }
     </script>
 @endsection

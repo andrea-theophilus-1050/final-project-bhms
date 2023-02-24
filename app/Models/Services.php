@@ -22,4 +22,9 @@ class Services extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function type()
+    {
+        return $this->belongsTo(TypeService::class, 'type_id');
+    }
 }

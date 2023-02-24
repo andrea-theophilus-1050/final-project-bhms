@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tb_services', function (Blueprint $table) {
-            $table->id('service_id');
-            $table->string('service_name');
-            $table->string('price');
-            $table->string('description');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('tb_user');
+        Schema::create('tb_type_service', function (Blueprint $table) {
+            $table->id('type_id');
+            $table->string('type_name');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_services');
+        Schema::dropIfExists('tb_type_service');
     }
 };

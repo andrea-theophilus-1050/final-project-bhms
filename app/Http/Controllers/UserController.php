@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
+
 
 
 class UserController extends Controller
 {
-    public function googleRedirect(Request $request)
+    public function googleRedirect()
     {
         return Socialite::driver('google')->redirect();
     }
@@ -44,7 +44,7 @@ class UserController extends Controller
         }
     }
 
-    public function facebookRedirect(Request $request)
+    public function facebookRedirect()
     {
         return Socialite::driver('facebook')->redirect();
     }
