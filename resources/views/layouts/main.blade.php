@@ -353,7 +353,7 @@
                     </li>
                     <li class="dropdown">
                         <a href="{{ route('house.index') }}"
-                            class="dropdown-toggle no-arrow {{ request()->routeIs('house.index') ? 'active' : '' }}">
+                            class="dropdown-toggle no-arrow {{ request()->routeIs('house.index') || request()->routeIs('room.index') ? 'active' : '' }}">
                             <span class="micon dw dw-house1"></span><span class="mtext">@lang('messages.navHouse')</span>
                         </a>
                     </li>

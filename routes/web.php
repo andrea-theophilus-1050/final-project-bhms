@@ -190,5 +190,5 @@ Route::group(['prefix' => '/auth'], function () {
 
 // 404 Error
 Route::fallback(function () {
-    return view('errors.404')->with('title', '404 Error');
+    abort(404);
 });
