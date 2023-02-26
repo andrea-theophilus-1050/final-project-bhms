@@ -48,17 +48,25 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
                             <div class="title">
-                                <h4>{{ $rooms[0]->houses->house_name }}</h4>
-                                {{ $rooms[0]->houses->house_address }}
+                                <i>
+                                    <h6>{{ $rooms[0]->houses->house_name }}</h6>
+                                    {{ $rooms[0]->houses->house_address }}
+                                </i>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="pull-right" style="display: flex">
-                                <a class="btn btn-outline-primary btn-sm" id="toggle-btn">Hide </a>
+                                <a class="btn btn-outline-primary btn-sm" id="toggle-btn" style="display: flex; align-items: center">Hide</a>
                                 <div id="content">
                                     &nbsp;&nbsp;&nbsp;You have another house?
-                                    <a href="javascript:;" data-toggle="modal" data-target="#house-add"
-                                        class="btn btn-success btn-sm"><i class="ion-plus-round"></i> Add new house</a>
+                                    <button class="btn btn-success btn-sm" data-toggle="modal"data-target="#house-add"><i
+                                            class="ion-plus-round"></i> Add new</button>&nbsp;&nbsp;OR&nbsp;&nbsp;
+
+                                    <button id="edit-house" data-houseID="{{ $rooms[0]->houses->house_id }}"
+                                        data-houseName="{{ $rooms[0]->houses->house_name }}"
+                                        data-houseAddress="{{ $rooms[0]->houses->house_address }}"
+                                        data-houseDescription="{{ $rooms[0]->houses->house_description }}"
+                                        class="btn btn-secondary btn-sm" title="Edit house"><i class="fa fa-edit"></i> Edit</button>
                                 </div>
                             </div>
                         </div>
@@ -86,6 +94,13 @@
                         isHidden = !isHidden;
                     });
                 </script>
+
+
+                {{-- SECTION-START: add & update house popup --}}
+
+                @include('dashboard.house.modal-add-update')
+
+                <!-- SECTION-END: add & update house popup -->
             @endif
 
             {{-- <div class="page-header">
@@ -215,12 +230,14 @@
                                                     <div class="col-sm-12 col-md-3 mb-30">
                                                         <div class="card card-box">
                                                             @if ($room->status == 0)
-                                                                <div class="card-header" style="background-color: #B3DBF8">
+                                                                <div class="card-header"
+                                                                    style="background-color: #B3DBF8">
                                                                     <i class="icon-copy dw dw-house"></i>
                                                                     &nbsp;&nbsp;&nbsp;&nbsp;{{ $room->room_name }}
                                                                 </div>
                                                             @else
-                                                                <div class="card-header" style="background-color: #1899F5">
+                                                                <div class="card-header"
+                                                                    style="background-color: #1899F5">
                                                                     <i class="icon-copy dw dw-house"></i>
                                                                     &nbsp;&nbsp;&nbsp;&nbsp;{{ $room->room_name }}
                                                                     <span class="badge badge-pill badge-success">
@@ -451,45 +468,7 @@
     </div>
     <!-- SECTION-END: update room popup -->
 
-    <!-- SECTION-START: add house popup -->
-    <div class="modal fade" id="house-add" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myLargeModalLabel">Add a new house</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                </div>
-                <div class="modal-body">
-                    <form name="formAddHouse" method="post" action="{{ route('house.store') }}">
-                        @csrf
-                        <div class="form-group row">
-                            <label class="col-md-4">House name</label>
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" name="house_name">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-4">House address</label>
-                            <div class="col-md-8">
-                                <textarea class="form-control" name="house_address"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-4">Description</label>
-                            <div class="col-md-8">
-                                <textarea class="form-control" name="house_description"></textarea>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Add</button>
-                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- SECTION-END: add house popup -->
+
 
 
 
@@ -560,7 +539,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            // passing value to delete room confirm modal
+            // NOTE: passing value to delete room confirm modal
             var deleteButtons = document.querySelectorAll('#confirm-delete-modal-btn');
             deleteButtons.forEach(function(e) {
                 e.addEventListener('click', function() {
@@ -580,7 +559,7 @@
                 });
             });
 
-            // passing value to edit room modal
+            // NOTE: passing value to edit room modal
             var editButtons = document.querySelectorAll('#edit-room-modal-btn');
             editButtons.forEach(function(e) {
                 e.addEventListener('click', function() {
@@ -606,6 +585,30 @@
                     priceInput.value = price;
 
                     $('#room-edit').modal('show');
+                });
+            });
+
+            // NOTE: passing value to edit house modal
+            var editHouseBtn = document.querySelectorAll('#edit-house');
+            editHouseBtn.forEach(function(e) {
+                e.addEventListener('click', function() {
+                    var houseID = e.getAttribute('data-houseID');
+                    var houseName = e.getAttribute('data-houseName');
+                    var houseAddress = e.getAttribute('data-houseAddress');
+                    var houseDescription = e.getAttribute('data-houseDescription');
+
+                    var inputName = document.querySelector('#house_name_edit');
+                    var inputAddress = document.querySelector('#house_address_edit');
+                    var inputDescription = document.querySelector('#house_description_edit');
+                    var formUpdate = document.querySelector('#formUpdateHouse');
+
+                    inputName.value = houseName;
+                    inputAddress.value = houseAddress;
+                    inputDescription.value = houseDescription;
+                    formUpdate.action = "{{ route('house.update', ':id') }}".replace(':id',
+                        houseID);
+
+                    $('#house-edit').modal('show');
                 });
             });
         });

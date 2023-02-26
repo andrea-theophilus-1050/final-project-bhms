@@ -22,10 +22,14 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('email');
             $table->string('hometown');
+            $table->string('citizen_card_front_image')->nullable();
+            $table->string('citizen_card_back_image')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('password')->nullable();
             $table->string('status')->default(0);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('tb_user')->onUpdate('cascade')->onDelete('cascade');
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 

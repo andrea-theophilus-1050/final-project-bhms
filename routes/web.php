@@ -11,6 +11,7 @@ use App\Http\Controllers\Tenants\TenantController;
 use App\Http\Controllers\Service\ServicesController;
 use App\Http\Controllers\Calculation\CalculationWaterElectricityController;
 use Illuminate\Support\Facades\Auth;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,10 +108,18 @@ Route::middleware('setLocale')->group(function () {
                     // Route::post('tenant/add-action', [TenantController::class, 'store'])->name('tenant.add');
 
                     Route::resource('services', ServicesController::class);
-                    Route::get('water', [CalculationWaterElectricityController::class, 'water'])->name('water');
-                    Route::get('electric', [CalculationWaterElectricityController::class, 'electric'])->name('electric');
-                    Route::get('costs-incurred', [CalculationWaterElectricityController::class, 'costs_incurred'])->name('costs-incurred');
-                    Route::get('room-billing', [CalculationWaterElectricityController::class, 'room_billing'])->name('room-billing');
+
+                    Route::get('utility-bill', [DashboardController::class, 'utility_bill'])->name('utility-bill');
+                    Route::get('costs-incurred', [DashboardController::class, 'costs_incurred'])->name('costs-incurred');
+                    Route::get('room-billing', [DashboardController::class, 'room_billing'])->name('room-billing');
+
+                    Route::post('utility-insert', [CalculationWaterElectricityController::class, 'utility_insert'])->name('utility.insert');
+
+
+
+                    Route::get('feedback', [DashboardController::class, 'feedback'])->name('feedback');
+
+                    Route::get('/export-users',[UserController::class,'exportUsers'])->name('export-users');
                 });
             });
             Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->name('profile');

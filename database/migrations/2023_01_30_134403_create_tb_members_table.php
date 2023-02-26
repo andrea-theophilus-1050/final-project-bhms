@@ -22,11 +22,13 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('email');
             $table->string('hometown');
-            $table->string('preResidence');
+            $table->string('citizen_card_front_image');
+            $table->string('citizen_card_back_image');
+            $table->string('avatar');
             $table->string('status');
             $table->unsignedBigInteger('tenant_id');
             $table->foreign('tenant_id')->references('tenant_id')->on('tb_main_tenants')->onUpdate('cascade')->onDelete('cascade');
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 

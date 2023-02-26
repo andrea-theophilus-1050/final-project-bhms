@@ -22,7 +22,7 @@ return new class extends Migration
             // $table->integer('status')->default(0);
             $table->foreign('room_id')->references('room_id')->on('tb_rooms');
             $table->foreign('tenant_id')->references('tenant_id')->on('tb_main_tenants');
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 

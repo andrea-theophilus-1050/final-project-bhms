@@ -371,18 +371,10 @@
 
 
                     <li class="dropdown">
-                        <a href="{{ route('electric') }}"
-                            class="dropdown-toggle no-arrow {{ request()->routeIs('electric') ? 'active' : '' }}">
-                            <span class="micon dw dw-flash1"></span><span class="mtext">Electricity
-                                Calculation</span>
+                        <a href="{{ route('utility-bill') }}"
+                            class="dropdown-toggle no-arrow {{ request()->routeIs('utility-bill') ? 'active' : '' }}">
+                            <span class="micon dw dw-flash1"></span><span class="mtext">Utility Bill</span>
 
-                        </a>
-                    </li>
-
-                    <li class="dropdown">
-                        <a href="{{ route('water') }}"
-                            class="dropdown-toggle no-arrow {{ request()->routeIs('water') ? 'active' : '' }}">
-                            <span class="micon dw dw-save-water"></span><span class="mtext">Water Calculation</span>
                         </a>
                     </li>
 
@@ -396,7 +388,14 @@
                     <li class="dropdown">
                         <a href="{{ route('room-billing') }}"
                             class="dropdown-toggle no-arrow {{ request()->routeIs('room-billing') ? 'active' : '' }}">
-                            <span class="micon dw dw-calculator"></span><span class="mtext">Room billing</span>
+                            <span class="micon fa fa-calculator"></span><span class="mtext">Room billing</span>
+                        </a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="{{ route('feedback') }}"
+                            class="dropdown-toggle no-arrow {{ request()->routeIs('feedback') ? 'active' : '' }}">
+                            <span class="micon dw dw-chat-11"></span><span class="mtext">Feedback management</span>
                         </a>
                     </li>
                     {{-- <li class="dropdown">

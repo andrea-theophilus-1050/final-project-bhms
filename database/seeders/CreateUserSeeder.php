@@ -195,6 +195,7 @@ class CreateUserSeeder extends Seeder
                 'hometown' => 'Hometown 1',
                 'status' => 0,
                 'user_id' => 1,
+                'password' => Hash::make('12345678'),
             ],
             [
                 'fullname' => 'Tenant 2',
@@ -206,7 +207,7 @@ class CreateUserSeeder extends Seeder
                 'hometown' => 'Hometown 1',
                 'status' => 0,
                 'user_id' => 1,
-
+                'password' => Hash::make('12345678'),
             ],
             [
                 'fullname' => 'Tenant 3',
@@ -218,7 +219,7 @@ class CreateUserSeeder extends Seeder
                 'hometown' => 'Hometown 1',
                 'status' => 0,
                 'user_id' => 1,
-
+                'password' => Hash::make('12345678'),
             ],
             [
                 'fullname' => 'Tenant 4',
@@ -230,7 +231,7 @@ class CreateUserSeeder extends Seeder
                 'hometown' => 'Hometown 1',
                 'status' => 0,
                 'user_id' => 1,
-
+                'password' => Hash::make('12345678'),
             ],
             [
                 'fullname' => 'Tenant 5',
@@ -242,7 +243,7 @@ class CreateUserSeeder extends Seeder
                 'hometown' => 'Hometown 1',
                 'status' => 0,
                 'user_id' => 1,
-
+                'password' => Hash::make('12345678'),
             ],
         ];
 

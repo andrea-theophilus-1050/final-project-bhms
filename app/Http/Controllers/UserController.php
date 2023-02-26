@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\App;
+use App\Exports\ExportUser;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 
 
@@ -265,4 +268,9 @@ class UserController extends Controller
     //         return redirect()->route('home');
     //     }
     // }
+
+    public function exportUsers(Request $request)
+    {
+        return Excel::download(new ExportUser, 'users.xlsx');
+    }
 }

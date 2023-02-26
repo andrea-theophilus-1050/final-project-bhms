@@ -6,12 +6,12 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            <h4>Water Calculation</h4>
+                            <h4>Feedback management</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Water Calculation</li>
+                                <li class="breadcrumb-item active" aria-current="page">Feedback management</li>
                             </ol>
                         </nav>
                     </div>

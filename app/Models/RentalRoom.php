@@ -31,4 +31,9 @@ class RentalRoom extends Model
     {
         return $this->belongsTo(Tenant::class, 'tenant_id');
     }
+
+    public function utilities()
+    {
+        return $this->hasMany(Utility::class, 'rental_room_id', 'rental_room_id');
+    }
 }
