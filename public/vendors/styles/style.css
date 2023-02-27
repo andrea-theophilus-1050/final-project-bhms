@@ -2033,11 +2033,11 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th:first-child:before {
 .sidebar-menu .submenu li a.active,
 .sidebar-menu .submenu li a:hover {
     color: #fff;
-    background-color: rgba(0, 0, 0, .4)
+    background-color: rgba(0, 0, 0, 0.4)
 }
 
 .sidebar-menu>ul>li>.dropdown-toggle.active {
-    background-color: rgba(0, 0, 0, .4)
+    background-color: rgb(69 61 104 / 40%);
 }
 
 .sidebar-light .sidebar-menu>ul>li>.dropdown-toggle.active {

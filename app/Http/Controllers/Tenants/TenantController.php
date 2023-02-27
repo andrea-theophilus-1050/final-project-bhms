@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Tenants;
 
+use App\Exports\ExportTenantList;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tenant;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class TenantController extends Controller
 {
@@ -69,5 +72,10 @@ class TenantController extends Controller
         $tenant = Tenant::find($id);
         $tenant->delete();
         return redirect()->route('tenant.index')->with('success', 'Tenant has been deleted successfully');
+    }
+
+    public function exportTenant()
+    {
+        return Excel::download(new ExportTenantList, 'tenantList.xlsx');
     }
 }

@@ -56,7 +56,8 @@
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="pull-right" style="display: flex">
-                                <a class="btn btn-outline-primary btn-sm" id="toggle-btn" style="display: flex; align-items: center">Hide</a>
+                                <a class="btn btn-outline-primary btn-sm" id="toggle-btn"
+                                    style="display: flex; align-items: center">Hide</a>
                                 <div id="content">
                                     &nbsp;&nbsp;&nbsp;You have another house?
                                     <button class="btn btn-success btn-sm" data-toggle="modal"data-target="#house-add"><i
@@ -66,7 +67,8 @@
                                         data-houseName="{{ $rooms[0]->houses->house_name }}"
                                         data-houseAddress="{{ $rooms[0]->houses->house_address }}"
                                         data-houseDescription="{{ $rooms[0]->houses->house_description }}"
-                                        class="btn btn-secondary btn-sm" title="Edit house"><i class="fa fa-edit"></i> Edit</button>
+                                        class="btn btn-secondary btn-sm" title="Edit house"><i class="fa fa-edit"></i>
+                                        Edit</button>
                                 </div>
                             </div>
                         </div>
@@ -206,14 +208,13 @@
 
                         <div class="clearfix mb-10">
                             <div class="pull-right">
-                                <a href="javascript:;" data-toggle="modal" data-target="#room-add"
-                                    class="btn btn-success btn-sm" style="width: fix-content"><i
+                                <button data-toggle="modal" data-target="#room-add" class="btn btn-success btn-sm"><i
                                         class="icon-copy fa fa-plus" aria-hidden="true"></i>
-                                    Add a new room</a>
-                                <a href="javascript:;" data-toggle="modal" data-target="#room-add-multiple"
-                                    class="btn btn-info btn-sm"><i class="icon-copy fa fa-plus" aria-hidden="true"></i>
+                                    Add a new room</button>
+                                <button data-toggle="modal" data-target="#room-add-multiple" class="btn btn-info btn-sm"><i
+                                        class="icon-copy fa fa-plus" aria-hidden="true"></i>
                                     Add
-                                    multiple new rooms</a>
+                                    multiple new rooms</button>
                             </div>
                         </div>
 
@@ -230,8 +231,7 @@
                                                     <div class="col-sm-12 col-md-3 mb-30">
                                                         <div class="card card-box">
                                                             @if ($room->status == 0)
-                                                                <div class="card-header"
-                                                                    style="background-color: #B3DBF8">
+                                                                <div class="card-header" style="background-color: #B3DBF8">
                                                                     <i class="icon-copy dw dw-house"></i>
                                                                     &nbsp;&nbsp;&nbsp;&nbsp;{{ $room->room_name }}
                                                                 </div>
@@ -290,33 +290,35 @@
                                                                     <i class="icon-copy dw dw-trash"></i>
                                                                 </a> --}}
 
-                                                                    <form id="delete-room"
-                                                                        action="{{ route('room.delete', $room->room_id) }}"
-                                                                        method="Post">
-                                                                        <a href="#" class="btn btn-primary btn-sm"
-                                                                            role="button" title="Show details"><i
-                                                                                class="fa fa-eye"></i></a>
-                                                                        <a href="javascript:;" data-toggle="modal"
-                                                                            id="edit-room-modal-btn"
-                                                                            data-id="{{ $room->room_id }}"
-                                                                            data-roomName="{{ $room->room_name }}"
-                                                                            data-price="{{ $room->price }}"
-                                                                            data-description="{{ $room->room_description }}"
-                                                                            class="btn btn-secondary btn-sm"
-                                                                            title="Edit Room"><i
-                                                                                class="fa fa-edit"></i></a>
-                                                                        @csrf
-                                                                        {{-- <button type="submit" class="btn btn-danger"
+
+
+                                                                    <a href="#" class="btn btn-primary btn-sm"
+                                                                        role="button" title="Show details"
+                                                                        data-toggle="modal"
+                                                                        data-target="#show-detail-room"><i
+                                                                            class="fa fa-eye"></i></a>
+
+
+                                                                    <a href="javascript:;" data-toggle="modal"
+                                                                        id="edit-room-modal-btn"
+                                                                        data-id="{{ $room->room_id }}"
+                                                                        data-roomName="{{ $room->room_name }}"
+                                                                        data-price="{{ $room->price }}"
+                                                                        data-description="{{ $room->room_description }}"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        title="Edit Room"><i class="fa fa-edit"></i></a>
+                                                                    @csrf
+                                                                    {{-- <button type="submit" class="btn btn-danger"
                                                                         onclick="return confirm('Are you sure to delete?')"><i
                                                                             class="fa fa-trash"></i></button> --}}
 
-                                                                        <button class="btn btn-danger btn-sm"
-                                                                            type="button" id="confirm-delete-modal-btn"
-                                                                            data-id="{{ $room->room_id }}"
-                                                                            data-roomName="{{ $room->room_name }}"
-                                                                            data-houseID="{{ $id }}"><i
-                                                                                class="fa fa-trash"></i></button>
-                                                                    </form>
+                                                                    <button class="btn btn-danger btn-sm" type="button"
+                                                                        id="confirm-delete-modal-btn"
+                                                                        data-id="{{ $room->room_id }}"
+                                                                        data-roomName="{{ $room->room_name }}"
+                                                                        data-houseID="{{ $id }}"><i
+                                                                            class="fa fa-trash"></i></button>
+
                                                                 </div>
 
                                                             </div>
@@ -468,41 +470,354 @@
     </div>
     <!-- SECTION-END: update room popup -->
 
-
-
-
-
-    {{-- <!-- Confirmation modal -->
-
-    <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    <!-- SECTION-START: Detail room modal -->
+    <div class="modal fade bs-example-modal-lg" id="show-detail-room" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-body text-center font-18">
-                    <h4 class="padding-top-30 mb-30 weight-500" id="msg-delete-confirm">Are you sure you want to continue?</h4>
-                    <form method="post" action="{{ route('room.delete', $id) }}">
-                        @csrf
-                        <input type="hidden" name="id" id="id">
-                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
-                            <div class="col-6">
-                                <button type="button"
-                                    class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
-                                    data-dismiss="modal"><i class="fa fa-times"></i></button>
-                                NO
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="invoice-wrap">
+                    <div class="invoice-box">
+                        {{-- SECTION-START: room information --}}
+                        <h5 class="text-left mb-20 weight-600"><i class="icon-copy dw dw-house"></i> Room information</h5>
+                        <div class="row pb-30">
+
+                            <div class="col-md-6">
+                                <p class="font-14 mb-5">Room:
+                                    <strong class="font-16 weight-600" id="modal_room_name">
+                                        Room name 1
+                                    </strong>
+                                </p>
+                                <p class="font-14 mb-5">Price:
+                                    <strong class="font-16 weight-600" id="modal_room_price">
+                                        5,000,000
+                                    </strong>
+                                </p>
+                                <p class="font-14 mb-5">Status:
+                                    <span class="badge badge-pill badge-danger" id="modal_room_status">
+                                        Available
+                                    </span>
+                                </p>
                             </div>
-                            <div class="col-6">
-                                <button type="submit"
-                                    class="btn btn-primary border-radius-100 btn-block confirmation-btn"><i
-                                        class="fa fa-check"></i></button>
-                                YES
+                            <div class="col-md-6">
+                                <p class="font-14 mb-5">Belongs to the house:
+                                    <strong class="weight-600" id="modal_house_name">
+                                        Trọ Hoàn Hảo 2
+                                    </strong>
+                                </p>
+                                <p class="font-14 mb-5">House address:
+                                    <strong class="weight-600" id="modal_house_address">
+                                        123 Nguyễn Văn Linh, Phường 7, Quận Gò Vấp, TP Hồ Chí Minh
+                                    </strong>
+                                </p>
                             </div>
                         </div>
-                    </form>
+                        {{-- SECTION-END: room information --}}
+
+                        {{-- SECTION-START: Main tenant information --}}
+                        <div class="invoice-desc pb-30">
+                            <h5 class="text-left mb-20 weight-600"><i class="icon-copy dw dw-user-2"></i> Main tenant</h5>
+                            <div class="row pb-30">
+                                <div class="col-md-6">
+                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-user"></i> Fullname:
+                                        <strong class="weight-600" id="modal_tenant_fullname">
+                                            Luu Hoai Phong
+                                        </strong>
+                                    </p>
+                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-id-card2"></i> ID card number:
+                                        <strong class="weight-600" id="modal_tenant_idCard">
+                                            082201003811
+                                        </strong>
+                                    </p>
+                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-phone-call"></i> Phone number:
+                                        <strong class="weight-600" id="modal_tenant_phone">
+                                            <a href="tel:0398371050" style="color: blue">0398371050</a>
+                                        </strong>
+                                    </p>
+                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-email1"></i> Email:
+                                        <strong class="weight-600" id="modal_tenant_email">
+                                            <a href="mailto:luuhoaiphong147@gmail.com"
+                                                style="color: blue">luuhoaiphong147@gmail.com</a>
+                                        </strong>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <p class="font-15 mb-5"><i class="icon-copy ion-transgender"></i> Gender:
+                                        <strong class="weight-600" id="modal_tenant_gender">
+                                            Male
+                                        </strong>
+                                    </p>
+                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-calendar-5"></i> Date of birth:
+                                        <strong class="weight-600" id="modal_tenant_dob">
+                                            March 1, 2001
+                                        </strong>
+                                    </p>
+                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-house-1"></i> Hometown:
+                                        <strong class="weight-600" id="modal_tenant_hometown">
+                                            Quý Thành, Nhị Quý, Cai Lậy, Tiền Giang
+                                        </strong>
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div class="row pb-30">
+                                <div class="col-md-6">
+                                    <p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card front photo:
+                                    </p>
+                                    <img src="{{ asset('avatar/default-image.png') }}" alt="" width="80%"
+                                        id="modal_tenant_front_IDcard">
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card back photo:
+                                    </p>
+                                    <img src="{{ asset('avatar/default-image.png') }}" alt="" width="80%"
+                                        id="modal_tenant_back_IDcard">
+                                </div>
+                            </div>
+                        </div>
+                        {{-- SECTION-END: Main tenant information --}}
+
+                        {{-- SECTION-START: Room members --}}
+                        <div class="invoice-desc pb-30">
+                            <h5 class="text-left weight-600 mb-10">
+                                <i class="icon-copy fa fa-group" aria-hidden="true"></i> Room members &nbsp;&nbsp;&nbsp;
+
+                                {{-- NOTE: Button for show/hide table add new members --}}
+                                <button class="btn btn-info btn-sm" id="showHideAddMember"><i
+                                        class="icon-copy dw dw-add"></i>
+                                    Add new members
+                                </button>
+                            </h5>
+
+                            {{-- NOTE: table for add new members start --}}
+                            <div class="table-responsive" id="addMemebersTable">
+                                <form id="room-members" action="" method="POST">
+                                    <div class="pull-right mb-10">
+                                        <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+                                    </div>
+                                    @csrf
+                                    <table class="table table-striped" id="tenant-member-table">
+                                        <thead style="white-space: nowrap;">
+                                            <tr>
+                                                <th scope="col">Full name </th>
+                                                <th scope="col">ID Card</th>
+                                                <th scope="col">Data of birth</th>
+                                                <th scope="col">Gender</th>
+                                                <th scope="col">Phone</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Hometown</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="table-body">
+                                            <tr>
+                                                
+                                                <td>
+                                                    <input type='text' class='form-control' name='fullname[]'>
+                                                </td>
+                                                <td>
+                                                    <input type='text' class='form-control' name='id_card[]'>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" name="dob[]">
+                                                </td>
+                                                <td>
+                                                    <div class="custom-control custom-radio mb-5 mr-20">
+                                                        <input type="radio" id="male" name="gender[0]"
+                                                            class="custom-control-input" value="Male" checked>
+                                                        <label class="custom-control-label weight-400"
+                                                            for="male">Male</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio mb-5">
+                                                        <input type="radio" id="female" name="gender[0]"
+                                                            class="custom-control-input" value="Female">
+                                                        <label class="custom-control-label weight-400"
+                                                            for="female">Female</label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input type='text' class='form-control' name='phone[]'>
+                                                </td>
+                                                <td>
+                                                    <input type='text' class='form-control' name='email[]'>
+                                                </td>
+                                                <td>
+                                                    <input type='text' class='form-control' name='hometown[]'>
+                                                </td>
+                                                <td>
+                                                    <button type='button' class='btn btn-danger btn-sm'
+                                                        onclick='deleteRow(this)'><i class='icon-copy fa fa-minus-circle'
+                                                            aria-hidden='true'></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="7"></td>
+                                                <td>
+                                                    <button class="btn btn-success btn-sm" type="button"
+                                                        id="add-new-row">
+                                                        <i class="icon-copy fa fa-plus-circle" aria-hidden="true"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </form>
+                            </div>
+                            {{-- NOTE: table for add new members end --}}
+
+                            <div class="row pb-30">
+                                <div class="col-md-6">
+                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-user"></i> Fullname:
+                                        <strong class="weight-600" id="modal_members_fullname">
+                                            Luu Hoai Phong
+                                        </strong>
+                                    </p>
+                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-id-card2"></i> ID card number:
+                                        <strong class="weight-600" id="modal_members_idCard">
+                                            082201003811
+                                        </strong>
+                                    </p>
+                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-phone-call"></i> Phone number:
+                                        <strong class="weight-600" id="modal_members_phone">
+                                            <a href="tel:0398371050" style="color: blue">0398371050</a>
+                                        </strong>
+                                    </p>
+                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-email1"></i> Email:
+                                        <strong class="weight-600" id="modal_members_email">
+                                            <a href="mailto:luuhoaiphong147@gmail.com"
+                                                style="color: blue">luuhoaiphong147@gmail.com</a>
+                                        </strong>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <p class="font-15 mb-5"><i class="icon-copy ion-transgender"></i> Gender:
+                                        <strong class="weight-600" id="modal_members_gender">
+                                            Male
+                                        </strong>
+                                    </p>
+                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-calendar-5"></i> Date of birth:
+                                        <strong class="weight-600" id="modal_members_dob">
+                                            March 1, 2001
+                                        </strong>
+                                    </p>
+                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-house-1"></i> Hometown:
+                                        <strong class="weight-600" id="modal_members_hometown">
+                                            Quý Thành, Nhị Quý, Cai Lậy, Tiền Giang
+                                        </strong>
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div class="row pb-30">
+                                <div class="col-md-6">
+                                    <p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card front photo:
+                                    </p>
+                                    <img src="{{ asset('avatar/default-image.png') }}" alt="" width="80%"
+                                        id="modal_members_front_IDcard">
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card back photo:
+                                    </p>
+                                    <img src="{{ asset('avatar/default-image.png') }}" alt="" width="80%"
+                                        id="modal_members_back_IDcard">
+                                </div>
+                            </div>
+
+                            {{-- line divider --}}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="divider" style="background-color: black; height: 2px; width: 100%"></div>
+                                </div>
+                            </div>
+
+                            {{--     <ul>
+                                    <li class="clearfix">
+                                        <div class="invoice-sub">Website Design</div>
+                                        <div class="invoice-rate">$20</div>
+                                        <div class="invoice-hours">100</div>
+                                        <div class="invoice-subtotal"><span class="weight-600">$2000</span>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <div class="invoice-sub">Logo Design</div>
+                                        <div class="invoice-rate">$20</div>
+                                        <div class="invoice-hours">100</div>
+                                        <div class="invoice-subtotal"><span class="weight-600">$2000</span>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <div class="invoice-sub">Website Design</div>
+                                        <div class="invoice-rate">$20</div>
+                                        <div class="invoice-hours">100</div>
+                                        <div class="invoice-subtotal"><span class="weight-600">$2000</span>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <div class="invoice-sub">Logo Design</div>
+                                        <div class="invoice-rate">$20</div>
+                                        <div class="invoice-hours">100</div>
+                                        <div class="invoice-subtotal"><span class="weight-600">$2000</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div> --}}
+                            {{-- <div class="invoice-desc-footer">
+                                <div class="invoice-desc-head clearfix">
+                                    <div class="invoice-sub">Bank Info</div>
+                                    <div class="invoice-rate">Due By</div>
+                                    <div class="invoice-subtotal">Total Due</div>
+                                </div>
+                                <div class="invoice-desc-body">
+                                    <ul>
+                                        <li class="clearfix">
+                                            <div class="invoice-sub">
+                                                <p class="font-14 mb-5">Account No: <strong class="weight-600">123 456
+                                                        789</strong></p>
+                                                <p class="font-14 mb-5">Code: <strong class="weight-600">4556</strong></p>
+                                            </div>
+                                            <div class="invoice-rate font-20 weight-600">10 Jan 2018</div>
+                                            <div class="invoice-subtotal"><span
+                                                    class="weight-600 font-24 text-danger">$8000</span></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div> --}}
+                        </div>
+                        {{-- SECTION-END: room members --}}
+                    </div>
                 </div>
             </div>
         </div>
-    </div> --}}
 
-    {{-- @include('layouts.confirm-popup') --}}
+        <script>
+            // NOTE: script for show/hide add new members modal popup
+            const toggleBtn = document.querySelector('#showHideAddMember');
+            const content = document.querySelector('#addMemebersTable');
+
+            content.style.display = 'none';
+            toggleBtn.innerHTML = '<i class="icon-copy dw dw-add"></i> Add new';
+
+            let isHidden = true;
+
+            toggleBtn.addEventListener('click', () => {
+                if (isHidden) {
+                    content.style.display = 'block';
+                    toggleBtn.innerHTML = 'Hide';
+                } else {
+                    content.style.display = 'none';
+                    toggleBtn.innerHTML = '<i class="icon-copy dw dw-add"></i> Add new';
+                }
+                isHidden = !isHidden;
+            });
+        </script>
+    </div>
+    <!-- SECTION-END: Detail room modal -->
+
     {{-- SECTION-START: confirm delete popup --}}
     <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -640,6 +955,77 @@
 
             // Update the input value with the formatted value
             this.value = formatted;
+        }
+
+
+
+
+        //NOTE: add new row to table button
+        const addRowButton = document.getElementById("add-new-row");
+        const tableBody = document.getElementById("table-body");
+        let clickCount = 0;
+
+        addRowButton.addEventListener("click", function() {
+            clickCount++;
+            // NOTE: Create a new row
+            const newRow = document.createElement("tr");
+
+            // NOTE: Create the cells for the new row
+            const cell1 = document.createElement("td");
+            const cell2 = document.createElement("td");
+            const cell3 = document.createElement("td");
+            const cell4 = document.createElement("td");
+            const cell5 = document.createElement("td");
+            const cell6 = document.createElement("td");
+            const cell7 = document.createElement("td");
+            const cell8 = document.createElement("td");
+
+
+            // NOTE: Add content to the cells
+            cell1.innerHTML =
+                "<input type='text' class='form-control' name='fullname[]'>";
+            cell2.innerHTML =
+                "<input type='text' class='form-control' name='id_card[]'>";
+            cell3.innerHTML =
+                "<input class='form-control' type='text' name='dob[]'>";
+            cell4.innerHTML =
+                "<div class='custom-control custom-radio mb-5 mr-20'>" +
+                "<input type='radio' id='male" + clickCount +
+                "' name='gender[" + clickCount + "]' class='custom-control-input' value='Male' checked>" +
+                "<label class='custom-control-label weight-400' for='male" + clickCount + "'>Male</label>" +
+                "</div> <div class='custom-control custom-radio mb-5'>" +
+                "<input type='radio' id='female" + clickCount +
+                "' name='gender[" + clickCount + "]' class='custom-control-input' value='Female'>" +
+                "<label class='custom-control-label weight-400' for='female" + clickCount +
+                "'>Female</label> </div>";
+            cell5.innerHTML =
+                "<input type='text' class='form-control' name='phone[]'>";
+            cell6.innerHTML =
+                "<input type='text' class='form-control' name='email[]'>";
+            cell7.innerHTML =
+                "<input type='text' class='form-control' name='hometown[]'>";
+            cell8.innerHTML =
+                "<button type='button' class='btn btn-danger btn-sm' onclick='deleteRow(this)'><i class='icon-copy fa fa-minus-circle' aria-hidden='true'></i></button>";
+
+            // NOTE: Append the cells to the new row
+            newRow.appendChild(cell1);
+            newRow.appendChild(cell2);
+            newRow.appendChild(cell3);
+            newRow.appendChild(cell4);
+            newRow.appendChild(cell5);
+            newRow.appendChild(cell6);
+            newRow.appendChild(cell7);
+            newRow.appendChild(cell8);
+
+            // NOTE: Append the new row to the table body
+            tableBody.appendChild(newRow);
+
+        });
+
+        // NOTE: delete row in table
+        function deleteRow(btn) {
+            const row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
         }
     </script>
 @endsection

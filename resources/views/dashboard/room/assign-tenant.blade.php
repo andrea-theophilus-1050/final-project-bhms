@@ -48,6 +48,12 @@
             <div class="col-lg-12 col-md-12 col-sm-12 mb-30">
                 <div class="pd-20 card-box">
 
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-primary" type="button" onclick="submitForm()"
+                            style="margin-right: 15px">Save</button>
+                        <a href="{{ route('room.index', $room->house_id) }}" class="btn btn-danger">Cancel</a>
+                    </div>
+
                     <div class="tab">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
@@ -63,12 +69,13 @@
                                     aria-selected="false">Members</a>
                             </li>
                         </ul>
+
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="home" role="tabpanel">
                                 <div class="pd-20">
-                                    <a href="javascript:;" class="btn btn-primary btn-sm mb-20" data-target="#tenant-list"
+                                    <a href="javascript:;" class="btn btn-secondary btn-sm mb-20" data-target="#tenant-list"
                                         data-toggle="modal">Get tenants</a>
-                                    <form method="post" action="{{ route('room.assign-tenant-action', $room->room_id) }}">
+                                    <form id="mainTenant" method="post" action="{{ route('room.assign-tenant-action', $room->room_id) }}">
                                         @csrf
 
                                         <div class="form-group row">
@@ -211,14 +218,14 @@
                                                     <input class="form-control" value="50" type="range">
                                                 </div>
                                             </div> --}}
-                                        <div class="form-group row">
+                                        {{-- <div class="form-group row">
                                             <div class="col-sm-12 col-md-2"></div>
                                             <div class="col-sm-12 col-md-10">
                                                 <button class="btn btn-primary" type="submit">Submit</button>
                                                 <a class="btn btn-danger"
                                                     href="{{ route('room.index', $room->house_id) }}">Cancel</a>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </form>
                                 </div>
                             </div>
@@ -280,11 +287,13 @@
                             <div class="tab-pane fade" id="contact" role="tabpanel">
                                 <div class="pd-20">
                                     <div class="table-responsive">
-                                        <div class="pull-right mb-20">
+                                        {{-- <div class="pull-right mb-20">
                                             <button class="btn btn-primary" onclick="saveMember()">Save</button>
                                             <button class="btn btn-danger">Cancel</button>
-                                        </div>
-                                        <form id="room-members" action="{{ route('assign-members') }}" method="POST">
+                                        </div> --}}
+                                        <form id="room-members"
+                                            action="{{ route('room.assign-tenant-action', $room->room_id) }}"
+                                            method="POST">
                                             @csrf
                                             <table class="table table-striped" id="tenant-member-table">
                                                 <thead>
@@ -445,9 +454,9 @@
 
     <script>
         /*NOTE: handle click on row in table of List of Tenants
-            - checked => hide other row
-            - unchecked => show all row 
-            */
+                    - checked => hide other row
+                    - unchecked => show all row 
+                    */
         const tbody = document.querySelector('#tenant-list tbody');
         const rows = tbody.querySelectorAll('#tenant-list tr');
         rows.forEach((row) => {
@@ -609,9 +618,12 @@
         }
 
         // NOTE: save member to room
-        function saveMember() {
-            const form = document.getElementById('room-members');
-            form.submit();
+        function submitForm() {
+            const formMainTenant = document.getElementById('mainTenant');
+            const formMemeber = document.getElementById('room-members');
+            
+            formMainTenant.submit();
+            formMemeber.submit();
         }
     </script>
 @endsection

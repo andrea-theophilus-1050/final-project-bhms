@@ -88,31 +88,43 @@ class RoomController extends Controller
     public function assignTenant_action(Request $request, $id)
     {
         if ($request->tenant_id == null) {
-            // add new tenant
-            $tenant = new Tenant();
-            $tenant->fullname = $request->fullname;
-            $tenant->gender = $request->gender;
-            $tenant->dob = $request->dob;
-            $tenant->id_card = $request->id_card;
-            $tenant->phone_number = $request->phone;
-            $tenant->email = $request->email;
-            $tenant->hometown = $request->hometown;
-            $tenant->status = 1;
-            $tenant->user_id = auth()->user()->id;
-            $tenant->save();
+            
+            DB::beginTransaction();
 
-            // update status of room to 1, means it is rented
-            $room = Room::find($id);
-            $room->status = 1;
-            $room->save();
+            try {
+                // add new tenant
+                $tenant = new Tenant();
+                $tenant->fullname = $request->fullname;
+                $tenant->gender = $request->gender;
+                $tenant->dob = $request->dob;
+                $tenant->id_card = $request->id_card;
+                $tenant->phone_number = $request->phone;
+                $tenant->email = $request->email;
+                $tenant->hometown = $request->hometown;
+                $tenant->status = 1;
+                $tenant->user_id = auth()->user()->id;
+                $tenant->save();
 
-            // add data to rental room
-            $rental = new RentalRoom();
-            $rental->room_id = $id;
-            $rental->tenant_id = $tenant->tenant_id;
-            $rental->start_date = $request->start_date;
-            // $rental->end_date = $request->end_date;
-            $rental->save();
+                // update status of room to 1, means it is rented
+                $room = Room::find($id);
+                $room->status = 1;
+                $room->save();
+
+                // add data to rental room
+                $rental = new RentalRoom();
+                $rental->room_id = $id;
+                $rental->tenant_id = $tenant->tenant_id;
+                $rental->start_date = $request->start_date;
+                // $rental->end_date = $request->end_date;
+                $rental->save();
+
+            } catch (\Exception $e) {
+                DB::rollBack();
+                throw $e;
+            }
+
+            DB::commit();
+
             return redirect()->route('room.index', $room->house_id)->with('success', 'Room has been assigned successfully');
         } else {
             // update status of room to 1, means it is rented
@@ -142,10 +154,10 @@ class RoomController extends Controller
         dd($request->all());
     }
 
-    public function getMembers(Request $request)
-    {
-        dd($request->all());
-    }
+    // public function getMembers(Request $request)
+    // {
+    //     dd($request->all());
+    // }
 
     // public function room()
     // {

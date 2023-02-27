@@ -119,7 +119,10 @@ Route::middleware('setLocale')->group(function () {
 
                     Route::get('feedback', [DashboardController::class, 'feedback'])->name('feedback');
 
+
+                    // NOTE: Export testing, not done 
                     Route::get('/export-users',[UserController::class,'exportUsers'])->name('export-users');
+                    Route::get('/export-tenant', [TenantController::class,'exportTenant'])->name('export-tenant');
                 });
             });
             Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->name('profile');
