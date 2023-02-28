@@ -241,7 +241,7 @@
                                                                     <i class="icon-copy dw dw-house"></i>
                                                                     &nbsp;&nbsp;&nbsp;&nbsp;{{ $room->room_name }}
                                                                     <span class="badge badge-pill badge-success">
-                                                                        Rented
+                                                                        Occupied
                                                                     </span>
                                                                 </div>
                                                             @endif
@@ -251,7 +251,7 @@
                                                                 <p class="card-text">
                                                                     <i class="icon-copy dw dw-user-3"></i>
                                                                     @if ($room->status == 0)
-                                                                        <span class="badge badge-pill badge-danger">
+                                                                        <span class="badge badge-pill badge-primary">
                                                                             Available
                                                                         </span>
                                                                     @else
@@ -290,23 +290,65 @@
                                                                     <i class="icon-copy dw dw-trash"></i>
                                                                 </a> --}}
 
+                                                                    @if ($room->status == 0)
+                                                                        <button id="show-roomInfo-detail"
+                                                                            class="btn btn-primary btn-sm" role="button"
+                                                                            title="Show details" data-toggle="modal"
+                                                                            data-roomName="{{ $room->room_name }}"
+                                                                            data-price="{{ $room->price }}"
+                                                                            data-status="{{ $room->status }}"
+                                                                            data-houseName="{{ $room->houses->house_name }}"
+                                                                            data-houseAddress="{{ $room->houses->house_address }}"
+                                                                            data-mainTenantID="" data-tenantName=""
+                                                                            data-idCard="" data-phoneNumber=""
+                                                                            data-email="" data-gender="" data-dob=""
+                                                                            data-hometown="" data-idFrontPhoto=""
+                                                                            data-idBackPhoto="" data-memberName=""
+                                                                            data-memberIdCard="" data-memberPhoneNumber=""
+                                                                            data-memberEmail="" data-memberGender=""
+                                                                            data-memberDoB="" data-memberHometown=""><i
+                                                                                class="fa fa-eye"></i></button>
+                                                                    @else
+                                                                        <button id="show-roomInfo-detail"
+                                                                            class="btn btn-primary btn-sm" role="button"
+                                                                            title="Show details" data-toggle="modal"
+                                                                            data-roomName="{{ $room->room_name }}"
+                                                                            data-price="{{ $room->price }}"
+                                                                            data-status="{{ $room->status }}"
+                                                                            data-houseName="{{ $room->houses->house_name }}"
+                                                                            data-houseAddress="{{ $room->houses->house_address }}"
+                                                                            data-mainTenantID="{{ $room->rentals->tenants->tenant_id }}"
+                                                                            data-tenantName="{{ $room->rentals->tenants->fullname }}"
+                                                                            data-idCard="{{ $room->rentals->tenants->id_card }}"
+                                                                            data-phoneNumber="{{ $room->rentals->tenants->phone_number }}"
+                                                                            data-email="{{ $room->rentals->tenants->email }}"
+                                                                            data-gender="{{ $room->rentals->tenants->gender }}"
+                                                                            data-dob="{{ $room->rentals->tenants->dob }}"
+                                                                            data-hometown="{{ $room->rentals->tenants->hometown }}"
+                                                                            data-idFrontPhoto="{{ asset('uploads/tenants/id_card_front/' . $room->rentals->tenants->citizen_card_front_image) }}"
+                                                                            data-idBackPhoto="{{ asset('uploads/tenants/id_card_back/' . $room->rentals->tenants->citizen_card_back_image) }}"
+                                                                            data-memberName=" " data-memberIdCard=" "
+                                                                            data-memberPhoneNumber=" "
+                                                                            data-memberEmail=" " data-memberGender=" "
+                                                                            data-memberDoB=" " data-memberHometown=" "><i
+                                                                                class="fa fa-eye"></i></button>
+                                                                    @endif
 
 
-                                                                    <a href="#" class="btn btn-primary btn-sm"
-                                                                        role="button" title="Show details"
-                                                                        data-toggle="modal"
+                                                                    {{-- <button class="btn btn-primary btn-sm" role="button"
+                                                                        title="Show details" data-toggle="modal"
                                                                         data-target="#show-detail-room"><i
-                                                                            class="fa fa-eye"></i></a>
+                                                                            class="fa fa-eye"></i></button> --}}
 
 
-                                                                    <a href="javascript:;" data-toggle="modal"
-                                                                        id="edit-room-modal-btn"
+                                                                    <button data-toggle="modal" id="edit-room-modal-btn"
                                                                         data-id="{{ $room->room_id }}"
                                                                         data-roomName="{{ $room->room_name }}"
                                                                         data-price="{{ $room->price }}"
                                                                         data-description="{{ $room->room_description }}"
                                                                         class="btn btn-secondary btn-sm"
-                                                                        title="Edit Room"><i class="fa fa-edit"></i></a>
+                                                                        title="Edit Room"><i
+                                                                            class="fa fa-edit"></i></button>
                                                                     @csrf
                                                                     {{-- <button type="submit" class="btn btn-danger"
                                                                         onclick="return confirm('Are you sure to delete?')"><i
@@ -471,7 +513,8 @@
     <!-- SECTION-END: update room popup -->
 
     <!-- SECTION-START: Detail room modal -->
-    <div class="modal fade bs-example-modal-lg" id="show-detail-room" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade bs-example-modal-lg" id="show-detail-room-modal" tabindex="-1" role="dialog"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -522,23 +565,24 @@
                                 <div class="col-md-6">
                                     <p class="font-15 mb-5"><i class="icon-copy dw dw-user"></i> Fullname:
                                         <strong class="weight-600" id="modal_tenant_fullname">
-                                            Luu Hoai Phong
+                                            Tenant name
                                         </strong>
                                     </p>
                                     <p class="font-15 mb-5"><i class="icon-copy dw dw-id-card2"></i> ID card number:
                                         <strong class="weight-600" id="modal_tenant_idCard">
-                                            082201003811
+                                            Tenant ID Card
                                         </strong>
                                     </p>
                                     <p class="font-15 mb-5"><i class="icon-copy dw dw-phone-call"></i> Phone number:
-                                        <strong class="weight-600" id="modal_tenant_phone">
-                                            <a href="tel:0398371050" style="color: blue">0398371050</a>
+                                        <strong class="weight-600">
+                                            <a href="tel:0398371050" style="color: blue" id="modal_tenant_phone">Tenant
+                                                phone number</a>
                                         </strong>
                                     </p>
                                     <p class="font-15 mb-5"><i class="icon-copy dw dw-email1"></i> Email:
-                                        <strong class="weight-600" id="modal_tenant_email">
-                                            <a href="mailto:luuhoaiphong147@gmail.com"
-                                                style="color: blue">luuhoaiphong147@gmail.com</a>
+                                        <strong class="weight-600">
+                                            <a href="mailto:luuhoaiphong147@gmail.com" style="color: blue"
+                                                id="modal_tenant_email">Tenant email address</a>
                                         </strong>
                                     </p>
                                 </div>
@@ -546,17 +590,17 @@
 
                                     <p class="font-15 mb-5"><i class="icon-copy ion-transgender"></i> Gender:
                                         <strong class="weight-600" id="modal_tenant_gender">
-                                            Male
+                                            Tenant gender
                                         </strong>
                                     </p>
                                     <p class="font-15 mb-5"><i class="icon-copy dw dw-calendar-5"></i> Date of birth:
                                         <strong class="weight-600" id="modal_tenant_dob">
-                                            March 1, 2001
+                                            Tenant Date of birth
                                         </strong>
                                     </p>
                                     <p class="font-15 mb-5"><i class="icon-copy dw dw-house-1"></i> Hometown:
                                         <strong class="weight-600" id="modal_tenant_hometown">
-                                            Quý Thành, Nhị Quý, Cai Lậy, Tiền Giang
+                                            Tenant hometown
                                         </strong>
                                     </p>
 
@@ -566,8 +610,8 @@
                                 <div class="col-md-6">
                                     <p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card front photo:
                                     </p>
-                                    <img src="{{ asset('avatar/default-image.png') }}" alt="" width="80%"
-                                        id="modal_tenant_front_IDcard">
+                                    <img src="{{ asset('uploads/tenants/id_card_front/1677567821.jpg') }}" alt=""
+                                        width="80%" id="modal_tenant_front_IDcard">
                                 </div>
                                 <div class="col-md-6">
                                     <p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card back photo:
@@ -580,7 +624,7 @@
                         {{-- SECTION-END: Main tenant information --}}
 
                         {{-- SECTION-START: Room members --}}
-                        <div class="invoice-desc pb-30">
+                        <div class="invoice-desc pb-30" id="roomMembersSection">
                             <h5 class="text-left weight-600 mb-10">
                                 <i class="icon-copy fa fa-group" aria-hidden="true"></i> Room members &nbsp;&nbsp;&nbsp;
 
@@ -592,104 +636,128 @@
                             </h5>
 
                             {{-- NOTE: table for add new members start --}}
-                            <div class="table-responsive" id="addMemebersTable">
-                                <form id="room-members" action="" method="POST">
-                                    <div class="pull-right mb-10">
-                                        <button class="btn btn-primary btn-sm" type="submit">Submit</button>
-                                    </div>
-                                    @csrf
-                                    <table class="table table-striped" id="tenant-member-table">
-                                        <thead style="white-space: nowrap;">
-                                            <tr>
-                                                <th scope="col">Full name </th>
-                                                <th scope="col">ID Card</th>
-                                                <th scope="col">Data of birth</th>
-                                                <th scope="col">Gender</th>
-                                                <th scope="col">Phone</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Hometown</th>
-                                                <th scope="col"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="table-body">
-                                            <tr>
-                                                
-                                                <td>
-                                                    <input type='text' class='form-control' name='fullname[]'>
-                                                </td>
-                                                <td>
-                                                    <input type='text' class='form-control' name='id_card[]'>
-                                                </td>
-                                                <td>
-                                                    <input class="form-control" type="text" name="dob[]">
-                                                </td>
-                                                <td>
-                                                    <div class="custom-control custom-radio mb-5 mr-20">
-                                                        <input type="radio" id="male" name="gender[0]"
-                                                            class="custom-control-input" value="Male" checked>
-                                                        <label class="custom-control-label weight-400"
-                                                            for="male">Male</label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio mb-5">
-                                                        <input type="radio" id="female" name="gender[0]"
-                                                            class="custom-control-input" value="Female">
-                                                        <label class="custom-control-label weight-400"
-                                                            for="female">Female</label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <input type='text' class='form-control' name='phone[]'>
-                                                </td>
-                                                <td>
-                                                    <input type='text' class='form-control' name='email[]'>
-                                                </td>
-                                                <td>
-                                                    <input type='text' class='form-control' name='hometown[]'>
-                                                </td>
-                                                <td>
-                                                    <button type='button' class='btn btn-danger btn-sm'
-                                                        onclick='deleteRow(this)'><i class='icon-copy fa fa-minus-circle'
-                                                            aria-hidden='true'></i></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="7"></td>
-                                                <td>
-                                                    <button class="btn btn-success btn-sm" type="button"
-                                                        id="add-new-row">
-                                                        <i class="icon-copy fa fa-plus-circle" aria-hidden="true"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </form>
+                            <div id="addMemebersTable">
+                                <div class="pull-right mb-10">
+                                    <button class="btn btn-primary btn-sm" type="submit"
+                                        onclick="submitForm()">Submit</button>
+                                </div>
+                                <div class="table-responsive">
+                                    <form id="room-members" action="{{ route('assign-members') }}" method="POST">
+                                        <input type="hidden" name="main_tenant_id" id="main_tenant_id">
+                                        @csrf
+                                        <table class="table table-striped" id="tenant-member-table">
+                                            <thead style="white-space: nowrap;">
+                                                <tr>
+                                                    <th scope="col"
+                                                        style="position: sticky; left: 0; z-index: 1; background: white">
+                                                    </th>
+                                                    <th scope="col">Full name </th>
+                                                    <th scope="col">ID Card</th>
+                                                    <th scope="col">Data of birth</th>
+                                                    <th scope="col">Gender</th>
+                                                    <th scope="col">Phone</th>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Hometown</th>
+                                                    <th scope="col">ID Card front photo</th>
+                                                    <th scope="col">ID Card back photo</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="table-body">
+                                                <tr>
+                                                    <td style="position: sticky; left: 0; z-index: 1; background: white;">
+                                                        <button type='button' class='btn btn-danger btn-sm'
+                                                            onclick='deleteRow(this)'><i
+                                                                class='icon-copy fa fa-minus-circle'
+                                                                aria-hidden='true'></i></button>
+                                                    </td>
+                                                    <td>
+                                                        <input type='text' class='form-control' name='fullname[]'
+                                                            style="width: 200px">
+                                                    </td>
+                                                    <td>
+                                                        <input type='text' class='form-control' name='id_card[]'
+                                                            style="width: 200px">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" type="text" name="dob[]"
+                                                            style="width: 100px">
+                                                    </td>
+                                                    <td>
+                                                        <div class="custom-control custom-radio mb-5 mr-20">
+                                                            <input type="radio" id="male" name="gender[0]"
+                                                                class="custom-control-input" value="Male" checked>
+                                                            <label class="custom-control-label weight-400"
+                                                                for="male">Male</label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio mb-5">
+                                                            <input type="radio" id="female" name="gender[0]"
+                                                                class="custom-control-input" value="Female">
+                                                            <label class="custom-control-label weight-400"
+                                                                for="female">Female</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <input type='text' class='form-control' name='phone[]'
+                                                            style="width: 200px">
+                                                    </td>
+                                                    <td>
+                                                        <input type='text' class='form-control' name='email[]'
+                                                            style="width: 200px">
+                                                    </td>
+                                                    <td>
+                                                        <input type='text' class='form-control' name='hometown[]'
+                                                            style="width: 200px">
+                                                    </td>
+                                                    <td>
+                                                        <input type='file' class='form-control'
+                                                            name='idcard_back[]'style="width: 200px">
+                                                    </td>
+                                                    <td>
+                                                        <input type='file' class='form-control'
+                                                            name='idcard_front[]'style="width: 200px">
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td style="position: sticky; left: 0; z-index: 1">
+                                                        <button class="btn btn-success btn-sm" type="button"
+                                                            id="add-new-row">
+                                                            <i class="icon-copy fa fa-plus-circle" aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td colspan="9"></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </form>
+                                </div>
                             </div>
                             {{-- NOTE: table for add new members end --}}
 
-                            <div class="row pb-30">
+                            <div class="row pb-30" style="margin-top: 20px">
                                 <div class="col-md-6">
                                     <p class="font-15 mb-5"><i class="icon-copy dw dw-user"></i> Fullname:
                                         <strong class="weight-600" id="modal_members_fullname">
-                                            Luu Hoai Phong
+                                            Members full name
                                         </strong>
                                     </p>
                                     <p class="font-15 mb-5"><i class="icon-copy dw dw-id-card2"></i> ID card number:
                                         <strong class="weight-600" id="modal_members_idCard">
-                                            082201003811
+                                            Members ID card number
                                         </strong>
                                     </p>
                                     <p class="font-15 mb-5"><i class="icon-copy dw dw-phone-call"></i> Phone number:
-                                        <strong class="weight-600" id="modal_members_phone">
-                                            <a href="tel:0398371050" style="color: blue">0398371050</a>
+                                        <strong class="weight-600">
+                                            <a href="tel:0398371050" style="color: blue" id="modal_members_phone">Members
+                                                phone number</a>
                                         </strong>
                                     </p>
                                     <p class="font-15 mb-5"><i class="icon-copy dw dw-email1"></i> Email:
-                                        <strong class="weight-600" id="modal_members_email">
-                                            <a href="mailto:luuhoaiphong147@gmail.com"
-                                                style="color: blue">luuhoaiphong147@gmail.com</a>
+                                        <strong class="weight-600">
+                                            <a href="mailto:luuhoaiphong147@gmail.com" style="color: blue"
+                                                id="modal_members_email">Members email address</a>
                                         </strong>
                                     </p>
                                 </div>
@@ -697,17 +765,17 @@
 
                                     <p class="font-15 mb-5"><i class="icon-copy ion-transgender"></i> Gender:
                                         <strong class="weight-600" id="modal_members_gender">
-                                            Male
+                                            Members Gender
                                         </strong>
                                     </p>
                                     <p class="font-15 mb-5"><i class="icon-copy dw dw-calendar-5"></i> Date of birth:
                                         <strong class="weight-600" id="modal_members_dob">
-                                            March 1, 2001
+                                            Members date of birth
                                         </strong>
                                     </p>
                                     <p class="font-15 mb-5"><i class="icon-copy dw dw-house-1"></i> Hometown:
                                         <strong class="weight-600" id="modal_members_hometown">
-                                            Quý Thành, Nhị Quý, Cai Lậy, Tiền Giang
+                                            Members hometown
                                         </strong>
                                     </p>
 
@@ -800,7 +868,7 @@
             const content = document.querySelector('#addMemebersTable');
 
             content.style.display = 'none';
-            toggleBtn.innerHTML = '<i class="icon-copy dw dw-add"></i> Add new';
+            toggleBtn.innerHTML = '<i class="icon-copy dw dw-add"></i> Add new members';
 
             let isHidden = true;
 
@@ -810,7 +878,7 @@
                     toggleBtn.innerHTML = 'Hide';
                 } else {
                     content.style.display = 'none';
-                    toggleBtn.innerHTML = '<i class="icon-copy dw dw-add"></i> Add new';
+                    toggleBtn.innerHTML = '<i class="icon-copy dw dw-add"></i> Add new members';
                 }
                 isHidden = !isHidden;
             });
@@ -926,6 +994,124 @@
                     $('#house-edit').modal('show');
                 });
             });
+
+            // NOTE: pass value to show-detail-room
+            var showDetailRoomBtn = document.querySelectorAll('#show-roomInfo-detail');
+            showDetailRoomBtn.forEach(function(e) {
+                e.addEventListener('click', function() {
+                    // NOTE: get from button attribute
+                    var roomName = e.getAttribute('data-roomName');
+                    var price = e.getAttribute('data-price');
+                    var roomStatus = e.getAttribute('data-status');
+                    var houseName = e.getAttribute('data-houseName');
+                    var houseAddress = e.getAttribute('data-houseAddress');
+
+                    var tenantID = e.getAttribute('data-mainTenantID');
+                    var fullname = e.getAttribute('data-tenantName');
+                    var idCard = e.getAttribute('data-idCard');
+                    var phone = e.getAttribute('data-phoneNumber');
+                    var email = e.getAttribute('data-email');
+                    var gender = e.getAttribute('data-gender');
+                    var dob = e.getAttribute('data-dob');
+                    var hometown = e.getAttribute('data-hometown');
+                    var idFrontPhoto = e.getAttribute('data-idFrontPhoto');
+                    var idBackPhoto = e.getAttribute('data-idBackPhoto');
+
+                    var memberName = e.getAttribute('data-memberName');
+                    var memberIDCard = e.getAttribute('data-memberIdCard');
+                    var memberPhone = e.getAttribute('data-memberPhoneNumber');
+                    var memberEmail = e.getAttribute('data-memberEmail');
+                    var memberGender = e.getAttribute('data-memberGender');
+                    var memberDOB = e.getAttribute('data-memberDoB');
+                    var memberHometown = e.getAttribute('data-memberHometown');
+
+
+
+
+                    //NOTE: get element from modal to show - detail room
+                    var roomNameModal = document.querySelector('#modal_room_name');
+                    var priceModal = document.querySelector('#modal_room_price');
+                    var roomStatusModal = document.querySelector('#modal_room_status');
+                    var houseNameModal = document.querySelector('#modal_house_name');
+                    var houseAddressModal = document.querySelector('#modal_house_address');
+
+                    // NOTE: get element from modal to show - tenant info
+                    var tenantNameModal = document.querySelector('#modal_tenant_fullname');
+                    var tenantIDCardModal = document.querySelector('#modal_tenant_idCard');
+                    var tenantPhoneModal = document.querySelector('#modal_tenant_phone');
+                    var tenantEmailModal = document.querySelector('#modal_tenant_email');
+                    var tenantGenderModal = document.querySelector('#modal_tenant_gender');
+                    var tenantDOBModal = document.querySelector('#modal_tenant_dob');
+                    var tenantHometownModal = document.querySelector('#modal_tenant_hometown');
+                    var idFrontPhotoModal = document.querySelector('#modal_tenant_front_IDcard');
+                    var idBackPhotoModal = document.querySelector('#modal_tenant_back_IDcard');
+
+                    // NOTE: get element from modal to show - member info
+                    var mainTenantID = document.querySelector('#main_tenant_id');
+                    var memberNameModal = document.querySelector('#modal_members_fullname');
+                    var memberIDCardModal = document.querySelector('#modal_members_idCard');
+                    var memberPhoneModal = document.querySelector('#modal_members_phone');
+                    var memberEmailModal = document.querySelector('#modal_members_email');
+                    var memberGenderModal = document.querySelector('#modal_members_gender');
+                    var memberDOBModal = document.querySelector('#modal_members_dob');
+                    var memberHometownModal = document.querySelector('#modal_members_hometown');
+
+
+
+                    // NOTE: set value to modal
+                    // NOTE: set value to Room infomation
+                    roomNameModal.innerHTML = roomName;
+                    priceModal.innerHTML = price;
+                    if (roomStatus == 0) {
+                        roomStatusModal.className = "badge badge-pill badge-primary";
+                        roomStatusModal.innerHTML = "Available";
+                    } else {
+                        roomStatusModal.className = "badge badge-pill badge-success"
+                        roomStatusModal.innerHTML = "Occupied";
+                    }
+                    houseNameModal.innerHTML = houseName;
+                    houseAddressModal.innerHTML = houseAddress;
+
+                    // NOTE: set value to Tenant infomation
+                    tenantNameModal.innerHTML = fullname;
+                    tenantIDCardModal.innerHTML = idCard;
+                    tenantPhoneModal.innerHTML = phone;
+                    tenantEmailModal.innerHTML = email;
+                    tenantGenderModal.innerHTML = gender;
+                    tenantDOBModal.innerHTML = dob;
+                    tenantHometownModal.innerHTML = hometown;
+
+                    tenantPhoneModal.href = "tel:" + phone;
+                    tenantEmailModal.href = "mailto:" + email;
+
+                    // NOTE: set src image ID Card front to tenant infomation
+                    idFrontPhotoModal.src = idFrontPhoto;
+                    // NOTE: set src image ID Card back to tenant infomation
+                    idBackPhotoModal.src = idBackPhoto;
+
+                    // NOTE: set value to Member infomation
+                    memberNameModal.innerHTML = memberName;
+                    memberIDCardModal.innerHTML = memberIDCard;
+                    memberPhoneModal.innerHTML = memberPhone;
+                    memberEmailModal.innerHTML = memberEmail;
+                    memberGenderModal.innerHTML = memberGender;
+                    memberDOBModal.innerHTML = memberDOB;
+                    memberHometownModal.innerHTML = memberHometown;
+
+
+                    // NOTE: show/hide member section if tenantID is null ot not null
+                    if (tenantID == "") {
+                        document.getElementById('roomMembersSection').style.display = 'none';
+                    } else {
+                        document.getElementById('roomMembersSection').style.display = '';
+                        mainTenantID.value = tenantID;
+                    }
+
+
+                    $('#show-detail-room-modal').modal('show');
+                });
+            });
+
         });
 
         // function assignTenantSubmit() {
@@ -979,16 +1165,22 @@
             const cell6 = document.createElement("td");
             const cell7 = document.createElement("td");
             const cell8 = document.createElement("td");
+            const cell9 = document.createElement("td");
+            const cell10 = document.createElement("td");
+
+            cell1.style.position = "sticky";
+            cell1.style.left = "0";
+            cell1.style.backgroundColor = "white";
+            cell1.style.zIndex = "1";
 
 
             // NOTE: Add content to the cells
             cell1.innerHTML =
-                "<input type='text' class='form-control' name='fullname[]'>";
-            cell2.innerHTML =
-                "<input type='text' class='form-control' name='id_card[]'>";
-            cell3.innerHTML =
-                "<input class='form-control' type='text' name='dob[]'>";
-            cell4.innerHTML =
+                "<button type='button' class='btn btn-danger btn-sm' onclick='deleteRow(this)'><i class='icon-copy fa fa-minus-circle' aria-hidden='true'></i></button>";
+            cell2.innerHTML = "<input type='text' class='form-control' name='fullname[]' style='width: 200px'>";
+            cell3.innerHTML = "<input type='text' class='form-control' name='id_card[]' style='width: 200px'>";
+            cell4.innerHTML = "<input class='form-control' type='text' name='dob[]' style='width: 100px'>";
+            cell5.innerHTML =
                 "<div class='custom-control custom-radio mb-5 mr-20'>" +
                 "<input type='radio' id='male" + clickCount +
                 "' name='gender[" + clickCount + "]' class='custom-control-input' value='Male' checked>" +
@@ -998,15 +1190,11 @@
                 "' name='gender[" + clickCount + "]' class='custom-control-input' value='Female'>" +
                 "<label class='custom-control-label weight-400' for='female" + clickCount +
                 "'>Female</label> </div>";
-            cell5.innerHTML =
-                "<input type='text' class='form-control' name='phone[]'>";
-            cell6.innerHTML =
-                "<input type='text' class='form-control' name='email[]'>";
-            cell7.innerHTML =
-                "<input type='text' class='form-control' name='hometown[]'>";
-            cell8.innerHTML =
-                "<button type='button' class='btn btn-danger btn-sm' onclick='deleteRow(this)'><i class='icon-copy fa fa-minus-circle' aria-hidden='true'></i></button>";
-
+            cell6.innerHTML = "<input type='text' class='form-control' name='phone[]' style='width: 200px'>";
+            cell7.innerHTML = "<input type='text' class='form-control' name='email[]' style='width: 200px'>";
+            cell8.innerHTML = "<input type='text' class='form-control' name='hometown[]' style='width: 200px'>";
+            cell9.innerHTML = "<input type='file' class='form-control' name='idcard_front[]' style='width: 200px'>";
+            cell10.innerHTML = "<input type='file' class='form-control' name='idcard_back[]' style='width: 200px'>";
             // NOTE: Append the cells to the new row
             newRow.appendChild(cell1);
             newRow.appendChild(cell2);
@@ -1016,6 +1204,8 @@
             newRow.appendChild(cell6);
             newRow.appendChild(cell7);
             newRow.appendChild(cell8);
+            newRow.appendChild(cell9);
+            newRow.appendChild(cell10);
 
             // NOTE: Append the new row to the table body
             tableBody.appendChild(newRow);
@@ -1026,6 +1216,10 @@
         function deleteRow(btn) {
             const row = btn.parentNode.parentNode;
             row.parentNode.removeChild(row);
+        }
+
+        function submitForm() {
+            document.getElementById("room-members").submit();
         }
     </script>
 @endsection

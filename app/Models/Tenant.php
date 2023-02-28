@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Members;
+use App\Models\RentalRoom;
 
 class Tenant extends Model
 {
@@ -21,7 +23,6 @@ class Tenant extends Model
         'dob',
         'id_card',
         'hometown',
-        'preResidence',
         'status',
         'user_id',
         'avatar',
@@ -41,6 +42,11 @@ class Tenant extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function members()
+    {
+        return $this->hasMany(Members::class, 'tenant_id');
     }
 
     public function rentals()

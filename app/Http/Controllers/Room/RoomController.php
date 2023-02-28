@@ -9,6 +9,7 @@ use App\Models\Room;
 use App\Models\Tenant;
 use App\Models\RentalRoom;
 use App\Models\Services;
+use App\Models\Members;
 
 class RoomController extends Controller
 {
@@ -88,7 +89,7 @@ class RoomController extends Controller
     public function assignTenant_action(Request $request, $id)
     {
         if ($request->tenant_id == null) {
-            
+
             DB::beginTransaction();
 
             try {
@@ -117,7 +118,6 @@ class RoomController extends Controller
                 $rental->start_date = $request->start_date;
                 // $rental->end_date = $request->end_date;
                 $rental->save();
-
             } catch (\Exception $e) {
                 DB::rollBack();
                 throw $e;
@@ -151,18 +151,32 @@ class RoomController extends Controller
 
     public function assignMembers(Request $request)
     {
-        dd($request->all());
+        $mainTenantID = $request->main_tenant_id;
+
+        $fullname = $request->input('fullname');
+        $id_card = $request->input('id_card');
+        $phone_number = $request->input('phone');
+        $email = $request->input('email');
+        $hometown = $request->input('hometown');
+        $gender = $request->input('gender');
+        $dob = $request->input('dob');
+
+        for ($i = 0; $i < count($fullname); $i++) {
+            $members = new Members();
+            $members->fullname = $fullname[$i];
+            $members->id_card = $id_card[$i];
+            $members->phone_number = $phone_number[$i];
+            $members->email = $email[$i];
+            $members->hometown = $hometown[$i];
+            $members->gender = $gender[$i];
+            $members->dob = $dob[$i];
+            $members->tenant_id = $mainTenantID;
+            $members->citizen_card_front_image = 'aa';
+            $members->citizen_card_back_image = 'aa';
+            $members->avatar = 'aa';
+            $members->status = 1;
+            $members->save();
+        }
+        return redirect()->back()->with('success', 'Members has been added successfully');
     }
-
-    // public function getMembers(Request $request)
-    // {
-    //     dd($request->all());
-    // }
-
-    // public function room()
-    // {
-    //     $house = DB::table('tb_rooms')->where('area_id', 2)->get();
-
-    //     return view('dashboard.room.room', compact(['house']))->with('title', 'Room Management');
-    // }
 }

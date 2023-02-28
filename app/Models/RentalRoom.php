@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Room;
 use App\Models\Tenant;
+use App\Models\Utility;
 
 class RentalRoom extends Model
 {

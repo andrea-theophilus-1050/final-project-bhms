@@ -47,13 +47,6 @@
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 mb-30">
                 <div class="pd-20 card-box">
-
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary" type="button" onclick="submitForm()"
-                            style="margin-right: 15px">Save</button>
-                        <a href="{{ route('room.index', $room->house_id) }}" class="btn btn-danger">Cancel</a>
-                    </div>
-
                     <div class="tab">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
@@ -64,10 +57,6 @@
                                 <a class="nav-link text-blue" data-toggle="tab" href="#profile" role="tab"
                                     aria-selected="false">Services</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-blue" data-toggle="tab" href="#contact" role="tab"
-                                    aria-selected="false">Members</a>
-                            </li>
                         </ul>
 
                         <div class="tab-content">
@@ -75,7 +64,8 @@
                                 <div class="pd-20">
                                     <a href="javascript:;" class="btn btn-secondary btn-sm mb-20" data-target="#tenant-list"
                                         data-toggle="modal">Get tenants</a>
-                                    <form id="mainTenant" method="post" action="{{ route('room.assign-tenant-action', $room->room_id) }}">
+                                    <form id="mainTenant" method="post"
+                                        action="{{ route('room.assign-tenant-action', $room->room_id) }}">
                                         @csrf
 
                                         <div class="form-group row">
@@ -218,14 +208,14 @@
                                                     <input class="form-control" value="50" type="range">
                                                 </div>
                                             </div> --}}
-                                        {{-- <div class="form-group row">
+                                        <div class="form-group row">
                                             <div class="col-sm-12 col-md-2"></div>
                                             <div class="col-sm-12 col-md-10">
                                                 <button class="btn btn-primary" type="submit">Submit</button>
                                                 <a class="btn btn-danger"
                                                     href="{{ route('room.index', $room->house_id) }}">Cancel</a>
                                             </div>
-                                        </div> --}}
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -281,89 +271,6 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="contact" role="tabpanel">
-                                <div class="pd-20">
-                                    <div class="table-responsive">
-                                        {{-- <div class="pull-right mb-20">
-                                            <button class="btn btn-primary" onclick="saveMember()">Save</button>
-                                            <button class="btn btn-danger">Cancel</button>
-                                        </div> --}}
-                                        <form id="room-members"
-                                            action="{{ route('room.assign-tenant-action', $room->room_id) }}"
-                                            method="POST">
-                                            @csrf
-                                            <table class="table table-striped" id="tenant-member-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Full name </th>
-                                                        <th scope="col">ID Card</th>
-                                                        <th scope="col">Data of birth</th>
-                                                        <th scope="col">Gender</th>
-                                                        <th scope="col">Phone</th>
-                                                        <th scope="col">Email</th>
-                                                        <th scope="col">Hometown</th>
-                                                        <th scope="col"></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="table-body">
-                                                    <tr>
-                                                        <td>
-                                                            <input type='text' class='form-control' name='fullname[]'>
-                                                        </td>
-                                                        <td>
-                                                            <input type='text' class='form-control' name='id_card[]'>
-                                                        </td>
-                                                        <td>
-                                                            <input class="form-control" type="text" name="dob[]">
-                                                        </td>
-                                                        <td>
-                                                            <div class="custom-control custom-radio mb-5 mr-20">
-                                                                <input type="radio" id="male" name="gender[0]"
-                                                                    class="custom-control-input" value="Male" checked>
-                                                                <label class="custom-control-label weight-400"
-                                                                    for="male">Male</label>
-                                                            </div>
-                                                            <div class="custom-control custom-radio mb-5">
-                                                                <input type="radio" id="female" name="gender[0]"
-                                                                    class="custom-control-input" value="Female">
-                                                                <label class="custom-control-label weight-400"
-                                                                    for="female">Female</label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <input type='text' class='form-control' name='phone[]'>
-                                                        </td>
-                                                        <td>
-                                                            <input type='text' class='form-control' name='email[]'>
-                                                        </td>
-                                                        <td>
-                                                            <input type='text' class='form-control' name='hometown[]'>
-                                                        </td>
-                                                        <td>
-                                                            <button type='button' class='btn btn-danger btn-sm'
-                                                                onclick='deleteRow(this)'><i
-                                                                    class='icon-copy fa fa-minus-circle'
-                                                                    aria-hidden='true'></i></button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td colspan="7"></td>
-                                                        <td>
-                                                            <button class="btn btn-success btn-sm" type="button"
-                                                                id="add-new-row">
-                                                                <i class="icon-copy fa fa-plus-circle"
-                                                                    aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -454,9 +361,9 @@
 
     <script>
         /*NOTE: handle click on row in table of List of Tenants
-                    - checked => hide other row
-                    - unchecked => show all row 
-                    */
+                            - checked => hide other row
+                            - unchecked => show all row 
+                            */
         const tbody = document.querySelector('#tenant-list tbody');
         const rows = tbody.querySelectorAll('#tenant-list tr');
         rows.forEach((row) => {
@@ -547,83 +454,6 @@
             } else {
                 document.getElementById('alert-error').style.display = '';
             }
-        }
-
-        //NOTE: add new row to table button
-        const addRowButton = document.getElementById("add-new-row");
-        const tableBody = document.getElementById("table-body");
-        let clickCount = 0;
-
-        addRowButton.addEventListener("click", function() {
-            clickCount++;
-            // NOTE: Create a new row
-            const newRow = document.createElement("tr");
-
-            // NOTE: Create the cells for the new row
-            const cell1 = document.createElement("td");
-            const cell2 = document.createElement("td");
-            const cell3 = document.createElement("td");
-            const cell4 = document.createElement("td");
-            const cell5 = document.createElement("td");
-            const cell6 = document.createElement("td");
-            const cell7 = document.createElement("td");
-            const cell8 = document.createElement("td");
-
-
-            // NOTE: Add content to the cells
-            cell1.innerHTML =
-                "<input type='text' class='form-control' name='fullname[]'>";
-            cell2.innerHTML =
-                "<input type='text' class='form-control' name='id_card[]'>";
-            cell3.innerHTML =
-                "<input class='form-control' type='text' name='dob[]'>";
-            cell4.innerHTML =
-                "<div class='custom-control custom-radio mb-5 mr-20'>" +
-                "<input type='radio' id='male" + clickCount +
-                "' name='gender[" + clickCount + "]' class='custom-control-input' value='Male' checked>" +
-                "<label class='custom-control-label weight-400' for='male" + clickCount + "'>Male</label>" +
-                "</div> <div class='custom-control custom-radio mb-5'>" +
-                "<input type='radio' id='female" + clickCount +
-                "' name='gender[" + clickCount + "]' class='custom-control-input' value='Female'>" +
-                "<label class='custom-control-label weight-400' for='female" + clickCount +
-                "'>Female</label> </div>";
-            cell5.innerHTML =
-                "<input type='text' class='form-control' name='phone[]'>";
-            cell6.innerHTML =
-                "<input type='text' class='form-control' name='email[]'>";
-            cell7.innerHTML =
-                "<input type='text' class='form-control' name='hometown[]'>";
-            cell8.innerHTML =
-                "<button type='button' class='btn btn-danger btn-sm' onclick='deleteRow(this)'><i class='icon-copy fa fa-minus-circle' aria-hidden='true'></i></button>";
-
-            // NOTE: Append the cells to the new row
-            newRow.appendChild(cell1);
-            newRow.appendChild(cell2);
-            newRow.appendChild(cell3);
-            newRow.appendChild(cell4);
-            newRow.appendChild(cell5);
-            newRow.appendChild(cell6);
-            newRow.appendChild(cell7);
-            newRow.appendChild(cell8);
-
-            // NOTE: Append the new row to the table body
-            tableBody.appendChild(newRow);
-
-        });
-
-        // NOTE: delete row in table
-        function deleteRow(btn) {
-            const row = btn.parentNode.parentNode;
-            row.parentNode.removeChild(row);
-        }
-
-        // NOTE: save member to room
-        function submitForm() {
-            const formMainTenant = document.getElementById('mainTenant');
-            const formMemeber = document.getElementById('room-members');
-            
-            formMainTenant.submit();
-            formMemeber.submit();
         }
     </script>
 @endsection

@@ -42,6 +42,21 @@ class TenantController extends Controller
         $tenant->email = $request->email;
         $tenant->hometown = $request->hometown;
         $tenant->user_id = auth()->user()->id;
+
+        $id_card_front_name = null;
+        $id_card_back_name = null;
+        if ($request->hasFile('id_card_front') && $request->hasFile('id_card_back')) {
+            $id_card_front = $request->file('id_card_front');
+            $id_card_back = $request->file('id_card_back');
+
+            $id_card_front_name = time() . '.' . $id_card_front->getClientOriginalExtension();
+            $id_card_back_name = time() . '.' . $id_card_back->getClientOriginalExtension();
+
+            $id_card_front->move(public_path('uploads/tenants/id_card_front'), $id_card_front_name);
+            $id_card_back->move(public_path('uploads/tenants/id_card_back'), $id_card_back_name);
+        }
+        $tenant->citizen_card_front_image = $id_card_front_name;
+        $tenant->citizen_card_back_image = $id_card_back_name;
         $tenant->save();
         return redirect()->route('tenant.index');
     }

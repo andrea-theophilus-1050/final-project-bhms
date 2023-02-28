@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\App;
 use App\Exports\ExportUser;
 use Maatwebsite\Excel\Facades\Excel;
 
-
-
-
 class UserController extends Controller
 {
     public function googleRedirect()
@@ -101,10 +98,7 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
-            // if ($request->remember_me) {
-            //     Cookie::queue('username', $request->username, 60 * 24 * 30);
-            //     Cookie::queue('password', $request->password, 60 * 24 * 30);
-            // }
+
             if (Auth::user()->role == 'landlords') {
                 return redirect()->route('home')->with('success', 'Login successful!');
             } else {
@@ -168,48 +162,25 @@ class UserController extends Controller
                 } else if ($email) {
                     return redirect()->back()->with('errorProfile', 'Email already exists')->withInput($request->all());
                 } else {
-                    if ($request->avatar == "") {
-                        // DB::table('tb_user')->where('id', auth()->user()->id)->update([
-                        //     'name' => $request->name,
-                        //     'email' => $request->email,
-                        //     'phone' => $request->phone,
-                        //     'dob' => $request->dob,
-                        //     'gender' => $request->gender
-                        // ]);
-                        //update user using class User
-                        $user = User::find(auth()->user()->id);
-                        $user->name = $request->name;
-                        $user->email = $request->email;
-                        $user->phone = $request->phone;
-                        $user->dob = $request->dob;
-                        $user->gender = $request->gender;
-                        $user->save();
-                    } else {
+                    $user = User::find(auth()->user()->id);
+                    $user->name = $request->name;
+                    $user->email = $request->email;
+                    $user->phone = $request->phone;
+                    $user->dob = $request->dob;
+                    $user->gender = $request->gender;
+
+                    $generatedAvatarName = null;
+                    if ($request->avatar != "") {
                         $request->validate([
                             'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
                         ]);
 
                         $generatedAvatarName = 'avatar-' . time() . '.' . $request->avatar->extension();
                         $request->avatar->move(public_path('avatar'), $generatedAvatarName);
-
-                        // DB::table('tb_user')->where('id', auth()->user()->id)->update([
-                        //     'name' => $request->name,
-                        //     'email' => $request->email,
-                        //     'phone' => $request->phone,
-                        //     'dob' => $request->dob,
-                        //     'gender' => $request->gender,
-                        //     'avatar' => $generatedAvatarName
-                        // ]);
-                        //update user using class User
-                        $user = User::find(auth()->user()->id);
-                        $user->name = $request->name;
-                        $user->email = $request->email;
-                        $user->phone = $request->phone;
-                        $user->dob = $request->dob;
-                        $user->gender = $request->gender;
-                        $user->avatar = $generatedAvatarName;
-                        $user->save();
                     }
+
+                    $user->avatar = $generatedAvatarName;
+                    $user->save();
                 }
                 return redirect()->route('profile')->with('successProfile', 'Profile updated successfully');
                 break;
@@ -242,32 +213,6 @@ class UserController extends Controller
         $request->session()->regenerateToken();
         return redirect()->route('login')->with('success', 'Logout successful!');
     }
-
-
-
-    // public function githubRedirect(Request $request)
-    // {
-    //     return Socialite::driver('github')->redirect();
-    // }
-
-    // public function githubCallback(Request $request)
-    // {
-    //     $userData = Socialite::driver('github')->user();
-    //     $user = User::where('email', $userData->getEmail())->where('type_login', 'github')->first();
-    //     if ($user) {
-    //         Auth::login($user, true);
-    //         return redirect()->route('home');
-    //     } else {
-    //         $user = new User();
-    //         $user->name = $userData->getName();
-    //         $user->email = $userData->getEmail();
-    //         $user->password = Hash::make($userData->getId());
-    //         $user->type_login = 'github';
-    //         $user->save();
-    //         Auth::login($user, true);
-    //         return redirect()->route('home');
-    //     }
-    // }
 
     public function exportUsers(Request $request)
     {

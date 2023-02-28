@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\House;
 use App\Models\RentalRoom;
 
+
 class Room extends Model
 {
     use HasFactory;

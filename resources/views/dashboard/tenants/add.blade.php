@@ -21,7 +21,7 @@
             </div>
 
             <div class="pd-20 card-box mb-30">
-                <form method="post" action="{{ route('tenant.store') }}">
+                <form method="post" action="{{ route('tenant.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Full name</label>
@@ -92,6 +92,26 @@
                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Hometowm'">
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">ID Card front photo</label>
+                        <div class="col-sm-12 col-md-10">
+                            <input class="form-control" type="file" name="id_card_front" id="id_card_front"
+                                onchange="previewImage(id_card_front, preview_id_card_front)" accept="image/*">
+                            <img src="" id="preview_id_card_front" alt=""
+                                width="40%" style="margin-top: 10px">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">ID Card front photo</label>
+                        <div class="col-sm-12 col-md-10">
+                            <input class="form-control" type="file" name="id_card_back" id="id_card_back"
+                                onchange="previewImage(id_card_back, preview_id_card_back)" accept="image/*">
+                            <img src="" id="preview_id_card_back" alt=""
+                                width="40%" style="margin-top: 10px">
+                        </div>
+                    </div>
+
+
                     {{-- <div class="form-group row">
                         <label for="example-datetime-local-input" class="col-sm-12 col-md-2 col-form-label">Date and
                             time</label>
@@ -151,4 +171,18 @@
             </div>
         </div>
     </div>
+
+    
+    <script>
+        // NOTE: Preview image before upload (id_card_front, id_card_back)
+        function previewImage(input, preview) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $(preview).attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 @endsection
