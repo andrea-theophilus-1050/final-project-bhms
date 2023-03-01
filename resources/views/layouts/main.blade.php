@@ -353,13 +353,13 @@
                     </li>
                     <li class="dropdown">
                         <a href="{{ route('house.index') }}"
-                            class="dropdown-toggle no-arrow {{ request()->routeIs('house.index') || request()->routeIs('room.index') ? 'active' : '' }}">
+                            class="dropdown-toggle no-arrow {{ request()->routeIs('house.index') || request()->routeIs('room.index') || request()->routeIs('room.assign-tenant') ? 'active' : '' }}">
                             <span class="micon dw dw-house1"></span><span class="mtext">@lang('messages.navHouse')</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('tenant.index') }}"
-                            class="dropdown-toggle no-arrow {{ request()->routeIs('tenant.index') ? 'active' : '' }}">
+                            class="dropdown-toggle no-arrow {{ request()->routeIs('tenant.index') || request()->routeIs('tenant.create') || request()->routeIs('tenant.edit') ? 'active' : '' }}">
                             <span class="micon dw dw-user-2"></span><span class="mtext">Tenants Management</span>
                         </a>
                     </li>

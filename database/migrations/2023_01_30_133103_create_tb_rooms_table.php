@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('room_description')->nullable();
             $table->unsignedBigInteger('house_id');
             $table->foreign('house_id')->references('house_id')->on('tb_house')->onUpdate('cascade')->onDelete('cascade');
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

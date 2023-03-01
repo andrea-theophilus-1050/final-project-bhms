@@ -102,6 +102,36 @@
                                 value="{{ $tenant->hometown }}">
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">ID Card photo</label>
+                        <div class="col-sm-12 col-md-10">
+                            <img src="{{ asset('uploads/tenants/id_card_front/' . $tenant->citizen_card_front_image) }}"
+                                alt="" width="40%" title="{{ $tenant->citizen_card_front_image }}">
+                            <img src="{{ asset('uploads/tenants/id_card_back/' . $tenant->citizen_card_back_image) }}"
+                                alt="" width="40%" style="margin-left: 15px"
+                                title="{{ $tenant->citizen_card_back_image }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">Change ID Card front photo</label>
+                        <div class="col-sm-12 col-md-10">
+                            <input class="form-control" type="file" name="id_card_front" id="id_card_front"
+                                onchange="previewImage(id_card_front, preview_id_card_front)" accept="image/*">
+                            <img src="" id="preview_id_card_front" alt="" width="40%"
+                                style="margin-top: 10px">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">Change ID Card front photo</label>
+                        <div class="col-sm-12 col-md-10">
+                            <input class="form-control" type="file" name="id_card_back" id="id_card_back"
+                                onchange="previewImage(id_card_back, preview_id_card_back)" accept="image/*">
+                            <img src="" id="preview_id_card_back" alt="" width="40%"
+                                style="margin-top: 10px">
+                        </div>
+                    </div>
                     {{-- <div class="form-group row">
                         <label for="example-datetime-local-input" class="col-sm-12 col-md-2 col-form-label">Date and
                             time</label>

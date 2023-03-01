@@ -67,7 +67,8 @@
                                                 <a class="dropdown-item" type="button" id="confirm-delete-modal-btn"
                                                     data-toggle="modal" data-target="#confirm-delete-modal"
                                                     data-tenantID="{{ $tenant->tenant_id }}"
-                                                    data-tenantName="{{ $tenant->fullname }}" data-backdrop="static"><i
+                                                    data-tenantName="{{ $tenant->fullname }}" data-backdrop="static"
+                                                    style="color: red; font-weight: bold"><i
                                                         class="dw dw-delete-3"></i> Delete</a>
                                             </div>
                                         </div>

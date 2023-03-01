@@ -174,7 +174,6 @@ class RoomController extends Controller
             $members->citizen_card_front_image = 'aa';
             $members->citizen_card_back_image = 'aa';
             $members->avatar = 'aa';
-            $members->status = 1;
             $members->save();
         }
         return redirect()->back()->with('success', 'Members has been added successfully');

@@ -156,7 +156,7 @@
                             </div>
                             <div class="widget-data">
                                 <div class="h4 mb-0" id="s1">{{ $countTotal }}</div>
-                                <div class="weight-600 font-14">Total room</div>
+                                <div class="weight-600 font-14">Total rooms</div>
                             </div>
                         </div>
                     </div>
@@ -169,7 +169,7 @@
                             </div>
                             <div class="widget-data">
                                 <div class="h4 mb-0" id="s2">{{ $countRentedRoom }}</div>
-                                <div class="weight-600 font-14">Rented room</div>
+                                <div class="weight-600 font-14">Occupied room</div>
                             </div>
                         </div>
                     </div>
@@ -257,6 +257,12 @@
                                                                     @else
                                                                         <b style="color: green">
                                                                             {{ $room->rentals->tenants->fullname }}
+
+                                                                            {{-- NOTE: this is the way to get members --}}
+                                                                            {{-- @foreach ($room->rentals->tenants->members as $member)
+                                                                                {{ $member->fullname }}
+                                                                                {{ $member->dob }}
+                                                                            @endforeach --}}
                                                                         </b>
                                                                     @endif
                                                                 </p>
@@ -306,8 +312,9 @@
                                                                             data-idBackPhoto="" data-memberName=""
                                                                             data-memberIdCard="" data-memberPhoneNumber=""
                                                                             data-memberEmail="" data-memberGender=""
-                                                                            data-memberDoB="" data-memberHometown=""><i
-                                                                                class="fa fa-eye"></i></button>
+                                                                            data-memberDoB="" data-memberHometown="">
+                                                                            <i class="fa fa-eye"></i>
+                                                                        </button>
                                                                     @else
                                                                         <button id="show-roomInfo-detail"
                                                                             class="btn btn-primary btn-sm" role="button"
@@ -325,13 +332,15 @@
                                                                             data-gender="{{ $room->rentals->tenants->gender }}"
                                                                             data-dob="{{ $room->rentals->tenants->dob }}"
                                                                             data-hometown="{{ $room->rentals->tenants->hometown }}"
-                                                                            data-idFrontPhoto="{{ asset('uploads/tenants/id_card_front/' . $room->rentals->tenants->citizen_card_front_image) }}"
-                                                                            data-idBackPhoto="{{ asset('uploads/tenants/id_card_back/' . $room->rentals->tenants->citizen_card_back_image) }}"
-                                                                            data-memberName=" " data-memberIdCard=" "
-                                                                            data-memberPhoneNumber=" "
-                                                                            data-memberEmail=" " data-memberGender=" "
-                                                                            data-memberDoB=" " data-memberHometown=" "><i
-                                                                                class="fa fa-eye"></i></button>
+                                                                            data-idFrontPhoto="{{ $room->rentals->tenants->citizen_card_front_image }}"
+                                                                            data-idBackPhoto="{{ $room->rentals->tenants->citizen_card_back_image }}"
+                                                                            data-memberName="" data-memberIdCard=""
+                                                                            data-memberPhoneNumber="" data-memberEmail=""
+                                                                            data-memberGender="" data-memberDoB=""
+                                                                            data-memberHometown=""
+                                                                            data-list-member="{{ $room->rentals->tenants->members }}">
+                                                                            <i class="fa fa-eye"></i>
+                                                                        </button>
                                                                     @endif
 
 
@@ -534,24 +543,24 @@
                                 </p>
                                 <p class="font-14 mb-5">Price:
                                     <strong class="font-16 weight-600" id="modal_room_price">
-                                        5,000,000
+                                        Room price
                                     </strong>
                                 </p>
                                 <p class="font-14 mb-5">Status:
                                     <span class="badge badge-pill badge-danger" id="modal_room_status">
-                                        Available
+                                        Room status
                                     </span>
                                 </p>
                             </div>
                             <div class="col-md-6">
                                 <p class="font-14 mb-5">Belongs to the house:
                                     <strong class="weight-600" id="modal_house_name">
-                                        Trọ Hoàn Hảo 2
+                                        Boarding House name
                                     </strong>
                                 </p>
                                 <p class="font-14 mb-5">House address:
                                     <strong class="weight-600" id="modal_house_address">
-                                        123 Nguyễn Văn Linh, Phường 7, Quận Gò Vấp, TP Hồ Chí Minh
+                                        House address
                                     </strong>
                                 </p>
                             </div>
@@ -561,6 +570,7 @@
                         {{-- SECTION-START: Main tenant information --}}
                         <div class="invoice-desc pb-30">
                             <h5 class="text-left mb-20 weight-600"><i class="icon-copy dw dw-user-2"></i> Main tenant</h5>
+
                             <div class="row pb-30">
                                 <div class="col-md-6">
                                     <p class="font-15 mb-5"><i class="icon-copy dw dw-user"></i> Fullname:
@@ -643,7 +653,7 @@
                                 </div>
                                 <div class="table-responsive">
                                     <form id="room-members" action="{{ route('assign-members') }}" method="POST">
-                                        <input type="hidden" name="main_tenant_id" id="main_tenant_id">
+                                        <input type="text" name="main_tenant_id" id="main_tenant_id">
                                         @csrf
                                         <table class="table table-striped" id="tenant-member-table">
                                             <thead style="white-space: nowrap;">
@@ -735,74 +745,83 @@
                                 </div>
                             </div>
                             {{-- NOTE: table for add new members end --}}
+                            <div id="memberContainer">
+                                <div id="membersInfo">
+                                    <div class="row pb-30" style="margin-top: 20px">
+                                        <div class="col-md-6">
+                                            <p class="font-15 mb-5"><i class="icon-copy dw dw-user"></i> Fullname:
+                                                <strong class="weight-600" id="modal_members_fullname">
+                                                    Members full name
+                                                </strong>
+                                            </p>
+                                            <p class="font-15 mb-5"><i class="icon-copy dw dw-id-card2"></i> ID card
+                                                number:
+                                                <strong class="weight-600" id="modal_members_idCard">
+                                                    Members ID card number
+                                                </strong>
+                                            </p>
+                                            <p class="font-15 mb-5"><i class="icon-copy dw dw-phone-call"></i> Phone
+                                                number:
+                                                <strong class="weight-600">
+                                                    <a href="tel:0398371050" style="color: blue"
+                                                        id="modal_members_phone">Members
+                                                        phone number</a>
+                                                </strong>
+                                            </p>
+                                            <p class="font-15 mb-5"><i class="icon-copy dw dw-email1"></i> Email:
+                                                <strong class="weight-600">
+                                                    <a href="mailto:luuhoaiphong147@gmail.com" style="color: blue"
+                                                        id="modal_members_email">Members email address</a>
+                                                </strong>
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6">
 
-                            <div class="row pb-30" style="margin-top: 20px">
-                                <div class="col-md-6">
-                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-user"></i> Fullname:
-                                        <strong class="weight-600" id="modal_members_fullname">
-                                            Members full name
-                                        </strong>
-                                    </p>
-                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-id-card2"></i> ID card number:
-                                        <strong class="weight-600" id="modal_members_idCard">
-                                            Members ID card number
-                                        </strong>
-                                    </p>
-                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-phone-call"></i> Phone number:
-                                        <strong class="weight-600">
-                                            <a href="tel:0398371050" style="color: blue" id="modal_members_phone">Members
-                                                phone number</a>
-                                        </strong>
-                                    </p>
-                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-email1"></i> Email:
-                                        <strong class="weight-600">
-                                            <a href="mailto:luuhoaiphong147@gmail.com" style="color: blue"
-                                                id="modal_members_email">Members email address</a>
-                                        </strong>
-                                    </p>
-                                </div>
-                                <div class="col-md-6">
+                                            <p class="font-15 mb-5"><i class="icon-copy ion-transgender"></i> Gender:
+                                                <strong class="weight-600" id="modal_members_gender">
+                                                    Members Gender
+                                                </strong>
+                                            </p>
+                                            <p class="font-15 mb-5"><i class="icon-copy dw dw-calendar-5"></i> Date of
+                                                birth:
+                                                <strong class="weight-600" id="modal_members_dob">
+                                                    Members date of birth
+                                                </strong>
+                                            </p>
+                                            <p class="font-15 mb-5"><i class="icon-copy dw dw-house-1"></i> Hometown:
+                                                <strong class="weight-600" id="modal_members_hometown">
+                                                    Members hometown
+                                                </strong>
+                                            </p>
 
-                                    <p class="font-15 mb-5"><i class="icon-copy ion-transgender"></i> Gender:
-                                        <strong class="weight-600" id="modal_members_gender">
-                                            Members Gender
-                                        </strong>
-                                    </p>
-                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-calendar-5"></i> Date of birth:
-                                        <strong class="weight-600" id="modal_members_dob">
-                                            Members date of birth
-                                        </strong>
-                                    </p>
-                                    <p class="font-15 mb-5"><i class="icon-copy dw dw-house-1"></i> Hometown:
-                                        <strong class="weight-600" id="modal_members_hometown">
-                                            Members hometown
-                                        </strong>
-                                    </p>
+                                        </div>
+                                    </div>
+                                    <div class="row pb-30">
+                                        <div class="col-md-6">
+                                            <p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card front
+                                                photo:
+                                            </p>
+                                            <img src="{{ asset('avatar/default-image.png') }}" alt=""
+                                                width="80%" id="modal_members_front_IDcard">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card back
+                                                photo:
+                                            </p>
+                                            <img src="{{ asset('avatar/default-image.png') }}" alt=""
+                                                width="80%" id="modal_members_back_IDcard">
+                                        </div>
+                                    </div>
 
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="divider"
+                                                style="background-color: black; height: 2px; width: 100%">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row pb-30">
-                                <div class="col-md-6">
-                                    <p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card front photo:
-                                    </p>
-                                    <img src="{{ asset('avatar/default-image.png') }}" alt="" width="80%"
-                                        id="modal_members_front_IDcard">
-                                </div>
-                                <div class="col-md-6">
-                                    <p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card back photo:
-                                    </p>
-                                    <img src="{{ asset('avatar/default-image.png') }}" alt="" width="80%"
-                                        id="modal_members_back_IDcard">
-                                </div>
-                            </div>
-
-                            {{-- line divider --}}
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="divider" style="background-color: black; height: 2px; width: 100%"></div>
-                                </div>
-                            </div>
-
                             {{--     <ul>
                                     <li class="clearfix">
                                         <div class="invoice-sub">Website Design</div>
@@ -1017,13 +1036,124 @@
                     var idFrontPhoto = e.getAttribute('data-idFrontPhoto');
                     var idBackPhoto = e.getAttribute('data-idBackPhoto');
 
-                    var memberName = e.getAttribute('data-memberName');
-                    var memberIDCard = e.getAttribute('data-memberIdCard');
-                    var memberPhone = e.getAttribute('data-memberPhoneNumber');
-                    var memberEmail = e.getAttribute('data-memberEmail');
-                    var memberGender = e.getAttribute('data-memberGender');
-                    var memberDOB = e.getAttribute('data-memberDoB');
-                    var memberHometown = e.getAttribute('data-memberHometown');
+                    // var memberName = e.getAttribute('data-memberName');
+                    // var memberIDCard = e.getAttribute('data-memberIdCard');
+                    // var memberPhone = e.getAttribute('data-memberPhoneNumber');
+                    // var memberEmail = e.getAttribute('data-memberEmail');
+                    // var memberGender = e.getAttribute('data-memberGender');
+                    // var memberDOB = e.getAttribute('data-memberDoB');
+                    // var memberHometown = e.getAttribute('data-memberHometown');
+
+
+
+                    // NOTE: show members information
+                    var listMembers = e.getAttribute('data-list-member');
+                    var jsonListMembers = JSON.parse(listMembers);
+
+                    const memberContainer = document.querySelector('#memberContainer');
+                    memberContainer.innerHTML = '';
+
+                    jsonListMembers.forEach((member, index) => {
+                        const memberList = document.createElement('div');
+                        memberList.setAttribute('id', 'membersInfo');
+
+                        memberList.innerHTML =
+                            '<div class="row" style="margin-top: 20px">' +
+                            '<div class="col-md-6">' +
+                            '<p class="font-15"><i class="icon-copy dw dw-list"></i>' +
+                            '<strong class="weight-600"> ' +
+                            '<u>Member ' +
+                            (index + 1) +
+                            ':</u>' +
+                            '</strong>' +
+                            '</p>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="row pb-30">' +
+                            '<div class="col-md-6">' +
+                            '<p class="font-15 mb-5"><i class="icon-copy dw dw-user"></i> Fullname:' +
+                            '<strong class="weight-600" id="modal_members_fullname">' +
+                            member.fullname +
+                            '</strong>' +
+                            '</p>' +
+                            '<p class="font-15 mb-5"><i class="icon-copy dw dw-id-card2"></i> ID card number:' +
+                            '<strong class="weight-600" id="modal_members_idCard">' +
+                            member.id_card +
+                            '</strong>' +
+                            '</p>' +
+                            '<p class="font-15 mb-5"><i class="icon-copy dw dw-phone-call"></i> Phone number:' +
+                            '<strong class="weight-600">' +
+                            '<a href="tel:0398371050" style="color: blue" id="modal_members_phone">' +
+                            member.phone_number +
+                            '</a>' +
+                            '</strong>' +
+                            '</p>' +
+                            '<p class="font-15 mb-5"><i class="icon-copy dw dw-email1"></i> Email:' +
+                            '<strong class="weight-600">' +
+                            '<a href="mailto:luuhoaiphong147@gmail.com" style="color: blue" id="modal_members_email">' +
+                            member.email +
+                            '</a>' +
+                            '</strong>' +
+                            '</p>' +
+                            '</div>' +
+                            '<div class="col-md-6">' +
+                            '<p class="font-15 mb-5"><i class="icon-copy ion-transgender"></i> Gender:' +
+                            '<strong class="weight-600" id="modal_members_gender">' +
+                            member.gender +
+                            '</strong>' +
+                            '</p>' +
+                            '<p class="font-15 mb-5"><i class="icon-copy dw dw-calendar-5"></i> Date of birth:' +
+                            '<strong class="weight-600" id="modal_members_dob">' +
+                            member.dob +
+                            '</strong>' +
+                            '</p>' +
+                            '<p class="font-15 mb-5"><i class="icon-copy dw dw-house-1"></i> Hometown:' +
+                            '<strong class="weight-600" id="modal_members_hometown">' +
+                            member.hometown +
+                            '</strong>' +
+                            '</p>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="row pb-30">' +
+                            '<div class="col-md-6">' +
+                            '<p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card front photo:</p>' +
+                            '<img src="{{ asset('avatar/default-image.png') }}" alt="" width="80%" id="modal_members_front_IDcard">' +
+                            '</div>' +
+                            '<div class="col-md-6">' +
+                            '<p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card back photo:</p>' +
+                            '<img src="{{ asset('avatar/default-image.png') }}" alt="" width="80%" id="modal_members_back_IDcard">' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="row">' +
+                            '<div class="col-md-12">' +
+                            '<div class="divider" style="background-color: black; height: 1px; width: 100%"></div>' +
+                            '</div>' +
+                            '</div>';
+
+                        memberContainer.appendChild(memberList);
+                    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1047,14 +1177,14 @@
                     var idBackPhotoModal = document.querySelector('#modal_tenant_back_IDcard');
 
                     // NOTE: get element from modal to show - member info
-                    var mainTenantID = document.querySelector('#main_tenant_id');
-                    var memberNameModal = document.querySelector('#modal_members_fullname');
-                    var memberIDCardModal = document.querySelector('#modal_members_idCard');
-                    var memberPhoneModal = document.querySelector('#modal_members_phone');
-                    var memberEmailModal = document.querySelector('#modal_members_email');
-                    var memberGenderModal = document.querySelector('#modal_members_gender');
-                    var memberDOBModal = document.querySelector('#modal_members_dob');
-                    var memberHometownModal = document.querySelector('#modal_members_hometown');
+                    // var mainTenantID = document.querySelector('#main_tenant_id');
+                    // var memberNameModal = document.querySelector('#modal_members_fullname');
+                    // var memberIDCardModal = document.querySelector('#modal_members_idCard');
+                    // var memberPhoneModal = document.querySelector('#modal_members_phone');
+                    // var memberEmailModal = document.querySelector('#modal_members_email');
+                    // var memberGenderModal = document.querySelector('#modal_members_gender');
+                    // var memberDOBModal = document.querySelector('#modal_members_dob');
+                    // var memberHometownModal = document.querySelector('#modal_members_hometown');
 
 
 
@@ -1085,29 +1215,29 @@
                     tenantEmailModal.href = "mailto:" + email;
 
                     // NOTE: set src image ID Card front to tenant infomation
-                    idFrontPhotoModal.src = idFrontPhoto;
+                    idFrontPhotoModal.src = `{{ asset('uploads/tenants/id_card_front/${idFrontPhoto}') }}`;
                     // NOTE: set src image ID Card back to tenant infomation
-                    idBackPhotoModal.src = idBackPhoto;
+                    idBackPhotoModal.src = `{{ asset('uploads/tenants/id_card_back/${idBackPhoto}') }}`;
 
                     // NOTE: set value to Member infomation
-                    memberNameModal.innerHTML = memberName;
-                    memberIDCardModal.innerHTML = memberIDCard;
-                    memberPhoneModal.innerHTML = memberPhone;
-                    memberEmailModal.innerHTML = memberEmail;
-                    memberGenderModal.innerHTML = memberGender;
-                    memberDOBModal.innerHTML = memberDOB;
-                    memberHometownModal.innerHTML = memberHometown;
+                    // memberNameModal.innerHTML = memberName;
+                    // memberIDCardModal.innerHTML = memberIDCard;
+                    // memberPhoneModal.innerHTML = memberPhone;
+                    // memberEmailModal.innerHTML = memberEmail;
+                    // memberGenderModal.innerHTML = memberGender;
+                    // memberDOBModal.innerHTML = memberDOB;
+                    // memberHometownModal.innerHTML = memberHometown;
 
 
                     // NOTE: show/hide member section if tenantID is null ot not null
-                    if (tenantID == "") {
-                        document.getElementById('roomMembersSection').style.display = 'none';
-                    } else {
-                        document.getElementById('roomMembersSection').style.display = '';
-                        mainTenantID.value = tenantID;
-                    }
+                    // if (tenantID == "") {
+                    //     document.getElementById('roomMembersSection').style.display = 'none';
+                    // } else {
+                    //     document.getElementById('roomMembersSection').style.display = '';
+                    //     mainTenantID.value = tenantID;
+                    // }
 
-
+                    // NOTE: show modal
                     $('#show-detail-room-modal').modal('show');
                 });
             });

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('old_water_index');
             $table->string('new_water_index');
             $table->string('date')->nullable();
-            // $table->timestamps();
+            $table->timestamps();
             $table->foreign('rental_room_id')->references('rental_room_id')->on('tb_rental_room')->onUpdate('cascade')->onDelete('cascade');
         });
     }

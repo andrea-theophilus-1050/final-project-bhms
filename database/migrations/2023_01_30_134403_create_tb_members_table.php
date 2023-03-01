@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->unsignedBigInteger('tenant_id');
             $table->foreign('tenant_id')->references('tenant_id')->on('tb_main_tenants')->onUpdate('cascade')->onDelete('cascade');
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 
