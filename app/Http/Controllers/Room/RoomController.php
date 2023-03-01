@@ -15,7 +15,7 @@ class RoomController extends Controller
 {
     public function index($id)
     {
-        $rooms = Room::where('house_id', $id)->orderBy('status', 'asc')->paginate(20);
+        $rooms = Room::where('house_id', $id)->paginate(20);
         $tenants = Tenant::where('user_id', auth()->user()->id)->where('status', 0)->get();
 
         $countTotal = Room::where('house_id', $id)->count();
@@ -171,9 +171,27 @@ class RoomController extends Controller
             $members->gender = $gender[$i];
             $members->dob = $dob[$i];
             $members->tenant_id = $mainTenantID;
-            $members->citizen_card_front_image = 'aa';
-            $members->citizen_card_back_image = 'aa';
-            $members->avatar = 'aa';
+
+
+            $id_card_front_name = null;
+            $id_card_back_name = null;
+
+            try {
+                $id_card_front = $request->file('idcard_front')[$i];
+                $id_card_back = $request->file('idcard_back')[$i];
+
+                $id_card_front_name = time() . '.' . $id_card_front->getClientOriginalExtension();
+                $id_card_back_name = time() . '.' . $id_card_back->getClientOriginalExtension();
+
+                $id_card_front->move(public_path('uploads/members/id_card_front'), $id_card_front_name);
+                $id_card_back->move(public_path('uploads/members/id_card_back'), $id_card_back_name);
+            } catch (\Exception $e) {
+                DB::rollBack();
+            }
+
+            $members->citizen_card_front_image = $id_card_front_name;
+            $members->citizen_card_back_image = $id_card_back_name;
+
             $members->save();
         }
         return redirect()->back()->with('success', 'Members has been added successfully');

@@ -257,12 +257,6 @@
                                                                     @else
                                                                         <b style="color: green">
                                                                             {{ $room->rentals->tenants->fullname }}
-
-                                                                            {{-- NOTE: this is the way to get members --}}
-                                                                            {{-- @foreach ($room->rentals->tenants->members as $member)
-                                                                                {{ $member->fullname }}
-                                                                                {{ $member->dob }}
-                                                                            @endforeach --}}
                                                                         </b>
                                                                     @endif
                                                                 </p>
@@ -296,35 +290,17 @@
                                                                     <i class="icon-copy dw dw-trash"></i>
                                                                 </a> --}}
 
-                                                                    @if ($room->status == 0)
-                                                                        <button id="show-roomInfo-detail"
-                                                                            class="btn btn-primary btn-sm" role="button"
-                                                                            title="Show details" data-toggle="modal"
-                                                                            data-roomName="{{ $room->room_name }}"
-                                                                            data-price="{{ $room->price }}"
-                                                                            data-status="{{ $room->status }}"
-                                                                            data-houseName="{{ $room->houses->house_name }}"
-                                                                            data-houseAddress="{{ $room->houses->house_address }}"
-                                                                            data-mainTenantID="" data-tenantName=""
-                                                                            data-idCard="" data-phoneNumber=""
-                                                                            data-email="" data-gender="" data-dob=""
-                                                                            data-hometown="" data-idFrontPhoto=""
-                                                                            data-idBackPhoto="" data-memberName=""
-                                                                            data-memberIdCard="" data-memberPhoneNumber=""
-                                                                            data-memberEmail="" data-memberGender=""
-                                                                            data-memberDoB="" data-memberHometown="">
-                                                                            <i class="fa fa-eye"></i>
-                                                                        </button>
-                                                                    @else
-                                                                        <button id="show-roomInfo-detail"
-                                                                            class="btn btn-primary btn-sm" role="button"
-                                                                            title="Show details" data-toggle="modal"
-                                                                            data-roomName="{{ $room->room_name }}"
-                                                                            data-price="{{ $room->price }}"
-                                                                            data-status="{{ $room->status }}"
-                                                                            data-houseName="{{ $room->houses->house_name }}"
-                                                                            data-houseAddress="{{ $room->houses->house_address }}"
-                                                                            data-mainTenantID="{{ $room->rentals->tenants->tenant_id }}"
+
+                                                                    <button id="show-roomInfo-detail"
+                                                                        class="btn btn-primary btn-sm" role="button"
+                                                                        title="Show details" data-toggle="modal"
+                                                                        data-roomID="{{ $room->room_id }}"
+                                                                        data-roomName="{{ $room->room_name }}"
+                                                                        data-price="{{ $room->price }}"
+                                                                        data-status="{{ $room->status }}"
+                                                                        data-houseName="{{ $room->houses->house_name }}"
+                                                                        data-houseAddress="{{ $room->houses->house_address }}"
+                                                                        @if ($room->status == 1) data-mainTenantID="{{ $room->rentals->tenants->tenant_id }}"
                                                                             data-tenantName="{{ $room->rentals->tenants->fullname }}"
                                                                             data-idCard="{{ $room->rentals->tenants->id_card }}"
                                                                             data-phoneNumber="{{ $room->rentals->tenants->phone_number }}"
@@ -334,14 +310,22 @@
                                                                             data-hometown="{{ $room->rentals->tenants->hometown }}"
                                                                             data-idFrontPhoto="{{ $room->rentals->tenants->citizen_card_front_image }}"
                                                                             data-idBackPhoto="{{ $room->rentals->tenants->citizen_card_back_image }}"
-                                                                            data-memberName="" data-memberIdCard=""
-                                                                            data-memberPhoneNumber="" data-memberEmail=""
-                                                                            data-memberGender="" data-memberDoB=""
-                                                                            data-memberHometown=""
-                                                                            data-list-member="{{ $room->rentals->tenants->members }}">
+                                                                            data-list-member="{{ $room->rentals->tenants->members }}" @endif>
+                                                                        <i class="fa fa-eye"></i>
+                                                                    </button>
+                                                                    {{-- @else
+                                                                        <button id="show-roomInfo-detail"
+                                                                            class="btn btn-primary btn-sm" role="button"
+                                                                            title="Show details" data-toggle="modal"
+                                                                            data-roomName="{{ $room->room_name }}"
+                                                                            data-price="{{ $room->price }}"
+                                                                            data-status="{{ $room->status }}"
+                                                                            data-houseName="{{ $room->houses->house_name }}"
+                                                                            data-houseAddress="{{ $room->houses->house_address }}"
+                                                                            >
                                                                             <i class="fa fa-eye"></i>
                                                                         </button>
-                                                                    @endif
+                                                                    @endif --}}
 
 
                                                                     {{-- <button class="btn btn-primary btn-sm" role="button"
@@ -567,9 +551,22 @@
                         </div>
                         {{-- SECTION-END: room information --}}
 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="divider" style="background-color: black; height: 2px; width: 100%">
+                                </div>
+                            </div>
+                        </div>
+
                         {{-- SECTION-START: Main tenant information --}}
-                        <div class="invoice-desc pb-30">
-                            <h5 class="text-left mb-20 weight-600"><i class="icon-copy dw dw-user-2"></i> Main tenant</h5>
+                        <div class="invoice-desc pb-30" style="margin-top: 20px">
+                            <h5 class="text-left mb-20 weight-600"><i class="icon-copy dw dw-user-2"></i> Main tenant
+                                &nbsp;&nbsp;&nbsp;
+                                <a href="#" class="btn btn-info btn-sm" id="assignTenant"><i
+                                        class="icon-copy dw dw-add"></i>
+                                    Assign tenant
+                                </a>
+                            </h5>
 
                             <div class="row pb-30">
                                 <div class="col-md-6">
@@ -620,21 +617,26 @@
                                 <div class="col-md-6">
                                     <p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card front photo:
                                     </p>
-                                    <img src="{{ asset('uploads/tenants/id_card_front/1677567821.jpg') }}" alt=""
-                                        width="80%" id="modal_tenant_front_IDcard">
+                                    <img src="" alt="" width="80%" id="modal_tenant_front_IDcard">
                                 </div>
                                 <div class="col-md-6">
                                     <p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card back photo:
                                     </p>
-                                    <img src="{{ asset('avatar/default-image.png') }}" alt="" width="80%"
-                                        id="modal_tenant_back_IDcard">
+                                    <img src="" alt="" width="80%" id="modal_tenant_back_IDcard">
                                 </div>
                             </div>
                         </div>
                         {{-- SECTION-END: Main tenant information --}}
 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="divider" style="background-color: black; height: 2px; width: 100%">
+                                </div>
+                            </div>
+                        </div>
+
                         {{-- SECTION-START: Room members --}}
-                        <div class="invoice-desc pb-30" id="roomMembersSection">
+                        <div class="invoice-desc pb-30" id="roomMembersSection" style="margin-top: 20px">
                             <h5 class="text-left weight-600 mb-10">
                                 <i class="icon-copy fa fa-group" aria-hidden="true"></i> Room members &nbsp;&nbsp;&nbsp;
 
@@ -652,7 +654,7 @@
                                         onclick="submitForm()">Submit</button>
                                 </div>
                                 <div class="table-responsive">
-                                    <form id="room-members" action="{{ route('assign-members') }}" method="POST">
+                                    <form id="room-members" action="{{ route('assign-members') }}" method="POST" enctype="multipart/form-data">
                                         <input type="text" name="main_tenant_id" id="main_tenant_id">
                                         @csrf
                                         <table class="table table-striped" id="tenant-member-table">
@@ -720,11 +722,11 @@
                                                     </td>
                                                     <td>
                                                         <input type='file' class='form-control'
-                                                            name='idcard_back[]'style="width: 200px">
+                                                            name='idcard_front[]'style="width: 200px">
                                                     </td>
                                                     <td>
                                                         <input type='file' class='form-control'
-                                                            name='idcard_front[]'style="width: 200px">
+                                                            name='idcard_back[]'style="width: 200px">
                                                     </td>
 
                                                 </tr>
@@ -1018,145 +1020,13 @@
             var showDetailRoomBtn = document.querySelectorAll('#show-roomInfo-detail');
             showDetailRoomBtn.forEach(function(e) {
                 e.addEventListener('click', function() {
-                    // NOTE: get from button attribute
+                    // NOTE: get room information from button attribute
+                    var roomID = e.getAttribute('data-roomID');
                     var roomName = e.getAttribute('data-roomName');
                     var price = e.getAttribute('data-price');
                     var roomStatus = e.getAttribute('data-status');
                     var houseName = e.getAttribute('data-houseName');
                     var houseAddress = e.getAttribute('data-houseAddress');
-
-                    var tenantID = e.getAttribute('data-mainTenantID');
-                    var fullname = e.getAttribute('data-tenantName');
-                    var idCard = e.getAttribute('data-idCard');
-                    var phone = e.getAttribute('data-phoneNumber');
-                    var email = e.getAttribute('data-email');
-                    var gender = e.getAttribute('data-gender');
-                    var dob = e.getAttribute('data-dob');
-                    var hometown = e.getAttribute('data-hometown');
-                    var idFrontPhoto = e.getAttribute('data-idFrontPhoto');
-                    var idBackPhoto = e.getAttribute('data-idBackPhoto');
-
-                    // var memberName = e.getAttribute('data-memberName');
-                    // var memberIDCard = e.getAttribute('data-memberIdCard');
-                    // var memberPhone = e.getAttribute('data-memberPhoneNumber');
-                    // var memberEmail = e.getAttribute('data-memberEmail');
-                    // var memberGender = e.getAttribute('data-memberGender');
-                    // var memberDOB = e.getAttribute('data-memberDoB');
-                    // var memberHometown = e.getAttribute('data-memberHometown');
-
-
-
-                    // NOTE: show members information
-                    var listMembers = e.getAttribute('data-list-member');
-                    var jsonListMembers = JSON.parse(listMembers);
-
-                    const memberContainer = document.querySelector('#memberContainer');
-                    memberContainer.innerHTML = '';
-
-                    jsonListMembers.forEach((member, index) => {
-                        const memberList = document.createElement('div');
-                        memberList.setAttribute('id', 'membersInfo');
-
-                        memberList.innerHTML =
-                            '<div class="row" style="margin-top: 20px">' +
-                            '<div class="col-md-6">' +
-                            '<p class="font-15"><i class="icon-copy dw dw-list"></i>' +
-                            '<strong class="weight-600"> ' +
-                            '<u>Member ' +
-                            (index + 1) +
-                            ':</u>' +
-                            '</strong>' +
-                            '</p>' +
-                            '</div>' +
-                            '</div>' +
-                            '<div class="row pb-30">' +
-                            '<div class="col-md-6">' +
-                            '<p class="font-15 mb-5"><i class="icon-copy dw dw-user"></i> Fullname:' +
-                            '<strong class="weight-600" id="modal_members_fullname">' +
-                            member.fullname +
-                            '</strong>' +
-                            '</p>' +
-                            '<p class="font-15 mb-5"><i class="icon-copy dw dw-id-card2"></i> ID card number:' +
-                            '<strong class="weight-600" id="modal_members_idCard">' +
-                            member.id_card +
-                            '</strong>' +
-                            '</p>' +
-                            '<p class="font-15 mb-5"><i class="icon-copy dw dw-phone-call"></i> Phone number:' +
-                            '<strong class="weight-600">' +
-                            '<a href="tel:0398371050" style="color: blue" id="modal_members_phone">' +
-                            member.phone_number +
-                            '</a>' +
-                            '</strong>' +
-                            '</p>' +
-                            '<p class="font-15 mb-5"><i class="icon-copy dw dw-email1"></i> Email:' +
-                            '<strong class="weight-600">' +
-                            '<a href="mailto:luuhoaiphong147@gmail.com" style="color: blue" id="modal_members_email">' +
-                            member.email +
-                            '</a>' +
-                            '</strong>' +
-                            '</p>' +
-                            '</div>' +
-                            '<div class="col-md-6">' +
-                            '<p class="font-15 mb-5"><i class="icon-copy ion-transgender"></i> Gender:' +
-                            '<strong class="weight-600" id="modal_members_gender">' +
-                            member.gender +
-                            '</strong>' +
-                            '</p>' +
-                            '<p class="font-15 mb-5"><i class="icon-copy dw dw-calendar-5"></i> Date of birth:' +
-                            '<strong class="weight-600" id="modal_members_dob">' +
-                            member.dob +
-                            '</strong>' +
-                            '</p>' +
-                            '<p class="font-15 mb-5"><i class="icon-copy dw dw-house-1"></i> Hometown:' +
-                            '<strong class="weight-600" id="modal_members_hometown">' +
-                            member.hometown +
-                            '</strong>' +
-                            '</p>' +
-                            '</div>' +
-                            '</div>' +
-                            '<div class="row pb-30">' +
-                            '<div class="col-md-6">' +
-                            '<p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card front photo:</p>' +
-                            '<img src="{{ asset('avatar/default-image.png') }}" alt="" width="80%" id="modal_members_front_IDcard">' +
-                            '</div>' +
-                            '<div class="col-md-6">' +
-                            '<p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card back photo:</p>' +
-                            '<img src="{{ asset('avatar/default-image.png') }}" alt="" width="80%" id="modal_members_back_IDcard">' +
-                            '</div>' +
-                            '</div>' +
-                            '<div class="row">' +
-                            '<div class="col-md-12">' +
-                            '<div class="divider" style="background-color: black; height: 1px; width: 100%"></div>' +
-                            '</div>' +
-                            '</div>';
-
-                        memberContainer.appendChild(memberList);
-                    });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     //NOTE: get element from modal to show - detail room
                     var roomNameModal = document.querySelector('#modal_room_name');
@@ -1164,6 +1034,50 @@
                     var roomStatusModal = document.querySelector('#modal_room_status');
                     var houseNameModal = document.querySelector('#modal_house_name');
                     var houseAddressModal = document.querySelector('#modal_house_address');
+
+                    // NOTE: set value to modal
+                    // NOTE: set value to Room infomation
+                    roomNameModal.innerHTML = roomName;
+                    priceModal.innerHTML = price;
+                    if (roomStatus == 0) {
+                        roomStatusModal.className = "badge badge-pill badge-primary";
+                        roomStatusModal.innerHTML = "Available";
+                        document.getElementById('assignTenant').style.display = "";
+                        document.getElementById('assignTenant').href =
+                            "{{ route('room.assign-tenant', ':id') }}".replace(':id', roomID);
+                    } else {
+                        roomStatusModal.className = "badge badge-pill badge-success"
+                        roomStatusModal.innerHTML = "Occupied";
+                        document.getElementById('assignTenant').style.display = "none";
+                    }
+                    houseNameModal.innerHTML = houseName;
+                    houseAddressModal.innerHTML = houseAddress;
+
+                    // NOTE: set default value to tenant information
+                    var tenantID, fullname, idCard, phone, email, gender, dob, hometown,
+                        idFrontPhoto, idBackPhoto;
+
+                    tenantID = fullname = idCard = phone = email = gender = dob = hometown =
+                        idFrontPhoto = idBackPhoto = "";
+
+                    //NOTE: if room is occupied, get tenant information
+                    if (roomStatus == 1) {
+                        // NOTE: get tenant information from button attribute
+                        tenantID = e.getAttribute('data-mainTenantID');
+                        fullname = e.getAttribute('data-tenantName');
+                        idCard = e.getAttribute('data-idCard');
+                        phone = e.getAttribute('data-phoneNumber');
+                        email = e.getAttribute('data-email');
+                        gender = e.getAttribute('data-gender');
+                        dob = e.getAttribute('data-dob');
+                        hometown = e.getAttribute('data-hometown');
+                        idFrontPhoto = e.getAttribute('data-idFrontPhoto');
+                        idBackPhoto = e.getAttribute('data-idBackPhoto');
+
+
+
+
+                    }
 
                     // NOTE: get element from modal to show - tenant info
                     var tenantNameModal = document.querySelector('#modal_tenant_fullname');
@@ -1173,34 +1087,9 @@
                     var tenantGenderModal = document.querySelector('#modal_tenant_gender');
                     var tenantDOBModal = document.querySelector('#modal_tenant_dob');
                     var tenantHometownModal = document.querySelector('#modal_tenant_hometown');
-                    var idFrontPhotoModal = document.querySelector('#modal_tenant_front_IDcard');
+                    var idFrontPhotoModal = document.querySelector(
+                        '#modal_tenant_front_IDcard');
                     var idBackPhotoModal = document.querySelector('#modal_tenant_back_IDcard');
-
-                    // NOTE: get element from modal to show - member info
-                    // var mainTenantID = document.querySelector('#main_tenant_id');
-                    // var memberNameModal = document.querySelector('#modal_members_fullname');
-                    // var memberIDCardModal = document.querySelector('#modal_members_idCard');
-                    // var memberPhoneModal = document.querySelector('#modal_members_phone');
-                    // var memberEmailModal = document.querySelector('#modal_members_email');
-                    // var memberGenderModal = document.querySelector('#modal_members_gender');
-                    // var memberDOBModal = document.querySelector('#modal_members_dob');
-                    // var memberHometownModal = document.querySelector('#modal_members_hometown');
-
-
-
-                    // NOTE: set value to modal
-                    // NOTE: set value to Room infomation
-                    roomNameModal.innerHTML = roomName;
-                    priceModal.innerHTML = price;
-                    if (roomStatus == 0) {
-                        roomStatusModal.className = "badge badge-pill badge-primary";
-                        roomStatusModal.innerHTML = "Available";
-                    } else {
-                        roomStatusModal.className = "badge badge-pill badge-success"
-                        roomStatusModal.innerHTML = "Occupied";
-                    }
-                    houseNameModal.innerHTML = houseName;
-                    houseAddressModal.innerHTML = houseAddress;
 
                     // NOTE: set value to Tenant infomation
                     tenantNameModal.innerHTML = fullname;
@@ -1214,28 +1103,111 @@
                     tenantPhoneModal.href = "tel:" + phone;
                     tenantEmailModal.href = "mailto:" + email;
 
-                    // NOTE: set src image ID Card front to tenant infomation
-                    idFrontPhotoModal.src = `{{ asset('uploads/tenants/id_card_front/${idFrontPhoto}') }}`;
-                    // NOTE: set src image ID Card back to tenant infomation
-                    idBackPhotoModal.src = `{{ asset('uploads/tenants/id_card_back/${idBackPhoto}') }}`;
+                    // NOTE: set src image ID Card front/back to tenant infomation
+                    idFrontPhotoModal.src = idFrontPhoto != "" ?
+                        `{{ asset('uploads/tenants/id_card_front/${idFrontPhoto}') }}` :
+                        "{{ asset('avatar/default-image.png') }}";
+                    idBackPhotoModal.src = idBackPhoto != "" ?
+                        `{{ asset('uploads/tenants/id_card_back/${idBackPhoto}') }}` :
+                        "{{ asset('avatar/default-image.png') }}";
 
-                    // NOTE: set value to Member infomation
-                    // memberNameModal.innerHTML = memberName;
-                    // memberIDCardModal.innerHTML = memberIDCard;
-                    // memberPhoneModal.innerHTML = memberPhone;
-                    // memberEmailModal.innerHTML = memberEmail;
-                    // memberGenderModal.innerHTML = memberGender;
-                    // memberDOBModal.innerHTML = memberDOB;
-                    // memberHometownModal.innerHTML = memberHometown;
+                    // // NOTE: show/hide member section if tenantID is null ot not null
+                    if (tenantID == "") {
+                        document.getElementById('roomMembersSection').style.display = 'none';
+                    } else {
+                        document.getElementById('roomMembersSection').style.display = '';
+                        var mainTenantID = document.querySelector('#main_tenant_id');
+                        mainTenantID.value = tenantID;
 
+                        const memberContainer = document.querySelector('#memberContainer');
+                        memberContainer.innerHTML = '';
 
-                    // NOTE: show/hide member section if tenantID is null ot not null
-                    // if (tenantID == "") {
-                    //     document.getElementById('roomMembersSection').style.display = 'none';
-                    // } else {
-                    //     document.getElementById('roomMembersSection').style.display = '';
-                    //     mainTenantID.value = tenantID;
-                    // }
+                        // NOTE: show members information
+                        var listMembers = e.getAttribute('data-list-member');
+                        var jsonListMembers = JSON.parse(listMembers);
+
+                        jsonListMembers.forEach((member, index) => {
+                            const memberList = document.createElement('div');
+                            memberList.setAttribute('id', 'membersInfo');
+
+                            memberList.innerHTML =
+                                '<div class="row" style="margin-top: 20px">' +
+                                '<div class="col-md-6">' +
+                                '<p class="font-15"><i class="icon-copy dw dw-list"></i>' +
+                                '<strong class="weight-600"> ' +
+                                '<u>Member ' +
+                                (index + 1) +
+                                ':</u>' +
+                                '</strong>' +
+                                '</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="row pb-30">' +
+                                '<div class="col-md-6">' +
+                                '<p class="font-15 mb-5"><i class="icon-copy dw dw-user"></i> Fullname:' +
+                                '<strong class="weight-600" id="modal_members_fullname">' +
+                                member.fullname +
+                                '</strong>' +
+                                '</p>' +
+                                '<p class="font-15 mb-5"><i class="icon-copy dw dw-id-card2"></i> ID card number:' +
+                                '<strong class="weight-600" id="modal_members_idCard">' +
+                                member.id_card +
+                                '</strong>' +
+                                '</p>' +
+                                '<p class="font-15 mb-5"><i class="icon-copy dw dw-phone-call"></i> Phone number:' +
+                                '<strong class="weight-600">' +
+                                '<a href="tel:' + member.phone_number +
+                                '" style="color: blue" id="modal_members_phone">' +
+                                member.phone_number +
+                                '</a>' +
+                                '</strong>' +
+                                '</p>' +
+                                '<p class="font-15 mb-5"><i class="icon-copy dw dw-email1"></i> Email:' +
+                                '<strong class="weight-600">' +
+                                '<a href="mailto:' + member.email +
+                                '" style="color: blue" id="modal_members_email">' +
+                                member.email +
+                                '</a>' +
+                                '</strong>' +
+                                '</p>' +
+                                '</div>' +
+                                '<div class="col-md-6">' +
+                                '<p class="font-15 mb-5"><i class="icon-copy ion-transgender"></i> Gender:' +
+                                '<strong class="weight-600" id="modal_members_gender">' +
+                                member.gender +
+                                '</strong>' +
+                                '</p>' +
+                                '<p class="font-15 mb-5"><i class="icon-copy dw dw-calendar-5"></i> Date of birth:' +
+                                '<strong class="weight-600" id="modal_members_dob">' +
+                                member.dob +
+                                '</strong>' +
+                                '</p>' +
+                                '<p class="font-15 mb-5"><i class="icon-copy dw dw-house-1"></i> Hometown:' +
+                                '<strong class="weight-600" id="modal_members_hometown">' +
+                                member.hometown +
+                                '</strong>' +
+                                '</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="row pb-30">' +
+                                '<div class="col-md-6">' +
+                                '<p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card front photo:</p>' +
+                                `<img src="{{ asset('uploads/members/id_card_front/${member.citizen_card_front_image}') }}" alt="" width="80%" id="modal_members_front_IDcard">` +
+                                '</div>' +
+                                '<div class="col-md-6">' +
+                                '<p class="font-14 mb-5"><i class="icon-copy dw dw-image1"></i> ID Card back photo:</p>' +
+                                `<img src="{{ asset('uploads/members/id_card_back/${member.citizen_card_back_image}') }}" alt="" width="80%" id="modal_members_back_IDcard">` +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="row">' +
+                                '<div class="col-md-12">' +
+                                '<div class="divider" style="background-color: black; height: 1px; width: 100%"></div>' +
+                                '</div>' +
+                                '</div>';
+
+                            memberContainer.appendChild(memberList);
+                        });
+                    }
 
                     // NOTE: show modal
                     $('#show-detail-room-modal').modal('show');
@@ -1244,16 +1216,10 @@
 
         });
 
-        // function assignTenantSubmit() {
-        //     const tenantForm = document.querySelector('#room-assign-tenant');
-        //     tenantForm.submit();
-        // }
-
         // Format number input with commas as thousands separators
         const numberInput = document.querySelector("#room-add #price");
         const numberInputMultiple = document.querySelector("#room-add-multiple #price");
         const numberInputEdit = document.querySelector("#room-edit #price_edit");
-
 
         // Add event listener for when input value changes
         numberInput.addEventListener("input", formatNumber);
@@ -1272,9 +1238,6 @@
             // Update the input value with the formatted value
             this.value = formatted;
         }
-
-
-
 
         //NOTE: add new row to table button
         const addRowButton = document.getElementById("add-new-row");
@@ -1302,7 +1265,6 @@
             cell1.style.left = "0";
             cell1.style.backgroundColor = "white";
             cell1.style.zIndex = "1";
-
 
             // NOTE: Add content to the cells
             cell1.innerHTML =
@@ -1339,7 +1301,6 @@
 
             // NOTE: Append the new row to the table body
             tableBody.appendChild(newRow);
-
         });
 
         // NOTE: delete row in table
