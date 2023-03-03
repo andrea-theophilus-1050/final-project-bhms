@@ -5,15 +5,15 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="title">
-                        <h4>@lang('messages.navRoom')</h4>
+                        <h4>@lang('messages.navAssignTenant')</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('house.index') }}">House management</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('house.index') }}">@lang('messages.navHouse')</a></li>
                             <li class="breadcrumb-item" aria-current="page"><a
                                     href="{{ route('room.index', $room->house_id) }}">@lang('messages.navRoom')</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Assign tenant</li>
+                            <li class="breadcrumb-item active" aria-current="page">@lang('messages.navAssignTenant')</li>
                         </ol>
                     </nav>
                 </div>

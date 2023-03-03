@@ -102,6 +102,16 @@
                                     <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
                                 </div>
                             </div>
+
+                            <div class="input-group custom">
+                                <input type="email" class="form-control form-control-lg" id="email"
+                                    name="email" placeholder="@lang('messages.labelEmail')" autocomplete="on" required
+                                    value="{{ old('email') }}">
+                                <div class="input-group-append custom">
+                                    <span class="input-group-text"><i class="icon-copy dw dw-email1"></i></span>
+                                </div>
+                            </div>
+
                             <div class="input-group custom">
                                 <input type="password" class="form-control form-control-lg"
                                     placeholder="@lang('messages.labelPassword')" id="password" name="password" required

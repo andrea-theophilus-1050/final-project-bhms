@@ -49,8 +49,8 @@ class TenantController extends Controller
             $id_card_front = $request->file('id_card_front');
             $id_card_back = $request->file('id_card_back');
 
-            $id_card_front_name = time() . '.' . $id_card_front->getClientOriginalExtension();
-            $id_card_back_name = time() . '.' . $id_card_back->getClientOriginalExtension();
+            $id_card_front_name = 'front - ' . $request->fullname . time() . '.' . $id_card_front->getClientOriginalExtension();
+            $id_card_back_name = 'back - ' . $request->fullname . time() . '.' . $id_card_back->getClientOriginalExtension();
 
             $id_card_front->move(public_path('uploads/tenants/id_card_front'), $id_card_front_name);
             $id_card_back->move(public_path('uploads/tenants/id_card_back'), $id_card_back_name);

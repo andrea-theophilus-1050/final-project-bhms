@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\App;
 use App\Exports\ExportUser;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Auth\Events\Registered;
 
 class UserController extends Controller
 {
@@ -120,29 +121,24 @@ class UserController extends Controller
         $request->validate([
             'username' => 'required',
             'password' => 'required|min:6',
+            'email' => 'email|required|unique:tb_user',
             'confirmPassword' => 'required|same:password',
         ]);
 
-        $user = User::where('username', $request->username)->where('type_login', 'username')->first();
-        if (!$user) {
-            $user = new User([
-                'username' => $request->username,
-                'password' => Hash::make($request->password)
-            ]);
+        event(new Registered($user = $this->create($request->all())));
 
-            $user->save();
-            return redirect()->route('login')->with('success', 'Registration successful!')->withInput($request->all());
-        } else {
-            if (App::isLocale('en')) {
-                return back()->with('errors', 'Username already exists')->withInput($request->all());
-            } else if (App::isLocale('chn')) {
-                return back()->with('errors', '此用户名已存在')->withInput($request->all());
-            } else if (App::isLocale('fra')) {
-                return back()->with('errors', 'Ce nom d\'utilisateur existe déjà')->withInput($request->all());
-            } else {
-                return back()->with('errors', 'Tên đăng nhập đã tồn tại')->withInput($request->all());
-            }
-        }
+        Auth::login($user, true);
+
+        return redirect()->route('home')->with('success', 'Registration successful!');
+    }
+
+    public function create(array $data)
+    {
+        return User::create([
+            'username' => $data['username'],
+            'password' => Hash::make($data['password']),
+            'email' => $data['email'],
+        ]);
     }
 
     // handle update profile
@@ -214,6 +210,7 @@ class UserController extends Controller
         return redirect()->route('login')->with('success', 'Logout successful!');
     }
 
+    //Test export excel - need to delete
     public function exportUsers(Request $request)
     {
         return Excel::download(new ExportUser, 'users.xlsx');

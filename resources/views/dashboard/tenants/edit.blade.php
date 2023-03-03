@@ -6,14 +6,14 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            <h4>Update tenant information</h4>
+                            <h4>@lang('messages.navUpdateTenant')</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
                                 <li class="breadcrumb-item" aria-current="page"><a
-                                        href="{{ route('tenant.index') }}">Tenants management</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Update tenant information</li>
+                                        href="{{ route('tenant.index') }}">@lang('messages.navTenant')</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">@lang('messages.navUpdateTenant')</li>
                             </ol>
                         </nav>
                     </div>

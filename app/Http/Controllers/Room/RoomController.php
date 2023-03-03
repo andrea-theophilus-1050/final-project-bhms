@@ -180,8 +180,8 @@ class RoomController extends Controller
                 $id_card_front = $request->file('idcard_front')[$i];
                 $id_card_back = $request->file('idcard_back')[$i];
 
-                $id_card_front_name = time() . '.' . $id_card_front->getClientOriginalExtension();
-                $id_card_back_name = time() . '.' . $id_card_back->getClientOriginalExtension();
+                $id_card_front_name = 'front - ' .  $fullname[$i] . time() . $id_card[$i] . '.' . $id_card_front->getClientOriginalExtension();
+                $id_card_back_name = 'back - ' . $fullname[$i] . time() . $id_card[$i] . '.' . $id_card_back->getClientOriginalExtension();
 
                 $id_card_front->move(public_path('uploads/members/id_card_front'), $id_card_front_name);
                 $id_card_back->move(public_path('uploads/members/id_card_back'), $id_card_back_name);

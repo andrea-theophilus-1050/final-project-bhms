@@ -12,6 +12,9 @@ use App\Http\Controllers\Service\ServicesController;
 use App\Http\Controllers\Calculation\CalculationWaterElectricityController;
 use Illuminate\Support\Facades\Auth;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\ForgotPasswordController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,24 +40,47 @@ Route::middleware('setLocale')->group(function () {
     })->name('lang-vietnamese');
 
     //Route user account
-    Route::get('/', function () {
-        if (Auth::check())
-            return redirect()->route('home');
-        else
-            return redirect()->route('login');
-    });
+    // Route::get('/', function () {
+    //     if (Auth::check())
+    //         return redirect()->route('home');
+    //     else
+    //         return redirect()->route('login');
+    // });
     Route::get('login', [UserController::class, 'login'])->name('login');
     Route::post('login', [UserController::class, 'login_action'])->name('login.action');
     Route::get('register', [UserController::class, 'register'])->name('register');
     Route::post('register', [UserController::class, 'register_action'])->name('register.action');
     Route::get('logout', [UserController::class, 'logout'])->name('logout');
-    Route::get('/forgot-password', function () {
-        return view('user.forgot-password')->with('title', 'Forgot Password');
-    });
 
+    //Route forgot password
+    Route::get('forgot-password', [ForgotPasswordController::class, 'index'])->middleware('guest')->name('forgot-password');
+    Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->middleware('guest')->name('send-reset-link-email');
+    
+    Route::get('/reset-password/{token}', function ($token) {
+        return view('user.reset-password', ['token' => $token]);
+    })->middleware('guest')->name('password.reset');
+
+    Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword'])->middleware('guest')->name('password.update');
+    
+    // Route verify email
+    Route::get('email/verify', function () {
+        return view('user.verify-email');
+    })->middleware('auth')->name('verification.notice');
+
+    Route::get('email/verify/{id}/{hash}', function(EmailVerificationRequest $request) {
+        $request->fulfill();
+    
+        return redirect()->route('home');
+    })->middleware(['auth', 'signed'])->name('verification.verify');
+
+    Route::post('email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+    
+        return back()->with('resent', 'Verification link sent!');
+    })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
     //Route auth
-    Route::middleware(['auth', 'userRole:landlords'])->group(function () {
+    Route::middleware(['auth', 'verified', 'userRole:landlords'])->group(function () {
         Route::group(['prefix' => 'landlords'], function () {
             Route::middleware('checkProfile')->group(function () {
                 Route::get('dashboard', [DashboardController::class, 'index'])->name('home');

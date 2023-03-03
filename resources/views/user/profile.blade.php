@@ -35,7 +35,7 @@
                     <div class="pd-20 card-box height-100-p">
                         <div class="profile-photo">
                             @if ($user->avatar == null)
-                                <img src="{{ asset('avatar/default_avt.png') }}" alt="" class="avatar-photo">
+                                <img src="{{ asset('avatar/default-avatar.png') }}" alt="" class="avatar-photo">
                             @else
                                 <img src="{{ asset('avatar/' . auth()->user()->avatar) }}" alt=""
                                     class="avatar-photo">

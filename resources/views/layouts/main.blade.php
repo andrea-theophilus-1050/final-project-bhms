@@ -195,7 +195,7 @@
                     <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                         <span class="user-icon">
                             @if (auth()->user()->avatar == null)
-                                <img src="{{ asset('avatar/default_avt.png') }}" alt=""
+                                <img src="{{ asset('avatar/default-avatar.png') }}" alt=""
                                     class="avatar-photo">
                             @else
                                 <img src="{{ asset('avatar/' . auth()->user()->avatar) }}" alt=""
@@ -360,7 +360,7 @@
                     <li>
                         <a href="{{ route('tenant.index') }}"
                             class="dropdown-toggle no-arrow {{ request()->routeIs('tenant.index') || request()->routeIs('tenant.create') || request()->routeIs('tenant.edit') ? 'active' : '' }}">
-                            <span class="micon dw dw-user-2"></span><span class="mtext">Tenants Management</span>
+                            <span class="micon dw dw-user-2"></span><span class="mtext">@lang('messages.navTenant')</span>
                         </a>
                     </li>
                     {{-- <li class="dropdown">
@@ -373,7 +373,7 @@
                     <li class="dropdown">
                         <a href="{{ route('utility-bill') }}"
                             class="dropdown-toggle no-arrow {{ request()->routeIs('utility-bill') ? 'active' : '' }}">
-                            <span class="micon dw dw-flash1"></span><span class="mtext">Utility Bill</span>
+                            <span class="micon dw dw-flash1"></span><span class="mtext">@lang('messages.navUtility')</span>
 
                         </a>
                     </li>
@@ -381,21 +381,21 @@
                     <li class="dropdown">
                         <a href="{{ route('costs-incurred') }}"
                             class="dropdown-toggle no-arrow {{ request()->routeIs('costs-incurred') ? 'active' : '' }}">
-                            <span class="micon dw dw-notebook"></span><span class="mtext">Costs incurred</span>
+                            <span class="micon dw dw-notebook"></span><span class="mtext">@lang('messages.navCostsIncurred')</span>
                         </a>
                     </li>
 
                     <li class="dropdown">
                         <a href="{{ route('room-billing') }}"
                             class="dropdown-toggle no-arrow {{ request()->routeIs('room-billing') ? 'active' : '' }}">
-                            <span class="micon fa fa-calculator"></span><span class="mtext">Room billing</span>
+                            <span class="micon fa fa-calculator"></span><span class="mtext">@lang('messages.navRoomBilling')</span>
                         </a>
                     </li>
 
                     <li class="dropdown">
                         <a href="{{ route('feedback') }}"
                             class="dropdown-toggle no-arrow {{ request()->routeIs('feedback') ? 'active' : '' }}">
-                            <span class="micon dw dw-chat-11"></span><span class="mtext">Feedback management</span>
+                            <span class="micon dw dw-chat-11"></span><span class="mtext">@lang('messages.navFeedback')</span>
                         </a>
                     </li>
                     {{-- <li class="dropdown">
