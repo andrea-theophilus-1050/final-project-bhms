@@ -88,11 +88,10 @@ class RoomController extends Controller
 
     public function assignTenant_action(Request $request, $id)
     {
-        if ($request->tenant_id == null) {
+        DB::beginTransaction();
 
-            DB::beginTransaction();
-
-            try {
+        try {
+            if ($request->tenant_id == null) {
                 // add new tenant
                 $tenant = new Tenant();
                 $tenant->fullname = $request->fullname;
@@ -105,48 +104,60 @@ class RoomController extends Controller
                 $tenant->status = 1;
                 $tenant->user_id = auth()->user()->id;
                 $tenant->save();
-
-                // update status of room to 1, means it is rented
-                $room = Room::find($id);
-                $room->status = 1;
-                $room->save();
-
-                // add data to rental room
-                $rental = new RentalRoom();
-                $rental->room_id = $id;
-                $rental->tenant_id = $tenant->tenant_id;
-                $rental->start_date = $request->start_date;
-                // $rental->end_date = $request->end_date;
-                $rental->save();
-            } catch (\Exception $e) {
-                DB::rollBack();
-                throw $e;
+            } else {
+                // update status of tenant to 1, means it is rented
+                $tenant = Tenant::find($request->tenant_id);
+                $tenant->status = 1;
+                $tenant->save();
             }
 
-            DB::commit();
-
-            return redirect()->route('room.index', $room->house_id)->with('success', 'Room has been assigned successfully');
-        } else {
             // update status of room to 1, means it is rented
             $room = Room::find($id);
             $room->status = 1;
             $room->save();
 
-            $tenant = Tenant::find($request->tenant_id);
-            $tenant->status = 1;
-            $tenant->save();
-
             // add data to rental room
             $rental = new RentalRoom();
             $rental->room_id = $id;
-            $rental->tenant_id = $request->tenant_id;
+            $rental->tenant_id = $tenant->tenant_id;
             $rental->start_date = $request->start_date;
             // $rental->end_date = $request->end_date;
             $rental->save();
-            return redirect()->route('room.index', $room->house_id)->with('success', 'Room has been assigned successfully');
+
+            // add data to services
+            // $serviceID = $request->input('serviceID');
+            // $servicePrice = $request->input('servicePrice');
+            // $roomID = $request->input('roomID');
+
+            // for ($i = 0; $i < count($serviceID); $i++) {
+            //     DB::table('tb_services_used')->insert([
+            //         'service_id' => $serviceID[$i],
+            //         'room_id' => $roomID,
+            //         'price_if_changed' => $servicePrice[$i]
+            //     ]);
+            // }
+
+            $selectedServices = $request->input('selectService');
+            $serviceID = $request->input('serviceID');
+            $servicePrice = $request->input('servicePrice');
+            $roomID = $request->input('roomID');
+
+            for ($i = 0; $i < count($serviceID); $i++) {
+                if (in_array($serviceID[$i], $selectedServices)) {
+                    DB::table('tb_services_used')->insert([
+                        'service_id' => $serviceID[$i],
+                        'room_id' => $roomID,
+                        'price_if_changed' => $servicePrice[$i]
+                    ]);
+                }
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
 
-        // dd($request->all());
+        DB::commit();
+        return redirect()->route('room.index', $room->house_id)->with('success', 'Room has been assigned successfully');
     }
 
     public function assignMembers(Request $request)
@@ -171,7 +182,6 @@ class RoomController extends Controller
             $members->gender = $gender[$i];
             $members->dob = $dob[$i];
             $members->tenant_id = $mainTenantID;
-
 
             $id_card_front_name = null;
             $id_card_back_name = null;

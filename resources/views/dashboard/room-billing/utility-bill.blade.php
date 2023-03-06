@@ -6,12 +6,12 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            <h4>Electricity Calculation</h4>
+                            <h4>@lang('messages.navUtility')</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Electricity Calculation</li>
+                                <li class="breadcrumb-item active" aria-current="page">@lang('messages.navUtility')</li>
                             </ol>
                         </nav>
                     </div>
@@ -69,7 +69,7 @@
                                         </td>
                                         <td style="text-align: center">
                                             <div id="usedIndex_electric"
-                                                style="background: rgb(226, 182, 182); border-radius: 5px">0</div>
+                                                style="background: rgb(222, 222, 222); border-radius: 5px; padding: 8px">0</div>
                                         </td>
                                         <td>
                                             <input class="form-control" type="number" name="oldIndex_water[]"
@@ -81,7 +81,7 @@
                                         </td>
                                         <td style="text-align: center">
                                             <div id="usedIndex_water"
-                                                style="background: rgb(226, 182, 182); border-radius: 5px">0</div>
+                                                style="background: rgb(222, 222, 222); border-radius: 5px; padding: 8px">0</div>
                                         </td>
                                     </tr>
                                 @endforeach

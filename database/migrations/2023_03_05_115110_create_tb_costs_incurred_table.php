@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tb_services', function (Blueprint $table) {
-            $table->id('service_id');
-            $table->string('service_name');
+        Schema::create('tb_costs_incurred', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('date_id');
             $table->string('price');
-            $table->string('description')->nullable();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('tb_user');
+            $table->string('reason');
+            $table->foreign('date_id')->references('date_id')->on('tb_date')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_services');
+        Schema::dropIfExists('tb_costs_incurred');
     }
 };

@@ -370,10 +370,26 @@
                     </li> --}}
 
 
-                    <li class="dropdown">
+                    {{-- <li class="dropdown">
                         <a href="{{ route('utility-bill') }}"
                             class="dropdown-toggle no-arrow {{ request()->routeIs('utility-bill') ? 'active' : '' }}">
                             <span class="micon dw dw-flash1"></span><span class="mtext">@lang('messages.navUtility')</span>
+
+                        </a>
+                    </li> --}}
+
+                    <li class="dropdown">
+                        <a href="{{ route('electricity-bill') }}"
+                            class="dropdown-toggle no-arrow {{ request()->routeIs('electricity-bill') ? 'active' : '' }}">
+                            <span class="micon dw dw-flash1"></span><span class="mtext">Electricity bill</span>
+
+                        </a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="{{ route('water-bill') }}"
+                            class="dropdown-toggle no-arrow {{ request()->routeIs('water-bill') ? 'active' : '' }}">
+                            <span class="micon dw dw-save-water"></span><span class="mtext">Water bill</span>
 
                         </a>
                     </li>

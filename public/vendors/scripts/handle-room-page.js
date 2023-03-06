@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var showDetailRoomBtn = document.querySelectorAll('#show-roomInfo-detail');
     showDetailRoomBtn.forEach(function (e) {
         e.addEventListener('click', function () {
+            //NOTE: get base url
+            var baseURL = window.location.origin;
+
             // NOTE: get room information from button attribute
             var roomID = e.getAttribute('data-roomID');
             var roomName = e.getAttribute('data-roomName');
@@ -26,8 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 roomStatusModal.className = "badge badge-pill badge-primary";
                 roomStatusModal.innerHTML = "Available";
                 document.getElementById('assignTenant').style.display = "";
-                document.getElementById('assignTenant').href =
-                    "{{ route('room.assign-tenant', ':id') }}".replace(':id', roomID);
+                document.getElementById('assignTenant').href = baseURL + "/landlords/dashboard/house/room/" + roomID + "/assignTenant";
             } else {
                 roomStatusModal.className = "badge badge-pill badge-success"
                 roomStatusModal.innerHTML = "Occupied";
@@ -82,8 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
             tenantPhoneModal.href = "tel:" + phone;
             tenantEmailModal.href = "mailto:" + email;
 
-            //NOTE: get base url
-            var baseURL = window.location.origin;
+
 
             // NOTE: set src image ID Card front/back to tenant infomation
             idFrontPhotoModal.src = idFrontPhoto != "" ?

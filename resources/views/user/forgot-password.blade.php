@@ -43,10 +43,25 @@
                     <img src="{{ asset('vendors/images/logo-boarding-house.png') }}" alt="">
                 </a>
             </div>
-            <div class="login-menu">
-                <ul>
-                    <li><a href="{{ url('login') }}">Login</a></li>
-                </ul>
+            {{-- NOTE: dropdownlist for change language --}}
+            <div class="dropdown">
+                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                    @if (app()->getLocale() == 'en')
+                        <img src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
+                            alt=""> @lang('messages.langEnglish')
+                    @elseif (app()->getLocale() == 'vie')
+                        <img src="{{ asset('vendors/images/Flag_Vietnam.png') }}" height="30px" width="40px"
+                            alt=""> @lang('messages.langVietnamese')
+                    @endif
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="{{ route('lang-english') }}"><img
+                            src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
+                            alt=""> @lang('messages.langEnglish')</a>
+                    <a class="dropdown-item" href="{{ route('lang-vietnamese') }}"><img
+                            src="{{ asset('vendors/images/Flag_Vietnam.png') }}" height="30px" width="40px"
+                            alt=""> @lang('messages.langVietnamese')</a>
+                </div>
             </div>
         </div>
     </div>

@@ -135,7 +135,9 @@ Route::middleware('setLocale')->group(function () {
 
                     Route::resource('services', ServicesController::class);
 
-                    Route::get('utility-bill', [DashboardController::class, 'utility_bill'])->name('utility-bill');
+                    // Route::get('utility-bill', [DashboardController::class, 'utility_bill'])->name('utility-bill');
+                    Route::get('electricity-bill', [DashboardController::class, 'electricity_bill'])->name('electricity-bill');
+                    Route::get('water-bill', [DashboardController::class, 'water_bill'])->name('water-bill');
                     Route::get('costs-incurred', [DashboardController::class, 'costs_incurred'])->name('costs-incurred');
                     Route::get('room-billing', [DashboardController::class, 'room_billing'])->name('room-billing');
 

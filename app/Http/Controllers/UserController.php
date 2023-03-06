@@ -98,7 +98,9 @@ class UserController extends Controller
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials, $remember)) {
-            $request->session()->regenerate();
+            // $request->session()->regenerate();
+            $user = Auth::user();
+            Auth::login($user, true);
 
             if (Auth::user()->role == 'landlords') {
                 return redirect()->route('home')->with('success', 'Login successful!');

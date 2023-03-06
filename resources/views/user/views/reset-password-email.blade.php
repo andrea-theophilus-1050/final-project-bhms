@@ -47,7 +47,7 @@
                                             update your password.
                                         </p>
                                         <a href="{{ $url }}" target="_blank"
-                                            style="background:#1b00ff;text-decoration:none !important; font-weight:bold; margin-top:35px; color:#fff;text-transform:uppercase; font-size:18px;padding:10px 24px;display:inline-block;border-radius:50px;">Reset
+                                            style="background:#1b00ff;text-decoration:none !important; font-weight:bold; margin-top:35px; color:#fff; font-size:18px;padding:10px 24px;display:inline-block;border-radius:50px;">Reset
                                             Password</a>
 
                                         <p style="color:#455056; font-size:15px;line-height:24px; margin-top: 30px;">

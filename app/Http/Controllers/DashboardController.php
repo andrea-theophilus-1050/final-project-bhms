@@ -38,11 +38,47 @@ class DashboardController extends Controller
         return view('management.add-room')->with('title', 'Add New Room');
     }
 
-    public function utility_bill()
+    // public function utility_bill()
+    // {
+    //     $rooms = Room::join('tb_house', 'tb_house.house_id', '=', 'tb_rooms.house_id')->join('tb_user', 'tb_user.id', '=', 'tb_house.user_id')->where('tb_user.id', auth()->user()->id)->where('tb_rooms.status', 1)->get();
+    //     $service = Services::where('service_name', 'Electricity')->first();
+    //     return view('dashboard.room-billing.utility-bill')->with('title', 'Utility bill')->with('rooms', $rooms)->with('service', $service);
+    // }
+
+    public function electricity_bill()
     {
-        $rooms = Room::join('tb_house', 'tb_house.house_id', '=', 'tb_rooms.house_id')->join('tb_user', 'tb_user.id', '=', 'tb_house.user_id')->where('tb_user.id', auth()->user()->id)->where('tb_rooms.status', 1)->get();
-        $service = Services::where('service_name', 'Electricity')->first();
-        return view('dashboard.room-billing.utility-bill')->with('title', 'Utility bill')->with('rooms', $rooms)->with('service', $service);
+        $dataList = DB::table('tb_rooms')
+            ->join('tb_house', 'tb_house.house_id', '=', 'tb_rooms.house_id')
+            ->join('tb_user', 'tb_user.id', '=', 'tb_house.user_id')
+            ->join('tb_services_used', 'tb_services_used.room_id', '=', 'tb_rooms.room_id')
+            ->join('tb_services', 'tb_services.service_id', '=', 'tb_services_used.service_id')
+            ->join('tb_type_service', 'tb_type_service.type_id', '=', 'tb_services.type_id')
+            ->join('tb_rental_room', 'tb_rental_room.room_id', '=', 'tb_rooms.room_id')
+            ->join('tb_main_tenants', 'tb_main_tenants.tenant_id', '=', 'tb_rental_room.tenant_id')
+            ->where('tb_user.id', auth()->user()->id)
+            ->where('tb_rooms.status', 1)
+            ->where('tb_type_service.type_name', 'Electricity')
+            ->get();
+        // $service = Services::where('service_name', 'Electricity')->first();
+        return view('dashboard.room-billing.electricity-bill')->with('title', 'Electricity bill')->with('dataList', $dataList);
+    }
+
+    public function water_bill()
+    {
+        $dataList = DB::table('tb_rooms')
+            ->join('tb_house', 'tb_house.house_id', '=', 'tb_rooms.house_id')
+            ->join('tb_user', 'tb_user.id', '=', 'tb_house.user_id')
+            ->join('tb_services_used', 'tb_services_used.room_id', '=', 'tb_rooms.room_id')
+            ->join('tb_services', 'tb_services.service_id', '=', 'tb_services_used.service_id')
+            ->join('tb_type_service', 'tb_type_service.type_id', '=', 'tb_services.type_id')
+            ->join('tb_rental_room', 'tb_rental_room.room_id', '=', 'tb_rooms.room_id')
+            ->join('tb_main_tenants', 'tb_main_tenants.tenant_id', '=', 'tb_rental_room.tenant_id')
+            ->where('tb_user.id', auth()->user()->id)
+            ->where('tb_rooms.status', 1)
+            ->where('tb_type_service.type_name', 'Water')
+            ->get();
+        // $service = Services::where('service_name', 'Electricity')->first();
+        return view('dashboard.room-billing.water-bill')->with('title', 'Water bill')->with('dataList', $dataList);
     }
 
     public function costs_incurred()

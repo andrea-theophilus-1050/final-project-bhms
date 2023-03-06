@@ -44,240 +44,160 @@
         </div>
 
 
-        <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12 mb-30">
-                <div class="pd-20 card-box">
-                    <div class="tab">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active text-blue" data-toggle="tab" href="#home" role="tab"
-                                    aria-selected="true">Tenant information</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-blue" data-toggle="tab" href="#profile" role="tab"
-                                    aria-selected="false">Services</a>
-                            </li>
-                        </ul>
+        <div class="pd-20 card-box mb-30">
+            <div class="pull-right">
 
-                        <div class="tab-content">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel">
-                                <div class="pd-20">
-                                    <a href="javascript:;" class="btn btn-secondary btn-sm mb-20" data-target="#tenant-list"
-                                        data-toggle="modal">Get tenants</a>
-                                    <form id="mainTenant" method="post"
-                                        action="{{ route('room.assign-tenant-action', $room->room_id) }}">
-                                        @csrf
 
-                                        <div class="form-group row">
-                                            <input type="hidden" id="tenant_id" name="tenant_id">
+                <button class="btn btn-primary" type="submit" onclick="submitForm()">Submit</button>
+                <a class="btn btn-danger" href="{{ route('room.index', $room->house_id) }}">Cancel</a>
 
-                                            <label class="col-sm-12 col-md-2 col-form-label">Full name</label>
-                                            <div class="col-sm-6 col-md-4">
-                                                <input class="form-control" type="text" placeholder="Full name"
-                                                    name="fullname" id="tenant_name">
-                                            </div>
+            </div>
+            <h5 class="h5 text-blue mb-20">Tenant information</h5>
+            <button class="btn btn-secondary btn-sm mb-20" data-target="#tenant-list" data-toggle="modal">Get
+                tenants</button>
+            <form id="assignTenant" method="post" action="{{ route('room.assign-tenant-action', $room->room_id) }}">
+                @csrf
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Rental room</label>
+                    <div class="col-sm-12 col-md-4">
+                        <input class="form-control" value="{{ $room->room_name }}" type="text" name="room_rental"
+                            readonly>
+                    </div>
 
-                                            <label class="col-sm-12 col-md-2 col-form-label">ID Card Number</label>
-                                            <div class="col-sm-6 col-md-4">
-                                                <input class="form-control" placeholder="ID Card number" type="text"
-                                                    name="id_card" id="tenant_id_card">
-                                            </div>
-                                        </div>
-                                        {{-- <div class="form-group row">
-                                                <label class="col-sm-12 col-md-2 col-form-label">Which area?</label>
-                                                <div class="col-sm-12 col-md-10">
-                                                    <select class="custom-select col-12">
-                                                        <option selected="">Choose...</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
-                                                    </select>
-                                                </div>
-                                            </div> --}}
-                                        <div class="form-group row">
-                                            <label class="col-sm-12 col-md-2 col-form-label">Date of birth</label>
-                                            <div class="col-sm-12 col-md-4">
-                                                <input class="form-control date-picker" placeholder="Date of birth"
-                                                    type="text" name="dob" id="dob">
-                                            </div>
+                    <label class="col-sm-12 col-md-2 col-form-label">Room price</label>
+                    <div class="col-sm-12 col-md-4">
+                        <input class="form-control" value="{{ $room->price }}" type="text" name="room_price" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <input type="hidden" id="tenant_id" name="tenant_id">
 
-                                            <label class="col-sm-12 col-md-2 col-form-label">Gender</label>
-                                            <div class="col-sm-12 col-md-4">
-                                                <div class="d-flex">
-                                                    <div class="custom-control custom-radio mb-5 mr-20">
-                                                        <input type="radio" id="gender1" name="gender"
-                                                            class="custom-control-input" value="Male" checked>
-                                                        <label class="custom-control-label weight-400"
-                                                            for="gender1">Male</label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio mb-5">
-                                                        <input type="radio" id="gender2" name="gender"
-                                                            class="custom-control-input" value="Female">
-                                                        <label class="custom-control-label weight-400"
-                                                            for="gender2">Female</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-12 col-md-2 col-form-label">Phone number</label>
-                                            <div class="col-sm-12 col-md-4">
-                                                <input class="form-control" placeholder="Phone number" type="text"
-                                                    name="phone" id="phone_number">
-                                            </div>
+                    <label class="col-sm-12 col-md-2 col-form-label">Full name</label>
+                    <div class="col-sm-6 col-md-4">
+                        <input class="form-control" type="text" placeholder="Full name" autofocus name="fullname"
+                            id="tenant_name">
+                    </div>
 
-                                            <label class="col-sm-12 col-md-2 col-form-label">Email</label>
-                                            <div class="col-sm-12 col-md-4">
-                                                <input class="form-control" placeholder="Email" type="text"
-                                                    name="email" id="email">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-12 col-md-2 col-form-label">Hometown</label>
-                                            <div class="col-sm-12 col-md-10">
-                                                <input class="form-control" placeholder="Hometown address" type="text"
-                                                    name="hometown" id="hometown">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-12 col-md-2 col-form-label">Rental room</label>
-                                            <div class="col-sm-12 col-md-4">
-                                                <input class="form-control" value="{{ $room->room_name }}" type="text"
-                                                    name="room_rental" readonly>
-                                            </div>
+                    <label class="col-sm-12 col-md-2 col-form-label">ID Card Number</label>
+                    <div class="col-sm-6 col-md-4">
+                        <input class="form-control" placeholder="ID Card number" type="text" name="id_card"
+                            id="tenant_id_card">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Date of birth</label>
+                    <div class="col-sm-12 col-md-4">
+                        <input class="form-control date-picker" placeholder="Date of birth" type="text" name="dob"
+                            id="dob">
+                    </div>
 
-                                            <label class="col-sm-12 col-md-2 col-form-label">Room price</label>
-                                            <div class="col-sm-12 col-md-4">
-                                                <input class="form-control" value="{{ $room->price }}" type="text"
-                                                    name="room_price" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-12 col-md-2 col-form-label">Start date</label>
-                                            <div class="col-sm-12 col-md-4">
-                                                <input class="form-control date-picker" placeholder="Start date"
-                                                    type="text" name="start_date" required>
-                                            </div>
-                                        </div>
-
-                                        {{-- <div class="form-group row">
-                                                <label for="example-datetime-local-input" class="col-sm-12 col-md-2 col-form-label">Date and
-                                                    time</label>
-                                                <div class="col-sm-12 col-md-10">
-                                                    <input class="form-control datetimepicker" placeholder="Choose Date anf time" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-12 col-md-2 col-form-label">Date</label>
-                                                <div class="col-sm-12 col-md-10">
-                                                    <input class="form-control date-picker" placeholder="Select Date" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-12 col-md-2 col-form-label">Month</label>
-                                                <div class="col-sm-12 col-md-10">
-                                                    <input class="form-control month-picker" placeholder="Select Month" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-12 col-md-2 col-form-label">Time</label>
-                                                <div class="col-sm-12 col-md-10">
-                                                    <input class="form-control time-picker" placeholder="Select time" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-12 col-md-2 col-form-label">Select</label>
-                                                <div class="col-sm-12 col-md-10">
-                                                    <select class="custom-select col-12">
-                                                        <option selected="">Choose...</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-12 col-md-2 col-form-label">Color</label>
-                                                <div class="col-sm-12 col-md-10">
-                                                    <input class="form-control" value="#563d7c" type="color">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-sm-12 col-md-2 col-form-label">Input Range</label>
-                                                <div class="col-sm-12 col-md-10">
-                                                    <input class="form-control" value="50" type="range">
-                                                </div>
-                                            </div> --}}
-                                        <div class="form-group row">
-                                            <div class="col-sm-12 col-md-2"></div>
-                                            <div class="col-sm-12 col-md-10">
-                                                <button class="btn btn-primary" type="submit">Submit</button>
-                                                <a class="btn btn-danger"
-                                                    href="{{ route('room.index', $room->house_id) }}">Cancel</a>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
+                    <label class="col-sm-12 col-md-2 col-form-label">Gender</label>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="d-flex">
+                            <div class="custom-control custom-radio mb-5 mr-20">
+                                <input type="radio" id="gender1" name="gender" class="custom-control-input"
+                                    value="Male" checked>
+                                <label class="custom-control-label weight-400" for="gender1">Male</label>
                             </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel">
-                                <div class="pd-20">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped" id="house-table">
-                                            <thead>
-                                                <tr>
-                                                    <th hidden scope="col">House ID</th>
-                                                    <th scope="col">No. </th>
-                                                    <th scope="col">Service name</th>
-                                                    <th scope="col">Price</th>
-                                                    {{-- <th scope="col">Description</th>
-                                                    <th scope="col">Actions</th> --}}
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($services as $service)
-                                                    <tr {{-- class="table-success" --}}>
-                                                        <td hidden>{{ $service->service_id }}</td>
-                                                        <th>{{ $loop->iteration }}</th>
-                                                        <td>{{ $service->service_name }}</td>
-                                                        <td>
-                                                            <input type="number" class="form-control"
-                                                                value="{{ $service->price }}">
-                                                        </td>
-                                                        {{-- <td id="house-description"
-                                                            style=" max-width: 200px; 
-                                                                overflow: hidden; 
-                                                                text-overflow: ellipsis; 
-                                                                white-space: nowrap;"
-                                                            title="{{ $service->description }}">
-                                                            {{ $service->description }}</td>
-                                                        <td>
-                                                            <a id="edit-service" href="javascript:;"
-                                                                data-serviceID="{{ $service->service_id }}"
-                                                                data-serviceName="{{ $service->service_name }}"
-                                                                data-price="{{ $service->price }}"
-                                                                data-description="{{ $service->description }}"
-                                                                class="btn btn-secondary" title="Edit service"><i
-                                                                    class="fa fa-edit"></i></a>
-
-                                                            <button class="btn btn-danger" type="button"
-                                                                id="confirm-delete-modal-btn"
-                                                                data-serviceID="{{ $service->service_id }}"
-                                                                data-serviceName="{{ $service->service_name }}"
-                                                                data-backdrop="static">
-                                                                <i class="fa fa-trash"></i></button>
-                                                            </form>
-                                                        </td> --}}
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                            <div class="custom-control custom-radio mb-5">
+                                <input type="radio" id="gender2" name="gender" class="custom-control-input"
+                                    value="Female">
+                                <label class="custom-control-label weight-400" for="gender2">Female</label>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Phone number</label>
+                    <div class="col-sm-12 col-md-4">
+                        <input class="form-control" placeholder="Phone number" type="text" name="phone"
+                            id="phone_number">
+                    </div>
+
+                    <label class="col-sm-12 col-md-2 col-form-label">Email</label>
+                    <div class="col-sm-12 col-md-4">
+                        <input class="form-control" placeholder="Email" type="text" name="email" id="email">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Hometown</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input class="form-control" placeholder="Hometown address" type="text" name="hometown"
+                            id="hometown">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">Start date</label>
+                    <div class="col-sm-12 col-md-4">
+                        <input class="form-control date-picker" placeholder="Start date" type="text"
+                            name="start_date" required>
+                    </div>
+                </div>
+
+                <div style="width: 100%; height: 1px; background: #0b132b" class="mb-20"></div>
+
+                <h5 class="h5 text-blue mb-20">Services</h5>
+                {{-- NOTE: Services section --}}
+                <div class="table-responsive">
+                    <table class="table table-striped" id="house-table">
+                        <thead>
+                            <tr>
+                                <th></th>                                
+                                <th scope="col">No. </th>
+                                <th scope="col">Service name</th>
+                                <th scope="col">Price</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <input type="hidden" class="form-control" value="{{ $room->room_id }}" name="roomID">
+                            @foreach ($services as $service)
+                                <tr>
+                                    <td><input type="checkbox" class="form-control" style="width: 25px;" name="selectService[]" value="{{ $loop->iteration }}" checked>
+                                    </td>
+                                    <td hidden>{{ $service->service_id }}</td>
+                                    <th>{{ $loop->iteration }}</th>
+                                    <td>{{ $service->service_name }}</td>
+                                    <td>
+                                        <input type="hidden" class="form-control" value="{{ $service->service_id }}"
+                                            name="serviceID[]">
+                                        <input type="number" class="form-control" value="{{ $service->price }}"
+                                            name="servicePrice[]" style="width: 250px">
+                                    </td>
+                                    {{-- <td id="house-description"
+                                                                    style=" max-width: 200px; 
+                                                                        overflow: hidden; 
+                                                                        text-overflow: ellipsis; 
+                                                                        white-space: nowrap;"
+                                                                    title="{{ $service->description }}">
+                                                                    {{ $service->description }}</td>
+                                                                <td>
+                                                                    <a id="edit-service" href="javascript:;"
+                                                                        data-serviceID="{{ $service->service_id }}"
+                                                                        data-serviceName="{{ $service->service_name }}"
+                                                                        data-price="{{ $service->price }}"
+                                                                        data-description="{{ $service->description }}"
+                                                                        class="btn btn-secondary" title="Edit service"><i
+                                                                            class="fa fa-edit"></i></a>
+        
+                                                                    <button class="btn btn-danger" type="button"
+                                                                        id="confirm-delete-modal-btn"
+                                                                        data-serviceID="{{ $service->service_id }}"
+                                                                        data-serviceName="{{ $service->service_name }}"
+                                                                        data-backdrop="static">
+                                                                        <i class="fa fa-trash"></i></button>
+                                                                    </form>
+                                                                </td> --}}
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+            </form>
         </div>
     </div>
 
@@ -291,13 +211,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <form class="col-md-12 mb-10"
-                        style="display: flex; justify-content: space-between; align-items:center">
-                        <input type="text" class="form-control col-md-10" placeholder="Search tenant"
+                    <form class="col-md-12 mb-10">
+                        <input type="text" class="form-control col-md-12" placeholder="Search tenant"
                             id="search-tenant">
-                        <button class="btn btn-primary btn-sm"><i class="icon-copy dw dw-search">
-                            </i> &nbsp;&nbsp;Search
-                        </button>
+
                     </form>
 
                     {{-- <div class="mb-20">
@@ -330,11 +247,8 @@
                                 @foreach ($tenants as $tenant)
                                     <tr style="white-space: nowrap;">
                                         <th scope="row">
-                                            <form id="room-assign-tenant" action="" method="POST">
-                                                @csrf
-                                                <input type="checkbox" class="form-control" id="checkboxTenant"
-                                                    name="tenant_id" value="{{ $tenant->tenant_id }}">
-                                            </form>
+                                            <input type="checkbox" class="form-control" id="checkboxTenant"
+                                                name="tenant_id" value="{{ $tenant->tenant_id }}">
                                         </th>
                                         <td hidden>{{ $tenant->tenant_id }}</td>
                                         <td>{{ $tenant->fullname }}</td>
@@ -361,9 +275,9 @@
 
     <script>
         /*NOTE: handle click on row in table of List of Tenants
-                            - checked => hide other row
-                            - unchecked => show all row 
-                            */
+                                                                                    - checked => hide other row
+                                                                                    - unchecked => show all row 
+                                                                                    */
         const tbody = document.querySelector('#tenant-list tbody');
         const rows = tbody.querySelectorAll('#tenant-list tr');
         rows.forEach((row) => {
@@ -454,6 +368,10 @@
             } else {
                 document.getElementById('alert-error').style.display = '';
             }
+        }
+
+        function submitForm() {
+            document.getElementById('assignTenant').submit();
         }
     </script>
 @endsection
