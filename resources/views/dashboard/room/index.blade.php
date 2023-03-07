@@ -55,9 +55,8 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12">
-                            <div class="pull-right" style="display: flex">
-                                <a class="btn btn-outline-primary btn-sm" id="toggle-btn"
-                                    style="display: flex; align-items: center">Hide</a>
+                            <div class="pull-right d-flex">
+                                <a class="btn btn-outline-primary btn-sm d-flex align-items-center" id="toggle-btn">Hide</a>
                                 <div id="content">
                                     &nbsp;&nbsp;&nbsp;You have another house?
                                     <button class="btn btn-success btn-sm" data-toggle="modal"data-target="#house-add"><i
@@ -260,8 +259,7 @@
                                                                         </b>
                                                                     @endif
                                                                 </p>
-                                                                <p class="card-text"
-                                                                    style="display: flex; align-items: center">
+                                                                <p class="card-text d-flex align-items-center">
                                                                     <i class="icon-copy dw dw-money-2"
                                                                         style="font-size: 20px"></i>
                                                                     &nbsp;{{ number_format($room->price, 0, ',', ',') }}
@@ -364,7 +362,7 @@
                                                 @endforeach
                                             @endif
                                         </div>
-                                        <div style="display: flex;justify-content: center;align-items: center;">
+                                        <div class="d-flex justify-content-center align-items-center">
                                             {{ $rooms->links() }}
                                         </div>
                                     </div>

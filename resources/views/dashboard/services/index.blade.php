@@ -163,7 +163,7 @@
                         <div class="form-group row">
                             <label class="col-md-4">Price</label>
                             <div class="col-md-8">
-                                <input type="number" class="form-control" name="price" id="price_edit">
+                                <input type="text" class="form-control" name="price" id="price_edit">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -261,7 +261,9 @@
         });
 
         const numberInput = document.querySelector("#service-add #price");
+        const numberInputEdit = document.querySelector("#service-edit #price_edit");
         numberInput.addEventListener("input", formatNumber);
+        numberInputEdit.addEventListener("input", formatNumber);
 
         function formatNumber() {
 

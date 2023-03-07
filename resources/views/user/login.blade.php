@@ -175,17 +175,15 @@
                                 </div>
 
                                 <div class="input-group mb-0">
-                                    <a class="btn btn-outline-primary btn-lg btn-block"
-                                        href="{{ route('auth.googleRedirect') }}"
-                                        style="display: flex; justify-content: flex-start"><img
+                                    <a class="btn btn-outline-primary btn-lg btn-block d-flex justify-content-flex-start"
+                                        href="{{ route('auth.googleRedirect') }}"><img
                                             src="{{ asset('vendors/images/google-logo.png') }}"
                                             style="height: 30px; width: 30px; margin-right: 10%; margin-left: 5%" />
                                         @lang('messages.textLoginWithGoogle')</a>
                                 </div>
                                 <div class="input-group mb-0" style="margin-top: 10px">
-                                    <a class="btn btn-outline-primary btn-lg btn-block"
-                                        href="{{ route('auth.facebookRedirect') }}"
-                                        style="display: flex; justify-content: flex-start"><img
+                                    <a class="btn btn-outline-primary btn-lg btn-block d-flex justify-content-flex-start"
+                                        href="{{ route('auth.facebookRedirect') }}"><img
                                             src="{{ asset('vendors/images/facebook-logo.png') }}"
                                             style="height: 30px; width: 30px; margin-right: 10%; margin-left: 5%" />
                                         @lang('messages.textLoginWithFacebook')</a>

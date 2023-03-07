@@ -143,18 +143,20 @@
                     <table class="table table-striped" id="house-table">
                         <thead>
                             <tr>
-                                <th></th>                                
+                                <th></th>
                                 <th scope="col">No. </th>
                                 <th scope="col">Service name</th>
                                 <th scope="col">Price</th>
-                                
+
                             </tr>
                         </thead>
                         <tbody>
                             <input type="hidden" class="form-control" value="{{ $room->room_id }}" name="roomID">
                             @foreach ($services as $service)
                                 <tr>
-                                    <td><input type="checkbox" class="form-control" style="width: 25px;" name="selectService[]" value="{{ $loop->iteration }}" checked>
+                                    <td>
+                                        <input type="checkbox" class="form-control" style="width: 25px;"
+                                            name="selectService[]" value="{{ $loop->iteration }}" checked>
                                     </td>
                                     <td hidden>{{ $service->service_id }}</td>
                                     <th>{{ $loop->iteration }}</th>
@@ -211,11 +213,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <form class="col-md-12 mb-10">
-                        <input type="text" class="form-control col-md-12" placeholder="Search tenant"
-                            id="search-tenant">
 
-                    </form>
+                    <input type="text" class="form-control col-md-12" placeholder="Search tenant" id="search-tenant">
+
+
 
                     {{-- <div class="mb-20">
                         <a href="{{ route('tenant.view.add') }}" class="btn btn-success btn-sm">Add a new tenant</a>
@@ -275,9 +276,9 @@
 
     <script>
         /*NOTE: handle click on row in table of List of Tenants
-                                                                                    - checked => hide other row
-                                                                                    - unchecked => show all row 
-                                                                                    */
+                                                                                        - checked => hide other row
+                                                                                        - unchecked => show all row 
+                                                                                        */
         const tbody = document.querySelector('#tenant-list tbody');
         const rows = tbody.querySelectorAll('#tenant-list tr');
         rows.forEach((row) => {

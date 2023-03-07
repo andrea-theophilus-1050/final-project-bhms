@@ -1,29 +1,68 @@
 @extends('layouts.main')
 @section('content')
-    <form method="POST" action="{{ route('utility.insert') }}">
-        @csrf
-        <div class="pd-ltr-20 xs-pd-20-10">
-            <div class="min-height-200px">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="title">
+                            <h4>Water bill</h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Water bill</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <form method="POST" action="{{ route('electricity-filter') }}">
+                @csrf
                 <div class="page-header">
                     <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                            <div class="title">
-                                <h4>Water bill</h4>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="title mb-10">
+                                <h5>Filter</h5>
                             </div>
-                            <nav aria-label="breadcrumb" role="navigation">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Water bill</li>
-                                </ol>
-                            </nav>
+                            <div class="dropdown d-flex">
+                                <input type="text" class="form-control month-picker mr-3" placeholder="Month picker"
+                                    value="{{ now()->format('F Y') }}" name="month-filter">
+                                <select class="form-control font-13 mr-3" name="house-filter">
+                                    <option value="" selected>Room billed</option>
+                                    {{-- @foreach ($houseList as $house)
+                                        <option value="{{ $house->house_id }}">{{ $house->house_name }}</option>
+                                    @endforeach --}}
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+
+                            </div>
+                            {{-- <div class="dropdown">
+                                    <label style="font-size: 15px; font-weight: bold">Area: </label>
+                                    <a class="btn btn-success btn-sm dropdown-toggle" href="#" role="button"
+                                        data-toggle="dropdown">
+                                        January 2018
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="#">Export List</a>
+                                        <a class="dropdown-item" href="#">Policies</a>
+                                        <a class="dropdown-item" href="#">View Assets</a>
+                                    </div>
+                                </div> --}}
                         </div>
                     </div>
                 </div>
+            </form>
 
+            <form method="POST" action="{{ route('water.insert') }}">
+                @csrf
+                <input type="text" name="date" value="{{ $date }}">
                 <div class="pd-20 card-box mb-30">
                     <div class="clearfix mb-20">
                         <div class="pull-left">
-                            <h4 class="text-blue h4"></h4>
+                            <h4 class="text-blue h4"> <i class="dw dw-calendar-11"></i> <u>{{ $date }}</u> -
+                                Water bill</h4>
                         </div>
                         {{-- <div class="pull-right">
                         <a href="javascript:;" data-toggle="modal" data-target="#service-add"
@@ -60,6 +99,57 @@
                                         <td>{{ $data->room_name }}</td>
                                         <td>{{ $data->fullname }}</td>
                                         <td>
+                                            <input type="hidden" name="rentalRoomID[]"
+                                                value="{{ $data->rental_room_id }}">
+
+                                            @if (collect($oldIndexes)->where('rental_room_id', $data->rental_room_id)->where('new_water_index', '!=', 0)->isNotEmpty())
+                                                <input class="form-control" type="number" name="oldIndex_water[]"
+                                                    id="oldIndex_water" placeholder="0" min="0"
+                                                    value="{{ collect($oldIndexes)->where('rental_room_id', $data->rental_room_id)->pluck('new_water_index')->first() }}">
+                                            @else
+                                                <input class="form-control" type="number" name="oldIndex_water[]"
+                                                    id="oldIndex_water" placeholder="0" min="0" value="">
+                                            @endif
+
+                                            {{-- @if (collect($oldIndexes)->where('rental_room_id', $data->rental_room_id)->where('new_electricity_index', '!=', 0)->isNotEmpty())
+                                                    <input class="form-control" type="number" name="oldIndex_electric[]"
+                                                        id="oldIndex_electric" placeholder="0" min="0"
+                                                        value="{{ collect($oldIndexes)->where('rental_room_id', $data->rental_room_id)->where('new_electricity_index', '!=', 0)->pluck('new_electricity_index')->first() }}">
+                                                @else
+                                                    <input class="form-control" type="number" name="oldIndex_electric[]"
+                                                        id="oldIndex_electric" placeholder="0" min="0">
+                                                @endif --}}
+                                            {{-- @endif --}}
+
+                                            {{-- <input class="form-control" type="number" name="oldIndex_electric[]"
+                                                id="oldIndex_electric" placeholder="0" min="0" > --}}
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="number" name="newIndex_water[]"
+                                                id="newIndex_water" placeholder="0" min="0">
+                                        </td>
+                                        <td style="text-align: center">
+                                            <div id="usedIndex_water"
+                                                style="background: rgb(222, 222, 222); border-radius: 5px; padding: 8px">0
+                                            </div>
+                                        </td>
+                                        <td style="text-align: center; font-weight: bold">
+                                            <input type="hidden" value="{{ $data->price_if_changed }}" id="priceUnit">
+                                            <div id="totalAmount"
+                                                style="background: rgb(200, 200, 200); border-radius: 5px; padding: 8px">
+                                                0
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                                {{-- @foreach ($dataList as $data)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $data->house_name }}</td>
+                                        <td>{{ $data->room_name }}</td>
+                                        <td>{{ $data->fullname }}</td>
+                                        <td>
                                             <input type="hidden" name="rentalRoomID[]" value="{{ $data->room_id }}">
                                             <input class="form-control" type="number" name="oldIndex_water[]"
                                                 id="oldIndex_water" placeholder="0" min="0">
@@ -81,7 +171,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @endforeach --}}
 
 
                             </tbody>
@@ -89,10 +179,10 @@
                     </div>
 
                 </div>
-
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
+
 
     <script>
         // NOTE: get all the rows in the table body

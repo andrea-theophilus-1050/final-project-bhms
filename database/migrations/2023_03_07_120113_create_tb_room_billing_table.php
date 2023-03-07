@@ -15,12 +15,13 @@ return new class extends Migration
     {
         Schema::create('tb_room_billing', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('date_id');
             $table->string('total_price');
-            $table->string('paid_amount');
+            $table->string('paidAmount');
             $table->string('debt');
-            $table->tinyInteger('status'); // 0: chưa thanh toán, 1: đã thanh toán
-            $table->foreign('date_id')->references('date_id')->on('tb_date')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('status');
+            $table->string('date');
+            $table->unsignedBigInteger('rental_room_id');
+            $table->foreign('rental_room_id')->references('rental_room_id')->on('tb_rental_room')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

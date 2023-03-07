@@ -55,27 +55,27 @@ Route::middleware('setLocale')->group(function () {
     //Route forgot password
     Route::get('forgot-password', [ForgotPasswordController::class, 'index'])->middleware('guest')->name('forgot-password');
     Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->middleware('guest')->name('send-reset-link-email');
-    
+
     Route::get('/reset-password/{token}', function ($token) {
         return view('user.reset-password', ['token' => $token]);
     })->middleware('guest')->name('password.reset');
 
     Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword'])->middleware('guest')->name('password.update');
-    
+
     // Route verify email
     Route::get('email/verify', function () {
         return view('user.verify-email');
     })->middleware('auth')->name('verification.notice');
 
-    Route::get('email/verify/{id}/{hash}', function(EmailVerificationRequest $request) {
+    Route::get('email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
         $request->fulfill();
-    
+
         return redirect()->route('home');
     })->middleware(['auth', 'signed'])->name('verification.verify');
 
     Route::post('email/verification-notification', function (Request $request) {
         $request->user()->sendEmailVerificationNotification();
-    
+
         return back()->with('resent', 'Verification link sent!');
     })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
@@ -136,21 +136,31 @@ Route::middleware('setLocale')->group(function () {
                     Route::resource('services', ServicesController::class);
 
                     // Route::get('utility-bill', [DashboardController::class, 'utility_bill'])->name('utility-bill');
-                    Route::get('electricity-bill', [DashboardController::class, 'electricity_bill'])->name('electricity-bill');
-                    Route::get('water-bill', [DashboardController::class, 'water_bill'])->name('water-bill');
+                    Route::get('electricity-bill/{date}', [DashboardController::class, 'electricity_bill'])->name('electricity-bill');
+                    Route::get('water-bill/{date}', [DashboardController::class, 'water_bill'])->name('water-bill');
                     Route::get('costs-incurred', [DashboardController::class, 'costs_incurred'])->name('costs-incurred');
+                    Route::get('costs-incurred/add', [DashboardController::class, 'add_costs_incurred'])->name('costs-incurred.add');
                     Route::get('room-billing', [DashboardController::class, 'room_billing'])->name('room-billing');
 
-                    Route::post('utility-insert', [CalculationWaterElectricityController::class, 'utility_insert'])->name('utility.insert');
+                    Route::post('electricity-filter', [CalculationWaterElectricityController::class, 'electricity_filter'])->name('electricity-filter');
+                    Route::post('electricity-insert', [CalculationWaterElectricityController::class, 'electricity_insert'])->name('electricity.insert');
 
+                    // Route::post('water-filter', [CalculationWaterElectricityController::class, 'water_filter'])->name('water-filter');
+                    Route::post('water-insert', [CalculationWaterElectricityController::class, 'water_insert'])->name('water.insert');
+                    Route::post('costs-incurred-action', [CalculationWaterElectricityController::class, 'costs_incurred_action'])->name('add.costs-incurred.action');
 
 
                     Route::get('feedback', [DashboardController::class, 'feedback'])->name('feedback');
 
 
                     // NOTE: Export testing, not done 
-                    Route::get('/export-users',[UserController::class,'exportUsers'])->name('export-users');
-                    Route::get('/export-tenant', [TenantController::class,'exportTenant'])->name('export-tenant');
+                    Route::get('/export-users', [UserController::class, 'exportUsers'])->name('export-users');
+                    Route::get('/export-tenant', [TenantController::class, 'exportTenant'])->name('export-tenant');
+
+                    Route::get('/rooms/{house}', function ($house) {
+                        $rooms = App\Models\Room::where('house_id', $house)->get();
+                        return response()->json($rooms);
+                    });
                 });
             });
             Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->name('profile');
