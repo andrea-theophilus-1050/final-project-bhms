@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('price');
             $table->string('date');
-            $table->string('reason');
+            $table->text('reason');
             $table->unsignedBigInteger('rental_room_id');
             $table->foreign('rental_room_id')->references('rental_room_id')->on('tb_rental_room')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

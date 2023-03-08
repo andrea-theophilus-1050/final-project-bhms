@@ -206,6 +206,19 @@
                     <div class="pd-20 card-box">
 
                         <div class="clearfix mb-10">
+                            <div class="pull-left">
+                                {{-- <form action="" method="POST" class="d-flex">
+                                    @csrf
+                                    <input type="hidden" value="{{ $rooms[0]->house_id }}">
+                                    <div class="input-group custom">
+                                        <div class="input-group-prepend custom">
+                                            <div class="input-group-text" id="btnGroupAddon"><i class="dw dw-search mr-2"></i></div>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm mr-2" placeholder="Search room">
+                                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                                    </div>
+                                </form> --}}
+                            </div>
                             <div class="pull-right">
                                 <button data-toggle="modal" data-target="#room-add" class="btn btn-success btn-sm"><i
                                         class="icon-copy fa fa-plus" aria-hidden="true"></i>
@@ -310,7 +323,8 @@
                                                                             data-hometown="{{ $room->rentals->tenants->hometown }}"
                                                                             data-idFrontPhoto="{{ $room->rentals->tenants->citizen_card_front_image }}"
                                                                             data-idBackPhoto="{{ $room->rentals->tenants->citizen_card_back_image }}"
-                                                                            data-list-member="{{ $room->rentals->tenants->members }}" @endif>
+                                                                            data-list-member="{{ $room->rentals->tenants->members }}" 
+                                                                            data-service-used = "{{ collect($serviceUsed)->where('room_id', $room->room_id) }}" @endif>
                                                                         <i class="icon-copy fa fa-info-circle"
                                                                             aria-hidden="true"></i>
                                                                     </button>
@@ -555,6 +569,36 @@
                             <div class="col-md-12">
                                 <div class="divider" style="background-color: black; height: 2px; width: 100%">
                                 </div>
+                            </div>
+                        </div>
+
+                        {{-- SECTION-START: services used --}}
+
+                        <div class="invoice-desc pb-30" id="serviceUsed" style="margin-top: 20px">
+                            <h5 class="text-left mb-20 weight-600"><i class="icon-copy dw dw-suitcase-11"></i> Services
+                                current used
+                            </h5>
+                            <div class="table-responsive">
+                                <table class="table " id="service-used-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"># </th>
+                                            <th scope="col">Type service</th>
+                                            <th scope="col">Service name</th>
+                                            <th scope="col">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {{-- SECTION-END: services used --}}
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="divider" style="background-color: black; height: 2px; width: 100%"></div>
                             </div>
                         </div>
 
@@ -827,7 +871,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{--     <ul>
+                            {{-- <ul>
                                     <li class="clearfix">
                                         <div class="invoice-sub">Website Design</div>
                                         <div class="invoice-rate">$20</div>
@@ -856,8 +900,8 @@
                                         <div class="invoice-subtotal"><span class="weight-600">$2000</span>
                                         </div>
                                     </li>
-                                </ul>
-                            </div> --}}
+                                </ul> --}}
+                            {{-- </div> --}}
                             {{-- <div class="invoice-desc-footer">
                                 <div class="invoice-desc-head clearfix">
                                     <div class="invoice-sub">Bank Info</div>

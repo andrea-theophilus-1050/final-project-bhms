@@ -69,6 +69,7 @@
         @yield('content')
 
         @include('partials._footer')
+        
     </div>
 
     <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="icon-copy fa fa-arrow-up"

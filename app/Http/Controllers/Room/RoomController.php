@@ -17,6 +17,11 @@ class RoomController extends Controller
     {
         $rooms = Room::where('house_id', $id)->paginate(20);
         $tenants = Tenant::where('user_id', auth()->user()->id)->where('status', 0)->get();
+        $serviceUsed = DB::table('tb_services_used')
+            ->join('tb_services', 'tb_services.service_id', '=', 'tb_services_used.service_id')
+            ->join('tb_type_service', 'tb_type_service.type_id', '=', 'tb_services.type_id')
+            ->join('tb_rooms', 'tb_rooms.room_id', '=', 'tb_services_used.room_id')
+            ->get();
 
         $countTotal = Room::where('house_id', $id)->count();
         $countRentedRoom = Room::where('house_id', $id)->where('status', 1)->count();
@@ -26,6 +31,7 @@ class RoomController extends Controller
             [
                 'rooms',
                 'tenants',
+                'serviceUsed',
                 'id',
                 'countTotal',
                 'countRentedRoom',

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\App;
 use App\Exports\ExportUser;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Auth\Events\Registered;
+use App\Models\Services;
 
 class UserController extends Controller
 {
@@ -127,7 +128,22 @@ class UserController extends Controller
             'confirmPassword' => 'required|same:password',
         ]);
 
-        event(new Registered($user = $this->create($request->all())));
+        if(event(new Registered($user = $this->create($request->all())))){
+            Services::create([
+                'service_name' => 'Electricity',
+                'price' => 0,
+                'description' => 'Default and required electricity service',
+                'user_id' => $user->id,
+                'type_id' => 1,
+            ]);
+            Services::create([
+                'service_name' => 'Water',
+                'price' => 0,
+                'description' => 'Default and required water service,',
+                'user_id' => $user->id,
+                'type_id' => 2,
+            ]);
+        }
 
         Auth::login($user, true);
 

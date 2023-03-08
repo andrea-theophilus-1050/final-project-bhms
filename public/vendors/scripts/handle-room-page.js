@@ -84,8 +84,6 @@ document.addEventListener('DOMContentLoaded', function () {
             tenantPhoneModal.href = "tel:" + phone;
             tenantEmailModal.href = "mailto:" + email;
 
-
-
             // NOTE: set src image ID Card front/back to tenant infomation
             idFrontPhotoModal.src = idFrontPhoto != "" ?
                 baseURL + "/uploads/tenants/id_card_front/" + idFrontPhoto :
@@ -94,11 +92,35 @@ document.addEventListener('DOMContentLoaded', function () {
                 baseURL + "/uploads/tenants/id_card_back/" + idBackPhoto :
                 baseURL + "/avatar/default-image.png";
 
-            // // NOTE: show/hide member section if tenantID is null ot not null
+            // NOTE: show/hide member, service used section if tenantID is null ot not null
             if (tenantID == "") {
                 document.getElementById('roomMembersSection').style.display = 'none';
+                document.getElementById('serviceUsed').style.display = 'none';
             } else {
                 document.getElementById('roomMembersSection').style.display = '';
+                document.getElementById('serviceUsed').style.display = '';
+
+                // NOTE: section for service used
+                const table = document.querySelector('#service-used-table tbody');
+                table.innerHTML = '';
+                var serviceUsed = e.getAttribute('data-service-used');
+                const jsonServiceUsed = Object.values(JSON.parse(serviceUsed));
+                jsonServiceUsed.forEach((service, index) => {
+                    const newRow = table.insertRow();
+
+                    const cell1 = newRow.insertCell(0);
+                    const cell2 = newRow.insertCell(1);
+                    const cell3 = newRow.insertCell(2);
+                    const cell4 = newRow.insertCell(3);
+
+                    cell1.innerHTML = index + 1;
+                    cell2.innerHTML = service.type_name;
+                    cell3.innerHTML = service.service_name;
+                    cell4.innerHTML = service.price_if_changed;
+                });
+
+
+                // NOTE: section for members information
                 var mainTenantID = document.querySelector('#main_tenant_id');
                 mainTenantID.value = tenantID;
 
@@ -109,11 +131,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 var listMembers = e.getAttribute('data-list-member');
                 var jsonListMembers = JSON.parse(listMembers);
 
+                // console.log(jsonListMembers);
+
                 jsonListMembers.forEach((member, index) => {
                     const memberList = document.createElement('div');
                     memberList.setAttribute('id', 'membersInfo');
-                    var srcIDCardFrontPhoto = member.citizen_card_front_image != "" ? baseURL + '/uploads/members/id_card_front/' + member.citizen_card_front_image : baseURL + '/avatar/default-image.png';
-                    var srcIDCardBackPhoto = member.citizen_card_back_image != "" ? baseURL + '/uploads/members/id_card_back/' + member.citizen_card_back_image : baseURL + '/avatar/default-image.png';
+                    var srcIDCardFrontPhoto = member.citizen_card_front_image != null ? baseURL + '/uploads/members/id_card_front/' + member.citizen_card_front_image : baseURL + '/avatar/default-image.png';
+                    var srcIDCardBackPhoto = member.citizen_card_back_image != null ? baseURL + '/uploads/members/id_card_back/' + member.citizen_card_back_image : baseURL + '/avatar/default-image.png';
 
                     memberList.innerHTML =
                         '<div class="row" style="margin-top: 20px">' +

@@ -18,6 +18,19 @@ class ServicesController extends Controller
 
     public function store(Request $request)
     {
+        $typeService = $request->typeService;
+        $existsService = "";
+
+        if ($typeService == 1) {
+            $existsService = Services::where('type_id', 1)->where('user_id', auth()->user()->id)->first();
+        } elseif ($typeService == 2) {
+            $existsService = Services::where('type_id', 2)->where('user_id', auth()->user()->id)->first();
+        }
+
+        if ($existsService) {
+            return redirect()->back()->with('error', 'You can only have one electricity or water service');
+        }
+
         $service = new Services();
         $service->service_name = $request->service_name;
         $service->price = intval(str_replace(",", "", $request->price));
@@ -31,10 +44,8 @@ class ServicesController extends Controller
     public function update(Request $request, $id)
     {
         $service = Services::find($id);
-        $service->service_name = $request->service_name;
         $service->price = intval(str_replace(",", "", $request->price));
         $service->description = $request->description;
-        $service->type_id = $request->typeService;
         $service->save();
         return redirect()->route('services.index');
     }

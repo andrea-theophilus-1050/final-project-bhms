@@ -155,8 +155,15 @@
                             @foreach ($services as $service)
                                 <tr>
                                     <td>
-                                        <input type="checkbox" class="form-control" style="width: 25px;"
-                                            name="selectService[]" value="{{ $loop->iteration }}" checked>
+                                        @if ($service->service_name == 'Water' || $service->service_name == 'Electricity')
+                                            <input type="checkbox" class="form-control" style="width: 25px;"
+                                                name="selectService[]" value="{{ $loop->iteration }}" disabled checked>
+                                            <input type="hidden" class="form-control" style="width: 25px;"
+                                                name="selectService[]" value="{{ $loop->iteration }}" checked>
+                                        @else
+                                            <input type="checkbox" class="form-control" style="width: 25px;"
+                                                name="selectService[]" value="{{ $loop->iteration }}" checked>
+                                        @endif
                                     </td>
                                     <td hidden>{{ $service->service_id }}</td>
                                     <th>{{ $loop->iteration }}</th>
@@ -276,9 +283,9 @@
 
     <script>
         /*NOTE: handle click on row in table of List of Tenants
-                                                                                        - checked => hide other row
-                                                                                        - unchecked => show all row 
-                                                                                        */
+                                                                                                - checked => hide other row
+                                                                                                - unchecked => show all row 
+                                                                                                */
         const tbody = document.querySelector('#tenant-list tbody');
         const rows = tbody.querySelectorAll('#tenant-list tr');
         rows.forEach((row) => {

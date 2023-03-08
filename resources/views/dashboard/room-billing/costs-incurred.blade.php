@@ -99,6 +99,9 @@
     </div>
     {{-- SECTION-END: confirm delete popup --}}
 
+    
+
+
     {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             //NOTE: passing value to update house modal

@@ -18,6 +18,8 @@ class Services extends Model
         'service_name',
         'price',
         'description',
+        'user_id',
+        'type_id',
     ];
 
     public function user()

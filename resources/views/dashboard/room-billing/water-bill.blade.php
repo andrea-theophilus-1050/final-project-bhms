@@ -125,8 +125,14 @@
                                                 id="oldIndex_electric" placeholder="0" min="0" > --}}
                                         </td>
                                         <td>
-                                            <input class="form-control" type="number" name="newIndex_water[]"
-                                                id="newIndex_water" placeholder="0" min="0">
+                                            @if (collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->isNotEmpty())
+                                                <input class="form-control" type="number" name="newIndex_water[]"
+                                                    id="newIndex_water" placeholder="0" min="0"
+                                                    value="{{ collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->pluck('new_water_index')->first() }}">
+                                            @else
+                                                <input class="form-control" type="number" name="newIndex_water[]"
+                                                    id="newIndex_water" placeholder="0" min="0">
+                                            @endif
                                         </td>
                                         <td style="text-align: center">
                                             <div id="usedIndex_water"
@@ -224,6 +230,23 @@
                     row.querySelector('div[id="usedIndex_water"]').innerHTML = "Errors";
                 }
             });
+
+            // NOTE: if the new index electric input field has a value, then calculate the used index electric
+            if (input2.value && input2.value) {
+                var value2 = parseInt(input2.value);
+                var value1 = parseInt(input1.value);
+                var priceUnit = parseInt(row.querySelector('input[id="priceUnit"]').value);
+
+                if (!isNaN(value2) && !isNaN(value1) && value2 >= value1) {
+                    let consume = value2 - value1;
+                    let totalAmount = consume * priceUnit;
+
+                    row.querySelector('div[id="usedIndex_water"]').innerHTML = consume;
+                    row.querySelector('div[id="totalAmount"]').innerHTML = totalAmount
+                } else {
+                    row.querySelector('div[id="usedIndex_water"]').innerHTML = "Errors";
+                }
+            }
         });
     </script>
 @endsection

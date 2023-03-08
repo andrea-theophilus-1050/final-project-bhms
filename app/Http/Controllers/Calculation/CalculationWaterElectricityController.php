@@ -103,7 +103,7 @@ class CalculationWaterElectricityController extends Controller
 
         $costs = new CostIncurred();
         $costs->rental_room_id = $rentalID;
-        $costs->price = $price;
+        $costs->price = intval(str_replace(",", "", $price));
         $costs->reason = $reason;
         $costs->date = $date;
         $costs->save();

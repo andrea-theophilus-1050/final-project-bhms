@@ -20,85 +20,54 @@
 
 
         <div class="pd-20 card-box mb-30">
-
-            {{-- <h5 class="h5 text-blue mb-20">Tenant information</h5> --}}
-            <button class="btn btn-secondary btn-sm mb-20" data-target="#tenant-list" data-toggle="modal">Get
-                information</button>
+            <div class="clearfix mb-20">
+                <div class="pull-left">
+                    <h4 class="text-blue h4"></h4>
+                </div>
+                <div class="pull-right">
+                    <button class="btn btn-secondary btn-sm mb-20" data-target="#tenant-list" data-toggle="modal">Get
+                        information</button>
+                </div>
+            </div>
             <form id="Form_CostsIncurred" method="post" action="{{ route('add.costs-incurred.action') }}">
                 @csrf
-                <input type="text" value="" name="rental_room_id" id="rental_room_id">
+                <input type="hidden" value="" name="rental_room_id" id="rental_room_id">
                 <div class="form-group row">
-                    <label class="col-sm-12 col-md-2 col-form-label">House name</label>
-                    <div class="col-sm-12 col-md-4">
-                        <input class="form-control" value="" type="text" id="house_name" name="house_name"
-                            readonly>
-                    </div>
-
-                    <label class="col-sm-12 col-md-2 col-form-label">Room name</label>
-                    <div class="col-sm-12 col-md-4">
-                        <input class="form-control" value="" type="text" id="room_name" name="room_name" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-12 col-md-2 col-form-label">Tenant name</label>
-                    <div class="col-sm-6 col-md-4">
-                        <input class="form-control" type="text" name="tenant_name" id="tenant_name" readonly>
-                    </div>
-
                     <label class="col-sm-12 col-md-2 col-form-label">Month/Year</label>
                     <div class="col-sm-12 col-md-4">
                         <input class="form-control month-picker" placeholder="Month/Year" type="text" id="month_year"
                             name="month_year" required autofocus>
                     </div>
-                </div>
 
+                    <label class="col-sm-12 col-md-2 col-form-label">House name</label>
+                    <div class="col-sm-12 col-md-4">
+                        <input class="form-control" value="" type="text" id="house_name" name="house_name"
+                            readonly>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Price</label>
                     <div class="col-sm-6 col-md-4">
-                        <input class="form-control" type="text" name="price" id="price" placeholder="Price" required>
+                        <input class="form-control" type="text" name="price" id="price" placeholder="Price"
+                            required>
                     </div>
+                    <label class="col-sm-12 col-md-2 col-form-label">Room name</label>
+                    <div class="col-sm-12 col-md-4">
+                        <input class="form-control" value="" type="text" id="room_name" name="room_name" readonly>
+                    </div>
+                </div>
 
-
+                <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Reason for this cost incurred</label>
                     <div class="col-sm-6 col-md-4">
                         <textarea class="form-control" name="reason" id="reason" placeholder="Reason for this cost incurred" required></textarea>
                     </div>
-                </div>
-                {{-- <div class="form-group row">
-                    <label class="col-sm-12 col-md-2 col-form-label">Date of birth</label>
-                    <div class="col-sm-12 col-md-4">
-                        <input class="form-control date-picker" placeholder="Date of birth" type="text" name="dob"
-                            id="dob">
+
+                    <label class="col-sm-12 col-md-2 col-form-label">Tenant name</label>
+                    <div class="col-sm-6 col-md-4">
+                        <input class="form-control" type="text" name="tenant_name" id="tenant_name" readonly>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-sm-12 col-md-2 col-form-label">Phone number</label>
-                    <div class="col-sm-12 col-md-4">
-                        <input class="form-control" placeholder="Phone number" type="text" name="phone"
-                            id="phone_number">
-                    </div>
-
-                    <label class="col-sm-12 col-md-2 col-form-label">Email</label>
-                    <div class="col-sm-12 col-md-4">
-                        <input class="form-control" placeholder="Email" type="text" name="email" id="email">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-12 col-md-2 col-form-label">Hometown</label>
-                    <div class="col-sm-12 col-md-10">
-                        <input class="form-control" placeholder="Hometown address" type="text" name="hometown"
-                            id="hometown">
-                    </div>
-                </div> 
-
-                <div class="form-group row">
-                    <label class="col-sm-12 col-md-2 col-form-label">Start date</label>
-                    <div class="col-sm-12 col-md-4">
-                        <input class="form-control date-picker" placeholder="Start date" type="text" name="start_date"
-                            required>
-                    </div>
-                </div> --}}
-
                 <div class="form-group row">
                     <div class="col-sm-12 col-md-2"></div>
                     <div class="col-sm-12 col-md-10">
@@ -135,7 +104,7 @@
                             <thead style="white-space: nowrap;">
                                 <tr>
                                     <th scope="col"></th>
-                                    <th scope="col">Rental room ID</th>
+                                    <th scope="col" hidden>Rental room ID</th>
                                     <th scope="col">House name </th>
                                     <th scope="col">Room name </th>
                                     <th scope="col">Tenant name</th>
@@ -148,7 +117,7 @@
                                             <input type="checkbox" class="form-control" id="checkboxTenant"
                                                 name="tenant_id" value="{{ $data->tenant_id }}" style="width: 20px">
                                         </th>
-                                        <td>{{ $data->rental_room_id }}</td>
+                                        <td hidden>{{ $data->rental_room_id }}</td>
                                         <td>{{ $data->house_name }}</td>
                                         <td>{{ $data->room_name }}</td>
                                         <td>{{ $data->fullname }}</td>
@@ -168,10 +137,9 @@
     <!-- SECTION-END: tenant list modal -->
 
     <script>
-        /*NOTE: handle click on row in table of List of Tenants
-                                                                                                                            - checked => hide other row
-                                                                                                                            - unchecked => show all row 
-                                                                                                                            */
+        //NOTE: handle click on row in table of List of Tenants
+        //- checked => hide other row
+        //- unchecked => show all row 
         const tbody = document.querySelector('#tenant-list tbody');
         const rows = tbody.querySelectorAll('#tenant-list tr');
         rows.forEach((row) => {
@@ -232,7 +200,7 @@
             const checkbox = document.querySelector('table #checkboxTenant:checked');
             if (checkbox) {
                 const row = checkbox.closest('tr');
-                
+
                 const rentalID = row.cells[1].textContent;
                 const houseName = row.cells[2].textContent;
                 const roomName = row.cells[3].textContent;
@@ -254,6 +222,24 @@
 
         function submitForm() {
             document.getElementById('Form_CostsIncurred').submit();
+        }
+
+        // Format number input with commas as thousands separators
+        const numberInput = document.querySelector("#price");
+        // Add event listener for when input value changes
+        numberInput.addEventListener("input", formatNumber);
+
+        function formatNumber() {
+
+            if (this.value.length === 0) return;
+            // Get the input value and remove any non-numeric characters except for the decimal point
+            let input = this.value.replace(/[^0-9.]/g, "");
+
+            // Parse the input as a float and format it with commas as thousands separators
+            let formatted = parseFloat(input).toLocaleString();
+
+            // Update the input value with the formatted value
+            this.value = formatted;
         }
     </script>
 @endsection

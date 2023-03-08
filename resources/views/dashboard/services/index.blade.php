@@ -21,7 +21,17 @@
             <div class="pd-20 card-box mb-30">
                 <div class="clearfix mb-20">
                     <div class="pull-left">
-                        <h4 class="text-blue h4"></h4>
+                        <h6 class="text-blue h6">
+                            @if (session('error'))
+                                <div class="alert alert-danger d-flex align-items-center justify-content-center"
+                                    role="alert">
+                                    <strong>Error! </strong>{{ session('error') }}
+                                    <button type="button" class="close ml-2" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+                        </h6>
                     </div>
                     <div class="pull-right">
                         <a href="javascript:;" data-toggle="modal" data-target="#service-add"
@@ -63,10 +73,12 @@
                                             data-description="{{ $service->description }}" class="btn btn-secondary"
                                             title="Edit service"><i class="fa fa-edit"></i></a>
 
-                                        <button class="btn btn-danger" type="button" id="confirm-delete-modal-btn"
-                                            data-serviceID="{{ $service->service_id }}"
-                                            data-serviceName="{{ $service->service_name }}" data-backdrop="static">
-                                            <i class="fa fa-trash"></i></button>
+                                        @if ($service->type->type_name != 'Electricity' && $service->type->type_name != 'Water')
+                                            <button class="btn btn-danger" type="button" id="confirm-delete-modal-btn"
+                                                data-serviceID="{{ $service->service_id }}"
+                                                data-serviceName="{{ $service->service_name }}" data-backdrop="static">
+                                                <i class="fa fa-trash"></i></button>
+                                        @endif
                                         </form>
                                     </td>
                                 </tr>
@@ -101,7 +113,9 @@
                                 <select name="typeService" id="typeService" class="form-control">
                                     <option value="">-- Choose type of service --</option>
                                     @foreach ($type as $t)
-                                        <option value="{{ $t->type_id }}">{{ $t->type_name }}</option>
+                                        @if ($t->type_name != 'Electricity' && $t->type_name != 'Water')
+                                            <option value="{{ $t->type_id }}">{{ $t->type_name }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -145,13 +159,14 @@
                         <div class="form-group row">
                             <label class="col-md-4">Service name</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="service_name" id="service_name_edit">
+                                <input type="text" class="form-control" name="service_name" id="service_name_edit"
+                                    disabled>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4">Type of Service</label>
                             <div class="col-md-8">
-                                <select name="typeService" id="typeService" class="form-control">
+                                <select name="typeService" id="typeService" class="form-control" disabled>
                                     <option value="">-- Choose type of service --</option>
                                     @foreach ($type as $t)
                                         <option value="{{ $t->type_id }}" id="{{ $t->type_id }}">

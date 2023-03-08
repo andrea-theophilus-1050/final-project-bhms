@@ -120,8 +120,14 @@
                                                 id="oldIndex_electric" placeholder="0" min="0" > --}}
                                         </td>
                                         <td>
-                                            <input class="form-control" type="number" name="newIndex_electric[]"
-                                                id="newIndex_electric" placeholder="0" min="0">
+                                            @if (collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->isNotEmpty())
+                                                <input class="form-control" type="number" name="newIndex_electric[]"
+                                                    id="newIndex_electric" placeholder="0" min="0"
+                                                    value="{{ collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->pluck('new_electricity_index')->first() }}">
+                                            @else
+                                                <input class="form-control" type="number" name="newIndex_electric[]"
+                                                    id="newIndex_electric" placeholder="0" min="0">
+                                            @endif
                                         </td>
                                         <td style="text-align: center">
                                             <div id="usedIndex_electric"
@@ -154,7 +160,6 @@
             var input2 = row.querySelector('input[id="newIndex_electric"]');
             var input1 = row.querySelector('input[id="oldIndex_electric"]');
 
-
             input1.addEventListener('input', function() {
                 var value2 = parseInt(input2.value);
                 var value1 = parseInt(input1.value);
@@ -186,6 +191,24 @@
                     row.querySelector('div[id="usedIndex_electric"]').innerHTML = "Errors";
                 }
             });
+
+            // perform the subtraction on page load if there are values in the input fields
+            if (input1.value && input2.value) {
+                var value2 = parseInt(input2.value);
+                var value1 = parseInt(input1.value);
+                var priceUnit = parseInt(row.querySelector('input[id="priceUnit"]').value);
+
+                if (!isNaN(value2) && !isNaN(value1) && value2 >= value1) {
+                    let consume = value2 - value1;
+                    let totalAmount = consume * priceUnit;
+
+                    row.querySelector('div[id="usedIndex_electric"]').innerHTML = consume;
+                    row.querySelector('div[id="totalAmount"]').innerHTML = totalAmount;
+                } else {
+                    row.querySelector('div[id="usedIndex_electric"]').innerHTML = "Errors";
+                }
+            }
+
         });
     </script>
 @endsection
