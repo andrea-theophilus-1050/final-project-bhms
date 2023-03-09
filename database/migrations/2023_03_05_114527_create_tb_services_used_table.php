@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('tb_services_used', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('service_id');
-            $table->unsignedBigInteger('room_id');
+            $table->unsignedBigInteger('rental_room_id');
             $table->string('price_if_changed')->nullable();
             $table->foreign('service_id')->references('service_id')->on('tb_services')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('room_id')->references('room_id')->on('tb_rooms')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('rental_room_id')->references('rental_room_id')->on('tb_rental_room')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

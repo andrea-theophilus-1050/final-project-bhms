@@ -20,7 +20,8 @@ class RoomController extends Controller
         $serviceUsed = DB::table('tb_services_used')
             ->join('tb_services', 'tb_services.service_id', '=', 'tb_services_used.service_id')
             ->join('tb_type_service', 'tb_type_service.type_id', '=', 'tb_services.type_id')
-            ->join('tb_rooms', 'tb_rooms.room_id', '=', 'tb_services_used.room_id')
+            ->join('tb_rental_room', 'tb_rental_room.rental_room_id', '=', 'tb_services_used.rental_room_id')
+            ->join('tb_rooms', 'tb_rooms.room_id', '=', 'tb_rental_room.room_id')
             ->get();
 
         $countTotal = Room::where('house_id', $id)->count();
@@ -152,7 +153,7 @@ class RoomController extends Controller
                 if (in_array($serviceID[$i], $selectedServices)) {
                     DB::table('tb_services_used')->insert([
                         'service_id' => $serviceID[$i],
-                        'room_id' => $roomID,
+                        'rental_room_id' => $rental->rental_room_id,
                         'price_if_changed' => $servicePrice[$i]
                     ]);
                 }

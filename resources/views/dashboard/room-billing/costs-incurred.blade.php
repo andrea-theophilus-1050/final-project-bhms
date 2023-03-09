@@ -38,6 +38,7 @@
                                 <th scope="col">Tenant name</th>
                                 <th scope="col">Reason</th>
                                 <th scope="col">Price</th>
+                                <th scope="col">Date</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
@@ -50,11 +51,11 @@
                                     <td>{{ $data->fullname }}</td>
                                     <td>{{ $data->reason }}</td>
                                     <td>{{ $data->price }}</td>
+                                    <td>{{ $data->date }}</td>
                                     <td>
-                                        <a href="javascript:;" data-toggle="modal" data-target="#service-edit"
-                                            class="btn btn-primary btn-sm"><i class="dw dw-edit"></i></a>
-                                        <a href="javascript:;" data-toggle="modal" data-target="#service-delete"
-                                            class="btn btn-danger btn-sm"><i class="dw dw-delete"></i></a>
+                                        <a href="#" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                                        <button id="cost-incurred-delete" data-costs-id="{{ $data->id }}" type="button"
+                                            class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -75,9 +76,9 @@
                 <div class="modal-body text-center font-18">
                     <h4 class="padding-top-30 mb-30 weight-500" id="msg-delete-confirm">Are you sure you want to continue?
                     </h4>
-                    <form id="delete-form" method="post">
+                    <form id="delete-form" method="POST">
                         @csrf
-                        @method('DELETE')
+                        {{-- @method('DELETE') --}}
                         <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
                             <div class="col-6">
                                 <button type="button"
@@ -99,7 +100,21 @@
     </div>
     {{-- SECTION-END: confirm delete popup --}}
 
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var deleteBtn = document.querySelectorAll('#cost-incurred-delete');
+            deleteBtn.forEach(function(e) {
+                e.addEventListener('click', function() {
+                    var id = e.getAttribute('data-costs-id');
+
+                    var formDelete = document.querySelector('#delete-form');                    
+                    formDelete.action = "{{ route('cost_incurred.delete', ':id') }}".replace(':id', id);
+
+                    $('#confirm-delete-modal').modal('show');
+                });
+            });
+        });
+    </script>
 
 
     {{-- <script>

@@ -101,7 +101,7 @@ class UserController extends Controller
         if (Auth::attempt($credentials, $remember)) {
             // $request->session()->regenerate();
             $user = Auth::user();
-            Auth::login($user, true);
+            Auth::login($user, $remember);
 
             if (Auth::user()->role == 'landlords') {
                 return redirect()->route('home')->with('success', 'Login successful!');
@@ -128,7 +128,7 @@ class UserController extends Controller
             'confirmPassword' => 'required|same:password',
         ]);
 
-        if(event(new Registered($user = $this->create($request->all())))){
+        if (event(new Registered($user = $this->create($request->all())))) {
             Services::create([
                 'service_name' => 'Electricity',
                 'price' => 0,
@@ -157,6 +157,13 @@ class UserController extends Controller
             'password' => Hash::make($data['password']),
             'email' => $data['email'],
         ]);
+    }
+
+
+    // profile page
+    public function profile()
+    {
+        return view('user.profile')->with('user', auth()->user())->with('title', 'Profile');
     }
 
     // handle update profile
