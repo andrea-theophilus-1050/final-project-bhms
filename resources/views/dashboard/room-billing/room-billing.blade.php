@@ -18,41 +18,54 @@
                 </div>
             </div>
 
-            <form method="POST" action="">
-                @csrf
-                <div class="page-header">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="dropdown d-flex justify-content-space-between align-items-center">
-                                <input type="text" class="form-control month-picker mr-3 col-md-3"
-                                    placeholder="Month picker" value="{{ now()->format('F Y') }}" name="month-filter">
-                                <select class="form-control font-13 mr-3 col-md-3" name="house-filter">
-                                    <option value="0" selected>All houses</option>
-                                    @foreach ($houseList as $house)
-                                        <option value="{{ $house->house_id }}">{{ $house->house_name }}</option>
-                                    @endforeach
-                                </select>
-                                <button type="submit" class="btn btn-primary col-md-3">
-                                    <i class="fa fa-calculator mr-2"></i>Calculate Room Billing
-                                </button>
-
-                            </div>
-                            {{-- <div class="dropdown">
-                                <label style="font-size: 15px; font-weight: bold">Area: </label>
-                                <a class="btn btn-success btn-sm dropdown-toggle" href="#" role="button"
-                                    data-toggle="dropdown">
-                                    January 2018
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Export List</a>
-                                    <a class="dropdown-item" href="#">Policies</a>
-                                    <a class="dropdown-item" href="#">View Assets</a>
-                                </div>
-                            </div> --}}
-                        </div>
+            <div class="pd-20 card-box mb-30">
+                <div class="clearfix mb-20">
+                    <div class="pull-left">
+                        <h4 class="text-blue h4"></h4>
+                    </div>
+                    <div class="pull-right">
+                        <a href="{{ route('costs-incurred.add') }}" class="btn btn-success btn-sm"><i
+                                class="ion-plus-round"></i> Add a new reason</a>
                     </div>
                 </div>
-            </form>
+                <div class="table-responsive">
+                    <th><a href="{{ route('export-bill') }}?invoices={{ urlencode(json_encode($data)) }}"
+                            class="btn btn-primary">Export</a></th>
+                    <table class="table table-striped" id="house-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">House name</th>
+                                <th scope="col">Room name </th>
+                                <th scope="col">Tenant name</th>
+                                <th scope="col">Total price</th>
+
+
+                                {{-- <th scope="col">Actions</th> --}}
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach ($data as $bill)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $bill->house_name }}</td>
+                                    <td>{{ $bill->room_name }}</td>
+                                    <td>{{ $bill->tenant_name }}</td>
+                                    <td class="font-weight-bold">
+                                        <div
+                                            style="background: rgb(222, 222, 222); border-radius: 5px; padding: 8px; width: fit-content">
+                                            {{ number_format($bill->total, 0, ',', ',') }}
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

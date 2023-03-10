@@ -15,6 +15,8 @@ use App\Http\Controllers\Calculation\RoomBillingController;
 use App\Http\Controllers\ForgotPasswordController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportBills;
 
 /*
 |--------------------------------------------------------------------------
@@ -122,6 +124,7 @@ Route::middleware('setLocale')->group(function () {
 
 
                     Route::get('room-billing', [RoomBillingController::class, 'room_billing'])->name('room-billing');
+                    Route::post('calculate-room-billing', [RoomBillingController::class, 'calculateRoomBilling'])->name('calculate.room-billing');
                     Route::get('test', [RoomBillingController::class, 'test'])->name('test');
 
                     Route::get('feedback', [DashboardController::class, 'feedback'])->name('feedback');
@@ -129,6 +132,11 @@ Route::middleware('setLocale')->group(function () {
                     // NOTE: Export testing, not done 
                     Route::get('/export-users', [UserController::class, 'exportUsers'])->name('export-users');
                     Route::get('/export-tenant', [TenantController::class, 'exportTenant'])->name('export-tenant');
+                    Route::get('/export-bill', function (Request $request) {
+                        $invoices = $request->input('invoices');
+
+                        return Excel::download(new ExportBills($invoices), 'bill.xlsx');
+                    })->name('export-bill');
                 });
             });
             Route::get('/dashboard/profile', [UserController::class, 'profile'])->name('profile');

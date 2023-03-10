@@ -2,8 +2,7 @@
     <div class="brand-logo">
         <a href="{{ route('home') }}">
             <img src="{{ asset('vendors/images/logo-boarding-house.png') }}" alt="" class="dark-logo">
-            <img src="{{ asset('vendors/images/logo-boarding-house-white.png') }}" alt=""
-                class="light-logo">
+            <img src="{{ asset('vendors/images/logo-boarding-house-white.png') }}" alt="" class="light-logo">
         </a>
         <div class="close-sidebar" data-toggle="left-sidebar-close">
             <i class="ion-close-round"></i>
@@ -75,7 +74,7 @@
                 </li>
 
                 <li class="dropdown">
-                    <a href="{{ route('room-billing') }}"
+                    <a href="javascript:;" data-toggle="modal" data-target="#room-billing-modal"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('room-billing') ? 'active' : '' }}">
                         <span class="micon fa fa-calculator"></span><span class="mtext">@lang('messages.navRoomBilling')</span>
                     </a>
