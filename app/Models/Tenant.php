@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Members;
 use App\Models\RentalRoom;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Tenant extends Model
+class Tenant extends Authenticatable
 {
     use HasFactory;
+
     protected $table = 'tb_main_tenants';
     protected $primaryKey = 'tenant_id';
 
@@ -28,7 +30,11 @@ class Tenant extends Model
         'avatar',
         'citizen_card_front_image',
         'citizen_card_back_image',
-        'password'
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 
     protected static function boot()

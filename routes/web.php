@@ -13,6 +13,8 @@ use App\Http\Controllers\Calculation\ElectricityController;
 use App\Http\Controllers\Calculation\CostsIncurredController;
 use App\Http\Controllers\Calculation\RoomBillingController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\TenantRole\AuthTenantController;
+use App\Http\Controllers\TenantRole\HandleTenantController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -141,6 +143,20 @@ Route::middleware('setLocale')->group(function () {
             });
             Route::get('/dashboard/profile', [UserController::class, 'profile'])->name('profile');
             Route::post('/dashboard/update-profile', [UserController::class, 'updateProfile'])->name('update-profile');
+        });
+    });
+
+
+
+    // NOTE: Route auth user role tenants
+    Route::get('tenant/login', [AuthTenantController::class, 'login'])->name('tenant.login');
+    Route::post('tenant/login', [AuthTenantController::class, 'login_action'])->name('tenant.login.action');
+
+
+    Route::middleware(['auth:tenants'])->group(function () {
+        Route::group(['prefix' => 'tenants'], function () {
+            Route::get('index', [HandleTenantController::class, 'index'])->name('role.tenants.index');
+            Route::get('profile', [AuthTenantController::class, 'profile'])->name('role.tenants.profile');
         });
     });
 });
