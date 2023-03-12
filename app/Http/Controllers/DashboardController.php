@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Feedback;
+
 class DashboardController extends Controller
 {
     // home dashboard
@@ -13,6 +15,7 @@ class DashboardController extends Controller
     // feedback page
     public function feedback()
     {
-        return view('dashboard.feedback.feedback')->with('title', 'Feedback');
+        $feedbacks = Feedback::orderBy('created_at', 'desc')->orderBy('status', 'desc')->paginate(10);
+        return view('dashboard.feedback.feedback', compact(['feedbacks']))->with('title', 'Feedback');
     }
 }

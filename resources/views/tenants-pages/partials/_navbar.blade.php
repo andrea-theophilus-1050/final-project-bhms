@@ -165,7 +165,7 @@
                         <i class="dw dw-settings2"></i> @lang('messages.navLayoutSetting')</a>
                     <a class="dropdown-item" href="faq.html">
                         <i class="dw dw-help"></i> Help</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}">
+                    <a class="dropdown-item" href="{{ route('role.tenants.logout') }}">
                         <i class="dw dw-logout"></i> @lang('messages.navLogout')</a>
                 </div>
             </div>

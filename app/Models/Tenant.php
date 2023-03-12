@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Members;
 use App\Models\RentalRoom;
+use App\Models\Feedback;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Tenant extends Authenticatable
@@ -58,5 +59,10 @@ class Tenant extends Authenticatable
     public function rentals()
     {
         return $this->hasOne(RentalRoom::class, 'tenant_id');
+    }
+
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class, 'tenant_id');
     }
 }

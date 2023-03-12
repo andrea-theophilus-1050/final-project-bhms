@@ -17,6 +17,12 @@
                         <span class="micon fa fa-dashboard"></span><span class="mtext">@lang('messages.navHome')</span>
                     </a>
                 </li>
+                <li class="dropdown">
+                    <a href="{{ route('role.tenants.feedback') }}"
+                        class="dropdown-toggle no-arrow {{ request()->routeIs('role.tenants.feedback') ? 'active' : '' }}">
+                        <span class="micon dw dw-paper-plane"></span><span class="mtext">Send Feedback</span>
+                    </a>
+                </li>
 
 
 

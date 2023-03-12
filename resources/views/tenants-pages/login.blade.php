@@ -75,7 +75,7 @@
                 </div>
                 <div class="login-box bg-white box-shadow border-radius-10">
                     <div class="login-title">
-                        <h2 class="text-center text-primary">@lang('messages.titleSignIn')</h2>
+                        <h2 class="text-center text-primary">Sign in for Tenants</h2>
                     </div>
 
                     {{-- NOTE: alert success message after registration --}}

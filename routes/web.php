@@ -157,6 +157,13 @@ Route::middleware('setLocale')->group(function () {
         Route::group(['prefix' => 'tenants'], function () {
             Route::get('index', [HandleTenantController::class, 'index'])->name('role.tenants.index');
             Route::get('profile', [AuthTenantController::class, 'profile'])->name('role.tenants.profile');
+            Route::post('update-profile', [AuthTenantController::class, 'updateProfile'])->name('role.tenants.profile.action');
+            Route::get('logout', [AuthTenantController::class, 'logout'])->name('role.tenants.logout');
+
+            Route::get('feedback', [HandleTenantController::class, 'feedback'])->name('role.tenants.feedback');
+            Route::post('send-feedback', [HandleTenantController::class, 'sendFeedback'])->name('role.tenants.send.feedback');
+            Route::post('update-feedback/{id}', [HandleTenantController::class, 'updateFeedback'])->name('role.tenants.update.feedback');
+            Route::post('delete-feedback/{id}', [HandleTenantController::class, 'deleteFeedback'])->name('role.tenants.delete.feedback');
         });
     });
 });
