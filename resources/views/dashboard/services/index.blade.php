@@ -25,7 +25,7 @@
                             @if (session('error'))
                                 <div class="alert alert-danger d-flex align-items-center justify-content-center"
                                     role="alert">
-                                    <strong>Error! </strong>{{ session('error') }}
+                                    <strong>Error! </strong> &nbsp;&nbsp;{{ session('error') }}
                                     <button type="button" class="close ml-2" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>

@@ -157,12 +157,12 @@
                                     <td>
                                         @if ($service->service_name == 'Water' || $service->service_name == 'Electricity')
                                             <input type="checkbox" class="form-control" style="width: 25px;"
-                                                name="selectService[]" value="{{ $loop->iteration }}" disabled checked>
+                                                name="selectService[]" value="{{ $service->service_id }}" disabled checked>
                                             <input type="hidden" class="form-control" style="width: 25px;"
-                                                name="selectService[]" value="{{ $loop->iteration }}" checked>
+                                                name="selectService[]" value="{{ $service->service_id }}" checked>
                                         @else
                                             <input type="checkbox" class="form-control" style="width: 25px;"
-                                                name="selectService[]" value="{{ $loop->iteration }}" checked>
+                                                name="selectService[]" value="{{ $service->service_id }}" checked>
                                         @endif
                                     </td>
                                     <td hidden>{{ $service->service_id }}</td>

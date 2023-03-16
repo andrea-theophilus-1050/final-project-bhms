@@ -83,6 +83,9 @@
                         @if (session('success'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('success') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                         @endif
 
@@ -132,7 +135,8 @@
                                     oninvalid="this.setCustomValidity('Password must be at least 6 characters')"
                                     oninput="this.setCustomValidity('')" value="{{ old('password') }}">
                                 <div class="input-group-append custom">
-                                    <span class="input-group-text"><i class="dw dw-eye" id="togglePassword"></i></span>
+                                    <span class="input-group-text"><i class="dw dw-eye"
+                                            id="togglePassword"></i></span>
                                 </div>
                             </div>
                             <div class="row pb-30">

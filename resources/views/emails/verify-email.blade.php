@@ -3,7 +3,7 @@
 
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <title>Reset Password Email Template</title>
+    <title>Verify email address</title>
     <meta name="description" content="Reset Password Email Template.">
 </head>
 
@@ -20,7 +20,7 @@
                     </tr>
                     <tr>
                         <td style="text-align:center;">
-                            <img src="{{ asset('vendors/images/logo-boarding-house.png') }}">
+                            <img src="cid:logo.png">
                         </td>
                     </tr>
                     <tr>

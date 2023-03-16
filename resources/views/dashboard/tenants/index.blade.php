@@ -59,8 +59,8 @@
                                                 <i class="dw dw-more"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a href="#" class="dropdown-item"><i class="dw dw-eye"></i>
-                                                    View</a>
+                                                <a href="#" class="dropdown-item"><i class="icon-copy dw dw-user-13"></i>
+                                                    Grant account access </a>
                                                 <a href="{{ route('tenant.edit', $tenant->tenant_id) }}"
                                                     class="dropdown-item" title="Edit tenant"><i class="dw dw-edit2"></i>
                                                     Edit</a>

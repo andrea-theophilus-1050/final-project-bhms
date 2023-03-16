@@ -44,9 +44,14 @@ class VerifyEmail extends Notification
     public function toMail($notifiable)
     {
         $verificationURL = $this->verificationUrl($notifiable);
+        $imagePath = public_path('vendors/images/logo-boarding-house.png');
         return (new MailMessage)
             ->subject('Verify Email Address')
-            ->view('emails.verify-email', ['url' => $verificationURL]);
+            ->view('emails.verify-email', ['url' => $verificationURL])
+            ->attach($imagePath, [
+                'as' => 'logo.png',
+                'mime' => 'image/png',
+            ]);
         // ->line('The introduction to the notification.')
         // ->action('Notification Action', $verificationURL)
         // ->line('Thank you for using our application!');

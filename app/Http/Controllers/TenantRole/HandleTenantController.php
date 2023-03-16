@@ -24,7 +24,6 @@ class HandleTenantController extends Controller
 
         $feedback = new Feedback();
         $feedback->content = $request->contentFeedback;
-        $feedback->anonymous = $request->anonymous;
         $feedback->tenant_id = auth('tenants')->user()->tenant_id;
         $feedback->save();
 
@@ -35,7 +34,6 @@ class HandleTenantController extends Controller
     {
         $feedback = Feedback::find($id);
         $feedback->content = $request->contentFeedback;
-        $feedback->anonymous = $request->anonymous;
         $feedback->created_at = now();
         $feedback->save();
 

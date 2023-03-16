@@ -36,7 +36,7 @@
                     <label class="col-sm-12 col-md-2 col-form-label">Month/Year</label>
                     <div class="col-sm-12 col-md-4">
                         <input class="form-control month-picker" placeholder="Month/Year" type="text" id="month_year"
-                            name="month_year" required autofocus>
+                            name="month_year" required>
                     </div>
 
                     <label class="col-sm-12 col-md-2 col-form-label">House name</label>

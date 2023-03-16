@@ -50,8 +50,15 @@ class ResetPasswordNotification extends Notification
             'email' => $notifiable->getEmailForPasswordReset(),
         ], false));
 
+        $imagePath = public_path('vendors/images/logo-boarding-house.png');
+
         return (new MailMessage)
-            ->subject('Reset Password Notification')->view('emails.reset-password-email', ['url' => $url]);
+            ->subject('Reset Password Notification')
+            ->view('emails.reset-password-email', ['url' => $url])
+            ->attach($imagePath, [
+                'as' => 'logo.png',
+                'mime' => 'image/png',
+            ]);
         // ->line('You are receiving this email because we received a password reset request for your account.')
         // ->action('Reset Password', $url)
         // ->line('If you did not request a password reset, no further action is required.');

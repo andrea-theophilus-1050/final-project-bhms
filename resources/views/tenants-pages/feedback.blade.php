@@ -45,7 +45,6 @@
                                 <th scope="col">No. </th>
                                 <th scope="col">Your feedback</th>
                                 <th scope="col" class="text-center">Date sent</th>
-                                <th scope="col" class="text-center">Sent with anonymous</th>
                                 <th scope="col" class="text-center">Status</th>
                                 <th scope="col">Actions</th>
                             </tr>
@@ -56,13 +55,6 @@
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td style="max-width: 400px">{{ $feedback->content }}</td>
                                     <td class="text-center">{{ $feedback->created_at->format('F d, Y - h:i a') }}</td>
-                                    <td class="text-center">
-                                        @if ($feedback->anonymous)
-                                            <span class="badge badge-pill badge-success" style="width: 50px">Yes</span>
-                                        @else
-                                            <span class="badge badge-pill badge-danger" style="width: 50px">No</span>
-                                        @endif
-                                    </td>
                                     <td class="text-center">
                                         @if ($feedback->status == 0)
                                             <span class="badge badge-pill badge-warning">Pending</span>
@@ -79,9 +71,8 @@
                                         @if ($feedback->status == 0)
                                             <button id="edit-feedback-btn" type="button"
                                                 data-ID="{{ $feedback->feedback_id }}"
-                                                data-content="{{ $feedback->content }}"
-                                                data-anonymous="{{ $feedback->anonymous }}"
-                                                class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
+                                                data-content="{{ $feedback->content }}" class="btn btn-primary btn-sm"><i
+                                                    class="fa fa-edit"></i></button>
                                         @endif
 
                                     </td>
@@ -109,22 +100,6 @@
                             <label class="col-md-4">Your feedback</label>
                             <div class="col-md-8">
                                 <textarea class="form-control" name="contentFeedback"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-md-5">Send with anonymous</label>
-                            <div class="col-md-7 d-flex">
-                                <div class="custom-control custom-radio mb-5 mr-20">
-                                    <input type="radio" id="customRadio4" name="anonymous" class="custom-control-input"
-                                        value="1" checked>
-                                    <label class="custom-control-label weight-400" for="customRadio4">Yes</label>
-                                </div>
-                                <div class="custom-control custom-radio mb-5">
-                                    <input type="radio" id="customRadio5" name="anonymous"
-                                        class="custom-control-input" value="0">
-                                    <label class="custom-control-label weight-400" for="customRadio5">No</label>
-                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -156,22 +131,6 @@
                             <label class="col-md-4">Your feedback</label>
                             <div class="col-md-8">
                                 <textarea class="form-control" name="contentFeedback" id="contentFeedback_edit"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-md-5">Send with anonymous</label>
-                            <div class="col-md-7 d-flex">
-                                <div class="custom-control custom-radio mb-5 mr-20">
-                                    <input type="radio" id="customRadio4_edit" name="anonymous"
-                                        class="custom-control-input" value="1" checked>
-                                    <label class="custom-control-label weight-400" for="customRadio4_edit">Yes</label>
-                                </div>
-                                <div class="custom-control custom-radio mb-5">
-                                    <input type="radio" id="customRadio5_edit" name="anonymous"
-                                        class="custom-control-input" value="0">
-                                    <label class="custom-control-label weight-400" for="customRadio5_edit">No</label>
-                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -225,18 +184,9 @@
                 e.addEventListener('click', function() {
                     var id = e.getAttribute('data-ID');
                     var content = e.getAttribute('data-content');
-                    var anonymous = e.getAttribute('data-anonymous');
-
 
                     var contentInput = document.querySelector('#contentFeedback_edit');
-
                     var formUpdate = document.querySelector('#update-feedback-modal form');
-
-                    if (anonymous == 1) {
-                        document.getElementById('customRadio4_edit').checked = true;
-                    } else {
-                        document.getElementById('customRadio5_edit').checked = true;
-                    }
 
                     contentInput.value = content;
 

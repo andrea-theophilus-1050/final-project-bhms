@@ -37,6 +37,7 @@ class ServicesController extends Controller
         $service->description = $request->description;
         $service->user_id = auth()->user()->id;
         $service->type_id = $request->typeService;
+        $service->changed = 1;
         $service->save();
         return redirect()->route('services.index');
     }
@@ -46,6 +47,7 @@ class ServicesController extends Controller
         $service = Services::find($id);
         $service->price = intval(str_replace(",", "", $request->price));
         $service->description = $request->description;
+        $service->changed = 1;
         $service->save();
         return redirect()->route('services.index');
     }

@@ -57,11 +57,9 @@
                                     <td style="max-width: 400px">{{ $feedback->content }}</td>
                                     <td class="text-center">{{ $feedback->created_at->format('F d, Y - h:i a') }}</td>
                                     <td class="text-center">
-                                        @if ($feedback->anonymous)
-                                            <span class="badge badge-pill badge-success">Anonymous</span>
-                                        @else
-                                            {{ $feedback->tenant->fullname }} -  {{ $feedback->tenant->rentals->rooms->room_name }}
-                                        @endif
+                                        {{ $feedback->tenant->fullname }} -
+                                        {{ $feedback->tenant->rentals->rooms->room_name }} 
+                                        ({{ $feedback->tenant->rentals->rooms->houses->house_name }})
                                     </td>
                                     <td class="text-center">
                                         @if ($feedback->status == 0)

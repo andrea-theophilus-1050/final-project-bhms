@@ -31,8 +31,21 @@ class RoomBillingController extends Controller
             ->where('tb_house.user_id', auth()->user()->id)
             ->where('tb_services_used.service_id', 1)
             ->where('tb_water_bill.date', $month)
-            ->select('tb_rental_room.rental_room_id', 'tb_water_bill.new_water_index', 'tb_water_bill.old_water_index', 'tb_water_bill.date', 'tb_services_used.price_if_changed', 'tb_rooms.price', 'tb_rooms.room_name', 'tb_rooms.room_id', 'tb_house.house_name', 'tb_house.house_address', 'tb_main_tenants.fullname', 'tb_main_tenants.phone_number', 'tb_main_tenants.email')
-            ->get();
+            ->select(
+                'tb_rental_room.rental_room_id',
+                'tb_water_bill.new_water_index',
+                'tb_water_bill.old_water_index',
+                'tb_water_bill.date',
+                'tb_services_used.price_if_changed',
+                'tb_rooms.price',
+                'tb_rooms.room_name',
+                'tb_rooms.room_id',
+                'tb_house.house_name',
+                'tb_house.house_address',
+                'tb_main_tenants.fullname',
+                'tb_main_tenants.phone_number',
+                'tb_main_tenants.email'
+            )->get();
 
         $electricityBill = DB::table('tb_electricity_bill')
             ->join('tb_rental_room', 'tb_electricity_bill.rental_room_id', '=', 'tb_rental_room.rental_room_id')
@@ -43,8 +56,21 @@ class RoomBillingController extends Controller
             ->where('tb_house.user_id', auth()->user()->id)
             ->where('tb_services_used.service_id', 2)
             ->where('tb_electricity_bill.date', $month)
-            ->select('tb_rental_room.rental_room_id', 'tb_electricity_bill.new_electricity_index', 'tb_electricity_bill.old_electricity_index', 'tb_electricity_bill.date', 'tb_services_used.price_if_changed', 'tb_rooms.price', 'tb_rooms.room_name', 'tb_rooms.room_id', 'tb_house.house_name', 'tb_house.house_address', 'tb_main_tenants.fullname', 'tb_main_tenants.phone_number', 'tb_main_tenants.email')
-            ->get();
+            ->select(
+                'tb_rental_room.rental_room_id',
+                'tb_electricity_bill.new_electricity_index',
+                'tb_electricity_bill.old_electricity_index',
+                'tb_electricity_bill.date',
+                'tb_services_used.price_if_changed',
+                'tb_rooms.price',
+                'tb_rooms.room_name',
+                'tb_rooms.room_id',
+                'tb_house.house_name',
+                'tb_house.house_address',
+                'tb_main_tenants.fullname',
+                'tb_main_tenants.phone_number',
+                'tb_main_tenants.email'
+            )->get();
 
         $costsIncurred = DB::table('tb_costs_incurred')
             ->join('tb_rental_room', 'tb_costs_incurred.rental_room_id', '=', 'tb_rental_room.rental_room_id')
@@ -52,7 +78,16 @@ class RoomBillingController extends Controller
             ->join('tb_house', 'tb_rooms.house_id', '=', 'tb_house.house_id')
             ->where('tb_house.user_id', auth()->user()->id)
             ->where('tb_costs_incurred.date', $month)
-            ->select('tb_rental_room.rental_room_id', 'tb_costs_incurred.date', 'tb_costs_incurred.price', 'tb_costs_incurred.reason', 'tb_rooms.room_name', 'tb_rooms.room_id', 'tb_house.house_name', 'tb_house.house_address')
+            ->select(
+                'tb_rental_room.rental_room_id',
+                'tb_costs_incurred.date',
+                'tb_costs_incurred.price',
+                'tb_costs_incurred.reason',
+                'tb_rooms.room_name',
+                'tb_rooms.room_id',
+                'tb_house.house_name',
+                'tb_house.house_address'
+            )
             ->get();
 
         $otherServicesUsed = DB::table('tb_services_used')
@@ -62,8 +97,15 @@ class RoomBillingController extends Controller
             ->join('tb_main_tenants', 'tb_rental_room.tenant_id', '=', 'tb_main_tenants.tenant_id')
             ->where('tb_type_service.type_id', '!=', 1)
             ->where('tb_type_service.type_id', '!=', 2)
-            ->select('tb_services_used.service_id', 'tb_services_used.price_if_changed', 'tb_services.service_name', 'tb_services.service_id', 'tb_type_service.type_name', 'tb_type_service.type_id', 'tb_rental_room.rental_room_id')
-            ->get();
+            ->select(
+                'tb_services_used.service_id',
+                'tb_services_used.price_if_changed',
+                'tb_services.service_name',
+                'tb_services.service_id',
+                'tb_type_service.type_name',
+                'tb_type_service.type_id',
+                'tb_rental_room.rental_room_id'
+            )->get();
 
         $data = [];
 
@@ -72,6 +114,7 @@ class RoomBillingController extends Controller
                 if ($waterBill->room_id == $electricity->room_id) {
 
                     $result = new \stdClass();
+                    $result->rental_room_id = $waterBill->rental_room_id;
                     $result->house_name = $waterBill->house_name;
                     $result->house_address = $waterBill->house_address;
                     $result->room_name = $waterBill->room_name;
@@ -107,8 +150,9 @@ class RoomBillingController extends Controller
                         $result->otherServicesUsed = [];
                     }
 
-                    $result->total = $result->waterTotalPrice + $result->electricityTotalPrice + $result->room_price + collect($result->costsIncurred)->sum('price') + collect($result->otherServicesUsed)->sum('price_if_changed');
-
+                    $result->total = $result->waterTotalPrice + $result->electricityTotalPrice +
+                        $result->room_price + collect($result->costsIncurred)->sum('price') +
+                        collect($result->otherServicesUsed)->sum('price_if_changed');
 
                     $data[] = $result;
                     break;
@@ -116,12 +160,7 @@ class RoomBillingController extends Controller
             }
         }
 
-        // $json = json_encode($data, JSON_PRETTY_PRINT);
-
         return view('dashboard.room-billing.room-billing', compact(['data']))->with('title', 'Room Billing');
-        // $json = json_encode($data, JSON_PRETTY_PRINT);
-        // return response($json, 200)
-        //     ->header('Content-Type', 'application/json');
     }
 
     public function test()
@@ -198,6 +237,7 @@ class RoomBillingController extends Controller
             foreach ($electricityBill as $electricity) {
                 if ($waterBill->room_id == $electricity->room_id) {
                     $result = new \stdClass();
+                    $result->rental_room_id = $waterBill->rental_room_id;
                     $result->house_name = $waterBill->house_name;
                     $result->house_address = $waterBill->house_address;
                     $result->room_name = $waterBill->room_name;

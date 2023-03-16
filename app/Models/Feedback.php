@@ -16,7 +16,6 @@ class Feedback extends Model
     protected $fillable = [
         'content',
         'status',
-        'anonymous',
         'tenant_id'
     ];
 

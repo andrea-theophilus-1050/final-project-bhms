@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'userRole' => \App\Http\Middleware\UserRoleMiddleware::class,
         'checkProfile' => \App\Http\Middleware\CheckProfileUpdateMiddleware::class,
+        'checkPriceChangedFirst' => \App\Http\Middleware\ServicesPriceChangedFirst::class,
     ];
 }

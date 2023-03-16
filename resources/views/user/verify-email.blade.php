@@ -86,9 +86,18 @@
                         <form action="{{ route('verification.send') }}" method="POST">
                             @csrf
                             <div class="row align-items-center">
-                                <div class="col-12">
+                                <div class="col-5">
                                     <div class="input-group mb-0">
-                                        <button class="btn btn-primary btn-sm btn-block" type="submit">Re-send</button>
+                                        <button class="btn btn-primary btn-block" type="submit">Re-send</button>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="font-16 weight-600 text-center" data-color="#707373">OR</div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="input-group mb-0">
+                                        <a href="{{ route('logout') }}" class="btn btn-outline-primary btn-block"
+                                            type="submit">Logout</a>
                                     </div>
                                 </div>
                             </div>

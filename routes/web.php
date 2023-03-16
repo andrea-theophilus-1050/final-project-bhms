@@ -87,59 +87,61 @@ Route::middleware('setLocale')->group(function () {
     Route::middleware(['auth', 'verified', 'userRole:landlords'])->group(function () {
         Route::group(['prefix' => 'landlords'], function () {
             Route::middleware('checkProfile')->group(function () {
-                Route::get('dashboard', [DashboardController::class, 'index'])->name('home');
-                Route::group(['prefix' => 'dashboard'], function () {
+                Route::middleware('checkPriceChangedFirst')->group(function () {
+                    Route::get('dashboard', [DashboardController::class, 'index'])->name('home');
+                    Route::group(['prefix' => 'dashboard'], function () {
 
-                    Route::resource('house', HouseController::class);
+                        Route::resource('house', HouseController::class);
 
-                    Route::group(['prefix' => 'house'], function () {
-                        Route::get('{id}/list-room/', [RoomController::class, 'index'])->name('room.index');
-                        Route::post('room/{id}/add-action', [RoomController::class, 'addSingleRoom'])->name('room.add');
-                        Route::post('room/{id}/add-multiple-room-action', [RoomController::class, 'addMultipleRooms'])->name('room.add.multiple');
-                        Route::post('room/{id}/update-action', [RoomController::class, 'update'])->name('room.update');
-                        Route::post('room/{id}/room-delete', [RoomController::class, 'delete'])->name('room.delete');
+                        Route::group(['prefix' => 'house'], function () {
+                            Route::get('{id}/list-room/', [RoomController::class, 'index'])->name('room.index');
+                            Route::post('room/{id}/add-action', [RoomController::class, 'addSingleRoom'])->name('room.add');
+                            Route::post('room/{id}/add-multiple-room-action', [RoomController::class, 'addMultipleRooms'])->name('room.add.multiple');
+                            Route::post('room/{id}/update-action', [RoomController::class, 'update'])->name('room.update');
+                            Route::post('room/{id}/room-delete', [RoomController::class, 'delete'])->name('room.delete');
 
-                        Route::get('room/{id}/assignTenant', [RoomController::class, 'assignTenant'])->name('room.assign-tenant');
-                        Route::post('room/{id}/assignTenant', [RoomController::class, 'assignTenant_action'])->name('room.assign-tenant-action');
+                            Route::get('room/{id}/assignTenant', [RoomController::class, 'assignTenant'])->name('room.assign-tenant');
+                            Route::post('room/{id}/assignTenant', [RoomController::class, 'assignTenant_action'])->name('room.assign-tenant-action');
 
-                        Route::post('room/assignMembers', [RoomController::class, 'assignMembers'])->name('assign-members');
+                            Route::post('room/assignMembers', [RoomController::class, 'assignMembers'])->name('assign-members');
+                        });
+
+                        // Route::post('change-password', [DashboardController::class, 'changePassword'])->name('change-password');
+
+                        Route::resource('tenant', TenantController::class);
+
+
+                        Route::get('electricity-bill/{date}', [ElectricityController::class, 'electricity_bill'])->name('electricity-bill');
+                        Route::post('electricity-filter', [ElectricityController::class, 'electricity_filter'])->name('electricity-filter');
+                        Route::post('electricity-insert', [ElectricityController::class, 'electricity_insert'])->name('electricity.insert');
+
+                        Route::get('water-bill/{date}', [WaterController::class, 'water_bill'])->name('water-bill');
+                        Route::post('water-insert', [WaterController::class, 'water_insert'])->name('water.insert');
+                        // Route::post('water-filter', [WaterController::class, 'water_filter'])->name('water-filter');
+
+                        Route::get('costs-incurred', [CostsIncurredController::class, 'costs_incurred'])->name('costs-incurred');
+                        Route::get('costs-incurred/add', [CostsIncurredController::class, 'add_costs_incurred'])->name('costs-incurred.add');
+                        Route::post('costs-incurred-action', [CostsIncurredController::class, 'costs_incurred_action'])->name('add.costs-incurred.action');
+                        Route::post('costs-incurred-delete/{id}', [CostsIncurredController::class, 'cost_incurred_delete'])->name('cost_incurred.delete');
+
+
+                        Route::get('room-billing', [RoomBillingController::class, 'room_billing'])->name('room-billing');
+                        Route::post('calculate-room-billing', [RoomBillingController::class, 'calculateRoomBilling'])->name('calculate.room-billing');
+                        Route::get('test', [RoomBillingController::class, 'test'])->name('test');
+
+                        Route::get('feedback', [DashboardController::class, 'feedback'])->name('feedback');
+
+                        // NOTE: Export testing, not done 
+                        Route::get('/export-users', [UserController::class, 'exportUsers'])->name('export-users');
+                        Route::get('/export-tenant', [TenantController::class, 'exportTenant'])->name('export-tenant');
+                        Route::get('/export-bill', function (Request $request) {
+                            $invoices = $request->input('invoices');
+
+                            return Excel::download(new ExportBills($invoices), 'bill.xlsx');
+                        })->name('export-bill');
                     });
-
-                    // Route::post('change-password', [DashboardController::class, 'changePassword'])->name('change-password');
-
-                    Route::resource('tenant', TenantController::class);
-
-                    Route::resource('services', ServicesController::class);
-
-                    Route::get('electricity-bill/{date}', [ElectricityController::class, 'electricity_bill'])->name('electricity-bill');
-                    Route::post('electricity-filter', [ElectricityController::class, 'electricity_filter'])->name('electricity-filter');
-                    Route::post('electricity-insert', [ElectricityController::class, 'electricity_insert'])->name('electricity.insert');
-
-                    Route::get('water-bill/{date}', [WaterController::class, 'water_bill'])->name('water-bill');
-                    Route::post('water-insert', [WaterController::class, 'water_insert'])->name('water.insert');
-                    // Route::post('water-filter', [WaterController::class, 'water_filter'])->name('water-filter');
-
-                    Route::get('costs-incurred', [CostsIncurredController::class, 'costs_incurred'])->name('costs-incurred');
-                    Route::get('costs-incurred/add', [CostsIncurredController::class, 'add_costs_incurred'])->name('costs-incurred.add');
-                    Route::post('costs-incurred-action', [CostsIncurredController::class, 'costs_incurred_action'])->name('add.costs-incurred.action');
-                    Route::post('costs-incurred-delete/{id}', [CostsIncurredController::class, 'cost_incurred_delete'])->name('cost_incurred.delete');
-
-
-                    Route::get('room-billing', [RoomBillingController::class, 'room_billing'])->name('room-billing');
-                    Route::post('calculate-room-billing', [RoomBillingController::class, 'calculateRoomBilling'])->name('calculate.room-billing');
-                    Route::get('test', [RoomBillingController::class, 'test'])->name('test');
-
-                    Route::get('feedback', [DashboardController::class, 'feedback'])->name('feedback');
-
-                    // NOTE: Export testing, not done 
-                    Route::get('/export-users', [UserController::class, 'exportUsers'])->name('export-users');
-                    Route::get('/export-tenant', [TenantController::class, 'exportTenant'])->name('export-tenant');
-                    Route::get('/export-bill', function (Request $request) {
-                        $invoices = $request->input('invoices');
-
-                        return Excel::download(new ExportBills($invoices), 'bill.xlsx');
-                    })->name('export-bill');
                 });
+                Route::resource('services', ServicesController::class);
             });
             Route::get('/dashboard/profile', [UserController::class, 'profile'])->name('profile');
             Route::post('/dashboard/update-profile', [UserController::class, 'updateProfile'])->name('update-profile');

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id('feedback_id');
             $table->string('content');
             $table->tinyInteger('status')->default(0); // 0: not read, 1: read
-            $table->tinyInteger('anonymous')->default(1); // 1: anonymous, 0: not anonymous
             $table->unsignedBigInteger('tenant_id');
             $table->foreign('tenant_id')->references('tenant_id')->on('tb_main_tenants');
             $table->timestamps();
