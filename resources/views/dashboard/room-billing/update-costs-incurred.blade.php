@@ -11,7 +11,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('costs-incurred') }}">@lang('messages.navCostsIncurred')</a></li>
-                            <li class="breadcrumb-item active">Add costs incurred</li>
+                            <li class="breadcrumb-item active">Update costs incurred</li>
                         </ol>
                     </nav>
                 </div>
@@ -29,43 +29,46 @@
                         information</button>
                 </div>
             </div>
-            <form id="Form_CostsIncurred" method="post" action="{{ route('add.costs-incurred.action') }}">
+            <form id="Form_CostsIncurred" method="post"
+                action="{{ route('update.costs-incurred.action', $costIncurred->id) }}">
                 @csrf
-                <input type="hidden" value="" name="rental_room_id" id="rental_room_id">
+                <input type="hidden" value="{{ collect($dataList)->where('rental_room_id', $costIncurred->rental_room_id)->pluck('rental_room_id')->first() }}" name="rental_room_id" id="rental_room_id">
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Month/Year</label>
                     <div class="col-sm-12 col-md-4">
                         <input class="form-control month-picker" placeholder="Month/Year" type="text" id="month_year"
-                            name="month_year" required>
+                            name="month_year" required value="{{ $costIncurred->date }}">
                     </div>
 
                     <label class="col-sm-12 col-md-2 col-form-label">House name</label>
                     <div class="col-sm-12 col-md-4">
-                        <input class="form-control" value="" type="text" id="house_name" name="house_name"
-                            readonly>
+                        <input class="form-control" type="text" id="house_name" name="house_name" readonly
+                            value="{{ collect($dataList)->where('rental_room_id', $costIncurred->rental_room_id)->pluck('house_name')->first() }}">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Price</label>
                     <div class="col-sm-6 col-md-4">
                         <input class="form-control" type="text" name="price" id="price" placeholder="Price"
-                            required>
+                            required value="{{ $costIncurred->price }}">
                     </div>
                     <label class="col-sm-12 col-md-2 col-form-label">Room name</label>
                     <div class="col-sm-12 col-md-4">
-                        <input class="form-control" value="" type="text" id="room_name" name="room_name" readonly>
+                        <input class="form-control" type="text" id="room_name" name="room_name" readonly
+                            value="{{ collect($dataList)->where('rental_room_id', $costIncurred->rental_room_id)->pluck('room_name')->first() }}">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Reason for this cost incurred</label>
                     <div class="col-sm-6 col-md-4">
-                        <textarea class="form-control" name="reason" id="reason" placeholder="Reason for this cost incurred" required></textarea>
+                        <textarea class="form-control" name="reason" id="reason" placeholder="Reason for this cost incurred" required>{{ $costIncurred->reason }}</textarea>
                     </div>
 
                     <label class="col-sm-12 col-md-2 col-form-label">Tenant name</label>
                     <div class="col-sm-6 col-md-4">
-                        <input class="form-control" type="text" name="tenant_name" id="tenant_name" readonly>
+                        <input class="form-control" type="text" name="tenant_name" id="tenant_name" readonly
+                            value="{{ collect($dataList)->where('rental_room_id', $costIncurred->rental_room_id)->pluck('fullname')->first() }}">
                     </div>
                 </div>
                 <div class="form-group row">

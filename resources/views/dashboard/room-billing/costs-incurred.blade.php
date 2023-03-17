@@ -53,9 +53,10 @@
                                     <td>{{ $data->price }}</td>
                                     <td>{{ $data->date }}</td>
                                     <td>
-                                        <a href="#" class="btn btn-primary"><i class="fa fa-edit"></i></a>
-                                        <button id="cost-incurred-delete" data-costs-id="{{ $data->id }}" type="button"
-                                            class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                        <a href="{{ route('costs-incurred.update', $data->id) }}" class="btn btn-primary"><i
+                                                class="fa fa-edit"></i></a>
+                                        <button id="cost-incurred-delete" data-costs-id="{{ $data->id }}"
+                                            type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -107,8 +108,9 @@
                 e.addEventListener('click', function() {
                     var id = e.getAttribute('data-costs-id');
 
-                    var formDelete = document.querySelector('#delete-form');                    
-                    formDelete.action = "{{ route('cost_incurred.delete', ':id') }}".replace(':id', id);
+                    var formDelete = document.querySelector('#delete-form');
+                    formDelete.action = "{{ route('cost_incurred.delete', ':id') }}".replace(':id',
+                        id);
 
                     $('#confirm-delete-modal').modal('show');
                 });

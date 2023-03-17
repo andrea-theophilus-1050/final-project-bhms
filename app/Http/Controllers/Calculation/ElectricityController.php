@@ -20,18 +20,29 @@ class ElectricityController extends Controller
         $data = [];
 
         for ($i = 0; $i < count($rentalRoomID); $i++) {
-            $data[] = [
-                'rental_room_id' => $rentalRoomID[$i],
-                'old_electricity_index' => $oldIndexElectricity[$i],
-                'new_electricity_index' => $newIndexElectricity[$i],
-                'date' => $date,
-            ];
+
+            $exists = Electricity::where('rental_room_id', $rentalRoomID[$i])
+                ->where('date', $date)
+                ->first();
+
+            if ($exists) {
+                if ($exists->old_electricity_index !== $oldIndexElectricity[$i] || $exists->new_electricity_index !== $newIndexElectricity[$i]) {
+                    $exists->old_electricity_index = $oldIndexElectricity[$i];
+                    $exists->new_electricity_index = $newIndexElectricity[$i];
+                    $exists->save();
+                }
+            } else {
+                $data[] = [
+                    'rental_room_id' => $rentalRoomID[$i],
+                    'old_electricity_index' => $oldIndexElectricity[$i],
+                    'new_electricity_index' => $newIndexElectricity[$i],
+                    'date' => $date,
+                ];
+            }
         }
 
         Electricity::insert($data);
         return redirect()->back()->with('success', 'Insert data successfully');
-
-        // dd($request->all());
     }
 
     // electricity page 

@@ -107,22 +107,15 @@
                                                     id="oldIndex_water" placeholder="0" min="0"
                                                     value="{{ collect($oldIndexes)->where('rental_room_id', $data->rental_room_id)->pluck('new_water_index')->first() }}">
                                             @else
-                                                <input class="form-control" type="number" name="oldIndex_water[]"
-                                                    id="oldIndex_water" placeholder="0" min="0" value="">
-                                            @endif
-
-                                            {{-- @if (collect($oldIndexes)->where('rental_room_id', $data->rental_room_id)->where('new_electricity_index', '!=', 0)->isNotEmpty())
-                                                    <input class="form-control" type="number" name="oldIndex_electric[]"
-                                                        id="oldIndex_electric" placeholder="0" min="0"
-                                                        value="{{ collect($oldIndexes)->where('rental_room_id', $data->rental_room_id)->where('new_electricity_index', '!=', 0)->pluck('new_electricity_index')->first() }}">
+                                                @if (collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->isNotEmpty())
+                                                    <input class="form-control" type="number" name="oldIndex_water[]"
+                                                        id="oldIndex_water" placeholder="0" min="0"
+                                                        value="{{ collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->pluck('old_water_index')->first() }}">
                                                 @else
-                                                    <input class="form-control" type="number" name="oldIndex_electric[]"
-                                                        id="oldIndex_electric" placeholder="0" min="0">
-                                                @endif --}}
-                                            {{-- @endif --}}
-
-                                            {{-- <input class="form-control" type="number" name="oldIndex_electric[]"
-                                                id="oldIndex_electric" placeholder="0" min="0" > --}}
+                                                    <input class="form-control" type="number" name="oldIndex_water[]"
+                                                        id="oldIndex_water" placeholder="0" min="0">
+                                                @endif
+                                            @endif
                                         </td>
                                         <td>
                                             @if (collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->isNotEmpty())
@@ -148,38 +141,6 @@
                                         </td>
                                     </tr>
                                 @endforeach
-
-                                {{-- @foreach ($dataList as $data)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $data->house_name }}</td>
-                                        <td>{{ $data->room_name }}</td>
-                                        <td>{{ $data->fullname }}</td>
-                                        <td>
-                                            <input type="hidden" name="rentalRoomID[]" value="{{ $data->room_id }}">
-                                            <input class="form-control" type="number" name="oldIndex_water[]"
-                                                id="oldIndex_water" placeholder="0" min="0">
-                                        </td>
-                                        <td>
-                                            <input class="form-control" type="number" name="newIndex_water[]"
-                                                id="newIndex_water" placeholder="0" min="0">
-                                        </td>
-                                        <td style="text-align: center">
-                                            <div id="usedIndex_water"
-                                                style="background: rgb(222, 222, 222); border-radius: 5px; padding: 8px">0
-                                            </div>
-                                        </td>
-                                        <td style="text-align: center; font-weight: bold">
-                                            <input type="hidden" value="{{ $data->price_if_changed }}" id="priceUnit">
-                                            <div id="totalAmount"
-                                                style="background: rgb(200, 200, 200); border-radius: 5px; padding: 8px">
-                                                0
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach --}}
-
-
                             </tbody>
                         </table>
                     </div>

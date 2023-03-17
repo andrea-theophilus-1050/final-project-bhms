@@ -122,6 +122,8 @@ Route::middleware('setLocale')->group(function () {
                         Route::get('costs-incurred', [CostsIncurredController::class, 'costs_incurred'])->name('costs-incurred');
                         Route::get('costs-incurred/add', [CostsIncurredController::class, 'add_costs_incurred'])->name('costs-incurred.add');
                         Route::post('costs-incurred-action', [CostsIncurredController::class, 'costs_incurred_action'])->name('add.costs-incurred.action');
+                        Route::get('update-costs-incurred/{id}', [CostsIncurredController::class, 'update_costs_incurred'])->name('costs-incurred.update');
+                        Route::post('update-costs-incurred-action/{id}', [CostsIncurredController::class, 'update_costs_incurred_action'])->name('update.costs-incurred.action');
                         Route::post('costs-incurred-delete/{id}', [CostsIncurredController::class, 'cost_incurred_delete'])->name('cost_incurred.delete');
 
 

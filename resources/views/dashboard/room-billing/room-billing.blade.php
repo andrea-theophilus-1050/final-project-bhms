@@ -172,7 +172,7 @@
                                 <div class="invoice-desc-head clearfix">
                                     <div class="invoice-sub">Bank Info</div>
                                     <div class="invoice-rate">Due By</div>
-                                    <div class="invoice-subtotal">Total Due</div>
+                                    <div class="invoice-subtotal text-center">Total Due</div>
                                 </div>
                                 <div class="invoice-desc-body">
                                     <ul>
@@ -183,7 +183,7 @@
                                                 <p class="font-14 mb-5">Code: <strong class="weight-600">4556</strong></p>
                                             </div>
                                             <div class="invoice-rate font-20 weight-600">10 Jan 2018</div>
-                                            <div class="invoice-subtotal">
+                                            <div class="invoice-subtotal text-center">
                                                 <span class="weight-600 font-24 text-danger" id="totalBill">$8000</span>
                                             </div>
                                         </li>
@@ -198,85 +198,5 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const btnViewDetails = document.querySelectorAll('#view-details-btn');
-
-            btnViewDetails.forEach(function(e) {
-                e.addEventListener('click', function() {
-                    const objBill = JSON.parse(e.getAttribute('data-objBill'));
-
-                    var tenantName = document.getElementById('tenantName');
-                    var roomName = document.getElementById('roomName');
-                    var phoneNumber = document.getElementById('phoneNumber');
-                    var email = document.getElementById('email');
-                    var houseName = document.getElementById('houseName');
-                    var houseAddress = document.getElementById('houseAddress');
-                    var billDate = document.getElementById('billDate');
-
-                    var room_pirce = document.getElementById('room_pirce');
-                    var oldWaterIndex = document.getElementById('oldWaterIndex');
-                    var newWaterIndex = document.getElementById('newWaterIndex');
-                    var water_consumed = document.getElementById('water_consumed');
-                    var water_unit_price = document.getElementById('water_unit_price');
-                    var water_totalConsumed = document.getElementById('water_totalConsumed');
-                    var oldElectricityIndex = document.getElementById('oldElectricityIndex');
-                    var newElectricityIndex = document.getElementById('newElectricityIndex');
-                    var electricity_consumed = document.getElementById('electricity_consumed');
-                    var electricity_unit_price = document.getElementById('electricity_unit_price');
-                    var electricity_totalConsumed = document.getElementById(
-                        'electricity_totalConsumed');
-                    var totalBill = document.getElementById('totalBill');
-
-                    tenantName.innerHTML = objBill.tenant_name;
-                    roomName.innerHTML = objBill.room_name;
-                    phoneNumber.innerHTML = objBill.tenant_phone;
-                    email.innerHTML = objBill.tenant_email;
-                    houseName.innerHTML = objBill.house_name;
-                    houseAddress.innerHTML = objBill.house_address;
-                    billDate.innerHTML = objBill.billDate;
-
-                    room_pirce.innerHTML = objBill.room_price;
-
-                    oldWaterIndex.innerHTML = objBill.old_water_index;
-                    newWaterIndex.innerHTML = objBill.new_water_index;
-                    water_consumed.innerHTML = objBill.waterConsume;
-                    water_unit_price.innerHTML = objBill.waterServicePrice;
-                    water_totalConsumed.innerHTML = objBill.waterTotalPrice;
-
-                    oldElectricityIndex.innerHTML = objBill.old_electricity_index;
-                    newElectricityIndex.innerHTML = objBill.new_electricity_index;
-                    electricity_consumed.innerHTML = objBill.electricityConsume;
-                    electricity_unit_price.innerHTML = objBill.electricityServicePrice;
-                    electricity_totalConsumed.innerHTML = objBill.electricityTotalPrice;
-
-                    const detailsServicesBill = document.getElementById('costsIncurredSection');
-
-                    detailsServicesBill.innerHTML = '';
-
-                    for (const key in objBill.costsIncurred) {
-                        if (objBill.costsIncurred.hasOwnProperty(key)) {
-                            const element = objBill.costsIncurred[key];
-                            const li = document.createElement('li');
-                            li.classList.add('clearfix');
-                            li.innerHTML = `
-                                    <div class="invoice-sub">
-                                        ${element.reason}
-                                    </div>
-                                    <div class="invoice-rate"></div>
-                                    <div class="invoice-hours"></div>
-                                    <div class="invoice-subtotal text-center">
-                                        <span class="weight-600">${element.price}</span>
-                                    </div>
-                                    `;
-                            detailsServicesBill.appendChild(li);
-                        }
-                    }
-                    totalBill.innerHTML = objBill.total;
-
-                    $('#modal-view-details').modal('show');
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('vendors/scripts/handle-room-billing.js') }}"></script>
 @endsection

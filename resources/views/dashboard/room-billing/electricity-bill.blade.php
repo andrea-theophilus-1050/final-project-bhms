@@ -102,22 +102,15 @@
                                                     id="oldIndex_electric" placeholder="0" min="0"
                                                     value="{{ collect($oldIndexes)->where('rental_room_id', $data->rental_room_id)->pluck('new_electricity_index')->first() }}">
                                             @else
-                                                <input class="form-control" type="number" name="oldIndex_electric[]"
-                                                    id="oldIndex_electric" placeholder="0" min="0" value="">
-                                            @endif
-
-                                            {{-- @if (collect($oldIndexes)->where('rental_room_id', $data->rental_room_id)->where('new_electricity_index', '!=', 0)->isNotEmpty())
+                                                @if (collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->isNotEmpty())
                                                     <input class="form-control" type="number" name="oldIndex_electric[]"
                                                         id="oldIndex_electric" placeholder="0" min="0"
-                                                        value="{{ collect($oldIndexes)->where('rental_room_id', $data->rental_room_id)->where('new_electricity_index', '!=', 0)->pluck('new_electricity_index')->first() }}">
+                                                        value="{{ collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->pluck('old_electricity_index')->first() }}">
                                                 @else
                                                     <input class="form-control" type="number" name="oldIndex_electric[]"
                                                         id="oldIndex_electric" placeholder="0" min="0">
-                                                @endif --}}
-                                            {{-- @endif --}}
-
-                                            {{-- <input class="form-control" type="number" name="oldIndex_electric[]"
-                                                id="oldIndex_electric" placeholder="0" min="0" > --}}
+                                                @endif
+                                            @endif
                                         </td>
                                         <td>
                                             @if (collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->isNotEmpty())
