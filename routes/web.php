@@ -111,13 +111,13 @@ Route::middleware('setLocale')->group(function () {
                         Route::resource('tenant', TenantController::class);
 
 
-                        Route::get('electricity-bill/{date}', [ElectricityController::class, 'electricity_bill'])->name('electricity-bill');
+                        Route::get('electricity-bill/{date}/{house}', [ElectricityController::class, 'electricity_bill'])->name('electricity-bill');
                         Route::post('electricity-filter', [ElectricityController::class, 'electricity_filter'])->name('electricity-filter');
                         Route::post('electricity-insert', [ElectricityController::class, 'electricity_insert'])->name('electricity.insert');
 
-                        Route::get('water-bill/{date}', [WaterController::class, 'water_bill'])->name('water-bill');
+                        Route::get('water-bill/{date}/{house}', [WaterController::class, 'water_bill'])->name('water-bill');
+                        Route::post('water-filter', [WaterController::class, 'water_filter'])->name('water-filter');
                         Route::post('water-insert', [WaterController::class, 'water_insert'])->name('water.insert');
-                        // Route::post('water-filter', [WaterController::class, 'water_filter'])->name('water-filter');
 
                         Route::get('costs-incurred', [CostsIncurredController::class, 'costs_incurred'])->name('costs-incurred');
                         Route::get('costs-incurred/add', [CostsIncurredController::class, 'add_costs_incurred'])->name('costs-incurred.add');
@@ -141,6 +141,8 @@ Route::middleware('setLocale')->group(function () {
 
                             return Excel::download(new ExportBills($invoices), 'bill.xlsx');
                         })->name('export-bill');
+
+                        Route::get('pdf', [DashboardController::class, 'pdf'])->name('pdf');
                     });
                 });
                 Route::resource('services', ServicesController::class);

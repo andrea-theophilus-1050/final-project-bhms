@@ -51,7 +51,7 @@
                 </li> --}}
 
                 <li class="dropdown">
-                    <a href="{{ route('electricity-bill', now()->format('F Y')) }}"
+                    <a href="{{ route('electricity-bill', [now()->format('F Y'), 'all-house']) }}"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('electricity-bill') ? 'active' : '' }}">
                         <span class="micon dw dw-flash1"></span><span class="mtext">Electricity bill</span>
 
@@ -59,7 +59,7 @@
                 </li>
 
                 <li class="dropdown">
-                    <a href="{{ route('water-bill', now()->format('F Y')) }}"
+                    <a href="{{ route('water-bill', [now()->format('F Y'), 'all-house']) }}"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('water-bill') ? 'active' : '' }}">
                         <span class="micon dw dw-save-water"></span><span class="mtext">Water bill</span>
 

@@ -37,6 +37,22 @@ class UserController extends Controller
             $user->role = 'landlords';
             $user->save();
             Auth::login($user, true);
+
+            Services::create([
+                'service_name' => 'Electricity',
+                'price' => 0,
+                'description' => 'Default and required electricity service',
+                'user_id' => $user->id,
+                'type_id' => 1,
+            ]);
+            Services::create([
+                'service_name' => 'Water',
+                'price' => 0,
+                'description' => 'Default and required water service,',
+                'user_id' => $user->id,
+                'type_id' => 2,
+            ]);
+
             // return redirect()->route('home');
             if (Auth::user()->role == 'landlords') {
                 return redirect()->route('home')->with('success', 'Login successful!');
@@ -73,6 +89,22 @@ class UserController extends Controller
             $user->role = 'landlords';
             $user->save();
             Auth::login($user, true);
+
+            Services::create([
+                'service_name' => 'Electricity',
+                'price' => 0,
+                'description' => 'Default and required electricity service',
+                'user_id' => $user->id,
+                'type_id' => 1,
+            ]);
+            Services::create([
+                'service_name' => 'Water',
+                'price' => 0,
+                'description' => 'Default and required water service,',
+                'user_id' => $user->id,
+                'type_id' => 2,
+            ]);
+
             // return redirect()->route('home');
             if (Auth::user()->role == 'landlords') {
                 return redirect()->route('home')->with('success', 'Login successful!');

@@ -26,36 +26,26 @@
                                 <h5>Filter</h5>
                             </div>
                             <div class="dropdown d-flex">
-                                <input type="text" class="form-control month-picker mr-3" placeholder="Month picker"
-                                    value="{{ now()->format('F Y') }}" name="month-filter">
-                                <select class="form-control font-13 mr-3" name="house-filter">
-                                    <option value="" selected>Room billed</option>
+                                <input type="text" class="form-control form-control-sm month-picker mr-3"
+                                    placeholder="Month picker" value="{{ $date }}" name="month-filter">
+                                <select class="form-control form-control-sm font-13 mr-3" name="house-filter">
+                                    <option value="all-house" selected>All house</option>
                                     @foreach ($houseList as $house)
-                                        <option value="{{ $house->house_id }}">{{ $house->house_name }}</option>
+                                        <option value="{{ $house->house_id }}"
+                                            {{ last(request()->segments()) == $house->house_id ? 'selected' : '' }}>
+                                            {{ $house->house_name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 <button type="submit" class="btn btn-primary btn-sm">Filter</button>
-
                             </div>
-                            {{-- <div class="dropdown">
-                                <label style="font-size: 15px; font-weight: bold">Area: </label>
-                                <a class="btn btn-success btn-sm dropdown-toggle" href="#" role="button"
-                                    data-toggle="dropdown">
-                                    January 2018
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Export List</a>
-                                    <a class="dropdown-item" href="#">Policies</a>
-                                    <a class="dropdown-item" href="#">View Assets</a>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                 </div>
             </form>
             <form method="POST" action="{{ route('electricity.insert') }}">
                 @csrf
-                <input type="text" name="date" value="{{ $date }}">
+                <input type="hidden" name="date" value="{{ $date }}">
                 <div class="pd-20 card-box mb-30">
                     <div class="clearfix mb-20">
                         <div class="pull-left">
@@ -98,28 +88,33 @@
                                                 value="{{ $data->rental_room_id }}">
 
                                             @if (collect($oldIndexes)->where('rental_room_id', $data->rental_room_id)->where('new_electricity_index', '!=', 0)->isNotEmpty())
-                                                <input class="form-control" type="number" name="oldIndex_electric[]"
-                                                    id="oldIndex_electric" placeholder="0" min="0"
+                                                <input class="form-control form-control-sm" type="number"
+                                                    name="oldIndex_electric[]" id="oldIndex_electric" placeholder="0"
+                                                    min="0"
                                                     value="{{ collect($oldIndexes)->where('rental_room_id', $data->rental_room_id)->pluck('new_electricity_index')->first() }}">
                                             @else
                                                 @if (collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->isNotEmpty())
-                                                    <input class="form-control" type="number" name="oldIndex_electric[]"
-                                                        id="oldIndex_electric" placeholder="0" min="0"
+                                                    <input class="form-control form-control-sm" type="number"
+                                                        name="oldIndex_electric[]" id="oldIndex_electric" placeholder="0"
+                                                        min="0"
                                                         value="{{ collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->pluck('old_electricity_index')->first() }}">
                                                 @else
-                                                    <input class="form-control" type="number" name="oldIndex_electric[]"
-                                                        id="oldIndex_electric" placeholder="0" min="0">
+                                                    <input class="form-control form-control-sm" type="number"
+                                                        name="oldIndex_electric[]" id="oldIndex_electric" placeholder="0"
+                                                        min="0">
                                                 @endif
                                             @endif
                                         </td>
                                         <td>
                                             @if (collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->isNotEmpty())
-                                                <input class="form-control" type="number" name="newIndex_electric[]"
-                                                    id="newIndex_electric" placeholder="0" min="0"
+                                                <input class="form-control form-control-sm" type="number"
+                                                    name="newIndex_electric[]" id="newIndex_electric" placeholder="0"
+                                                    min="0"
                                                     value="{{ collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->pluck('new_electricity_index')->first() }}">
                                             @else
-                                                <input class="form-control" type="number" name="newIndex_electric[]"
-                                                    id="newIndex_electric" placeholder="0" min="0">
+                                                <input class="form-control form-control-sm" type="number"
+                                                    name="newIndex_electric[]" id="newIndex_electric" placeholder="0"
+                                                    min="0">
                                             @endif
                                         </td>
                                         <td style="text-align: center">
