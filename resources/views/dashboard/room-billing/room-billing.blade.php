@@ -30,7 +30,10 @@
                 </div>
                 <div class="table-responsive">
                     <th><a href="{{ route('export-bill') }}?invoices={{ urlencode(json_encode($data)) }}"
-                            class="btn btn-primary">Export</a></th>
+                            class="btn btn-primary">Export</a>
+
+                        <a href="{{ route('export-pdf', now()->format('F Y')) }}" class="btn btn-primary">PDF</a>
+                    </th>
                     <table class="table table-striped" id="house-table">
                         <thead>
                             <tr>
@@ -166,32 +169,32 @@
                                     <div id="otherServices">
 
                                     </div>
+
+                                    {{-- <div class="invoice-desc-head clearfix">
+                                        <div class="invoice-sub"></div>
+                                        <div class="invoice-rate"></div>
+                                        <div class="invoice-subtotal text-center"></div>
+                                    </div> --}}
+                                    <div class="invoice-desc-body">
+                                        <ul>
+                                            <li class="clearfix">
+                                                <div class="invoice-sub">
+                                                    <p class="font-14 mb-5">Account No: <strong class="weight-600">123 456
+                                                            789</strong></p>
+                                                    <p class="font-14 mb-5">Code: <strong class="weight-600">4556</strong>
+                                                    </p>
+                                                </div>
+                                                <div class="invoice-rate font-20 weight-600">10 Jan 2018</div>
+                                                <div class="invoice-subtotal text-center">
+                                                    <span class="weight-600 font-24 text-danger"
+                                                        id="totalBill">$8000</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </ul>
                             </div>
-                            <div class="invoice-desc-footer">
-                                <div class="invoice-desc-head clearfix">
-                                    <div class="invoice-sub">Bank Info</div>
-                                    <div class="invoice-rate">Due By</div>
-                                    <div class="invoice-subtotal text-center">Total Due</div>
-                                </div>
-                                <div class="invoice-desc-body">
-                                    <ul>
-                                        <li class="clearfix">
-                                            <div class="invoice-sub">
-                                                <p class="font-14 mb-5">Account No: <strong class="weight-600">123 456
-                                                        789</strong></p>
-                                                <p class="font-14 mb-5">Code: <strong class="weight-600">4556</strong></p>
-                                            </div>
-                                            <div class="invoice-rate font-20 weight-600">10 Jan 2018</div>
-                                            <div class="invoice-subtotal text-center">
-                                                <span class="weight-600 font-24 text-danger" id="totalBill">$8000</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
                         </div>
-                        <h4 class="text-center pb-20">Thank You!!</h4>
                     </div>
                 </div>
             </div>

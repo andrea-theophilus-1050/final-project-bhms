@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\House;
 use Illuminate\Support\Facades\DB;
+use App\Models\RoomBilling;
 
 
 class RoomBillingController extends Controller
@@ -14,13 +15,8 @@ class RoomBillingController extends Controller
     public function room_billing()
     {
         $houseList = House::where('user_id', auth()->user()->id)->get();
-        return view('dashboard.room-billing.room-billing', compact(['houseList']))->with('title', 'Room Billing');
-    }
 
-    public function calculateRoomBilling(Request $request)
-    {
-        $month = $request->month;
-        $house = $request->house;
+        $month = 'March 2023';
 
         $waterBills = DB::table('tb_water_bill')
             ->join('tb_rental_room', 'tb_water_bill.rental_room_id', '=', 'tb_rental_room.rental_room_id')
@@ -154,11 +150,33 @@ class RoomBillingController extends Controller
                         $result->room_price + collect($result->costsIncurred)->sum('price') +
                         collect($result->otherServicesUsed)->sum('price_if_changed');
 
+                    if (RoomBilling::where('rental_room_id', $result->rental_room_id)->where('date', $result->billDate)->count() == 0) {
+                        $roomBilling = new RoomBilling();
+                        $roomBilling->total_price = $result->total;
+                        $roomBilling->rental_room_id = $result->rental_room_id;
+                        $roomBilling->date = $result->billDate;
+                        $roomBilling->save();
+                    }
+
                     $data[] = $result;
                     break;
                 }
             }
         }
+
+
+        $roomBilling = RoomBilling::all();
+
+
+        return view('dashboard.room-billing.room-bill-page', compact(['houseList', 'roomBilling']))->with('title', 'Room Billing');
+    }
+
+    public function calculateRoomBilling(Request $request)
+    {
+        $month = $request->month;
+        $house = $request->house;
+
+
 
         return view('dashboard.room-billing.room-billing', compact(['data']))->with('title', 'Room Billing');
     }

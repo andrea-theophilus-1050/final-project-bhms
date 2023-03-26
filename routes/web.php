@@ -142,7 +142,7 @@ Route::middleware('setLocale')->group(function () {
                             return Excel::download(new ExportBills($invoices), 'bill.xlsx');
                         })->name('export-bill');
 
-                        Route::get('pdf', [DashboardController::class, 'pdf'])->name('pdf');
+                        Route::get('pdf/{month}', [DashboardController::class, 'pdf'])->name('export-pdf');
                     });
                 });
                 Route::resource('services', ServicesController::class);

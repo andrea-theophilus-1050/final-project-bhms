@@ -72,47 +72,6 @@
 
     </div>
 
-
-    <div class="modal fade" id="room-billing-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myLargeModalLabel">Calculate room billing</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="{{ route('calculate.room-billing') }}">
-                        @csrf
-                        <div class="form-group row">
-                            <label class="col-md-4">Month / Year</label>
-                            <div class="col-md-8">
-                                <input type="text" class="form-control month-picker" placeholder="Month picker"
-                                    value="{{ now()->format('F Y') }}" name="month">
-                            </div>
-                        </div>
-                        {{-- <div class="form-group row">
-                            <label class="col-md-4">Price</label>
-                            <div class="col-md-8">
-                                <select class="form-control font-13" name="house">
-                                    <option value="0" selected>All houses</option>
-                                    @foreach ($houseList as $house)
-                                        <option value="{{ $house->house_id }}">{{ $house->house_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div> --}}
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Calculate</button>
-                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
     <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="icon-copy fa fa-arrow-up"
             aria-hidden="true"></i></button>
 

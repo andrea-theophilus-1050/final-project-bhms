@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('tb_room_billing', function (Blueprint $table) {
             $table->id();
             $table->string('total_price');
-            $table->string('paidAmount');
-            $table->string('debt');
-            $table->string('status');
+            $table->string('paidAmount')->default(0);
+            $table->string('debt')->default(0);
+            $table->string('status')->default(0);
             $table->string('date');
             $table->unsignedBigInteger('rental_room_id');
             $table->foreign('rental_room_id')->references('rental_room_id')->on('tb_rental_room')->onUpdate('cascade')->onDelete('cascade');

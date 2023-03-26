@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Room;
 use App\Models\Tenant;
-use App\Models\Utility;
+use App\Models\RoomBilling;
 
 class RentalRoom extends Model
 {
@@ -33,8 +33,8 @@ class RentalRoom extends Model
         return $this->belongsTo(Tenant::class, 'tenant_id');
     }
 
-    public function utilities()
+    public function roomBillings()
     {
-        return $this->hasMany(Utility::class, 'rental_room_id', 'rental_room_id');
+        return $this->hasMany(RoomBilling::class, 'rental_room_id', 'rental_room_id');
     }
 }

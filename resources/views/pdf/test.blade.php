@@ -18,7 +18,6 @@
         .table .services {
             max-width: 120px;
             word-wrap: break-word;
-
         }
 
         .page-break {
@@ -28,43 +27,41 @@
 </head>
 
 <body>
-    @for ($i = 0; $i < 10; $i++)
-        @if ($i % 3 == 0 && $i != 0)
+    @foreach ($data as $index => $bill)
+        @if ($index % 3 == 0 && $index != 0)
             <div class="page-break"></div>
         @endif
-        <div class="main-container"
-            style="border-top: 1px solid; border-bottom: 1px solid; font-size: 12px">
+        <div class="main-container" style="border-top: 1px solid; border-bottom: 1px solid; font-size: 12px">
             <div class="pd-ltr-20 xs-pd-20-10">
                 <div class="min-height-200px">
                     <!-- basic table  Start -->
                     <div class="pd-20 card-box mb-30">
                         <div class="clearfix mb-10">
                             <div class="float-left" style="font-size: 9px">
-                                <strong>Can Ho mini Hoan Hao 2</strong>
-                                <p><strong>Address: </strong> 225/12/47 duong 30/4 phuong Hung Loi, Ninh Kieu, Can Tho
+                                <strong>{{ $bill->house_name }}</strong>
+                                <p><strong>Address: </strong> {{ $bill->house_address }}
                                 </p>
                             </div>
                             <div class="float-right">
-                                <strong style="font-size: 14px">Hoa Don Tien Phong</strong>
+                                <strong style="font-size: 14px">Room billing</strong>
                             </div>
                         </div>
 
                         <div class="clearfix mb-20">
                             <div class="float-left">
-                                <span><strong>Name: </strong>Luu Hoai Phong</span><br>
-                                <span><strong>Phone: </strong>0398371050</span><br>
-                                <span><strong>Email: </strong>luuhoaiphong147@gmail.com</span>
+                                <span><strong>Name: </strong>{{ $bill->tenant_name }}</span><br>
+                                <span><strong>Phone: </strong>{{ $bill->tenant_phone }}</span><br>
+                                <span><strong>Email: </strong>{{ $bill->tenant_email }}</span>
                             </div>
                             <div class="float-right">
-                                <span><strong>Room: </strong>14B</span><br>
-                                <span><strong>Date in: </strong>March 01, 2003</span><br>
+                                <span><strong>Room: </strong>{{ $bill->room_name }}</span><br>
+                                <span><strong>Billing date: </strong>{{ $bill->billDate }}</span><br>
                             </div>
                         </div>
 
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
                                     <th scope="col"></th>
                                     <th scope="col" class="text-center">Consumed</th>
                                     <th scope="col" class="text-center">Unit price</th>
@@ -73,45 +70,61 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td scope="row">1</td>
-                                    <td class="services">Electricity (Old: 12345, New: 12345)</td>
-                                    <td class="text-center">100</td>
-                                    <td class="text-center">1000</td>
-                                    <td class="text-center">100000</td>
+                                    <td class="services">Room price</td>
+                                    <td class="text-center"></td>
+                                    <td class="text-center"></td>
+                                    <td class="text-center">{{ number_format($bill->room_price, 0, ',', ',') }}</td>
                                 </tr>
                                 <tr>
-                                    <td scope="row">1</td>
-                                    <td class="services">Electricity (Old: 12345, New: 12345)</td>
-                                    <td class="text-center">100</td>
-                                    <td class="text-center">1000</td>
-                                    <td class="text-center">100000</td>
+                                    <td class="services">Electricity (Old: {{ $bill->old_electricity_index }} - New:
+                                        {{ $bill->new_electricity_index }})</td>
+                                    <td class="text-center">{{ $bill->electricityConsume }}</td>
+                                    <td class="text-center">{{ $bill->electricityServicePrice }}</td>
+                                    <td class="text-center">
+                                        {{ number_format($bill->electricityTotalPrice, 0, ',', ',') }}
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td scope="row">1</td>
-                                    <td class="services">Electricity (Old: 12345, New: 12345)</td>
-                                    <td class="text-center">100</td>
-                                    <td class="text-center">1000</td>
-                                    <td class="text-center">100000</td>
+                                    <td class="services">Water (Old: {{ $bill->old_water_index }} - New:
+                                        {{ $bill->new_water_index }})</td>
+                                    <td class="text-center">{{ $bill->waterConsume }}</td>
+                                    <td class="text-center">{{ $bill->waterServicePrice }}</td>
+                                    <td class="text-center">
+                                        {{ number_format($bill->waterTotalPrice, 0, ',', ',') }}
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td scope="row">1</td>
-                                    <td class="services">Electricity (Old: 12345, New: 12345)</td>
-                                    <td class="text-center">100</td>
-                                    <td class="text-center">1000</td>
-                                    <td class="text-center">100000</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">1</td>
-                                    <td class="services">Electricity (Old: 12345, New: 12345)</td>
-                                    <td class="text-center">100</td>
-                                    <td class="text-center">1000</td>
-                                    <td class="text-center">100000</td>
-                                </tr>
+
+                                @if ($bill->costsIncurred)
+                                    @foreach ($bill->costsIncurred as $cost)
+                                        <tr>
+                                            <td class="services">{{ $cost->reason }}</td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">
+                                                {{ number_format($cost->price, 0, ',', ',') }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+
+                                @if ($bill->otherServicesUsed)
+                                    @foreach ($bill->otherServicesUsed as $service)
+                                        <tr>
+                                            <td class="services">{{ $service->service_name }}</td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center"></td>
+                                            <td class="text-center">
+                                                {{ number_format($service->price_if_changed, 0, ',', ',') }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="4" class="text-center font-weight-bold">Total</td>
-                                    <td class="text-center font-weight-bold font-14">500000</td>
+                                    <td colspan="3" class="text-center font-weight-bold">Total</td>
+                                    <td class="text-center font-weight-bold font-14">
+                                        {{ number_format($bill->total, 0, ',', ',') }}</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -120,7 +133,7 @@
                 </div>
             </div>
         </div>
-    @endfor
+    @endforeach
 </body>
 
 </html>
