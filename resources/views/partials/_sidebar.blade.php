@@ -56,7 +56,7 @@
                     </a>
                 </li>
                 <li class="dropdown">
-                    <a href="{{ route('room-billing') }}"
+                    <a href="{{ route('room-billing', [now()->format('F Y'), 'all-house']) }}"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('room-billing') ? 'active' : '' }}">
                         <span class="micon fa fa-calculator"></span><span class="mtext">@lang('messages.navRoomBilling')</span>
                     </a>

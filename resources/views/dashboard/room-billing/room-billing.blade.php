@@ -21,35 +21,57 @@
             <div class="pd-20 card-box mb-30">
                 <div class="clearfix mb-20">
                     <div class="pull-left">
-                        <h4 class="text-blue h4"></h4>
+                        <h4 class="text-blue h4">Room billing - {{ $month }}</h4>
                     </div>
                     <div class="pull-right">
-                        <a href="{{ route('costs-incurred.add') }}" class="btn btn-success btn-sm"><i
-                                class="ion-plus-round"></i> Add a new reason</a>
+                        <button class="btn btn-success btn-sm" data-target="#room-billing-modal" data-toggle="modal"><i
+                                class="ion-calculator"></i> Calculate</button>
+                        <a href="{{ route('export-bill') }}?invoices={{ urlencode(json_encode($data)) }}"
+                            class="btn btn-primary btn-sm">Export</a>
+
+                        <a href="{{ route('export-pdf', [$month, $house]) }}" class="btn btn-primary btn-sm">PDF</a>
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <th><a href="{{ route('export-bill') }}?invoices={{ urlencode(json_encode($data)) }}"
-                            class="btn btn-primary">Export</a>
-
-                        <a href="{{ route('export-pdf', now()->format('F Y')) }}" class="btn btn-primary">PDF</a>
-                    </th>
                     <table class="table table-striped" id="house-table">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">Action</th>
                                 <th scope="col">House name</th>
                                 <th scope="col">Room name </th>
                                 <th scope="col">Tenant name</th>
                                 <th scope="col">Total price</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Details</th>
                             </tr>
                         </thead>
                         <tbody>
-
                             @foreach ($data as $bill)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+                                                href="#" role="button" data-toggle="dropdown">
+                                                <i class="dw dw-more"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                <button class="dropdown-item" id="update-status-btn" type="button"
+                                                    data-billID="{{ collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->id }}"
+                                                    data-totalPrice="{{ $bill->total }}"><i
+                                                        class="icon-copy dw dw-user-13"></i>
+                                                    Update status</button>
+
+                                                <a href="" class="dropdown-item" title="Edit tenant"><i
+                                                        class="dw dw-edit2"></i>
+                                                    Edit</a>
+                                                <a class="dropdown-item" type="button" id="confirm-delete-modal-btn"
+                                                    data-toggle="modal" data-target="#confirm-delete-modal" data-tenantID=""
+                                                    data-tenantName="" data-backdrop="static"
+                                                    style="color: red; font-weight: bold"><i class="dw dw-delete-3"></i>
+                                                    Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td>{{ $bill->house_name }}</td>
                                     <td>{{ $bill->room_name }}</td>
                                     <td>{{ $bill->tenant_name }}</td>
@@ -58,6 +80,17 @@
                                             style="background: rgb(222, 222, 222); border-radius: 5px; padding: 8px; width: fit-content">
                                             {{ number_format($bill->total, 0, ',', ',') }}
                                         </div>
+                                    </td>
+                                    <td>
+                                        @if (collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->status == 0)
+                                            <span class="badge badge-pill badge-warning">Pending</span>
+                                        @elseif (collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->status == 2)
+                                            <span class="badge badge-pill badge-info">
+                                                Still owed
+                                            </span>
+                                        @else
+                                            <span class="badge badge-pill badge-success">Paid</span>
+                                        @endif
                                     </td>
                                     <td>
                                         <button class="btn btn-primary btn-sm" id="view-details-btn"
@@ -69,6 +102,49 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="room-billing-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">Calculate room billing</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{{ route('calculate.room-billing') }}">
+                        @csrf
+                        <div class="form-group row">
+                            <label class="col-md-4">Month / Year</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control month-picker" placeholder="Month picker"
+                                    value="{{ $month }}" name="month">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">House</label>
+                            <div class="col-md-8">
+                                <select class="form-control font-13" name="house">
+                                    <option value="all-house" selected>All houses</option>
+                                    @foreach ($houseList as $house)
+                                        <option value="{{ $house->house_id }}"
+                                            {{ last(request()->segments()) == $house->house_id ? 'selected' : '' }}>
+                                            {{ $house->house_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Calculate</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -200,6 +276,111 @@
             </div>
         </div>
     </div>
+
+    {{-- SECTION-START: confirm delete popup --}}
+    <div class="modal fade" id="update-status" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center font-18">
+                    <h4 class="padding-top-30 mb-30 weight-500" id="msg-delete-confirm">Please double check the
+                        information before confirming!
+                    </h4>
+                    <form id="update-status-form" method="post">
+                        @csrf
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 col-form-label">Total price</label>
+                            <div class="col-sm-12 col-md-8">
+                                <input type="text" class="form-control form-control-sm" id="totalPrice" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 col-form-label">Paid amount</label>
+                            <div class="col-sm-12 col-md-8">
+                                <input type="text" class="form-control form-control-sm" id="paidAmount"
+                                    name="paidAmount">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 col-form-label">Debt</label>
+                            <div class="col-sm-12 col-md-8">
+                                <input type="text" class="form-control form-control-sm" id="debt" name="debt"
+                                    readonly>
+                            </div>
+                        </div>
+                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+                            <div class="col-6">
+                                <button type="button"
+                                    class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+                                    data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                Cancel
+                            </div>
+                            <div class="col-6">
+                                <button type="submit"
+                                    class="btn btn-primary border-radius-100 btn-block confirmation-btn"><i
+                                        class="fa fa-check"></i></button>
+                                Update
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- SECTION-END: confirm delete popup --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var updateStatusBtn = document.querySelectorAll('#update-status-btn');
+            updateStatusBtn.forEach(function(e) {
+                e.addEventListener('click', function() {
+                    var id = e.getAttribute('data-billID');
+                    var totalPrice = parseFloat(e.getAttribute('data-totalPrice'));
+
+                    var inputTotal = document.querySelector('#totalPrice');
+                    var inputPaid = document.querySelector('#paidAmount');
+                    var inputDebt = document.querySelector('#debt');
+
+                    inputTotal.value = totalPrice.toLocaleString();
+                    inputPaid.value = totalPrice.toLocaleString();
+                    inputDebt.value = 0;
+
+                    var form = document.querySelector('#update-status-form');
+                    form.action = "{{ route('update-status-bill', ':id') }}".replace(':id', id);
+
+                    $('#update-status').modal('show');
+                });
+            });
+        });
+
+        var inputTotalPrice = document.querySelector('#totalPrice');
+        var inputPaidAmount = document.querySelector('#paidAmount');
+        var inputDebt = document.querySelector('#debt');
+
+        inputPaidAmount.addEventListener("input", formatNumber);
+
+        function formatNumber() {
+            if (this.value.length === 0) return;
+            // Get the input value and remove any non-numeric characters except for the decimal point
+            let input = this.value.replace(/[^0-9.]/g, "");
+
+            // Parse the input as a float and format it with commas as thousands separators
+            let formatted = parseFloat(input).toLocaleString();
+
+            // Update the input value with the formatted value
+            this.value = formatted;
+        }
+
+        inputPaidAmount.addEventListener('input', function() {
+            var totalPrice = parseFloat(inputTotalPrice.value.replace(/,/g, ''));
+            var paidAmount = parseFloat(inputPaidAmount.value.replace(/,/g, ''));
+
+            if (paidAmount > totalPrice) {
+                inputPaidAmount.value = totalPrice.toLocaleString();
+                inputDebt.value = 0;
+            } else {
+                inputDebt.value = (totalPrice - paidAmount).toLocaleString();
+            }
+        });
+    </script>
 
     <script src="{{ asset('vendors/scripts/handle-room-billing.js') }}"></script>
 @endsection

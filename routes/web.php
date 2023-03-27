@@ -19,6 +19,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportBills;
+use App\Http\Controllers\ExportPDFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -127,8 +128,12 @@ Route::middleware('setLocale')->group(function () {
                         Route::post('costs-incurred-delete/{id}', [CostsIncurredController::class, 'cost_incurred_delete'])->name('cost_incurred.delete');
 
 
-                        Route::get('room-billing', [RoomBillingController::class, 'room_billing'])->name('room-billing');
+                        Route::get('room-billing/{month}/{house}', [RoomBillingController::class, 'room_billing'])->name('room-billing');
                         Route::post('calculate-room-billing', [RoomBillingController::class, 'calculateRoomBilling'])->name('calculate.room-billing');
+                        Route::post('update-status-bill/{id}', [RoomBillingController::class, 'updateStatusBill'])->name('update-status-bill');
+                        Route::get('export-bill-pdf/{month}/{house}', [ExportPDFController::class, 'exportPDF'])->name('export-pdf');
+
+
                         Route::get('test', [RoomBillingController::class, 'test'])->name('test');
 
                         Route::get('feedback', [DashboardController::class, 'feedback'])->name('feedback');
@@ -141,8 +146,6 @@ Route::middleware('setLocale')->group(function () {
 
                             return Excel::download(new ExportBills($invoices), 'bill.xlsx');
                         })->name('export-bill');
-
-                        Route::get('pdf/{month}', [DashboardController::class, 'pdf'])->name('export-pdf');
                     });
                 });
                 Route::resource('services', ServicesController::class);
