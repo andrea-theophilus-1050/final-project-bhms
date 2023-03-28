@@ -23,17 +23,42 @@
                     <div class="pull-left">
                         <h4 class="text-blue h4">Room billing - {{ $month }}</h4>
                     </div>
-                    <div class="pull-right">
-                        <button class="btn btn-success btn-sm" data-target="#room-billing-modal" data-toggle="modal"><i
+                    <div class="pull-right d-flex justify-content-between">
+                        <button class="btn btn-success btn-sm mr-2" data-target="#room-billing-modal" data-toggle="modal"><i
                                 class="ion-calculator"></i> Calculate</button>
                         <a href="{{ route('export-bill') }}?invoices={{ urlencode(json_encode($data)) }}"
-                            class="btn btn-primary btn-sm">Export</a>
+                            class="btn btn-primary btn-sm mr-2">Export</a>
 
-                        <a href="{{ route('export-pdf', [$month, $house]) }}" class="btn btn-primary btn-sm">PDF</a>
+                        <a href="{{ route('export-pdf', [$month, $house]) }}" class="btn btn-primary btn-sm mr-2">PDF</a>
+
+                        <form method="POST" action="{{ route('mail.send-bill', [$month, $house]) }}" id="send-email-form">
+                            @csrf
+                            <button class="btn btn-primary btn-sm" type="submit">Send email</button>
+                        </form>
                     </div>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped" id="house-table">
+                        {{-- alert --}}
+                        @if (session('success'))
+                            <div class="col-md-6">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Success!</strong> {{ session('success') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        @elseif (session('error'))
+                            <div class="col-md-6">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Error!</strong> {{ session('error') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        @endif
                         <thead>
                             <tr>
                                 <th scope="col">Action</th>
@@ -277,6 +302,25 @@
         </div>
     </div>
 
+    <div class="modal fade" id="loading-modal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        Sending...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     {{-- SECTION-START: confirm delete popup --}}
     <div class="modal fade" id="update-status" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -379,6 +423,15 @@
             } else {
                 inputDebt.value = (totalPrice - paidAmount).toLocaleString();
             }
+        });
+    </script>
+
+    <script>
+        const form = document.querySelector('#send-email-form');
+        form.querySelector('button[type="submit"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            $('#loading-modal').modal('show');
+            form.submit();
         });
     </script>
 

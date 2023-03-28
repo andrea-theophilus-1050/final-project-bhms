@@ -75,24 +75,25 @@ class ElectricityController extends Controller
         $data = [];
 
         for ($i = 0; $i < count($rentalRoomID); $i++) {
+            if ($oldIndexElectricity[$i] != null && $newIndexElectricity[$i] != null) {
+                $exists = Electricity::where('rental_room_id', $rentalRoomID[$i])
+                    ->where('date', $date)
+                    ->first();
 
-            $exists = Electricity::where('rental_room_id', $rentalRoomID[$i])
-                ->where('date', $date)
-                ->first();
-
-            if ($exists) {
-                if ($exists->old_electricity_index !== $oldIndexElectricity[$i] || $exists->new_electricity_index !== $newIndexElectricity[$i]) {
-                    $exists->old_electricity_index = $oldIndexElectricity[$i];
-                    $exists->new_electricity_index = $newIndexElectricity[$i];
-                    $exists->save();
+                if ($exists) {
+                    if ($exists->old_electricity_index !== $oldIndexElectricity[$i] || $exists->new_electricity_index !== $newIndexElectricity[$i]) {
+                        $exists->old_electricity_index = $oldIndexElectricity[$i];
+                        $exists->new_electricity_index = $newIndexElectricity[$i];
+                        $exists->save();
+                    }
+                } else {
+                    $data[] = [
+                        'rental_room_id' => $rentalRoomID[$i],
+                        'old_electricity_index' => $oldIndexElectricity[$i],
+                        'new_electricity_index' => $newIndexElectricity[$i],
+                        'date' => $date,
+                    ];
                 }
-            } else {
-                $data[] = [
-                    'rental_room_id' => $rentalRoomID[$i],
-                    'old_electricity_index' => $oldIndexElectricity[$i],
-                    'new_electricity_index' => $newIndexElectricity[$i],
-                    'date' => $date,
-                ];
             }
         }
 

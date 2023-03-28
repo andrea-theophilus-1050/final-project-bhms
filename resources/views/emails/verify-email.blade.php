@@ -20,7 +20,7 @@
                     </tr>
                     <tr>
                         <td style="text-align:center;">
-                            <img src="cid:logo.png">
+                            <img src="cid:logo.png" style="width: 200px">
                         </td>
                     </tr>
                     <tr>

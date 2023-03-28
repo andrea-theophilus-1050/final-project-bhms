@@ -73,23 +73,25 @@ class WaterController extends Controller
         $data = [];
 
         for ($i = 0; $i < count($rentalRoomID); $i++) {
-            $exists = Water::where('rental_room_id', $rentalRoomID[$i])
-                ->where('date', $date)
-                ->first();
+            if ($oldIndexWater[$i] != null && $newIndexWater[$i] != null && $oldIndexWater[$i] < $newIndexWater[$i]) {
+                $exists = Water::where('rental_room_id', $rentalRoomID[$i])
+                    ->where('date', $date)
+                    ->first();
 
-            if ($exists) {
-                if ($exists->old_water_index !== $oldIndexWater[$i] || $exists->new_water_index !== $newIndexWater[$i]) {
-                    $exists->old_water_index = $oldIndexWater[$i];
-                    $exists->new_water_index = $newIndexWater[$i];
-                    $exists->save();
+                if ($exists) {
+                    if ($exists->old_water_index !== $oldIndexWater[$i] || $exists->new_water_index !== $newIndexWater[$i]) {
+                        $exists->old_water_index = $oldIndexWater[$i];
+                        $exists->new_water_index = $newIndexWater[$i];
+                        $exists->save();
+                    }
+                } else {
+                    $data[] = [
+                        'rental_room_id' => $rentalRoomID[$i],
+                        'old_water_index' => $oldIndexWater[$i],
+                        'new_water_index' => $newIndexWater[$i],
+                        'date' => $date,
+                    ];
                 }
-            } else {
-                $data[] = [
-                    'rental_room_id' => $rentalRoomID[$i],
-                    'old_water_index' => $oldIndexWater[$i],
-                    'new_water_index' => $newIndexWater[$i],
-                    'date' => $date,
-                ];
             }
         }
 
