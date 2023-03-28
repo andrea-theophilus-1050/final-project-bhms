@@ -445,19 +445,28 @@
                         <div class="form-group row">
                             <label class="col-md-4">How many rooms do you want to create?</label>
                             <div class="col-md-8">
-                                <input type="number" class="form-control" name="quantity">
+                                <input type="number" class="form-control" name="quantity" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4">Room name</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="room_name">
+                                <div class="d-flex justify-content-between">
+                                    <input type="text" placeholder="Name" class="form-control col-md-6"
+                                        name="room_name" required>
+                                    <input type="number" placeholder="Start from" class="form-control col-md-5"
+                                        name="start_from" required min="1">
+                                </div>
+                                <small id="passwordHelpBlock" class="form-text text-muted">
+                                    Room name will be saved as: start with your room name followed by a count from the
+                                    number you enter. For example: "Room 1, Room 2, ..."
+                                </small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4">Price</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="price" id="price">
+                                <input type="text" class="form-control" name="price" id="price" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -589,7 +598,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+
                                     </tbody>
                                 </table>
                             </div>

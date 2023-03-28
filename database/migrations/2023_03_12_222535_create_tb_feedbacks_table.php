@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('content');
             $table->tinyInteger('status')->default(0); // 0: not read, 1: read
             $table->unsignedBigInteger('tenant_id');
-            $table->foreign('tenant_id')->references('tenant_id')->on('tb_main_tenants');
+            $table->foreign('tenant_id')->references('tenant_id')->on('tb_main_tenants')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

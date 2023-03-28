@@ -26,7 +26,7 @@ class SendMailController extends Controller
 
         try {
             foreach ($data as $bill) {
-                // send account information notification email
+                // send bill via email
                 Mail::to($bill->tenant_email)->send(new SendBillViaEmail($bill));
             }
             return redirect()->back()->with('success', 'Send bill via email successfully');

@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SendBillViaEmail extends Mailable
+class SendAccountInfo extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,12 +18,9 @@ class SendBillViaEmail extends Mailable
      *
      * @return void
      */
-
-    protected $bill;
-
-    public function __construct($bill)
+    public function __construct()
     {
-        $this->bill = $bill;
+        //
     }
 
     /**
@@ -34,7 +31,7 @@ class SendBillViaEmail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Notice of room billing - ' . $this->bill->billDate,
+            subject: 'Send Account Info',
         );
     }
 
@@ -46,7 +43,7 @@ class SendBillViaEmail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'emails.room-billing',
+            view: 'view.name',
         );
     }
 
@@ -57,21 +54,6 @@ class SendBillViaEmail extends Mailable
      */
     public function attachments()
     {
-        return [
-            public_path('vendors/images/logo-boarding-house.png'),
-        ];
-    }
-
-    public function build()
-    {
-        return $this->subject('Notice of room billing - ' . $this->bill->billDate)
-            ->view('emails.room-billing')
-            ->with([
-                'bill' => $this->bill,
-            ])
-            ->attach(public_path('vendors/images/logo-boarding-house.png'), [
-                'as' => 'logo.png',
-                'mime' => 'image/png',
-            ]);
+        return [];
     }
 }

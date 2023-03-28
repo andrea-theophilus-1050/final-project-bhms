@@ -33,6 +33,24 @@ class RoomBillingController extends Controller
         return view('dashboard.room-billing.room-billing', compact(['houseList', 'roomBilling', 'data', 'month', 'house']))->with('title', 'Room Billing');
     }
 
+    public function test()
+    {
+        $month = "March 2023";
+        $house = 'all-house';
+        $waterBills = $this->getWaterBills($month, $house);
+
+        $electricityBill = $this->getElectricityBills($month, $house);
+
+        $costsIncurred = $this->getCostsIncurred($month, $house);
+
+        $otherServicesUsed = $this->getOtherServicesUsed();
+
+        $data = $this->getData($waterBills, $electricityBill, $costsIncurred, $otherServicesUsed);
+
+        // return data with Pretty JSON
+        return response()->json($data, 200, [], JSON_PRETTY_PRINT);
+    }
+
     public function calculateRoomBilling(Request $request)
     {
         $month = $request->month;
@@ -65,10 +83,12 @@ class RoomBillingController extends Controller
                 ->join('tb_main_tenants', 'tb_rental_room.tenant_id', '=', 'tb_main_tenants.tenant_id')
                 ->join('tb_rooms', 'tb_rental_room.room_id', '=', 'tb_rooms.room_id')
                 ->join('tb_services_used', 'tb_rental_room.rental_room_id', '=', 'tb_services_used.rental_room_id')
+                ->join('tb_services', 'tb_services_used.service_id', '=', 'tb_services.service_id')
+                ->join('tb_type_service', 'tb_services.type_id', '=', 'tb_type_service.type_id')
                 ->join('tb_house', 'tb_rooms.house_id', '=', 'tb_house.house_id')
                 ->where('tb_house.user_id', auth()->user()->id)
                 ->where('tb_house.house_id', $house)
-                ->where('tb_services_used.service_id', 1)
+                ->where('tb_services.type_id', 2)
                 ->where('tb_water_bill.date', $month)
                 ->select(
                     'tb_rental_room.rental_room_id',
@@ -91,9 +111,11 @@ class RoomBillingController extends Controller
                 ->join('tb_main_tenants', 'tb_rental_room.tenant_id', '=', 'tb_main_tenants.tenant_id')
                 ->join('tb_rooms', 'tb_rental_room.room_id', '=', 'tb_rooms.room_id')
                 ->join('tb_services_used', 'tb_rental_room.rental_room_id', '=', 'tb_services_used.rental_room_id')
+                ->join('tb_services', 'tb_services_used.service_id', '=', 'tb_services.service_id')
+                ->join('tb_type_service', 'tb_services.type_id', '=', 'tb_type_service.type_id')
                 ->join('tb_house', 'tb_rooms.house_id', '=', 'tb_house.house_id')
                 ->where('tb_house.user_id', auth()->user()->id)
-                ->where('tb_services_used.service_id', 1)
+                ->where('tb_services.type_id', 2)
                 ->where('tb_water_bill.date', $month)
                 ->select(
                     'tb_rental_room.rental_room_id',
@@ -122,10 +144,12 @@ class RoomBillingController extends Controller
                 ->join('tb_main_tenants', 'tb_rental_room.tenant_id', '=', 'tb_main_tenants.tenant_id')
                 ->join('tb_rooms', 'tb_rental_room.room_id', '=', 'tb_rooms.room_id')
                 ->join('tb_services_used', 'tb_rental_room.rental_room_id', '=', 'tb_services_used.rental_room_id')
+                ->join('tb_services', 'tb_services_used.service_id', '=', 'tb_services.service_id')
+                ->join('tb_type_service', 'tb_services.type_id', '=', 'tb_type_service.type_id')
                 ->join('tb_house', 'tb_rooms.house_id', '=', 'tb_house.house_id')
                 ->where('tb_house.user_id', auth()->user()->id)
                 ->where('tb_house.house_id', $house)
-                ->where('tb_services_used.service_id', 2)
+                ->where('tb_services.type_id', 1)
                 ->where('tb_electricity_bill.date', $month)
                 ->select(
                     'tb_rental_room.rental_room_id',
@@ -148,9 +172,11 @@ class RoomBillingController extends Controller
                 ->join('tb_main_tenants', 'tb_rental_room.tenant_id', '=', 'tb_main_tenants.tenant_id')
                 ->join('tb_rooms', 'tb_rental_room.room_id', '=', 'tb_rooms.room_id')
                 ->join('tb_services_used', 'tb_rental_room.rental_room_id', '=', 'tb_services_used.rental_room_id')
+                ->join('tb_services', 'tb_services_used.service_id', '=', 'tb_services.service_id')
+                ->join('tb_type_service', 'tb_services.type_id', '=', 'tb_type_service.type_id')
                 ->join('tb_house', 'tb_rooms.house_id', '=', 'tb_house.house_id')
                 ->where('tb_house.user_id', auth()->user()->id)
-                ->where('tb_services_used.service_id', 2)
+                ->where('tb_services.type_id', 1)
                 ->where('tb_electricity_bill.date', $month)
                 ->select(
                     'tb_rental_room.rental_room_id',

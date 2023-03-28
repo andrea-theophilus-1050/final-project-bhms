@@ -57,7 +57,7 @@ class RoomController extends Controller
     {
         for ($i = 0; $i < $request->quantity; $i++) {
             $room = new Room();
-            $room->room_name = $request->room_name . ' ' . ($i + 1);
+            $room->room_name = $request->room_name . ' ' . ($request->start_from + $i);
             $room->price = intval(str_replace(",", "", $request->price));
             $room->room_description = $request->room_description;
             $room->house_id = $id;

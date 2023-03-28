@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('tb_services', function (Blueprint $table) {
             $table->unsignedBigInteger('type_id');
-            $table->foreign('type_id')->references('type_id')->on('tb_type_service');
+            $table->foreign('type_id')->references('type_id')->on('tb_type_service')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
