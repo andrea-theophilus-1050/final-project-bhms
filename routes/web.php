@@ -21,6 +21,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportBills;
 use App\Http\Controllers\ExportPDFController;
 use App\Http\Controllers\Mail\SendMailController;
+use App\Http\Controllers\TenantRole\PaymentVNPayController;
 
 /*
 |--------------------------------------------------------------------------
@@ -202,6 +203,13 @@ Route::middleware('setLocale')->group(function () {
                 Route::post('send-feedback', 'sendFeedback')->name('role.tenants.send.feedback');
                 Route::post('update-feedback/{id}', 'updateFeedback')->name('role.tenants.update.feedback');
                 Route::post('delete-feedback/{id}', 'deleteFeedback')->name('role.tenants.delete.feedback');
+
+                Route::get('payment-status', 'paymentStatus')->name('role.tenants.payment-status');
+                Route::post('update-bill-status', 'updateBillStatus')->name('payment.update-bill-status');
+            });
+
+            Route::controller(PaymentVNPayController::class)->group(function () {
+                Route::post('create-payment', 'createPayment')->name('payment-vnpay');
             });
         });
     });

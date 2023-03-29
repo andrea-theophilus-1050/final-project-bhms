@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\TypeService;
+use App\Models\ServicesUsed;
 
 class Services extends Model
 {
@@ -31,5 +32,10 @@ class Services extends Model
     public function type()
     {
         return $this->belongsTo(TypeService::class, 'type_id');
+    }
+
+    public function servicesUsed()
+    {
+        return $this->hasMany(ServicesUsed::class, 'service_id', 'service_id');
     }
 }

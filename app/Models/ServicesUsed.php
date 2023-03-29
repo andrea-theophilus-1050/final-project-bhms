@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\RentalRoom;
+use App\Models\Services;
 
 class ServicesUsed extends Model
 {
@@ -23,5 +24,10 @@ class ServicesUsed extends Model
     public function rentalRoom()
     {
         return $this->belongsTo(RentalRoom::class, 'rental_room_id');
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Services::class, 'service_id');
     }
 }

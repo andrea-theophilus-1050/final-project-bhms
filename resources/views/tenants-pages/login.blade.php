@@ -115,25 +115,20 @@
                                 <span class="input-group-text"><i class="dw dw-eye" id="togglePassword"></i></span>
                             </div>
                         </div>
-                        <div class="row pb-30">
-                            <div class="col-6">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="remember_me"
-                                        name="remember_me">
-                                    <label class="custom-control-label" for="remember_me">@lang('messages.labelRemember')</label>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="forgot-password">
-                                    <a href="{{ url('forgot-password') }}">@lang('messages.labelForgot')</a>
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="input-group mb-0">
                                     <input class="btn btn-primary btn-lg btn-block" type="submit"
                                         value="@lang('messages.btnLogin')" onclick="checkEmail()">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-6"></div>
+                            <div class="col-6">
+                                <div class="forgot-password">
+                                    <a href="{{ url('forgot-password') }}">@lang('messages.labelForgot')</a>
                                 </div>
                             </div>
                         </div>

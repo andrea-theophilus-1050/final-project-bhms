@@ -37,7 +37,7 @@ class RentalRoom extends Model
         return $this->belongsTo(Tenant::class, 'tenant_id');
     }
 
-    public function roomBillings()
+    public function roomBills()
     {
         return $this->hasMany(RoomBilling::class, 'rental_room_id', 'rental_room_id');
     }
