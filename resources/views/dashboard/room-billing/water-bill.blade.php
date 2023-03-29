@@ -59,8 +59,8 @@
                             class="btn btn-success btn-sm"><i class="ion-plus-round"></i> Add a new service</a>
                     </div> --}}
                         <div class="pull-right">
-                            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-                            <a href="{{ route('home') }}" class="btn btn-danger btn-sm">Cancel</a>
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="icon-copy dw dw-diskette2"></i> &nbsp; Save</button>
+                            <a href="{{ route('home') }}" class="btn btn-danger btn-sm"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Cancel</a>
                         </div>
                     </div>
                     <div class="table-responsive">

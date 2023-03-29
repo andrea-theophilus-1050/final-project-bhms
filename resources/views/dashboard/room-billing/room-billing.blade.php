@@ -25,15 +25,15 @@
                     </div>
                     <div class="pull-right d-flex justify-content-between">
                         <button class="btn btn-success btn-sm mr-2" data-target="#room-billing-modal" data-toggle="modal"><i
-                                class="ion-calculator"></i> Calculate</button>
+                                class="ion-calculator"></i> &nbsp; Calculate</button>
                         <a href="{{ route('export-bill') }}?invoices={{ urlencode(json_encode($data)) }}"
-                            class="btn btn-primary btn-sm mr-2">Export</a>
+                            class="btn btn-primary btn-sm mr-2"><i class="icon-copy fi-page-export"></i> &nbsp; Export Excel</a>
 
-                        <a href="{{ route('export-pdf', [$month, $house]) }}" class="btn btn-primary btn-sm mr-2">PDF</a>
+                        <a href="{{ route('export-pdf', [$month, $house]) }}" class="btn btn-primary btn-sm mr-2"><i class="icon-copy fi-print"></i> &nbsp; Print bills</a>
 
                         <form method="POST" action="{{ route('mail.send-bill', [$month, $house]) }}" id="send-email-form">
                             @csrf
-                            <button class="btn btn-primary btn-sm" type="submit">Send email</button>
+                            <button class="btn btn-primary btn-sm" type="submit"><i class="icon-copy fi-mail"></i> &nbsp; Send email</button>
                         </form>
                     </div>
                 </div>
@@ -165,8 +165,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Calculate</button>
-                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary"><i class="ion-calculator"></i> &nbsp; Calculate</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
                         </div>
                     </form>
 

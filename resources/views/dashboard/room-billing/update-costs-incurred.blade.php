@@ -25,7 +25,7 @@
                     <h4 class="text-blue h4"></h4>
                 </div>
                 <div class="pull-right">
-                    <button class="btn btn-secondary btn-sm mb-20" data-target="#tenant-list" data-toggle="modal">Get
+                    <button class="btn btn-secondary btn-sm mb-20" data-target="#tenant-list" data-toggle="modal"><i class="icon-copy dw dw-list"></i> &nbsp; Get
                         information</button>
                 </div>
             </div>
@@ -74,8 +74,8 @@
                 <div class="form-group row">
                     <div class="col-sm-12 col-md-2"></div>
                     <div class="col-sm-12 col-md-10">
-                        <button class="btn btn-primary" type="submit">Submit</button>
-                        <a href="{{ route('costs-incurred') }}" class="btn btn-danger"> Cancel</a>
+                        <button class="btn btn-primary" type="submit"><i class="icon-copy dw dw-diskette2"></i> &nbsp; Submit</button>
+                        <a href="{{ route('costs-incurred') }}" class="btn btn-danger"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Cancel</a>
                     </div>
                 </div>
 
@@ -131,8 +131,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="getTenant()">Assign Tenant</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
+                    <button type="button" class="btn btn-primary" onclick="getTenant()"><i class="icon-copy dw dw-tick"></i> &nbsp; Assign Tenant</button>
                 </div>
             </div>
         </div>

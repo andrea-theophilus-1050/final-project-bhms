@@ -33,10 +33,6 @@
                             @endif
                         </h6>
                     </div>
-                    <div class="pull-right">
-                        <a href="javascript:;" data-toggle="modal" data-target="#send-feedback-modal"
-                            class="btn btn-success btn-sm"><i class="dw dw-paper-plane"></i> Send feedback</a>
-                    </div>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped" id="house-table">

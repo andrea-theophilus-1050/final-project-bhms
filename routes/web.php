@@ -21,7 +21,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportBills;
 use App\Http\Controllers\ExportPDFController;
 use App\Http\Controllers\Mail\SendMailController;
-use App\Http\Controllers\TenantRole\PaymentVNPayController;
+use App\Http\Controllers\Payment\PaymentVNPayController;
+use App\Http\Controllers\TenantRole\PaymentVNPayController as TenantPaymentVNPayController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,6 +100,8 @@ Route::middleware('setLocale')->group(function () {
                     Route::get('dashboard', [DashboardController::class, 'index'])->name('home');
 
                     Route::group(['prefix' => 'dashboard'], function () {
+
+                        Route::resource('payment', PaymentVNPayController::class);
 
                         Route::resource('house', HouseController::class);
 
@@ -208,7 +211,7 @@ Route::middleware('setLocale')->group(function () {
                 Route::post('update-bill-status', 'updateBillStatus')->name('payment.update-bill-status');
             });
 
-            Route::controller(PaymentVNPayController::class)->group(function () {
+            Route::controller(TenantPaymentVNPayController::class)->group(function () {
                 Route::post('create-payment', 'createPayment')->name('payment-vnpay');
             });
         });

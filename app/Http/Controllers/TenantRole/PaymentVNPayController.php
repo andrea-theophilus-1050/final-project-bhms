@@ -15,15 +15,17 @@ class PaymentVNPayController extends Controller
 
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = "https://boardinghouse-management-system.me/tenants/payment-status";
-        $vnp_TmnCode = "BO9D63Q4"; //Mã website tại VNPAY 
-        $vnp_HashSecret = "ECOUSURSERNQEHYWKCUXPDAIVLSNAKAM"; //Chuỗi bí mật
+        $vnp_apiUrl = "http://sandbox.vnpayment.vn/merchant_webapi/merchant.html";
+        $apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
+        $vnp_TmnCode = auth('tenants')->user()->user->paymentVNPay->vnp_TmnCode; //Mã website tại VNPAY 
+        $vnp_HashSecret = auth('tenants')->user()->user->paymentVNPay->vnp_HashSecret; //Chuỗi bí mật
 
         $vnp_TxnRef = $request->billID; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này  sang VNPAY
         $vnp_OrderInfo = $request->paymentDesc;
         $vnp_OrderType = "billpayment";
         $vnp_Amount = $request->totalPrice * 100;
-        $vnp_Locale = "vn";
-        $vnp_BankCode = "NCB";
+        $vnp_Locale = "en";
+        $vnp_BankCode = "";
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
 
         $inputData = array(

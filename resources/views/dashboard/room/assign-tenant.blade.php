@@ -17,43 +17,20 @@
                         </ol>
                     </nav>
                 </div>
-                {{-- <div class="col-md-6 col-sm-12">
-                    <div class="dropdown">
-                        <form action="" style="display: flex; justify-content: space-between">
-                            <input type="text" name="search" placeholder="Room number" class="form-control"
-                                style="margin-right: 5%; font-size: 13px">
-                            <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
-                                <option value="">Room status</option>
-                                <option value="">1</option>
-                                <option value="">1</option>
-                                <option value="">1</option>
-                                <option value="">1</option>
-                            </select>
-                            <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
-                                <option value="">Room billed</option>
-                                <option value="">1</option>
-                                <option value="">1</option>
-                                <option value="">1</option>
-                                <option value="">1</option>
-                            </select>
-                            <button type="submit" class="btn btn-primary btn-sm">Search</button>
-                        </form>
-                    </div>
-                </div> --}}
             </div>
         </div>
 
 
         <div class="pd-20 card-box mb-30">
             <div class="pull-right">
-
-
-                <button class="btn btn-primary" type="submit" onclick="submitForm()">Submit</button>
-                <a class="btn btn-danger" href="{{ route('room.index', $room->house_id) }}">Cancel</a>
-
+                <button class="btn btn-primary" type="submit" onclick="submitForm()"><i
+                        class="icon-copy dw dw-diskette2"></i> &nbsp; Submit</button>
+                <a class="btn btn-danger" href="{{ route('room.index', $room->house_id) }}"><i class="icon-copy fa fa-close"
+                        aria-hidden="true"></i> &nbsp; Cancel</a>
             </div>
             <h5 class="h5 text-blue mb-20">Tenant information</h5>
-            <button class="btn btn-secondary btn-sm mb-20" data-target="#tenant-list" data-toggle="modal">Get
+            <button class="btn btn-secondary btn-sm mb-20" data-target="#tenant-list" data-toggle="modal"><i
+                    class="icon-copy dw dw-list"></i> &nbsp; Get
                 tenants</button>
             <form id="assignTenant" method="post" action="{{ route('room.assign-tenant-action', $room->room_id) }}">
                 @csrf
@@ -157,7 +134,8 @@
                                     <td>
                                         @if ($service->service_name == 'Water' || $service->service_name == 'Electricity')
                                             <input type="checkbox" class="form-control" style="width: 25px;"
-                                                name="selectService[]" value="{{ $service->service_id }}" disabled checked>
+                                                name="selectService[]" value="{{ $service->service_id }}" disabled
+                                                checked>
                                             <input type="hidden" class="form-control" style="width: 25px;"
                                                 name="selectService[]" value="{{ $service->service_id }}" checked>
                                         @else
@@ -174,38 +152,11 @@
                                         <input type="number" class="form-control" value="{{ $service->price }}"
                                             name="servicePrice[]" style="width: 250px">
                                     </td>
-                                    {{-- <td id="house-description"
-                                                                    style=" max-width: 200px; 
-                                                                        overflow: hidden; 
-                                                                        text-overflow: ellipsis; 
-                                                                        white-space: nowrap;"
-                                                                    title="{{ $service->description }}">
-                                                                    {{ $service->description }}</td>
-                                                                <td>
-                                                                    <a id="edit-service" href="javascript:;"
-                                                                        data-serviceID="{{ $service->service_id }}"
-                                                                        data-serviceName="{{ $service->service_name }}"
-                                                                        data-price="{{ $service->price }}"
-                                                                        data-description="{{ $service->description }}"
-                                                                        class="btn btn-secondary" title="Edit service"><i
-                                                                            class="fa fa-edit"></i></a>
-        
-                                                                    <button class="btn btn-danger" type="button"
-                                                                        id="confirm-delete-modal-btn"
-                                                                        data-serviceID="{{ $service->service_id }}"
-                                                                        data-serviceName="{{ $service->service_name }}"
-                                                                        data-backdrop="static">
-                                                                        <i class="fa fa-trash"></i></button>
-                                                                    </form>
-                                                                </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-
                 </div>
-
-
             </form>
         </div>
     </div>
@@ -220,15 +171,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-
                     <input type="text" class="form-control col-md-12" placeholder="Search tenant" id="search-tenant">
-
-
-
-                    {{-- <div class="mb-20">
-                        <a href="{{ route('tenant.view.add') }}" class="btn btn-success btn-sm">Add a new tenant</a>
-                    </div> --}}
-                    {{-- error alert --}}
+                    
                     <div class="alert alert-success alert-dismissible fade show" id="alert-error" role="alert"
                         style="display: none">
                         Please select a person
@@ -273,8 +217,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="getTenant()">Assign Tenant</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
+                    <button type="button" class="btn btn-primary" onclick="getTenant()"><i class="icon-copy dw dw-tick"></i> &nbsp; Assign Tenant</button>
                 </div>
             </div>
         </div>
@@ -283,9 +227,9 @@
 
     <script>
         /*NOTE: handle click on row in table of List of Tenants
-                                                                                                - checked => hide other row
-                                                                                                - unchecked => show all row 
-                                                                                                */
+                                                                                                            - checked => hide other row
+                                                                                                            - unchecked => show all row 
+                                                                                                            */
         const tbody = document.querySelector('#tenant-list tbody');
         const rows = tbody.querySelectorAll('#tenant-list tr');
         rows.forEach((row) => {

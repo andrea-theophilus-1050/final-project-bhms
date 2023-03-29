@@ -18,6 +18,12 @@
                     </a>
                 </li>
                 <li class="dropdown">
+                    <a href="{{ route('payment.index') }}"
+                        class="dropdown-toggle no-arrow {{ request()->routeIs('payment.index') ? 'active' : '' }}">
+                        <span class="micon dw dw-settings2"></span><span class="mtext">Config Payment VNPay</span>
+                    </a>
+                </li>
+                <li class="dropdown">
                     <a href="{{ route('services.index') }}"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('services.index') ? 'active' : '' }}">
                         <span class="micon dw dw-suitcase"></span><span class="mtext">@lang('messages.navService')</span>

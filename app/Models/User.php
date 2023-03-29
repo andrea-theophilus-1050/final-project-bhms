@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\House;
 use App\Models\Tenant;
+use App\Models\VNPayPayment;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmail;
 
@@ -49,6 +50,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function tenants()
     {
         return $this->hasMany(Tenant::class, 'user_id');
+    }
+
+    public function paymentVNPay()
+    {
+        return $this->hasOne(VNPayPayment::class, 'user_id');
     }
 
     public function sendPasswordResetNotification($token)

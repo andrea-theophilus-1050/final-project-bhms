@@ -32,15 +32,16 @@
                     <div class="clearfix">
                         <div class="table-responsive">
                             <div class="pull-right mb-10">
-                                @if ($bill->status == 0)
+                                @if ($bill->status == 0 && auth('tenants')->user()->user->paymentVNPay != null)
                                     <form action="{{ route('payment-vnpay') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="billID" value="{{ $bill->id }}">
                                         <input type="hidden" name="totalPrice" value="{{ $bill->total_price }}">
                                         <input type="hidden" name="paymentDesc"
                                             value="{{ 'Room payment for the month of ' . $bill->date . ' - Room: ' . $data->room_name . ' - ' . $data->tenant_name }}">
-                                        <button type="submit" name="redirect" class="btn btn-primary btn-sm">Payment via
-                                            VNPay</button>
+                                        <button type="submit" name="redirect" class="btn btn-primary btn-sm">
+                                            <i class="icon-copy dw dw-wallet1"></i> Payment via VNPay
+                                        </button>
                                     </form>
                                 @endif
                             </div>

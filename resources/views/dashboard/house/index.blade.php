@@ -70,36 +70,6 @@
                                     </td>
                                 </tr>
                             @endforeach
-
-                            {{-- @foreach ($houses as $house)
-                                @if ($loop->iteration % 2 == 0)
-                                    <tr style="background: white">
-                                        <td rowspan="2">asdfafdfadfd</td>
-                                        <td>asdfafdfadfd</td>
-                                        <td>asdfafdfadfd</td>
-                                        <td>asdfafdfadfd</td>
-                                        <td rowspan="2">asdasdfafdfadfdfadf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>asdfafdfadfd</td>
-                                        <td>asdfafdfadfd</td>
-                                        <td>asdfafdfadfd</td>
-                                    </tr>
-                                @else
-                                    <tr style="background: #f2f2f2">
-                                        <td rowspan="2">asdfafdfadfd</td>
-                                        <td>asdfafdfadfd</td>
-                                        <td>asdfafdfadfd</td>
-                                        <td>asdfafdfadfd</td>
-                                        <td rowspan="2">asdasdfafdfadfdfadf</td>
-                                    </tr>
-                                    <tr style="background: #f2f2f2">
-                                        <td>asdfafdfadfd</td>
-                                        <td>asdfafdfadfd</td>
-                                        <td>asdfafdfadfd</td>
-                                    </tr>
-                                @endif
-                            @endforeach --}}
                         </tbody>
                     </table>
                 </div>

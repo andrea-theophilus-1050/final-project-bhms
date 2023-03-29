@@ -93,13 +93,11 @@ class HandleTenantController extends Controller
                 if ($service->service->type_id != 1 && $service->service->type_id != 2) {
                     $servicesUsed->service_name = $service->service->service_name;
                     $servicesUsed->price = $service->price_if_changed;
-                } else {
-                    continue;
-                }
-                // $servicesUsed->service_name = $service->services->service_name;
-                // $servicesUsed->price_if_changed = $service->price_if_changed;
 
-                $data->servicesUsed[] = $servicesUsed;
+                    $data->servicesUsed[] = $servicesUsed;
+                } else {
+                    $data->servicesUsed = null;
+                }
             }
         } else {
             $data->servicesUsed = null;
@@ -151,8 +149,8 @@ class HandleTenantController extends Controller
     {
         $vnp_Url = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
         $vnp_Returnurl = 'https://boardinghouse-management-system.me/tenants/payment-status';
-        $vnp_TmnCode = 'BO9D63Q4'; //Mã website tại VNPAY
-        $vnp_HashSecret = 'ECOUSURSERNQEHYWKCUXPDAIVLSNAKAM'; //Chuỗi bí mật
+        $vnp_TmnCode = auth('tenants')->user()->user->paymentVNPay->vnp_TmnCode; //Mã website tại VNPAY
+        $vnp_HashSecret = auth('tenants')->user()->user->paymentVNPay->vnp_HashSecret; //Chuỗi bí mật
 
         $vnp_SecureHash = $_GET['vnp_SecureHash'];
         $inputData = [];

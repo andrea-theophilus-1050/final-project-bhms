@@ -185,7 +185,7 @@
                                                         <div class="form-group mb-0">
                                                             <button type="submit" class="btn btn-primary" id="btnSubmit"
                                                                 name="btnSubmit"
-                                                                value="updateInformation">@lang('messages.btnSave')</button>
+                                                                value="updateInformation"><i class="icon-copy dw dw-diskette2"></i> &nbsp; @lang('messages.btnSave')</button>
                                                         </div>
                                                     </li>
                                                     {{-- Edit personal information end --}}
@@ -272,7 +272,7 @@
                                                             <button type="submit" class="btn btn-primary"
                                                                 id="btnSubmitChangePassword" name="btnSubmit"
                                                                 value="changePassword"
-                                                                onclick="validate()">@lang('messages.tabChangePassword')</button>
+                                                                onclick="validate()"><i class="icon-copy dw dw-tick"></i> &nbsp; @lang('messages.tabChangePassword')</button>
                                                         </div>
                                                     </li>
                                                     {{-- Change password end --}}

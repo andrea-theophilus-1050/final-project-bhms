@@ -79,54 +79,6 @@
                                 </li>
                             </ul>
                         </div>
-                        {{-- <div class="profile-social">
-                            <h5 class="mb-20 h5 text-blue">Social Links</h5>
-                            <ul class="clearfix">
-                                <li><a href="#" class="btn" data-bgcolor="#3b5998" data-color="#ffffff"><i
-                                            class="fa fa-facebook"></i></a></li>
-                                <li><a href="#" class="btn" data-bgcolor="#1da1f2" data-color="#ffffff"><i
-                                            class="fa fa-twitter"></i></a></li>
-                                <li><a href="#" class="btn" data-bgcolor="#007bb5" data-color="#ffffff"><i
-                                            class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#" class="btn" data-bgcolor="#f46f30" data-color="#ffffff"><i
-                                            class="fa fa-instagram"></i></a></li>
-                                <li><a href="#" class="btn" data-bgcolor="#c32361" data-color="#ffffff"><i
-                                            class="fa fa-dribbble"></i></a></li>
-                                <li><a href="#" class="btn" data-bgcolor="#3d464d" data-color="#ffffff"><i
-                                            class="fa fa-dropbox"></i></a></li>
-                                <li><a href="#" class="btn" data-bgcolor="#db4437" data-color="#ffffff"><i
-                                            class="fa fa-google-plus"></i></a></li>
-                                <li><a href="#" class="btn" data-bgcolor="#bd081c" data-color="#ffffff"><i
-                                            class="fa fa-pinterest-p"></i></a></li>
-                                <li><a href="#" class="btn" data-bgcolor="#00aff0" data-color="#ffffff"><i
-                                            class="fa fa-skype"></i></a></li>
-                                <li><a href="#" class="btn" data-bgcolor="#00b489" data-color="#ffffff"><i
-                                            class="fa fa-vine"></i></a></li>
-                            </ul>
-                        </div> --}}
-                        {{-- <div class="profile-skills">
-                            <h5 class="mb-20 h5 text-blue">Key Skills</h5>
-                            <h6 class="mb-5 font-14">HTML</h6>
-                            <div class="progress mb-20" style="height: 6px;">
-                                <div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="0"
-                                    aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <h6 class="mb-5 font-14">Css</h6>
-                            <div class="progress mb-20" style="height: 6px;">
-                                <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="0"
-                                    aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <h6 class="mb-5 font-14">jQuery</h6>
-                            <div class="progress mb-20" style="height: 6px;">
-                                <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="0"
-                                    aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <h6 class="mb-5 font-14">Bootstrap</h6>
-                            <div class="progress mb-20" style="height: 6px;">
-                                <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="0"
-                                    aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div> --}}
                     </div>
                 </div>
                 <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 mb-30">
@@ -250,53 +202,11 @@
                                                             <input type="file" class="form-control form-control-lg"
                                                                 id="avatar" name="avatar">
                                                         </div>
-                                                        {{-- <div class="form-group">
-                                                            <label>Country</label>
-                                                            <select class="selectpicker form-control form-control-lg"
-                                                                data-style="btn-outline-secondary btn-lg"
-                                                                title="Not Chosen">
-                                                                <option>United States</option>
-                                                                <option>India</option>
-                                                                <option>United Kingdom</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>State/Province/Region</label>
-                                                            <input class="form-control form-control-lg" type="text">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Postal Code</label>
-                                                            <input class="form-control form-control-lg" type="text">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Phone Number</label>
-                                                            <input class="form-control form-control-lg" type="text">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Address</label>
-                                                            <textarea class="form-control"></textarea>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Visa Card Number</label>
-                                                            <input class="form-control form-control-lg" type="text">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Paypal ID</label>
-                                                            <input class="form-control form-control-lg" type="text">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox mb-5">
-                                                                <input type="checkbox" class="custom-control-input"
-                                                                    id="customCheck1-1">
-                                                                <label class="custom-control-label weight-400"
-                                                                    for="customCheck1-1">I agree to receive notification
-                                                                    emails</label>
-                                                            </div>
-                                                        </div> --}}
+
                                                         <div class="form-group mb-0">
                                                             <button type="submit" class="btn btn-primary" id="btnSubmit"
                                                                 name="btnSubmit"
-                                                                value="updateInformation">@lang('messages.btnSave')</button>
+                                                                value="updateInformation"><i class="icon-copy dw dw-diskette2"></i> &nbsp; @lang('messages.btnSave')</button>
                                                         </div>
                                                     </li>
                                                     {{-- Edit personal information end --}}
@@ -383,7 +293,7 @@
                                                             <button type="submit" class="btn btn-primary"
                                                                 id="btnSubmitChangePassword" name="btnSubmit"
                                                                 value="changePassword"
-                                                                onclick="validate()">@lang('messages.tabChangePassword')</button>
+                                                                onclick="validate()"><i class="icon-copy dw dw-tick"></i> &nbsp; @lang('messages.tabChangePassword')</button>
                                                         </div>
                                                     </li>
                                                     {{-- Change password end --}}

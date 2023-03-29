@@ -105,7 +105,7 @@
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><i
                                     class="icon-copy dw dw-paper-plane"></i>&nbsp;&nbsp;Send</button>
-                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
                         </div>
                     </form>
                 </div>
@@ -136,7 +136,7 @@
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><i
                                     class="icon-copy dw dw-paper-plane"></i>&nbsp;&nbsp;Send</button>
-                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
                         </div>
                     </form>
                 </div>

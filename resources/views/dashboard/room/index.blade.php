@@ -420,8 +420,10 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Add</button>
-                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary"><i class="icon-copy dw dw-diskette2"></i>
+                                &nbsp; Add</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i
+                                    class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
                         </div>
                     </form>
                 </div>
@@ -476,8 +478,10 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Add</button>
-                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary"><i class="icon-copy dw dw-diskette2"></i>
+                                &nbsp; Add</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i
+                                    class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
                         </div>
                     </form>
                 </div>
@@ -516,8 +520,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Update</button>
-                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary"><i class="icon-copy dw dw-diskette2"></i> &nbsp; Update</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
                         </div>
                     </form>
 
@@ -704,7 +708,8 @@
                             <div id="addMemebersTable">
                                 <div class="pull-right mb-10">
                                     <button class="btn btn-primary btn-sm" type="submit"
-                                        onclick="submitForm()">Submit</button>
+                                        onclick="submitForm()"><i class="icon-copy dw dw-diskette2"></i> &nbsp; Submit</button>
+                                        
                                 </div>
                                 <div class="table-responsive">
                                     <form id="room-members" action="{{ route('assign-members') }}" method="POST"
