@@ -116,6 +116,9 @@ Route::middleware('setLocale')->group(function () {
                                 Route::get('room/{id}/assignTenant', 'assignTenant')->name('room.assign-tenant');
                                 Route::post('room/{id}/assignTenant', 'assignTenant_action')->name('room.assign-tenant-action');
 
+                                Route::get('room/{id}/edit-tenant/{rental_id}', 'editTenant')->name('room.edit-tenant');
+                                Route::post('room/{id}/edit-tenant/{rental_id}', 'editTenant_action')->name('room.update-tenant-action');
+
                                 Route::post('room/assignMembers', 'assignMembers')->name('assign-members');
                             });
                         });

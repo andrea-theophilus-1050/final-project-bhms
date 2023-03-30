@@ -243,18 +243,78 @@
                                                     <div class="col-sm-12 col-md-3 mb-30">
                                                         <div class="card card-box">
                                                             @if ($room->status == 0)
-                                                                <div class="card-header" style="background-color: #B3DBF8">
-                                                                    <i class="icon-copy dw dw-house"></i>
-                                                                    &nbsp;&nbsp;&nbsp;&nbsp;{{ $room->room_name }}
+                                                                <div class="card-header d-flex justify-content-between"
+                                                                    style="background-color: #B3DBF8">
+                                                                    <div>
+                                                                        <i class="icon-copy dw dw-house"></i>
+                                                                        &nbsp;&nbsp;&nbsp;&nbsp;{{ $room->room_name }}
+                                                                    </div>
+                                                                    <div class="dropdown">
+                                                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+                                                                            href="#" role="button"
+                                                                            data-toggle="dropdown">
+                                                                            <i class="icon-copy fa fa-ellipsis-v"
+                                                                                aria-hidden="true"></i>
+                                                                        </a>
+                                                                        <div
+                                                                            class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                                            <a href="javacript:;" data-toggle="modal"
+                                                                                id="edit-room-modal-btn"
+                                                                                data-id="{{ $room->room_id }}"
+                                                                                data-roomName="{{ $room->room_name }}"
+                                                                                data-price="{{ $room->price }}"
+                                                                                data-description="{{ $room->room_description }}"
+                                                                                class="dropdown-item" title="Edit Room"><i
+                                                                                    class="dw dw-edit2"></i> Edit</a>
+                                                                            <a href="javacript:;" class="dropdown-item"
+                                                                                id="confirm-delete-modal-btn"
+                                                                                data-id="{{ $room->room_id }}"
+                                                                                data-roomName="{{ $room->room_name }}"
+                                                                                data-houseID="{{ $id }}"
+                                                                                title="Delete Room"
+                                                                                style="color: red; font-weight: bold"><i
+                                                                                    class="dw dw-delete-3"></i> Delete</a>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             @else
-                                                                <div class="card-header"
+                                                                <div class="card-header d-flex justify-content-between"
                                                                     style="background-color: #1899F5">
-                                                                    <i class="icon-copy dw dw-house"></i>
-                                                                    &nbsp;&nbsp;&nbsp;&nbsp;{{ $room->room_name }}
-                                                                    <span class="badge badge-pill badge-success">
-                                                                        Occupied
-                                                                    </span>
+                                                                    <div>
+                                                                        <i class="icon-copy dw dw-house"></i>
+                                                                        &nbsp;&nbsp;&nbsp;&nbsp;{{ $room->room_name }}
+                                                                        <span class="badge badge-pill badge-success">
+                                                                            Occupied
+                                                                        </span>
+                                                                    </div>
+
+                                                                    <div class="dropdown">
+                                                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+                                                                            href="#" role="button"
+                                                                            data-toggle="dropdown">
+                                                                            <i class="icon-copy fa fa-ellipsis-v"
+                                                                                aria-hidden="true"></i>
+                                                                        </a>
+                                                                        <div
+                                                                            class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                                            <a href="javacript:;" data-toggle="modal"
+                                                                                id="edit-room-modal-btn"
+                                                                                data-id="{{ $room->room_id }}"
+                                                                                data-roomName="{{ $room->room_name }}"
+                                                                                data-price="{{ $room->price }}"
+                                                                                data-description="{{ $room->room_description }}"
+                                                                                class="dropdown-item" title="Edit Room"><i
+                                                                                    class="dw dw-edit2"></i> Edit</a>
+                                                                            <a href="javacript:;" class="dropdown-item"
+                                                                                id="confirm-delete-modal-btn"
+                                                                                data-id="{{ $room->room_id }}"
+                                                                                data-roomName="{{ $room->room_name }}"
+                                                                                data-houseID="{{ $id }}"
+                                                                                title="Delete Room"
+                                                                                style="color: red; font-weight: bold"><i
+                                                                                    class="dw dw-delete-3"></i> Delete</a>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             @endif
 
@@ -328,46 +388,17 @@
                                                                         <i class="icon-copy fa fa-info-circle"
                                                                             aria-hidden="true"></i>
                                                                     </button>
-                                                                    {{-- @else
-                                                                        <button id="show-roomInfo-detail"
-                                                                            class="btn btn-primary btn-sm" role="button"
-                                                                            title="Show details" data-toggle="modal"
-                                                                            data-roomName="{{ $room->room_name }}"
-                                                                            data-price="{{ $room->price }}"
-                                                                            data-status="{{ $room->status }}"
-                                                                            data-houseName="{{ $room->houses->house_name }}"
-                                                                            data-houseAddress="{{ $room->houses->house_address }}"
-                                                                            >
-                                                                            <i class="fa fa-eye"></i>
-                                                                        </button>
-                                                                    @endif --}}
 
+                                                                    @if ($room->status != 0)
+                                                                        <a href="{{ route('room.edit-tenant', [$room->room_id, $room->rentals->rental_room_id]) }}" class="btn btn-secondary btn-sm">
+                                                                            <i class="fa fa-edit"></i>
+                                                                        </a>
 
-                                                                    {{-- <button class="btn btn-primary btn-sm" role="button"
-                                                                        title="Show details" data-toggle="modal"
-                                                                        data-target="#show-detail-room"><i
-                                                                            class="fa fa-eye"></i></button> --}}
-
-
-                                                                    <button data-toggle="modal" id="edit-room-modal-btn"
-                                                                        data-id="{{ $room->room_id }}"
-                                                                        data-roomName="{{ $room->room_name }}"
-                                                                        data-price="{{ $room->price }}"
-                                                                        data-description="{{ $room->room_description }}"
-                                                                        class="btn btn-secondary btn-sm"
-                                                                        title="Edit Room"><i
-                                                                            class="fa fa-edit"></i></button>
-                                                                    {{-- <button type="submit" class="btn btn-danger"
-                                                                        onclick="return confirm('Are you sure to delete?')"><i
-                                                                            class="fa fa-trash"></i></button> --}}
-
-                                                                    <button class="btn btn-danger btn-sm" type="button"
-                                                                        id="confirm-delete-modal-btn"
-                                                                        data-id="{{ $room->room_id }}"
-                                                                        data-roomName="{{ $room->room_name }}"
-                                                                        data-houseID="{{ $id }}"
-                                                                        title="Delete Room"><i
-                                                                            class="fa fa-trash"></i></button>
+                                                                        {{-- <button class="btn btn-danger btn-sm"
+                                                                            type="button">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </button> --}}
+                                                                    @endif
                                                                 </div>
 
                                                             </div>
@@ -520,8 +551,10 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><i class="icon-copy dw dw-diskette2"></i> &nbsp; Update</button>
-                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
+                            <button type="submit" class="btn btn-primary"><i class="icon-copy dw dw-diskette2"></i>
+                                &nbsp; Update</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i
+                                    class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
                         </div>
                     </form>
 
@@ -707,9 +740,9 @@
                             {{-- NOTE: table for add new members start --}}
                             <div id="addMemebersTable">
                                 <div class="pull-right mb-10">
-                                    <button class="btn btn-primary btn-sm" type="submit"
-                                        onclick="submitForm()"><i class="icon-copy dw dw-diskette2"></i> &nbsp; Submit</button>
-                                        
+                                    <button class="btn btn-primary btn-sm" type="submit" onclick="submitForm()"><i
+                                            class="icon-copy dw dw-diskette2"></i> &nbsp; Submit</button>
+
                                 </div>
                                 <div class="table-responsive">
                                     <form id="room-members" action="{{ route('assign-members') }}" method="POST"

@@ -27,13 +27,16 @@
                         <button class="btn btn-success btn-sm mr-2" data-target="#room-billing-modal" data-toggle="modal"><i
                                 class="ion-calculator"></i> &nbsp; Calculate</button>
                         <a href="{{ route('export-bill') }}?invoices={{ urlencode(json_encode($data)) }}"
-                            class="btn btn-primary btn-sm mr-2"><i class="icon-copy fi-page-export"></i> &nbsp; Export Excel</a>
+                            class="btn btn-primary btn-sm mr-2"><i class="icon-copy fi-page-export"></i> &nbsp; Export
+                            Excel</a>
 
-                        <a href="{{ route('export-pdf', [$month, $house]) }}" class="btn btn-primary btn-sm mr-2"><i class="icon-copy fi-print"></i> &nbsp; Print bills</a>
+                        <a href="{{ route('export-pdf', [$month, $house]) }}" class="btn btn-primary btn-sm mr-2"><i
+                                class="icon-copy fi-print"></i> &nbsp; Print bills</a>
 
                         <form method="POST" action="{{ route('mail.send-bill', [$month, $house]) }}" id="send-email-form">
                             @csrf
-                            <button class="btn btn-primary btn-sm" type="submit"><i class="icon-copy fi-mail"></i> &nbsp; Send email</button>
+                            <button class="btn btn-primary btn-sm" type="submit"><i class="icon-copy fi-mail"></i> &nbsp;
+                                Send email</button>
                         </form>
                     </div>
                 </div>
@@ -61,42 +64,19 @@
                         @endif
                         <thead>
                             <tr>
-                                <th scope="col">Action</th>
                                 <th scope="col">House name</th>
                                 <th scope="col">Room name </th>
                                 <th scope="col">Tenant name</th>
                                 <th scope="col">Total price</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Details</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($data as $bill)
                                 <tr>
-                                    <td>
-                                        <div class="dropdown">
-                                            <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-                                                href="#" role="button" data-toggle="dropdown">
-                                                <i class="dw dw-more"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <button class="dropdown-item" id="update-status-btn" type="button"
-                                                    data-billID="{{ collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->id }}"
-                                                    data-totalPrice="{{ $bill->total }}"><i
-                                                        class="icon-copy dw dw-user-13"></i>
-                                                    Update status</button>
 
-                                                <a href="" class="dropdown-item" title="Edit tenant"><i
-                                                        class="dw dw-edit2"></i>
-                                                    Edit</a>
-                                                <a class="dropdown-item" type="button" id="confirm-delete-modal-btn"
-                                                    data-toggle="modal" data-target="#confirm-delete-modal" data-tenantID=""
-                                                    data-tenantName="" data-backdrop="static"
-                                                    style="color: red; font-weight: bold"><i class="dw dw-delete-3"></i>
-                                                    Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
                                     <td>{{ $bill->house_name }}</td>
                                     <td>{{ $bill->room_name }}</td>
                                     <td>{{ $bill->tenant_name }}</td>
@@ -122,6 +102,19 @@
                                             data-objBill="{{ json_encode($bill) }}">
                                             <i class="fa fa-info-circle"></i>
                                         </button>
+                                    </td>
+                                    <td>
+                                        @if (collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->status != 1)
+                                            <button class="btn btn-success btn-sm" id="update-status-btn" type="button"
+                                                data-billID="{{ collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->id }}"
+                                                @if (collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->status == 0) data-totalPrice="{{ $bill->total }}"
+                                                    @else
+                                                    data-totalPrice="{{ $bill->total }}"
+                                                    data-paidAmount="{{ collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->paidAmount }}"
+                                                    data-debt="{{ collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->debt }}" @endif>
+                                                <i class="icon-copy dw dw-tick"></i> &nbsp; Change status
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -165,8 +158,10 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><i class="ion-calculator"></i> &nbsp; Calculate</button>
-                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
+                            <button type="submit" class="btn btn-primary"><i class="ion-calculator"></i> &nbsp;
+                                Calculate</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i
+                                    class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
                         </div>
                     </form>
 
@@ -379,13 +374,22 @@
                     var id = e.getAttribute('data-billID');
                     var totalPrice = parseFloat(e.getAttribute('data-totalPrice'));
 
+                    var paidAmount = parseFloat(e.getAttribute('data-paidAmount'));
+                    var debt = parseFloat(e.getAttribute('data-debt'));
+
                     var inputTotal = document.querySelector('#totalPrice');
                     var inputPaid = document.querySelector('#paidAmount');
                     var inputDebt = document.querySelector('#debt');
 
                     inputTotal.value = totalPrice.toLocaleString();
-                    inputPaid.value = totalPrice.toLocaleString();
-                    inputDebt.value = 0;
+
+                    if (paidAmount) {
+                        inputPaid.value = paidAmount.toLocaleString();
+                        inputDebt.value = debt.toLocaleString();
+                    } else {
+                        inputPaid.value = totalPrice.toLocaleString();
+                        inputDebt.value = 0;
+                    }
 
                     var form = document.querySelector('#update-status-form');
                     form.action = "{{ route('update-status-bill', ':id') }}".replace(':id', id);

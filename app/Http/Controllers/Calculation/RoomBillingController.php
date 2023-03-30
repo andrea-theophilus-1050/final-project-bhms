@@ -330,6 +330,12 @@ class RoomBillingController extends Controller
                         $roomBilling->rental_room_id = $result->rental_room_id;
                         $roomBilling->date = $result->billDate;
                         $roomBilling->save();
+                    } else {
+                        $roomBilling = RoomBilling::where('rental_room_id', $result->rental_room_id)->where('date', $result->billDate)->first();
+                        $roomBilling->total_price = $result->total;
+                        $roomBilling->rental_room_id = $result->rental_room_id;
+                        $roomBilling->date = $result->billDate;
+                        $roomBilling->save();
                     }
 
                     // NOTE: Push the result to the data array
