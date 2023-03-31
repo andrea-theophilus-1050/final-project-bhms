@@ -155,75 +155,43 @@ class RoomController extends Controller
         return redirect()->route('room.index', $room->house_id)->with('success', 'Room has been assigned successfully');
     }
 
-    public function editTenant($roomID, $rentalID)
+    public function editServicesUsed($roomID, $rentalID)
     {
         $rental = RentalRoom::find($rentalID);
-        $tenants = Tenant::where('user_id', auth()->user()->id)->where('status', 0)->get();
         $services = Services::where('user_id', auth()->user()->id)->get();
-        return view('dashboard.room.update-tenant-room', compact(['rental', 'tenants', 'services']))->with('title', 'Update Tenant Room');
+        return view('dashboard.room.update-tenant-room', compact(['rental', 'services']))->with('title', 'Update Tenant Room');
     }
 
-    public function editTenant_action(Request $request, $roomID, $rentalID)
+    public function editServicesUsed_action(Request $request, $houseID, $rentalID)
     {
-        // DB::transaction();
+        $selectedServices = $request->input('selectService');
+        $serviceID = $request->input('serviceID');
+        $servicePrice = $request->input('servicePrice');
 
-        try {
-            // if ($request->tenant_id == null) {
-            //     // add new tenant
-            //     $tenant = new Tenant();
-            //     $tenant->fullname = $request->fullname;
-            //     $tenant->gender = $request->gender;
-            //     $tenant->dob = $request->dob;
-            //     $tenant->id_card = $request->id_card;
-            //     $tenant->phone_number = $request->phone;
-            //     $tenant->email = $request->email;
-            //     $tenant->hometown = $request->hometown;
-            //     $tenant->status = 1;
-            //     $tenant->user_id = auth()->user()->id;
-            //     $tenant->save();
-            // } else {
-            //     // update status of tenant to 1, means it is rented
-            //     $tenant = Tenant::find($request->tenant_id);
-            //     $tenant->fullname = $request->fullname;
-            //     $tenant->gender = $request->gender;
-            //     $tenant->dob = $request->dob;
-            //     $tenant->id_card = $request->id_card;
-            //     $tenant->phone_number = $request->phone;
-            //     $tenant->email = $request->email;
-            //     $tenant->hometown = $request->hometown;
-            //     $tenant->status = 1;
-            //     $tenant->save();
-            // }
-            $selectedServices = $request->input('selectService');
-            $serviceID = $request->input('serviceID');
-            $servicePrice = $request->input('servicePrice');
+        for ($i = 0; $i < count($serviceID); $i++) {
+            if (in_array($serviceID[$i], $selectedServices)) {
 
+                // check exists
+                $check = DB::table('tb_services_used')->where('service_id', $serviceID[$i])->where('rental_room_id', $rentalID)->first();
 
-            for ($i = 0; $i < count($serviceID); $i++) {
-                if (in_array($serviceID[$i], $selectedServices)) {
-
-                    // check exists
-                    $check = DB::table('tb_services_used')->where('service_id', $serviceID[$i])->where('rental_room_id', $rentalID)->first();
-
-                    if (!$check) {
-                        DB::table('tb_services_used')->insert([
-                            'service_id' => $serviceID[$i],
-                            'rental_room_id' => $rentalID,
-                            'price_if_changed' => $servicePrice[$i]
-                        ]);
-                    }
+                if (!$check) {
+                    DB::table('tb_services_used')->insert([
+                        'service_id' => $serviceID[$i],
+                        'rental_room_id' => $rentalID,
+                        'price_if_changed' => $servicePrice[$i]
+                    ]);
                 } else {
-                    DB::table('tb_services_used')->where('service_id', $serviceID[$i])->where('rental_room_id', $rentalID)->delete();
+                    DB::table('tb_services_used')->where('service_id', $serviceID[$i])->where('rental_room_id', $rentalID)->update([
+                        'price_if_changed' => $servicePrice[$i]
+                    ]);
                 }
+            } else {
+                DB::table('tb_services_used')->where('service_id', $serviceID[$i])->where('rental_room_id', $rentalID)->delete();
             }
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
         }
 
-        // DB::commit();
-        return redirect()->route('room.index', $roomID)->with('success', 'Room has been assigned successfully');
-        // return redirect()->back()->with('success', 'Room has been assigned successfully');
+        return redirect()->route('room.index', $houseID)->with('success', 'Room has been assigned successfully');
+        // dd($request->all());
     }
 
     public function assignMembers(Request $request)

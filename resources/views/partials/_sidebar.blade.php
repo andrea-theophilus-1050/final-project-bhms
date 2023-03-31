@@ -1,6 +1,6 @@
 <div class="left-side-bar">
     <div class="brand-logo">
-        <a href="{{ route('home') }}">
+        <a>
             <img src="{{ asset('vendors/images/logo-boarding-house.png') }}" alt="" class="dark-logo">
             <img src="{{ asset('vendors/images/logo-boarding-house-white.png') }}" alt="" class="light-logo">
         </a>
@@ -11,6 +11,7 @@
     <div class="menu-block customscroll">
         <div class="sidebar-menu">
             <ul id="accordion-menu">
+                {{--  href="#" onclick="window.open('{{ route('home') }}', '_blank', 'width=800,height=600')" --}}
                 <li class="dropdown">
                     <a href="{{ route('home') }}"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('home') ? 'active' : '' }}">

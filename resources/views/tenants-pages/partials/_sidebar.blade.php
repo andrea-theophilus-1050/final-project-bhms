@@ -1,6 +1,6 @@
 <div class="left-side-bar">
     <div class="brand-logo">
-        <a href="{{ route('home') }}">
+        <a>
             <img src="{{ asset('vendors/images/logo-boarding-house.png') }}" alt="" class="dark-logo">
             <img src="{{ asset('vendors/images/logo-boarding-house-white.png') }}" alt="" class="light-logo">
         </a>

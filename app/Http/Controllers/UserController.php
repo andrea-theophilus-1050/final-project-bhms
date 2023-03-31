@@ -62,57 +62,57 @@ class UserController extends Controller
         }
     }
 
-    public function facebookRedirect()
-    {
-        return Socialite::driver('facebook')->redirect();
-    }
+    // public function facebookRedirect()
+    // {
+    //     return Socialite::driver('facebook')->redirect();
+    // }
 
-    public function facebookCallback(Request $request)
-    {
-        $userData = Socialite::driver('facebook')->user();
-        $user = User::where('email', $userData->getEmail())->where('type_login', 'facebook')->first();
-        if ($user) {
-            Auth::login($user, true);
-            return redirect()->route('home');
-        } else {
-            $user = new User();
-            $user->name = $userData->getName();
+    // public function facebookCallback(Request $request)
+    // {
+    //     $userData = Socialite::driver('facebook')->user();
+    //     $user = User::where('email', $userData->getEmail())->where('type_login', 'facebook')->first();
+    //     if ($user) {
+    //         Auth::login($user, true);
+    //         return redirect()->route('home');
+    //     } else {
+    //         $user = new User();
+    //         $user->name = $userData->getName();
 
-            if ($userData->getEmail() == null) {
-                $user->email = $userData->getId() . '@facebook.com';
-            } else {
-                $user->email = $userData->getEmail();
-            }
+    //         if ($userData->getEmail() == null) {
+    //             $user->email = $userData->getId() . '@facebook.com';
+    //         } else {
+    //             $user->email = $userData->getEmail();
+    //         }
 
-            $user->password = Hash::make($userData->getId());
-            $user->type_login = 'facebook';
-            $user->role = 'landlords';
-            $user->save();
-            Auth::login($user, true);
+    //         $user->password = Hash::make($userData->getId());
+    //         $user->type_login = 'facebook';
+    //         $user->role = 'landlords';
+    //         $user->save();
+    //         Auth::login($user, true);
 
-            Services::create([
-                'service_name' => 'Electricity',
-                'price' => 0,
-                'description' => 'Default and required electricity service',
-                'user_id' => $user->id,
-                'type_id' => 1,
-            ]);
-            Services::create([
-                'service_name' => 'Water',
-                'price' => 0,
-                'description' => 'Default and required water service,',
-                'user_id' => $user->id,
-                'type_id' => 2,
-            ]);
+    //         Services::create([
+    //             'service_name' => 'Electricity',
+    //             'price' => 0,
+    //             'description' => 'Default and required electricity service',
+    //             'user_id' => $user->id,
+    //             'type_id' => 1,
+    //         ]);
+    //         Services::create([
+    //             'service_name' => 'Water',
+    //             'price' => 0,
+    //             'description' => 'Default and required water service,',
+    //             'user_id' => $user->id,
+    //             'type_id' => 2,
+    //         ]);
 
-            // return redirect()->route('home');
-            if (Auth::user()->role == 'landlords') {
-                return redirect()->route('home')->with('success', 'Login successful!');
-            } else {
-                return back()->with('errors', 'You cannot access the system')->withInput($request->all());
-            }
-        }
-    }
+    //         // return redirect()->route('home');
+    //         if (Auth::user()->role == 'landlords') {
+    //             return redirect()->route('home')->with('success', 'Login successful!');
+    //         } else {
+    //             return back()->with('errors', 'You cannot access the system')->withInput($request->all());
+    //         }
+    //     }
+    // }
 
     //function return view login
     public function login()

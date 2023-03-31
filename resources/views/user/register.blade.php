@@ -44,7 +44,7 @@
     <div class="login-header box-shadow">
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <div class="brand-logo">
-                <a href="#">
+                <a>
                     <img src="{{ asset('vendors/images/logo-boarding-house.png') }}" alt="">
                 </a>
             </div>
@@ -176,13 +176,13 @@
                                             style="height: 30px; width: 30px; margin-right: 10%; margin-left: 5%" />
                                         @lang('messages.textLoginWithGoogle')</a>
                                 </div>
-                                <div class="input-group mb-0" style="margin-top: 10px">
+                                {{-- <div class="input-group mb-0" style="margin-top: 10px">
                                     <a class="btn btn-outline-primary btn-lg btn-block d-flex justify-content-flex-start"
                                         href="{{ route('auth.facebookRedirect') }}"><img
                                             src="{{ asset('vendors/images/facebook-logo.png') }}"
                                             style="height: 30px; width: 30px; margin-right: 10%; margin-left: 5%" />
                                         @lang('messages.textLoginWithFacebook')</a>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
