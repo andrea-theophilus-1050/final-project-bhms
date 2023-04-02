@@ -161,8 +161,14 @@
 
                     row.querySelector('div[id="usedIndex_water"]').innerHTML = consume;
                     row.querySelector('div[id="totalAmount"]').innerHTML = totalAmount;
+
+                    input1.classList.remove('form-control-warning');
+                    input2.classList.remove('form-control-warning');
                 } else {
                     row.querySelector('div[id="usedIndex_water"]').innerHTML = "Errors";
+
+                    input1.classList.add('form-control-warning');
+                    input2.classList.add('form-control-warning');
                 }
             });
 
@@ -176,9 +182,14 @@
                     let totalAmount = consume * priceUnit;
 
                     row.querySelector('div[id="usedIndex_water"]').innerHTML = consume;
-                    row.querySelector('div[id="totalAmount"]').innerHTML = totalAmount
+                    row.querySelector('div[id="totalAmount"]').innerHTML = totalAmount;
+
+                    input1.classList.remove('form-control-warning');
+                    input2.classList.remove('form-control-warning');
                 } else {
                     row.querySelector('div[id="usedIndex_water"]').innerHTML = "Errors";
+                    input1.classList.add('form-control-warning');
+                    input2.classList.add('form-control-warning');
                 }
             });
 
@@ -193,9 +204,14 @@
                     let totalAmount = consume * priceUnit;
 
                     row.querySelector('div[id="usedIndex_water"]').innerHTML = consume;
-                    row.querySelector('div[id="totalAmount"]').innerHTML = totalAmount
+                    row.querySelector('div[id="totalAmount"]').innerHTML = totalAmount;
+
+                    input1.classList.remove('form-control-warning');
+                    input2.classList.remove('form-control-warning');
                 } else {
                     row.querySelector('div[id="usedIndex_water"]').innerHTML = "Errors";
+                    input1.classList.add('form-control-warning');
+                    input2.classList.add('form-control-warning');
                 }
             }
         });

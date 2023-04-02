@@ -15,7 +15,7 @@ class TenantController extends Controller
     public function index()
     {
         // $tenants = DB::table('tb_main_tenants')->where('user_id', auth()->user()->id)->paginate(5);
-        $tenants = Tenant::where('user_id', auth()->user()->id)->paginate(30);
+        $tenants = Tenant::where('user_id', auth()->user()->id)->orderByRaw("FIELD(status, 1, 2, 0)")->paginate(30);
         return view('dashboard.tenants.index')->with('tenants', $tenants)->with('title', 'Tenant Management');
     }
 

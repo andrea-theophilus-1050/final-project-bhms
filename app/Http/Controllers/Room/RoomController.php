@@ -87,7 +87,7 @@ class RoomController extends Controller
     public function assignTenant($id)
     {
         $room = Room::find($id);
-        $tenants = Tenant::where('user_id', auth()->user()->id)->where('status', 0)->get();
+        $tenants = Tenant::where('user_id', auth()->user()->id)->where('status', '!=', 1)->get();
         $services = Services::where('user_id', auth()->user()->id)->get();
         // dd($room);
         return view('dashboard.room.assign-tenant', compact(['room', 'tenants', 'services']))->with('title', 'Assign Tenant');
@@ -239,5 +239,23 @@ class RoomController extends Controller
             $members->save();
         }
         return redirect()->back()->with('success', 'Members has been added successfully');
+    }
+
+    public function returnRoom(Request $request)
+    {
+        $room = Room::find($request->roomID);
+        $room->status = 0;
+        $room->save();
+
+        $tenant = Tenant::find($request->tenantID);
+        $tenant->status = 2;
+        $tenant->save();
+
+        $rental = RentalRoom::find($request->rentalID);
+        $rental->end_date = now();
+        $rental->status = 1;
+        $rental->save();
+
+        return redirect()->back()->with('success', 'Room has been returned successfully');
     }
 }

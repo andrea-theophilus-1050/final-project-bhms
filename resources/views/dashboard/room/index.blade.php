@@ -347,10 +347,22 @@
                                                                     </div>
                                                                 @else
                                                                     <div class="pull-left">
-                                                                        <a href="#"
+                                                                        {{-- <a href="#"
                                                                             class="btn btn-outline-secondary btn-sm"
                                                                             title="Return"><i
-                                                                                class="icon-copy dw dw-refresh2"></i></a>
+                                                                                class="icon-copy dw dw-refresh2"></i></a> --}}
+                                                                        <form action="">
+                                                                            @csrf
+                                                                            <button type="button" id="return-room-btn"
+                                                                                class="btn btn-outline-secondary btn-sm"
+                                                                                title="Return"
+                                                                                data-roomID="{{ $room->room_id }}"
+                                                                                data-tenantID="{{ $room->rentals->tenant_id }}"
+                                                                                data-tenantName="{{ $room->rentals->tenants->fullname }}"
+                                                                                data-roomName="{{ $room->room_name }}"
+                                                                                data-rentalID="{{ $room->rentals->rental_room_id }}"><i
+                                                                                    class="icon-copy dw dw-refresh2"></i></button>
+                                                                        </form>
                                                                     </div>
                                                                 @endif
 
@@ -390,7 +402,8 @@
                                                                     </button>
 
                                                                     @if ($room->status != 0)
-                                                                        <a href="{{ route('room.edit-tenant', [$room->room_id, $room->rentals->rental_room_id]) }}" class="btn btn-secondary btn-sm">
+                                                                        <a href="{{ route('room.edit-tenant', [$room->room_id, $room->rentals->rental_room_id]) }}"
+                                                                            class="btn btn-secondary btn-sm">
                                                                             <i class="fa fa-edit"></i>
                                                                         </a>
 
@@ -1033,6 +1046,40 @@
     </div>
     {{-- SECTION-END: confirm delete popup --}}
 
+    {{-- SECTION-START: confirm return room popup --}}
+    <div class="modal fade" id="return-room-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center font-18">
+                    <h4 class="padding-top-30 mb-30 weight-500" id="msg-confirm">Are you sure you want to continue?
+                    </h4>
+                    <form id="return-room-form" method="post">
+                        @csrf
+                        <input type="hidden" name="roomID" id="roomID">
+                        <input type="hidden" name="tenantID" id="tenantID">
+                        <input type="hidden" name="rentalID" id="rentalID">
+
+                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+                            <div class="col-6">
+                                <button type="button"
+                                    class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+                                    data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                NO
+                            </div>
+                            <div class="col-6">
+                                <button type="submit"
+                                    class="btn btn-primary border-radius-100 btn-block confirmation-btn"><i
+                                        class="fa fa-check"></i></button>
+                                YES
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- SECTION-END: confirm return room popup --}}
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -1107,6 +1154,34 @@
                         houseID);
 
                     $('#house-edit').modal('show');
+                });
+            });
+
+            var returnRoomBtn = document.querySelectorAll('#return-room-btn');
+            returnRoomBtn.forEach(function(e) {
+                e.addEventListener('click', function() {
+                    var roomID = e.getAttribute('data-roomID');
+                    var roomName = e.getAttribute('data-roomName');
+                    var tenantID = e.getAttribute('data-tenantID');
+                    var tenantName = e.getAttribute('data-tenantName');
+                    var rentalID = e.getAttribute('data-rentalID');
+
+                    var roomIDInput = document.querySelector('#return-room-modal #roomID');
+                    var tenantIDInput = document.querySelector('#return-room-modal #tenantID');
+                    var rentalIDInput = document.querySelector('#return-room-modal #rentalID');
+
+                    roomIDInput.value = roomID;
+                    tenantIDInput.value = tenantID;
+                    rentalIDInput.value = rentalID;
+
+                    var msg = document.querySelector('#return-room-modal #msg-confirm');
+                    msg.innerHTML = " \""+ roomName + " - " + tenantName + "\" <br>return room confirmation?"
+
+                    var formReturnRoom = document.querySelector('#return-room-form');
+                    formReturnRoom.action = "{{ route('room.return') }}";
+
+                    
+                    $('#return-room-modal').modal('show');
                 });
             });
 

@@ -26,18 +26,22 @@
                     <div class="pull-right d-flex justify-content-between">
                         <button class="btn btn-success btn-sm mr-2" data-target="#room-billing-modal" data-toggle="modal"><i
                                 class="ion-calculator"></i> &nbsp; Calculate</button>
-                        <a href="{{ route('export-bill') }}?invoices={{ urlencode(json_encode($data)) }}"
-                            class="btn btn-primary btn-sm mr-2"><i class="icon-copy fi-page-export"></i> &nbsp; Export
-                            Excel</a>
+                        @if (collect($data)->count() > 0)
+                            <a href="{{ route('export-bill') }}?invoices={{ urlencode(json_encode($data)) }}"
+                                class="btn btn-primary btn-sm mr-2"><i class="icon-copy fi-page-export"></i> &nbsp; Export
+                                Excel</a>
 
-                        <a href="{{ route('export-pdf', [$month, $house]) }}" class="btn btn-primary btn-sm mr-2"><i
-                                class="icon-copy fi-print"></i> &nbsp; Print bills</a>
+                            <a href="{{ route('export-pdf', [$month, $house]) }}" class="btn btn-primary btn-sm mr-2"><i
+                                    class="icon-copy fi-print"></i> &nbsp; Print bills</a>
 
-                        <form method="POST" action="{{ route('mail.send-bill', [$month, $house]) }}" id="send-email-form">
-                            @csrf
-                            <button class="btn btn-primary btn-sm" type="submit"><i class="icon-copy fi-mail"></i> &nbsp;
-                                Send email</button>
-                        </form>
+                            <form method="POST" action="{{ route('mail.send-bill', [$month, $house]) }}"
+                                id="send-email-form">
+                                @csrf
+                                <button class="btn btn-primary btn-sm" type="submit"><i class="icon-copy fi-mail"></i>
+                                    &nbsp;
+                                    Send email</button>
+                            </form>
+                        @endif
                     </div>
                 </div>
                 <div class="table-responsive">

@@ -59,7 +59,8 @@
                                                 <i class="dw dw-more"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a href="#" class="dropdown-item"><i class="icon-copy dw dw-user-13"></i>
+                                                <a href="#" class="dropdown-item"><i
+                                                        class="icon-copy dw dw-user-13"></i>
                                                     Grant account access </a>
                                                 <a href="{{ route('tenant.edit', $tenant->tenant_id) }}"
                                                     class="dropdown-item" title="Edit tenant"><i class="dw dw-edit2"></i>
@@ -68,8 +69,8 @@
                                                     data-toggle="modal" data-target="#confirm-delete-modal"
                                                     data-tenantID="{{ $tenant->tenant_id }}"
                                                     data-tenantName="{{ $tenant->fullname }}" data-backdrop="static"
-                                                    style="color: red; font-weight: bold"><i
-                                                        class="dw dw-delete-3"></i> Delete</a>
+                                                    style="color: red; font-weight: bold"><i class="dw dw-delete-3"></i>
+                                                    Delete</a>
                                             </div>
                                         </div>
                                     </td>
@@ -86,10 +87,12 @@
                                                 class="icon-copy dw dw-email1"></i> {{ $tenant->email }}</a></td>
                                     <td>{{ $tenant->hometown }}</td>
                                     <td>
-                                        @if ($tenant->status != 0)
+                                        @if ($tenant->status == 1)
                                             <span class="badge badge-pill badge-success">Rented</span>
+                                        @elseif($tenant->status == 2)
+                                            <span class="badge badge-pill badge-warning">Leaved</span>
                                         @else
-                                            <span class="badge badge-pill badge-danger">Not Rented</span>
+                                            <span class="badge badge-pill badge-info">Not Rented</span>
                                         @endif
                                     </td>
 

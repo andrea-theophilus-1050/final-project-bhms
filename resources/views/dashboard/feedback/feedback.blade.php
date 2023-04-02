@@ -54,7 +54,7 @@
                                     <td class="text-center">{{ $feedback->created_at->format('F d, Y - h:i a') }}</td>
                                     <td class="text-center">
                                         {{ $feedback->tenant->fullname }} -
-                                        {{ $feedback->tenant->rentals->rooms->room_name }} 
+                                        {{ $feedback->tenant->rentals->rooms->room_name }}
                                         ({{ $feedback->tenant->rentals->rooms->houses->house_name }})
                                     </td>
                                     <td class="text-center">
@@ -77,7 +77,8 @@
                                                 data-anonymous="{{ $feedback->anonymous }}"
                                                 class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
                                         @endif --}}
-                                        <button class="btn btn-primary btn-sm">
+                                        <button class="btn btn-primary btn-sm" data-id="{{ $feedback->feedback_id }}"
+                                            data-content="{{ $feedback->content }}" id="solve-btn">
                                             <i class="fa fa-info"></i>
                                         </button>
 
@@ -90,4 +91,65 @@
             </div>
         </div>
     </div>
+
+    {{-- SECTION-START: confirm delete popup --}}
+    <div class="modal fade" id="solve-feedback-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body text-center font-18">
+
+                    <form id="solve-form" method="post">
+                        @csrf
+                        <input type="hidden" name="id" id="idFeedback">
+
+                        <textarea class="form-control mb-10" id="feedbackContent" cols="30" rows="10" readonly></textarea>
+
+                        <div class="padding-bottom-30 row" style="max-width: 300px; margin: 0 auto;">
+                            <div class="col-6">
+                                <button type="submit" name="btnSolve" value="reject"
+                                    class="btn btn-danger border-radius-100 btn-block confirmation-btn"><i
+                                        class="fa fa-times"></i></button>
+                                Reject
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" name="btnSolve" value="accept"
+                                    class="btn btn-primary border-radius-100 btn-block confirmation-btn"><i
+                                        class="fa fa-check"></i></button>
+                                Accept
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- SECTION-END: confirm delete popup --}}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //NOTE: passing value to update house modal
+            var solveBtn = document.querySelectorAll('#solve-btn');
+            solveBtn.forEach(function(e) {
+                e.addEventListener('click', function() {
+                    var id = e.getAttribute('data-id');
+                    var content = e.getAttribute('data-content');
+
+                    var feedbackContent = document.querySelector('#feedbackContent');
+                    feedbackContent.value = content;
+
+                    var idInput = document.querySelector('#idFeedback');
+                    idInput.value = id;
+
+                    var form = document.querySelector('#solve-form');
+                    form.action = "{{ route('feedback.solve') }}";
+
+                    $('#solve-feedback-modal').modal('show');
+                });
+            });
+        });
+    </script>
 @endsection

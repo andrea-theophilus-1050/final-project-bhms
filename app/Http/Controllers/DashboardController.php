@@ -21,4 +21,25 @@ class DashboardController extends Controller
         $feedbacks = Feedback::orderBy('created_at', 'desc')->orderBy('status', 'desc')->paginate(10);
         return view('dashboard.feedback.feedback', compact(['feedbacks']))->with('title', 'Feedback');
     }
+
+    public function solveFeedback(Request $request)
+    {
+        $btnSubmit = $request->input('btnSolve');
+
+        switch ($btnSubmit) {
+            case 'accept':
+                $feedback = Feedback::find($request->input('id'));
+                $feedback->status = 1;
+                $feedback->save();
+                return redirect()->back()->with('success', 'Feedback accepted');
+                break;
+
+            case 'reject':
+                $feedback = Feedback::find($request->input('id'));
+                $feedback->status = 2;
+                $feedback->save();
+                return redirect()->back()->with('success', 'Feedback rejected');
+                break;
+        }
+    }
 }

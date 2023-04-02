@@ -159,8 +159,13 @@
 
                     row.querySelector('div[id="usedIndex_electric"]').innerHTML = consume;
                     row.querySelector('div[id="totalAmount"]').innerHTML = totalAmount;
+
+                    input1.classList.remove('form-control-warning');
+                    input2.classList.remove('form-control-warning');
                 } else {
                     row.querySelector('div[id="usedIndex_electric"]').innerHTML = "Errors";
+                    input1.classList.add('form-control-warning');
+                    input2.classList.add('form-control-warning');
                 }
             });
 
@@ -175,8 +180,13 @@
                     row.querySelector('div[id="usedIndex_electric"]').innerHTML = consume;
                     row.querySelector('div[id="totalAmount"]').innerHTML = totalAmount;
 
+                    input1.classList.remove('form-control-warning');
+                    input2.classList.remove('form-control-warning');
+
                 } else {
                     row.querySelector('div[id="usedIndex_electric"]').innerHTML = "Errors";
+                    input1.classList.add('form-control-warning');
+                    input2.classList.add('form-control-warning');
                 }
             });
 
@@ -192,8 +202,13 @@
 
                     row.querySelector('div[id="usedIndex_electric"]').innerHTML = consume;
                     row.querySelector('div[id="totalAmount"]').innerHTML = totalAmount;
+
+                    input1.classList.remove('form-control-warning');
+                    input2.classList.remove('form-control-warning');
                 } else {
                     row.querySelector('div[id="usedIndex_electric"]').innerHTML = "Errors";
+                    input1.classList.add('form-control-warning');
+                    input2.classList.add('form-control-warning');
                 }
             }
 

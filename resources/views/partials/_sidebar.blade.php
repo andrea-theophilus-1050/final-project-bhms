@@ -36,12 +36,7 @@
                         <span class="micon dw dw-house1"></span><span class="mtext">@lang('messages.navHouse')</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('tenant.index') }}"
-                        class="dropdown-toggle no-arrow {{ request()->routeIs('tenant.index') || request()->routeIs('tenant.create') || request()->routeIs('tenant.edit') ? 'active' : '' }}">
-                        <span class="micon dw dw-user-2"></span><span class="mtext">@lang('messages.navTenant')</span>
-                    </a>
-                </li>
+                
                 <li class="dropdown">
                     <a href="{{ route('electricity-bill', [now()->format('F Y'), 'all-house']) }}"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('electricity-bill') ? 'active' : '' }}">
@@ -72,6 +67,12 @@
                     <a href="{{ route('feedback') }}"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('feedback') ? 'active' : '' }}">
                         <span class="micon dw dw-chat-11"></span><span class="mtext">@lang('messages.navFeedback')</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('tenant.index') }}"
+                        class="dropdown-toggle no-arrow {{ request()->routeIs('tenant.index') || request()->routeIs('tenant.create') || request()->routeIs('tenant.edit') ? 'active' : '' }}">
+                        <span class="micon dw dw-user-2"></span><span class="mtext">@lang('messages.navTenant')</span>
                     </a>
                 </li>
             </ul>

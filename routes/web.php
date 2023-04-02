@@ -120,6 +120,8 @@ Route::middleware('setLocale')->group(function () {
                                 Route::post('room/{id}/update-services-used/{rental_id}', 'editServicesUsed_action')->name('room.update-tenant-action');
 
                                 Route::post('room/assignMembers', 'assignMembers')->name('assign-members');
+
+                                Route::post('room/return', 'returnRoom')->name('room.return');
                             });
                         });
 
@@ -166,6 +168,7 @@ Route::middleware('setLocale')->group(function () {
 
 
                         Route::get('feedback', [DashboardController::class, 'feedback'])->name('feedback');
+                        Route::post('solve-feedback', [DashboardController::class, 'solveFeedback'])->name('feedback.solve');
 
                         // NOTE: Export testing, not done 
                         Route::get('/export-users', [UserController::class, 'exportUsers'])->name('export-users');

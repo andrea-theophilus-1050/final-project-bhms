@@ -26,6 +26,7 @@ class ElectricityController extends Controller
                 ->join('tb_main_tenants', 'tb_main_tenants.tenant_id', '=', 'tb_rental_room.tenant_id')
                 ->where('tb_services.type_id', 1)
                 ->where('tb_house.user_id', auth()->user()->id)
+                ->where('tb_rental_room.status', 0)
                 ->get();
         } else {
             // get all rooms in the house of the user where the room is occupied
@@ -40,6 +41,7 @@ class ElectricityController extends Controller
                 ->where('tb_services.type_id', 1)
                 ->where('tb_house.user_id', auth()->user()->id)
                 ->where('tb_house.house_id', $house_id)
+                ->where('tb_rental_room.status', 0)
                 ->get();
         }
 
@@ -75,7 +77,7 @@ class ElectricityController extends Controller
         $data = [];
 
         for ($i = 0; $i < count($rentalRoomID); $i++) {
-            if ($oldIndexElectricity[$i] != null && $newIndexElectricity[$i] != null) {
+            if ($oldIndexElectricity[$i] != null && $newIndexElectricity[$i] != null && $oldIndexElectricity[$i] < $newIndexElectricity[$i]) {
                 $exists = Electricity::where('rental_room_id', $rentalRoomID[$i])
                     ->where('date', $date)
                     ->first();
