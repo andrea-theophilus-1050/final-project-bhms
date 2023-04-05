@@ -23,6 +23,7 @@ use App\Http\Controllers\ExportPDFController;
 use App\Http\Controllers\Mail\SendMailController;
 use App\Http\Controllers\Payment\PaymentVNPayController;
 use App\Http\Controllers\TenantRole\PaymentVNPayController as TenantPaymentVNPayController;
+use App\Http\Controllers\SendSMSController;
 
 /*
 |--------------------------------------------------------------------------
@@ -128,6 +129,7 @@ Route::middleware('setLocale')->group(function () {
                         // Route::post('change-password', [DashboardController::class, 'changePassword'])->name('change-password');
 
                         Route::resource('tenant', TenantController::class);
+                        Route::get('send-account-info/{id}', [TenantController::class, 'sendAccountInfo'])->name('notify.account-info.email');
 
 
                         Route::controller(ElectricityController::class)->group(function () {
@@ -164,6 +166,7 @@ Route::middleware('setLocale')->group(function () {
                         Route::get('export-bill-pdf/{month}/{house}', [ExportPDFController::class, 'exportPDF'])->name('export-pdf');
 
                         Route::post('send-mail-bill/{month}/{house}', [SendMailController::class, 'sendMailBill'])->name('mail.send-bill');
+                        Route::post('sendSMS/{month}/{house}', [SendSMSController::class, 'sendSMS'])->name('sms.send-bill');
 
 
 
@@ -189,6 +192,7 @@ Route::middleware('setLocale')->group(function () {
             });
         });
     });
+
 
 
 

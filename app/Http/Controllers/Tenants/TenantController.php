@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tenant;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -15,7 +16,7 @@ class TenantController extends Controller
     public function index()
     {
         // $tenants = DB::table('tb_main_tenants')->where('user_id', auth()->user()->id)->paginate(5);
-        $tenants = Tenant::where('user_id', auth()->user()->id)->orderByRaw("FIELD(status, 1, 2, 0)")->paginate(30);
+        $tenants = Tenant::where('user_id', auth()->user()->id)->orderByRaw("FIELD(status, 1, 0, 2)")->paginate(30);
         return view('dashboard.tenants.index')->with('tenants', $tenants)->with('title', 'Tenant Management');
     }
 
@@ -87,6 +88,13 @@ class TenantController extends Controller
         $tenant = Tenant::find($id);
         $tenant->delete();
         return redirect()->route('tenant.index')->with('success', 'Tenant has been deleted successfully');
+    }
+
+    public function sendAccountInfo($id)
+    {
+        $tenant = Tenant::find($id);
+        Mail::to($tenant->email)->send(new \App\Mail\NotifyAccountInfo($tenant));
+        return redirect()->back()->with('success', 'Account info has been sent successfully');
     }
 
     public function exportTenant()

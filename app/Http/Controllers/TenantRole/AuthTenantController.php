@@ -18,11 +18,19 @@ class AuthTenantController extends Controller
     public function login_action(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'credential' => 'required',
             'password' => 'required|min:6'
         ]);
 
-        $credentials = $request->only('email', 'password');
+        $credentials = [
+            'password' => $request->password,
+        ];
+
+        if (filter_var($request->credential, FILTER_VALIDATE_EMAIL)) {
+            $credentials['email'] = $request->credential;
+        } else {
+            $credentials['phone_number'] = $request->credential;
+        }
 
         if (Auth::guard('tenants')->attempt($credentials)) {
             if (Auth::guard('tenants')->user()->status == 0) {

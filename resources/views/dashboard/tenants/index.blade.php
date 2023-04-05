@@ -38,6 +38,7 @@
                                 <th scope="col"></th>
                                 <th hidden scope="col">Tenant ID</th>
                                 <th scope="col">No. </th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Full name</th>
                                 <th scope="col">ID Card</th>
                                 <th scope="col">Gender</th>
@@ -45,7 +46,6 @@
                                 <th scope="col">Phone number</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Hometown</th>
-                                <th scope="col">Status</th>
 
                             </tr>
                         </thead>
@@ -59,9 +59,11 @@
                                                 <i class="dw dw-more"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                <a href="#" class="dropdown-item"><i
-                                                        class="icon-copy dw dw-user-13"></i>
-                                                    Grant account access </a>
+                                                @if ($tenant->status == 1)
+                                                    <a href="{{ route('notify.account-info.email', $tenant->tenant_id) }}"
+                                                        class="dropdown-item"><i class="icon-copy dw dw-user-13"></i>
+                                                        Notify account info via Email </a>
+                                                @endif
                                                 <a href="{{ route('tenant.edit', $tenant->tenant_id) }}"
                                                     class="dropdown-item" title="Edit tenant"><i class="dw dw-edit2"></i>
                                                     Edit</a>
@@ -76,6 +78,15 @@
                                     </td>
                                     <td hidden>{{ $tenant->tenant_id }}</td>
                                     <th>{{ $loop->iteration }}</th>
+                                    <td>
+                                        @if ($tenant->status == 1)
+                                            <span class="badge badge-pill badge-success">Rented</span>
+                                        @elseif($tenant->status == 2)
+                                            <span class="badge badge-pill badge-warning">Leaved</span>
+                                        @else
+                                            <span class="badge badge-pill badge-info">Not Rented</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $tenant->fullname }}</td>
                                     <td>{{ $tenant->id_card }}</td>
                                     <td>{{ $tenant->gender }}</td>
@@ -86,15 +97,7 @@
                                     <td style="white-space: nowrap;"><a href="mailto:{{ $tenant->email }}"><i
                                                 class="icon-copy dw dw-email1"></i> {{ $tenant->email }}</a></td>
                                     <td>{{ $tenant->hometown }}</td>
-                                    <td>
-                                        @if ($tenant->status == 1)
-                                            <span class="badge badge-pill badge-success">Rented</span>
-                                        @elseif($tenant->status == 2)
-                                            <span class="badge badge-pill badge-warning">Leaved</span>
-                                        @else
-                                            <span class="badge badge-pill badge-info">Not Rented</span>
-                                        @endif
-                                    </td>
+
 
                                     {{-- <td>
                                         <form id="delete-area" 

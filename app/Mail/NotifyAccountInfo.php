@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AccountInformationNotify extends Mailable
+class NotifyAccountInfo extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,9 +18,12 @@ class AccountInformationNotify extends Mailable
      *
      * @return void
      */
-    public function __construct()
+
+    protected $tenant;
+
+    public function __construct($tenant)
     {
-        //
+        $this->tenant = $tenant;
     }
 
     /**
@@ -31,7 +34,7 @@ class AccountInformationNotify extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Account Information Notify',
+            subject: 'Notify Account Info',
         );
     }
 
@@ -43,7 +46,7 @@ class AccountInformationNotify extends Mailable
     public function content()
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.account-info',
         );
     }
 
@@ -54,6 +57,28 @@ class AccountInformationNotify extends Mailable
      */
     public function attachments()
     {
-        return [];
+        return [
+            public_path('vendors/images/logo-boarding-house.png'),
+        ];
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->view('emails.account-info')
+            ->with([
+                'email' => $this->tenant->email,
+                'phone' => $this->tenant->phone_number,
+                'password' => '12345678',
+                'url' => url('/tenant/login')
+            ])
+            ->attach(public_path('vendors/images/logo-boarding-house.png'), [
+                'as' => 'logo.png',
+                'mime' => 'image/png',
+            ]);
     }
 }

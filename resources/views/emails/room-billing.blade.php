@@ -152,7 +152,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="height:40px;">&nbsp;</td>
+                                    <td style="height:40px; margin-bottom: 50px">Please access to the system to view detail:
+                                        <a
+                                            href="{{ url('/') . '/tenant/login' }}">{{ url('/') . '/tenant/login' }}
+                                        </a>
+                                    </td>
                                 </tr>
                             </table>
                         </td>

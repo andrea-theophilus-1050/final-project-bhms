@@ -34,12 +34,20 @@
                             <a href="{{ route('export-pdf', [$month, $house]) }}" class="btn btn-primary btn-sm mr-2"><i
                                     class="icon-copy fi-print"></i> &nbsp; Print bills</a>
 
-                            <form method="POST" action="{{ route('mail.send-bill', [$month, $house]) }}"
+                            <form class="mr-2" method="POST" action="{{ route('mail.send-bill', [$month, $house]) }}"
                                 id="send-email-form">
                                 @csrf
                                 <button class="btn btn-primary btn-sm" type="submit"><i class="icon-copy fi-mail"></i>
                                     &nbsp;
                                     Send email</button>
+                            </form>
+
+                            <form method="POST" action="{{ route('sms.send-bill', [$month, $house]) }}"
+                                id="send-email-form">
+                                @csrf
+                                <button class="btn btn-primary btn-sm" type="submit"><i class="icon-copy fi-mail"></i>
+                                    &nbsp;
+                                    Send SMS</button>
                             </form>
                         @endif
                     </div>
