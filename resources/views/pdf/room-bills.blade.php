@@ -43,7 +43,9 @@
                                 </p>
                             </div>
                             <div class="float-right">
-                                <strong style="font-size: 14px">Room billing</strong>
+                                {{-- <strong style="font-size: 14px">Room billing</strong> --}}
+                                <img src="{{ asset('vendors/images/logo-boarding-house.png') }}" alt="logo"
+                                    width="90px">
                             </div>
                         </div>
 

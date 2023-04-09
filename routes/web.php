@@ -24,6 +24,7 @@ use App\Http\Controllers\Mail\SendMailController;
 use App\Http\Controllers\Payment\PaymentVNPayController;
 use App\Http\Controllers\TenantRole\PaymentVNPayController as TenantPaymentVNPayController;
 use App\Http\Controllers\SendSMSController;
+use App\Http\Controllers\Room\ReturnRoomController;
 
 /*
 |--------------------------------------------------------------------------
@@ -121,8 +122,6 @@ Route::middleware('setLocale')->group(function () {
                                 Route::post('room/{id}/update-services-used/{rental_id}', 'editServicesUsed_action')->name('room.update-tenant-action');
 
                                 Route::post('room/assignMembers', 'assignMembers')->name('assign-members');
-
-                                Route::post('room/return', 'returnRoom')->name('room.return');
                             });
                         });
 
@@ -158,9 +157,14 @@ Route::middleware('setLocale')->group(function () {
                             Route::post('calculate-room-billing', 'calculateRoomBilling')->name('calculate.room-billing');
                             Route::post('update-status-bill/{id}', 'updateStatusBill')->name('update-status-bill');
 
-
-
                             Route::get('test', 'test')->name('test');
+                        });
+
+                        Route::controller(ReturnRoomController::class)->group(function () {
+                            Route::post('room/return', 'returnRoom')->name('room.return');
+
+                            Route::get('handle-returned-room/{roomID}/{tenantID}/{rentalID}', 'handleReturnedRoom')->name('handle-returned-room');
+                            Route::post('service-insert', 'serviceInsert')->name('return.service-bill.insert');
                         });
 
                         Route::get('export-bill-pdf/{month}/{house}', [ExportPDFController::class, 'exportPDF'])->name('export-pdf');

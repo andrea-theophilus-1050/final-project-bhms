@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('total_price');
             $table->string('paidAmount')->default(0);
             $table->string('debt')->default(0);
-            $table->string('status')->default(0);
+            $table->tinyInteger('status')->default(0);
             $table->string('date');
             $table->unsignedBigInteger('rental_room_id');
             $table->foreign('rental_room_id')->references('rental_room_id')->on('tb_rental_room')->onUpdate('cascade')->onDelete('cascade');

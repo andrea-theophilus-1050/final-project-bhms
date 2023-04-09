@@ -71,7 +71,8 @@
                                     <td>
                                         <input type="hidden" class="form-control" value="{{ $service->service_id }}"
                                             name="serviceID[]">
-                                        <input type="text" class="form-control" value="{{ $rental->servicesUsed->where('service_id', $service->service_id)->first()->price_if_changed }}"
+                                        <input type="text" class="form-control"
+                                            value="{{ $rental->servicesUsed->where('service_id', $service->service_id)->first() != null ? $rental->servicesUsed->where('service_id', $service->service_id)->first()->price_if_changed : $service->price }}"
                                             name="servicePrice[]" style="width: 250px">
                                     </td>
                                 </tr>
@@ -79,7 +80,7 @@
                         </tbody>
                     </table>
                 </div>
-                
+
                 <div style="width: 100%; height: 1px; background: #0b132b" class="mb-20"></div>
 
                 <h5 class="h5 text-blue mb-30">Tenant information
@@ -105,26 +106,24 @@
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Rental room</label>
                     <div class="col-sm-12 col-md-4">
-                        <input class="form-control" value="{{ $rental->rooms->room_name }}" type="text"
-                             readonly>
+                        <input class="form-control" value="{{ $rental->rooms->room_name }}" type="text" readonly>
                     </div>
 
                     <label class="col-sm-12 col-md-2 col-form-label">Room price</label>
                     <div class="col-sm-12 col-md-4">
-                        <input class="form-control" value="{{ $rental->rooms->price }}" type="text" 
-                            readonly>
+                        <input class="form-control" value="{{ $rental->rooms->price }}" type="text" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Full name</label>
                     <div class="col-sm-6 col-md-4">
-                        <input class="form-control" type="text" placeholder="Full name" 
+                        <input class="form-control" type="text" placeholder="Full name"
                             value="{{ $rental->tenants->fullname }}" id="tenant_name" readonly>
                     </div>
 
                     <label class="col-sm-12 col-md-2 col-form-label">ID Card Number</label>
                     <div class="col-sm-6 col-md-4">
-                        <input class="form-control" placeholder="ID Card number" type="text" 
+                        <input class="form-control" placeholder="ID Card number" type="text"
                             value="{{ $rental->tenants->id_card }}" id="tenant_id_card"readonly>
                     </div>
                 </div>
@@ -132,7 +131,7 @@
                     <label class="col-sm-12 col-md-2 col-form-label">Date of birth</label>
                     <div class="col-sm-12 col-md-4">
                         <input class="form-control date-picker" placeholder="Date of birth" type="text"
-                             value="{{ $rental->tenants->dob }}" id="dob"readonly>
+                            value="{{ $rental->tenants->dob }}" id="dob"readonly>
                     </div>
 
                     <label class="col-sm-12 col-md-2 col-form-label">Gender</label>
@@ -140,13 +139,13 @@
                         <div class="d-flex">
                             @if ($rental->tenants->gender == 'Male')
                                 <div class="custom-control custom-radio mb-5 mr-20">
-                                    <input type="radio" id="gender1"  class="custom-control-input"
-                                        value="Male" checked>
+                                    <input type="radio" id="gender1" class="custom-control-input" value="Male"
+                                        checked>
                                     <label class="custom-control-label weight-400" for="gender1">Male</label>
                                 </div>
                             @else
                                 <div class="custom-control custom-radio mb-5">
-                                    <input type="radio" id="gender2"  class="custom-control-input"
+                                    <input type="radio" id="gender2" class="custom-control-input"
                                         value="Female"checked>
                                     <label class="custom-control-label weight-400" for="gender2">Female</label>
                                 </div>
@@ -157,7 +156,7 @@
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Phone number</label>
                     <div class="col-sm-12 col-md-4">
-                        <input class="form-control" placeholder="Phone number" type="text" 
+                        <input class="form-control" placeholder="Phone number" type="text"
                             value="{{ $rental->tenants->phone_number }}" id="phone_number" readonly>
                     </div>
 
@@ -170,7 +169,7 @@
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Hometown</label>
                     <div class="col-sm-12 col-md-10">
-                        <input class="form-control" placeholder="Hometown address" type="text" 
+                        <input class="form-control" placeholder="Hometown address" type="text"
                             value="{{ $rental->tenants->hometown }}" id="hometown" readonly>
                     </div>
                 </div>
@@ -179,7 +178,7 @@
                     <label class="col-sm-12 col-md-2 col-form-label">Start date</label>
                     <div class="col-sm-12 col-md-4">
                         <input class="form-control date-picker" placeholder="Start date" type="text"
-                            value="{{ $rental->start_date }}"  readonly>
+                            value="{{ $rental->start_date }}" readonly>
                     </div>
                 </div>
             </form>

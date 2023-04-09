@@ -240,22 +240,4 @@ class RoomController extends Controller
         }
         return redirect()->back()->with('success', 'Members has been added successfully');
     }
-
-    public function returnRoom(Request $request)
-    {
-        $room = Room::find($request->roomID);
-        $room->status = 0;
-        $room->save();
-
-        $tenant = Tenant::find($request->tenantID);
-        $tenant->status = 2;
-        $tenant->save();
-
-        $rental = RentalRoom::find($request->rentalID);
-        $rental->end_date = now();
-        $rental->status = 1;
-        $rental->save();
-
-        return redirect()->back()->with('success', 'Room has been returned successfully');
-    }
 }

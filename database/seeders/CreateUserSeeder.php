@@ -41,19 +41,19 @@ class CreateUserSeeder extends Seeder
         $services = [
             [
                 'service_name' => 'Electricity',
-                'price' => '0',
+                'price' => '3000',
                 'description' => 'Default and required electricity service',
                 'user_id' => 1,
                 'type_id' => 1,
-
+                'changed' => 1,
             ],
             [
                 'service_name' => 'Water',
-                'price' => '0',
+                'price' => '7000',
                 'description' => 'Default and required electricity service',
                 'user_id' => 1,
                 'type_id' => 2,
-
+                'changed' => 1,
             ]
         ];
 
