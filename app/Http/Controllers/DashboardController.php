@@ -56,6 +56,7 @@ class DashboardController extends Controller
             case 'accept':
                 $feedback = Feedback::find($request->input('id'));
                 $feedback->status = 1;
+                $feedback->response = $request->input('response');
                 $feedback->save();
                 return redirect()->back()->with('success', 'Feedback accepted');
                 break;
@@ -63,6 +64,7 @@ class DashboardController extends Controller
             case 'reject':
                 $feedback = Feedback::find($request->input('id'));
                 $feedback->status = 2;
+                $feedback->response = $request->input('response');
                 $feedback->save();
                 return redirect()->back()->with('success', 'Feedback rejected');
                 break;

@@ -227,6 +227,11 @@
                                         class="icon-copy fa fa-plus" aria-hidden="true"></i>
                                     Add
                                     multiple new rooms</button>
+
+                                <button data-toggle="modal" data-target="#multiple-delete" class="btn btn-danger btn-sm"
+                                    id="multiple-delete-btn" disabled><i class="icon-copy fa fa-trash"
+                                        aria-hidden="true"></i>
+                                    Delete selected rooms</button>
                             </div>
                         </div>
 
@@ -235,7 +240,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="home" role="tabpanel">
                                     <div class="pd-20">
-                                        <div class="row clearfix">
+                                        <div class="row clearfix" id="card-rooms">
                                             @if (count($rooms) == 0)
                                                 <h4>No data found</h4>
                                             @else
@@ -246,8 +251,12 @@
                                                                 <div class="card-header d-flex justify-content-between"
                                                                     style="background-color: #B3DBF8">
                                                                     <div>
+                                                                        <input type="checkbox" id="room-checkbox"
+                                                                            name="selectedRooms[]"
+                                                                            style="width: 15px; height: 15px; margin-right: 8px"
+                                                                            value="{{ $room->room_id }}">
                                                                         <i class="icon-copy dw dw-house"></i>
-                                                                        &nbsp;&nbsp;&nbsp;&nbsp;{{ $room->room_name }}
+                                                                        &nbsp;&nbsp;{{ $room->room_name }}
                                                                     </div>
                                                                     <div class="dropdown">
                                                                         <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
@@ -273,7 +282,8 @@
                                                                                 data-houseID="{{ $id }}"
                                                                                 title="Delete Room"
                                                                                 style="color: red; font-weight: bold"><i
-                                                                                    class="dw dw-delete-3"></i> Delete</a>
+                                                                                    class="dw dw-delete-3"></i>
+                                                                                Delete</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -282,10 +292,7 @@
                                                                     style="background-color: #1899F5">
                                                                     <div>
                                                                         <i class="icon-copy dw dw-house"></i>
-                                                                        &nbsp;&nbsp;&nbsp;&nbsp;{{ $room->room_name }}
-                                                                        <span class="badge badge-pill badge-success">
-                                                                            Occupied
-                                                                        </span>
+                                                                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>{{ $room->room_name }}</strong>
                                                                     </div>
 
                                                                     <div class="dropdown">
@@ -312,7 +319,8 @@
                                                                                 data-houseID="{{ $id }}"
                                                                                 title="Delete Room"
                                                                                 style="color: red; font-weight: bold"><i
-                                                                                    class="dw dw-delete-3"></i> Delete</a>
+                                                                                    class="dw dw-delete-3"></i>
+                                                                                Delete</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1080,6 +1088,40 @@
     </div>
     {{-- SECTION-END: confirm return room popup --}}
 
+    {{-- SECTION-START: confirm return room popup --}}
+    <div class="modal fade" id="multiple-delete" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center font-18">
+                    <h4 class="padding-top-30 mb-30 weight-500" id="msg-confirm">Are you sure you want to continue?
+                    </h4>
+                    <form id="multiple-delete-form" method="post" action="{{ route('room.delete.multiple') }}">
+                        @csrf
+                        <div id="selectedRoom-section">
+
+                        </div>
+
+                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+                            <div class="col-6">
+                                <button type="button"
+                                    class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+                                    data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                NO
+                            </div>
+                            <div class="col-6">
+                                <button type="submit"
+                                    class="btn btn-primary border-radius-100 btn-block confirmation-btn"><i
+                                        class="fa fa-check"></i></button>
+                                YES
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- SECTION-END: confirm return room popup --}}
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -1175,12 +1217,13 @@
                     rentalIDInput.value = rentalID;
 
                     var msg = document.querySelector('#return-room-modal #msg-confirm');
-                    msg.innerHTML = " \""+ roomName + " - " + tenantName + "\" <br>return room confirmation?"
+                    msg.innerHTML = " \"" + roomName + " - " + tenantName +
+                        "\" <br>return room confirmation?"
 
                     var formReturnRoom = document.querySelector('#return-room-form');
                     formReturnRoom.action = "{{ route('room.return') }}";
 
-                    
+
                     $('#return-room-modal').modal('show');
                 });
             });
@@ -1483,6 +1526,35 @@
         // function submitForm() {
         //     document.getElementById("room-members").submit();
         // }
+    </script>
+
+    <script>
+        const checkboxes = document.querySelectorAll('#card-rooms input[type="checkbox"]');
+        const deleteBtn = document.querySelector('#multiple-delete-btn');
+
+        function checkboxDeleteButton() {
+            const checked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+            deleteBtn.disabled = !checked;
+        }
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('click', checkboxDeleteButton);
+        });
+
+        deleteBtn.addEventListener('click', () => {
+            const deleteIDSection = document.getElementById('selectedRoom-section');
+            deleteIDSection.innerHTML = '';
+
+            Array.from(checkboxes).forEach(checkbox => {
+                if (checkbox.checked) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'selectedRoom[]';
+                    input.value = checkbox.value;
+                    deleteIDSection.appendChild(input);
+                }
+            });
+        });
     </script>
 
     <script src="{{ asset('vendors/scripts/handle-room-page.js') }}"></script>

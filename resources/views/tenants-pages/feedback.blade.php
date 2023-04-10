@@ -46,6 +46,7 @@
                                 <th scope="col">Your feedback</th>
                                 <th scope="col" class="text-center">Date sent</th>
                                 <th scope="col" class="text-center">Status</th>
+                                <th scope="col">Response</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
@@ -63,6 +64,9 @@
                                         @else
                                             <span class="badge badge-pill badge-danger">Rejected</span>
                                         @endif
+                                    </td>
+                                    <td>
+                                        {{ $feedback->response }}
                                     </td>
                                     <td>
                                         <button id="delete-feedback-btn" type="button"
@@ -105,7 +109,8 @@
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><i
                                     class="icon-copy dw dw-paper-plane"></i>&nbsp;&nbsp;Send</button>
-                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i
+                                    class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
                         </div>
                     </form>
                 </div>
@@ -136,14 +141,14 @@
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><i
                                     class="icon-copy dw dw-paper-plane"></i>&nbsp;&nbsp;Send</button>
-                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i
+                                    class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- SECTION-END: add service popup -->
 
     {{-- SECTION-START: confirm delete popup --}}

@@ -10,6 +10,7 @@ use App\Models\Members;
 use App\Models\RentalRoom;
 use App\Models\Feedback;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Notification;
 
 class Tenant extends Authenticatable
 {
@@ -64,5 +65,10 @@ class Tenant extends Authenticatable
     public function feedbacks()
     {
         return $this->hasMany(Feedback::class, 'tenant_id');
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'tenant_id');
     }
 }

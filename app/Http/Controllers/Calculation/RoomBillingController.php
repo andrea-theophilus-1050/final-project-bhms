@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\House;
 use Illuminate\Support\Facades\DB;
 use App\Models\RoomBilling;
+use App\Models\Notification;
 
 
 class RoomBillingController extends Controller
@@ -62,13 +63,21 @@ class RoomBillingController extends Controller
     public function updateStatusBill(Request $request, $id)
     {
         $roomBilling = RoomBilling::find($id);
-        $roomBilling->paidAmount = intval(str_replace(",", "", $request->paidAmount));
-        $roomBilling->debt = intval(str_replace(",", "", $request->debt));
-        if ($request->debt == 0) {
-            $roomBilling->status = 1;
-        } else {
-            $roomBilling->status = 2;
+
+        $btnSubmit = $request->status;
+
+        switch ($btnSubmit) {
+            case 'paid':
+                $roomBilling->status = 1;
+                break;
+            case 'unpaid':
+                $roomBilling->status = 0;
+                break;
+            default:
+                $roomBilling->status = 0;
+                break;
         }
+
         $roomBilling->save();
         return redirect()->back();
     }
@@ -101,6 +110,7 @@ class RoomBillingController extends Controller
                     'tb_rooms.room_id',
                     'tb_house.house_name',
                     'tb_house.house_address',
+                    'tb_main_tenants.tenant_id',
                     'tb_main_tenants.fullname',
                     'tb_main_tenants.phone_number',
                     'tb_main_tenants.email'
@@ -128,6 +138,7 @@ class RoomBillingController extends Controller
                     'tb_rooms.room_id',
                     'tb_house.house_name',
                     'tb_house.house_address',
+                    'tb_main_tenants.tenant_id',
                     'tb_main_tenants.fullname',
                     'tb_main_tenants.phone_number',
                     'tb_main_tenants.email'
@@ -162,6 +173,7 @@ class RoomBillingController extends Controller
                     'tb_rooms.room_id',
                     'tb_house.house_name',
                     'tb_house.house_address',
+                    'tb_main_tenants.tenant_id',
                     'tb_main_tenants.fullname',
                     'tb_main_tenants.phone_number',
                     'tb_main_tenants.email'
@@ -189,6 +201,7 @@ class RoomBillingController extends Controller
                     'tb_rooms.room_id',
                     'tb_house.house_name',
                     'tb_house.house_address',
+                    'tb_main_tenants.tenant_id',
                     'tb_main_tenants.fullname',
                     'tb_main_tenants.phone_number',
                     'tb_main_tenants.email'
@@ -279,6 +292,7 @@ class RoomBillingController extends Controller
                     $result->house_address = $waterBill->house_address;
                     $result->room_name = $waterBill->room_name;
                     $result->room_price = $waterBill->price;
+                    $result->tenant_id = $waterBill->tenant_id;
                     $result->tenant_name = $waterBill->fullname;
                     $result->tenant_phone = $waterBill->phone_number;
                     $result->tenant_email = $waterBill->email;
@@ -330,6 +344,16 @@ class RoomBillingController extends Controller
                         $roomBilling->rental_room_id = $result->rental_room_id;
                         $roomBilling->date = $result->billDate;
                         $roomBilling->save();
+
+                        // check exists notification
+                        $notification = Notification::where('url', $roomBilling->id)->where('status', 0)->first();
+                        if (!$notification) {
+                            $notification = new Notification();
+                            $notification->content = 'The room bill for ' . $roomBilling->date . ' has been created.';
+                            $notification->url = $roomBilling->id;
+                            $notification->tenant_id = $result->tenant_id;
+                            $notification->save();
+                        }
                     } else {
                         $roomBilling = RoomBilling::where('rental_room_id', $result->rental_room_id)->where('date', $result->billDate)->first();
                         $roomBilling->total_price = $result->total;

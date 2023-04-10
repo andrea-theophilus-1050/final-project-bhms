@@ -9,6 +9,7 @@ use App\Models\RoomBilling;
 use App\Models\RentalRoom;
 use Illuminate\Support\Facades\DB;
 use Nette\Utils\DateTime;
+use App\Models\Notification;
 
 class HandleTenantController extends Controller
 {
@@ -189,6 +190,16 @@ class HandleTenantController extends Controller
             $roomBilling->paidAmount = $totalPrice;
             $roomBilling->status = 1;
             $roomBilling->save();
+
+            // check exists notification
+            $checkNotification = Notification::where('url', $roomBilling->id)->first();
+            if (!$checkNotification) {
+                $notification = new Notification();
+                $notification->content = $roomBilling->rentalRoom->tenants->fullname . ' has paid for bill ' . $roomBilling->date;
+                $notification->user_id = $roomBilling->rentalRoom->rooms->houses->users->id;
+                $notification->url = $roomBilling->id;
+                $notification->save();
+            }
         }
 
         return view('tenants-pages.payment-status', compact([
@@ -209,6 +220,26 @@ class HandleTenantController extends Controller
         $roomBilling->paidAmount = $request->paidAmount;
         $roomBilling->status = 1;
         $roomBilling->save();
+
+        // check exists notification
+        $checkNotification = Notification::where('url', $roomBilling->id)->first();
+        if (!$checkNotification) {
+            $notification = new Notification();
+            $notification->content = $roomBilling->rentalRoom->tenants->name . ' has paid for bill ' . $roomBilling->date;
+            $notification->user_id = $roomBilling->rentalRoom->rooms->houses->users->id;
+            $notification->url = $roomBilling->id;
+            $notification->save();
+        }
+
         return redirect()->route('role.tenants.index');
+    }
+
+    public function clearNotification()
+    {
+        $notifications = Notification::where('tenant_id', auth('tenants')->user()->tenant_id)->get();
+        foreach ($notifications as $notification) {
+            $notification->delete();
+        }
+        return redirect()->back();
     }
 }

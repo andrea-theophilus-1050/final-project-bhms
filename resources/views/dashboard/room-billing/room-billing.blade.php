@@ -101,10 +101,6 @@
                                     <td>
                                         @if (collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->status == 0)
                                             <span class="badge badge-pill badge-warning">Pending</span>
-                                        @elseif (collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->status == 2)
-                                            <span class="badge badge-pill badge-info">
-                                                Still owed
-                                            </span>
                                         @else
                                             <span class="badge badge-pill badge-success">Paid</span>
                                         @endif
@@ -116,14 +112,16 @@
                                         </button>
                                     </td>
                                     <td>
-                                        @if (collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->status != 1)
+                                        @if (collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->status == 0)
                                             <button class="btn btn-success btn-sm" id="update-status-btn" type="button"
                                                 data-billID="{{ collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->id }}"
-                                                @if (collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->status == 0) data-totalPrice="{{ $bill->total }}"
-                                                    @else
-                                                    data-totalPrice="{{ $bill->total }}"
-                                                    data-paidAmount="{{ collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->paidAmount }}"
-                                                    data-debt="{{ collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->debt }}" @endif>
+                                                data-totalPrice="{{ $bill->total }}">
+                                                <i class="icon-copy dw dw-tick"></i> &nbsp; Change status
+                                            </button>
+                                        @else
+                                            <button class="btn btn-secondary btn-sm" id="update-status-btn" type="button"
+                                                data-billID="{{ collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->id }}"
+                                                data-totalPrice="{{ $bill->total }}">
                                                 <i class="icon-copy dw dw-tick"></i> &nbsp; Change status
                                             </button>
                                         @endif
@@ -197,7 +195,7 @@
                                 <img src="vendors/images/deskapp-logo.png" alt="">
                             </div>
                         </div>
-                        <h5 class="text-center mb-5 weight-600">INVOICE</h5>
+                        {{-- <h5 class="text-center mb-5 weight-600">INVOICE</h5> --}}
                         <div class="row pb-30">
                             <div class="col-md-6">
                                 <p class="font-14 mb-5">Full name: <strong class="weight-600" id="tenantName">Lưu Hoài
@@ -277,22 +275,11 @@
                                     <div id="otherServices">
 
                                     </div>
-
-                                    {{-- <div class="invoice-desc-head clearfix">
-                                        <div class="invoice-sub"></div>
-                                        <div class="invoice-rate"></div>
-                                        <div class="invoice-subtotal text-center"></div>
-                                    </div> --}}
                                     <div class="invoice-desc-body">
                                         <ul>
                                             <li class="clearfix">
-                                                <div class="invoice-sub">
-                                                    <p class="font-14 mb-5">Account No: <strong class="weight-600">123 456
-                                                            789</strong></p>
-                                                    <p class="font-14 mb-5">Code: <strong class="weight-600">4556</strong>
-                                                    </p>
-                                                </div>
-                                                <div class="invoice-rate font-20 weight-600">10 Jan 2018</div>
+                                                <div class="invoice-sub"></div>
+                                                <div class="invoice-rate font-20 weight-600">Total</div>
                                                 <div class="invoice-subtotal text-center">
                                                     <span class="weight-600 font-24 text-danger"
                                                         id="totalBill">$8000</span>
@@ -344,32 +331,24 @@
                                 <input type="text" class="form-control form-control-sm" id="totalPrice" disabled>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-md-3 col-form-label">Paid amount</label>
-                            <div class="col-sm-12 col-md-8">
-                                <input type="text" class="form-control form-control-sm" id="paidAmount"
-                                    name="paidAmount">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-md-3 col-form-label">Debt</label>
-                            <div class="col-sm-12 col-md-8">
-                                <input type="text" class="form-control form-control-sm" id="debt" name="debt"
-                                    readonly>
-                            </div>
-                        </div>
-                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
-                            <div class="col-6">
+                        <div class="padding-bottom-30 row" style="max-width: 300px; margin: 0 auto;">
+                            <div class="col-4">
                                 <button type="button"
                                     class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
                                     data-dismiss="modal"><i class="fa fa-times"></i></button>
                                 Cancel
                             </div>
-                            <div class="col-6">
-                                <button type="submit"
+                            <div class="col-4">
+                                <button type="submit" name="status" value="unpaid"
+                                    class="btn btn-danger border-radius-100 btn-block confirmation-btn"><i
+                                        class="fa fa-times"></i></button>
+                                Unpaid
+                            </div>
+                            <div class="col-4">
+                                <button type="submit" name="status" value="paid"
                                     class="btn btn-primary border-radius-100 btn-block confirmation-btn"><i
                                         class="fa fa-check"></i></button>
-                                Update
+                                Paid
                             </div>
                         </div>
                     </form>
@@ -386,22 +365,8 @@
                     var id = e.getAttribute('data-billID');
                     var totalPrice = parseFloat(e.getAttribute('data-totalPrice'));
 
-                    var paidAmount = parseFloat(e.getAttribute('data-paidAmount'));
-                    var debt = parseFloat(e.getAttribute('data-debt'));
-
                     var inputTotal = document.querySelector('#totalPrice');
-                    var inputPaid = document.querySelector('#paidAmount');
-                    var inputDebt = document.querySelector('#debt');
-
                     inputTotal.value = totalPrice.toLocaleString();
-
-                    if (paidAmount) {
-                        inputPaid.value = paidAmount.toLocaleString();
-                        inputDebt.value = debt.toLocaleString();
-                    } else {
-                        inputPaid.value = totalPrice.toLocaleString();
-                        inputDebt.value = 0;
-                    }
 
                     var form = document.querySelector('#update-status-form');
                     form.action = "{{ route('update-status-bill', ':id') }}".replace(':id', id);
@@ -409,36 +374,6 @@
                     $('#update-status').modal('show');
                 });
             });
-        });
-
-        var inputTotalPrice = document.querySelector('#totalPrice');
-        var inputPaidAmount = document.querySelector('#paidAmount');
-        var inputDebt = document.querySelector('#debt');
-
-        inputPaidAmount.addEventListener("input", formatNumber);
-
-        function formatNumber() {
-            if (this.value.length === 0) return;
-            // Get the input value and remove any non-numeric characters except for the decimal point
-            let input = this.value.replace(/[^0-9.]/g, "");
-
-            // Parse the input as a float and format it with commas as thousands separators
-            let formatted = parseFloat(input).toLocaleString();
-
-            // Update the input value with the formatted value
-            this.value = formatted;
-        }
-
-        inputPaidAmount.addEventListener('input', function() {
-            var totalPrice = parseFloat(inputTotalPrice.value.replace(/,/g, ''));
-            var paidAmount = parseFloat(inputPaidAmount.value.replace(/,/g, ''));
-
-            if (paidAmount > totalPrice) {
-                inputPaidAmount.value = totalPrice.toLocaleString();
-                inputDebt.value = 0;
-            } else {
-                inputDebt.value = (totalPrice - paidAmount).toLocaleString();
-            }
         });
     </script>
 

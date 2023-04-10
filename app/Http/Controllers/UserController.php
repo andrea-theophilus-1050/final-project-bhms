@@ -13,6 +13,7 @@ use App\Exports\ExportUser;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Auth\Events\Registered;
 use App\Models\Services;
+use App\Models\Notification;
 
 class UserController extends Controller
 {
@@ -265,6 +266,15 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('login')->with('success', 'Logout successful!');
+    }
+
+    public function clearNotification()
+    {
+        $notification = Notification::where('user_id', auth()->user()->id)->get();
+        foreach ($notification as $item) {
+            $item->delete();
+        }
+        return redirect()->back();
     }
 
     //Test export excel - need to delete

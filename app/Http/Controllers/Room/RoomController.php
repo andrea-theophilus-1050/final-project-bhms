@@ -84,6 +84,18 @@ class RoomController extends Controller
         return redirect()->route('room.index', $house_id)->with('success', 'Room has been deleted successfully');
     }
 
+    public function deleteMultiple(Request $request)
+    {
+        $selectedRooms = $request->selectedRoom;
+
+        foreach ($selectedRooms as $room) {
+            $room = Room::find($room);
+            $room->delete();
+        }
+
+        return redirect()->back()->with('success', 'Rooms have been deleted successfully');
+    }
+
     public function assignTenant($id)
     {
         $room = Room::find($id);

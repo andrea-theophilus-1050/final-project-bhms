@@ -114,6 +114,7 @@ Route::middleware('setLocale')->group(function () {
                                 Route::post('room/{id}/add-multiple-room-action', 'addMultipleRooms')->name('room.add.multiple');
                                 Route::post('room/{id}/update-action', 'update')->name('room.update');
                                 Route::post('room/{id}/room-delete', 'delete')->name('room.delete');
+                                Route::post('room/delete-multiple', 'deleteMultiple')->name('room.delete.multiple');
 
                                 Route::get('room/{id}/assignTenant', 'assignTenant')->name('room.assign-tenant');
                                 Route::post('room/{id}/assignTenant', 'assignTenant_action')->name('room.assign-tenant-action');
@@ -193,6 +194,8 @@ Route::middleware('setLocale')->group(function () {
             Route::controller(UserController::class)->group(function () {
                 Route::get('/dashboard/profile', 'profile')->name('profile');
                 Route::post('/dashboard/update-profile', 'updateProfile')->name('update-profile');
+
+                Route::get('clear-notification', 'clearNotification')->name('clear-notification');
             });
         });
     });
@@ -223,6 +226,8 @@ Route::middleware('setLocale')->group(function () {
 
                 Route::get('payment-status', 'paymentStatus')->name('role.tenants.payment-status');
                 Route::post('update-bill-status', 'updateBillStatus')->name('payment.update-bill-status');
+
+                Route::get('clear-notification', 'clearNotification')->name('role.tenants.clear-notification');
             });
 
             Route::controller(TenantPaymentVNPayController::class)->group(function () {

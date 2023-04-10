@@ -43,6 +43,7 @@
                                 <th scope="col" class="text-center">Date sent</th>
                                 <th scope="col" class="text-center">Sent by</th>
                                 <th scope="col" class="text-center">Status</th>
+                                <th scope="col">Your response</th>
                                 <th scope="col">Details</th>
                             </tr>
                         </thead>
@@ -66,17 +67,8 @@
                                             <span class="badge badge-pill badge-danger">Rejected</span>
                                         @endif
                                     </td>
+                                    <td style="max-width: 400px">{{ $feedback->response }}</td>
                                     <td>
-                                        {{-- <button id="delete-feedback-btn" type="button"
-                                            data-ID="{{ $feedback->feedback_id }}" class="btn btn-danger btn-sm"><i
-                                                class="fa fa-trash"></i></button>
-                                        @if ($feedback->status == 0)
-                                            <button id="edit-feedback-btn" type="button"
-                                                data-ID="{{ $feedback->feedback_id }}"
-                                                data-content="{{ $feedback->content }}"
-                                                data-anonymous="{{ $feedback->anonymous }}"
-                                                class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
-                                        @endif --}}
                                         <button class="btn btn-primary btn-sm" data-id="{{ $feedback->feedback_id }}"
                                             data-content="{{ $feedback->content }}" id="solve-btn">
                                             <i class="fa fa-info"></i>
@@ -100,15 +92,21 @@
 
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
-                <div class="modal-body text-center font-18">
+                <div class="modal-body font-18">
 
                     <form id="solve-form" method="post">
                         @csrf
                         <input type="hidden" name="id" id="idFeedback">
+                        <div class="form-group mb-3">
+                            <label for="feedbackContent">Feedback content</label>
+                            <textarea class="form-control mb-10" id="feedbackContent" cols="30" rows="10" readonly></textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Type your response</label>
+                            <input type="text" class="form-control" name="response">
+                        </div>
 
-                        <textarea class="form-control mb-10" id="feedbackContent" cols="30" rows="10" readonly></textarea>
-
-                        <div class="padding-bottom-30 row" style="max-width: 300px; margin: 0 auto;">
+                        <div class="padding-bottom-30 row text-center" style="max-width: 300px; margin: 0 auto;">
                             <div class="col-6">
                                 <button type="submit" name="btnSolve" value="reject"
                                     class="btn btn-danger border-radius-100 btn-block confirmation-btn"><i

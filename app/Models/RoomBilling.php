@@ -16,8 +16,6 @@ class RoomBilling extends Model
     protected $fillable = [
         'rental_room_id',
         'total_price',
-        'paidAmount',
-        'debt',
         'date',
         'status'
     ];

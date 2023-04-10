@@ -28,7 +28,7 @@
                 </div>
             </div>
             @foreach ($data->roomBills as $bill)
-                <div class="pd-20 card-box mb-30" @if ($bill->status != 0) style="background-color: #F7F7F7" @endif>
+                <div class="pd-20 card-box mb-30" @if ($bill->status != 0) style="background-color: #F7F7F7" @endif id="notify-{{ $bill->id }}">
                     <div class="clearfix">
                         <div class="table-responsive">
                             <div class="pull-right mb-10">

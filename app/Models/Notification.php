@@ -4,21 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 use App\Models\Tenant;
 
-class Feedback extends Model
+class Notification extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_feedbacks';
-    protected $primaryKey = 'feedback_id';
+    protected $table = 'tb_notification';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'content',
-        'status',
-        'response',
+        'url',
+        'user_id',
         'tenant_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 
     public function tenant()
     {

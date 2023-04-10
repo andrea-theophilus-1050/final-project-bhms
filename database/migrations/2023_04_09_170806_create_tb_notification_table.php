@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tb_feedbacks', function (Blueprint $table) {
-            $table->id('feedback_id');
+        Schema::create('tb_notification', function (Blueprint $table) {
+            $table->id();
             $table->string('content');
-            $table->tinyInteger('status')->default(0); // 0: not read, 1: read
-            $table->string('response')->nullable();
-            $table->unsignedBigInteger('tenant_id');
-            $table->foreign('tenant_id')->references('tenant_id')->on('tb_main_tenants')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('url');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('tb_user');
+            $table->unsignedBigInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('tenant_id')->on('tb_main_tenants');
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_feedbacks');
+        Schema::dropIfExists('tb_notification');
     }
 };

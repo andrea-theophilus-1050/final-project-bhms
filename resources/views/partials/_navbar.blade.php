@@ -47,60 +47,51 @@
                 </a>
             </div>
         </div> --}}
+
+        @php
+            $notifications = Auth::user()
+                ->notifications()
+                ->latest('created_at')
+                ->get();
+        @endphp
+
         <div class="user-notification">
             <div class="dropdown">
                 <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
                     <i class="icon-copy dw dw-notification"></i>
-                    <span class="badge notification-active"></span>
+                    @if ($notifications->count() > 0)
+                        <span class="badge notification-active"></span>
+                    @endif
                 </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <div class="notification-list mx-h-350 customscroll">
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <img src="vendors/images/img.jpg" alt="">
-                                    <h3>John Doe</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="vendors/images/photo1.jpg" alt="">
-                                    <h3>Lea R. Frith</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="vendors/images/photo2.jpg" alt="">
-                                    <h3>Erik L. Richards</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="vendors/images/photo3.jpg" alt="">
-                                    <h3>John Doe</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="vendors/images/photo4.jpg" alt="">
-                                    <h3>Renee I. Hansen</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="vendors/images/img.jpg" alt="">
-                                    <h3>Vicki M. Coleman</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                </a>
-                            </li>
-                        </ul>
+                @if ($notifications->count() > 0)
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="notification-list ml-2 mb-3">
+                            <a href="{{ route('clear-notification') }}">
+                                <i class="fa fa-trash"></i>&nbsp;&nbsp;Clear all notifications</a>
+                        </div>
+                        <div class="notification-list mx-h-350 customscroll">
+                            <ul>
+                                @foreach ($notifications as $notify)
+                                    <li>
+                                        <a href="{{ $notify->url }}">
+                                            <img src="{{ asset('vendors/images/bell-notify.png') }}" alt="">
+                                            <h3>Bill status</h3>
+                                            <p>{{ $notify->content }}</p>
+
+                                            <span style="font-size: 10px">{{ $notify->created_at->diffForHumans() }}</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                @else
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="notification-list mx-h-350 text-center">
+                            <p>There is no notification</p>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
 

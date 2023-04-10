@@ -16,8 +16,6 @@ return new class extends Migration
         Schema::create('tb_room_billing', function (Blueprint $table) {
             $table->id();
             $table->string('total_price');
-            $table->string('paidAmount')->default(0);
-            $table->string('debt')->default(0);
             $table->tinyInteger('status')->default(0);
             $table->string('date');
             $table->unsignedBigInteger('rental_room_id');
