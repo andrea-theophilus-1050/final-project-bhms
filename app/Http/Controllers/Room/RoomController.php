@@ -22,6 +22,7 @@ class RoomController extends Controller
             ->join('tb_type_service', 'tb_type_service.type_id', '=', 'tb_services.type_id')
             ->join('tb_rental_room', 'tb_rental_room.rental_room_id', '=', 'tb_services_used.rental_room_id')
             ->join('tb_rooms', 'tb_rooms.room_id', '=', 'tb_rental_room.room_id')
+            ->join('tb_main_tenants', 'tb_main_tenants.tenant_id', '=', 'tb_rental_room.tenant_id')
             ->get();
 
         $countTotal = Room::where('house_id', $id)->count();

@@ -13,6 +13,7 @@ use App\Models\VNPayPayment;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmail;
 use App\Models\Notification;
+use App\Models\Revenue;
 
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -61,6 +62,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function notifications()
     {
         return $this->hasMany(Notification::class, 'user_id');
+    }
+
+    public function revenues()
+    {
+        return $this->hasMany(Revenue::class, 'user_id');
     }
 
     public function sendPasswordResetNotification($token)

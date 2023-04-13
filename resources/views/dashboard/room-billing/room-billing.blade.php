@@ -83,6 +83,9 @@
                                 <th scope="col">Status</th>
                                 <th scope="col">Details</th>
                                 <th scope="col">Action</th>
+                                @if (collect($data)->where('status', '!=', 0)->count() > 0)
+                                    <th scope="col">Return room</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -126,6 +129,15 @@
                                             </button>
                                         @endif
                                     </td>
+                                    @if ($bill->status != 0)
+                                        <td>
+                                            <button class="btn btn-danger btn-sm" id="return-room-btn" type="button"
+                                                data-billID="{{ collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->id }}"
+                                                data-totalPrice="{{ $bill->total }}">
+                                                <i class="icon-copy dw dw-tick"></i> &nbsp; Return room
+                                            </button>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>

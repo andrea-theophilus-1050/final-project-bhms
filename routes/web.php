@@ -164,8 +164,8 @@ Route::middleware('setLocale')->group(function () {
                         Route::controller(ReturnRoomController::class)->group(function () {
                             Route::post('room/return', 'returnRoom')->name('room.return');
 
-                            Route::get('handle-returned-room/{roomID}/{tenantID}/{rentalID}', 'handleReturnedRoom')->name('handle-returned-room');
-                            Route::post('service-insert', 'serviceInsert')->name('return.service-bill.insert');
+                            // Route::get('handle-returned-room/{roomID}/{tenantID}/{rentalID}', 'handleReturnedRoom')->name('handle-returned-room');
+                            // Route::post('service-insert', 'serviceInsert')->name('return.service-bill.insert');
                         });
 
                         Route::get('export-bill-pdf/{month}/{house}', [ExportPDFController::class, 'exportPDF'])->name('export-pdf');

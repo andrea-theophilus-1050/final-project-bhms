@@ -13,7 +13,7 @@ class DashboardController extends Controller
     // home dashboard
     public function index()
     {
-        $revenueByMonth = DB::table('tb_room_billing')
+        $revenueByMonth = DB::table('tb_revenue')
             ->select(DB::raw("date as month"), DB::raw('SUM(total_price) as total_price'))
             ->where('date', 'LIKE', '% ' . date('Y') . '%')
             ->groupBy('month')
@@ -33,7 +33,7 @@ class DashboardController extends Controller
             ->where('tb_house.user_id', auth()->user()->id)
             ->where('tb_rooms.status', 1)->count();
 
-        $percentOccupiedRooms = ($occupiedRooms / $totalRooms) * 100;
+        $percentOccupiedRooms = number_format((($occupiedRooms / $totalRooms) * 100), 0);
 
         return view('dashboard.index', compact(['revenueByMonth', 'unpaidBill', 'percentOccupiedRooms']))->with('title', 'Dashboard');
 

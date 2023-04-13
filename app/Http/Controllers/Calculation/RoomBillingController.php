@@ -8,6 +8,7 @@ use App\Models\House;
 use Illuminate\Support\Facades\DB;
 use App\Models\RoomBilling;
 use App\Models\Notification;
+use App\Models\Revenue;
 
 
 class RoomBillingController extends Controller
@@ -69,6 +70,30 @@ class RoomBillingController extends Controller
         switch ($btnSubmit) {
             case 'paid':
                 $roomBilling->status = 1;
+                $roomBilling->save();
+
+                // Retrieve the previous revenue record for the same date and user_id
+                $revenue = Revenue::where('date', $roomBilling->date)
+                    ->where('user_id', auth()->user()->id)
+                    ->orderBy('created_at', 'desc')
+                    ->first();
+
+                if ($revenue) {
+                    // Create a new revenue record                    
+                    $revenue->date = $roomBilling->date;
+                    $revenue->total_price = $revenue->total_price + $roomBilling->total_price;
+                    $revenue->user_id = auth()->user()->id;
+                    $revenue->save();
+                } else {
+                    // Create a new revenue record
+                    $revenue = new Revenue();
+                    $revenue->date = $roomBilling->date;
+                    $revenue->total_price = $roomBilling->total_price;
+                    $revenue->user_id = auth()->user()->id;
+                    $revenue->save();
+                }
+
+
                 break;
             case 'unpaid':
                 $roomBilling->status = 0;
@@ -101,6 +126,7 @@ class RoomBillingController extends Controller
                 ->where('tb_water_bill.date', $month)
                 ->select(
                     'tb_rental_room.rental_room_id',
+                    'tb_rental_room.status',
                     'tb_water_bill.new_water_index',
                     'tb_water_bill.old_water_index',
                     'tb_water_bill.date',
@@ -129,6 +155,7 @@ class RoomBillingController extends Controller
                 ->where('tb_water_bill.date', $month)
                 ->select(
                     'tb_rental_room.rental_room_id',
+                    'tb_rental_room.status',
                     'tb_water_bill.new_water_index',
                     'tb_water_bill.old_water_index',
                     'tb_water_bill.date',
@@ -164,6 +191,7 @@ class RoomBillingController extends Controller
                 ->where('tb_electricity_bill.date', $month)
                 ->select(
                     'tb_rental_room.rental_room_id',
+                    'tb_rental_room.status',
                     'tb_electricity_bill.new_electricity_index',
                     'tb_electricity_bill.old_electricity_index',
                     'tb_electricity_bill.date',
@@ -192,6 +220,7 @@ class RoomBillingController extends Controller
                 ->where('tb_electricity_bill.date', $month)
                 ->select(
                     'tb_rental_room.rental_room_id',
+                    'tb_rental_room.status',
                     'tb_electricity_bill.new_electricity_index',
                     'tb_electricity_bill.old_electricity_index',
                     'tb_electricity_bill.date',
@@ -222,6 +251,7 @@ class RoomBillingController extends Controller
                 ->where('tb_costs_incurred.date', $month)
                 ->select(
                     'tb_rental_room.rental_room_id',
+                    'tb_rental_room.status',
                     'tb_costs_incurred.date',
                     'tb_costs_incurred.price',
                     'tb_costs_incurred.reason',
@@ -240,6 +270,7 @@ class RoomBillingController extends Controller
                 ->where('tb_costs_incurred.date', $month)
                 ->select(
                     'tb_rental_room.rental_room_id',
+                    'tb_rental_room.status',
                     'tb_costs_incurred.date',
                     'tb_costs_incurred.price',
                     'tb_costs_incurred.reason',
@@ -288,6 +319,7 @@ class RoomBillingController extends Controller
 
                     // NOTE: Get the room's, house's, and tenant's information 
                     $result->rental_room_id = $waterBill->rental_room_id;
+                    $result->status = $waterBill->status;
                     $result->house_name = $waterBill->house_name;
                     $result->house_address = $waterBill->house_address;
                     $result->room_name = $waterBill->room_name;
@@ -346,7 +378,7 @@ class RoomBillingController extends Controller
                         $roomBilling->save();
 
                         // check exists notification
-                        $notification = Notification::where('url', $roomBilling->id)->where('status', 0)->first();
+                        $notification = Notification::where('url', $roomBilling->id)->first();
                         if (!$notification) {
                             $notification = new Notification();
                             $notification->content = 'The room bill for ' . $roomBilling->date . ' has been created.';

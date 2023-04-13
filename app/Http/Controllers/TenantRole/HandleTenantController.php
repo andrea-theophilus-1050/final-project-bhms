@@ -10,6 +10,7 @@ use App\Models\RentalRoom;
 use Illuminate\Support\Facades\DB;
 use Nette\Utils\DateTime;
 use App\Models\Notification;
+use App\Models\Revenue;
 
 class HandleTenantController extends Controller
 {
@@ -187,9 +188,29 @@ class HandleTenantController extends Controller
 
         if ($responseCode == '00') {
             $roomBilling = RoomBilling::find($billID);
-            $roomBilling->paidAmount = $totalPrice;
             $roomBilling->status = 1;
             $roomBilling->save();
+
+            // Retrieve the previous revenue record for the same date and user_id
+            $revenue = Revenue::where('date', $roomBilling->date)
+                ->where('user_id', $roomBilling->rentalRoom->rooms->houses->users->id)
+                ->orderBy('created_at', 'desc')
+                ->first();
+
+            if ($revenue) {
+                // Create a new revenue record                    
+                $revenue->date = $roomBilling->date;
+                $revenue->total_price = $revenue->total_price + $roomBilling->total_price;
+                $revenue->user_id = $roomBilling->rentalRoom->rooms->houses->users->id;
+                $revenue->save();
+            } else {
+                // Create a new revenue record
+                $revenue = new Revenue();
+                $revenue->date = $roomBilling->date;
+                $revenue->total_price = $roomBilling->total_price;
+                $revenue->user_id = $roomBilling->rentalRoom->rooms->houses->users->id;
+                $revenue->save();
+            }
 
             // check exists notification
             $checkNotification = Notification::where('url', $roomBilling->id)->first();
@@ -216,20 +237,19 @@ class HandleTenantController extends Controller
 
     public function updateBillStatus(Request $request)
     {
-        $roomBilling = RoomBilling::find($request->billID);
-        $roomBilling->paidAmount = $request->paidAmount;
-        $roomBilling->status = 1;
-        $roomBilling->save();
+        // $roomBilling = RoomBilling::find($request->billID);
+        // $roomBilling->status = 1;
+        // $roomBilling->save();
 
-        // check exists notification
-        $checkNotification = Notification::where('url', $roomBilling->id)->first();
-        if (!$checkNotification) {
-            $notification = new Notification();
-            $notification->content = $roomBilling->rentalRoom->tenants->name . ' has paid for bill ' . $roomBilling->date;
-            $notification->user_id = $roomBilling->rentalRoom->rooms->houses->users->id;
-            $notification->url = $roomBilling->id;
-            $notification->save();
-        }
+        // // check exists notification
+        // $checkNotification = Notification::where('url', $roomBilling->id)->first();
+        // if (!$checkNotification) {
+        //     $notification = new Notification();
+        //     $notification->content = $roomBilling->rentalRoom->tenants->name . ' has paid for bill ' . $roomBilling->date;
+        //     $notification->user_id = $roomBilling->rentalRoom->rooms->houses->users->id;
+        //     $notification->url = $roomBilling->id;
+        //     $notification->save();
+        // }
 
         return redirect()->route('role.tenants.index');
     }
