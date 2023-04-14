@@ -10,7 +10,7 @@
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Room billing</li>
                             </ol>
                         </nav>
@@ -83,9 +83,7 @@
                                 <th scope="col">Status</th>
                                 <th scope="col">Details</th>
                                 <th scope="col">Action</th>
-                                @if (collect($data)->where('status', '!=', 0)->count() > 0)
-                                    <th scope="col">Return room</th>
-                                @endif
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -129,15 +127,19 @@
                                             </button>
                                         @endif
                                     </td>
-                                    @if ($bill->status != 0)
-                                        <td>
+                                    <td>
+                                        @if (collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->status != 0 &&
+                                                $bill->status != 0 &&
+                                                Carbon\Carbon::parse($bill->end_date)->format('F Y') == $month)
                                             <button class="btn btn-danger btn-sm" id="return-room-btn" type="button"
-                                                data-billID="{{ collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->id }}"
-                                                data-totalPrice="{{ $bill->total }}">
+                                                data-rentalRoomID="{{ $bill->rental_room_id }}"
+                                                data-roomID="{{ $bill->room_id }}" data-tenantID="{{ $bill->tenant_id }}"
+                                                data-tenantName="{{ $bill->tenant_name }}"
+                                                data-roomName="{{ $bill->room_name }}">
                                                 <i class="icon-copy dw dw-tick"></i> &nbsp; Return room
                                             </button>
-                                        </td>
-                                    @endif
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -369,6 +371,59 @@
         </div>
     </div>
     {{-- SECTION-END: confirm delete popup --}}
+
+    {{-- SECTION-START: confirm delete popup --}}
+    <div class="modal fade" id="return-room-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center font-18">
+                    <h4 class="padding-top-30 weight-500" id="msg-delete-confirm">Room return confirmation!</h4>
+                    <h6 class="padding-top-10 mb-30 weight-500 text-danger">Information will be deleted and cannot be
+                        recovered.</h6>
+                    <form id="return-room-form" method="post">
+                        @csrf
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 col-form-label">Tenant name</label>
+                            <div class="col-sm-12 col-md-8">
+                                <input type="hidden" id="inputTenantID" name="tenantID">
+                                <input type="text" class="form-control form-control-sm" id="inputFullname" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 col-form-label">Room name</label>
+                            <div class="col-sm-12 col-md-8">
+                                <input type="hidden" id="inputRoomID" name="roomID">
+                                <input type="hidden" id="inputRentalRoomID" name="rentalRoomID">
+                                <input type="text" class="form-control form-control-sm" id="inputRoomName" disabled>
+                            </div>
+                        </div>
+
+                        <div class="padding-bottom-30 row" style="max-width: 400px; margin: 0 auto;">
+                            <div class="col-4">
+                                <button type="button"
+                                    class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+                                    data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                Cancel
+                            </div>
+                            <div class="col-4">
+                                <button type="submit" name="status" value="unpaid"
+                                    class="btn btn-danger border-radius-100 btn-block confirmation-btn"><i
+                                        class="fa fa-times"></i></button>
+                                Not return
+                            </div>
+                            <div class="col-4">
+                                <button type="submit" name="status" value="return"
+                                    class="btn btn-primary border-radius-100 btn-block confirmation-btn"><i
+                                        class="fa fa-check"></i></button>
+                                Return
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- SECTION-END: confirm delete popup --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var updateStatusBtn = document.querySelectorAll('#update-status-btn');
@@ -384,6 +439,34 @@
                     form.action = "{{ route('update-status-bill', ':id') }}".replace(':id', id);
 
                     $('#update-status').modal('show');
+                });
+            });
+
+            var returnRoom = document.querySelectorAll('#return-room-btn');
+            returnRoom.forEach(function(e) {
+                e.addEventListener('click', function() {
+                    var roomID = e.getAttribute('data-roomID');
+                    var roomName = e.getAttribute('data-roomName');
+                    var rentalRoomID = e.getAttribute('data-rentalRoomID');
+                    var tenantID = e.getAttribute('data-tenantID');
+                    var tenantName = e.getAttribute('data-tenantName');
+
+                    var inputTenantID = document.querySelector('#inputTenantID');
+                    var inputFullname = document.querySelector('#inputFullname');
+                    var inputRentalRoomID = document.querySelector('#inputRentalRoomID');
+                    var inputRoomID = document.querySelector('#inputRoomID');
+                    var inputRoomName = document.querySelector('#inputRoomName');
+
+                    inputTenantID.value = tenantID;
+                    inputFullname.value = tenantName;
+                    inputRentalRoomID.value = rentalRoomID;
+                    inputRoomID.value = roomID;
+                    inputRoomName.value = roomName;
+
+                    var form = document.querySelector('#return-room-form');
+                    form.action = "{{ route('confirm-return-room') }}";
+
+                    $('#return-room-modal').modal('show');
                 });
             });
         });

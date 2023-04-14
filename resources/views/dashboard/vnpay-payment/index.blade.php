@@ -10,7 +10,7 @@
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Config VNPay payment</li>
                             </ol>
                         </nav>
@@ -21,7 +21,18 @@
             <div class="pd-20 card-box mb-30">
                 <div class="clearfix mb-20">
                     <div class="pull-left">
-                        <h4 class="text-blue h4"></h4>
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                                <ul style="list-style-type:circle">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
                     </div>
                     @if (auth()->user()->paymentVNPay == null)
                         <div class="pull-right">
@@ -84,13 +95,13 @@
                         <div class="form-group row">
                             <label class="col-md-4">vnp_TmnCode</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="vnp_TmnCode">
+                                <input type="text" class="form-control" name="vnp_TmnCode" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4">vnp_HashSecret</label>
                             <div class="col-md-8">
-                                <input class="form-control" name="vnp_HashSecret">
+                                <input class="form-control" name="vnp_HashSecret" required>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -122,13 +133,14 @@
                         <div class="form-group row">
                             <label class="col-md-4">vnp_TmnCode</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="vnp_TmnCode" id="vnp_TmnCode_edit">
+                                <input type="text" class="form-control" name="vnp_TmnCode" id="vnp_TmnCode_edit"
+                                    required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4">vnp_HashSecret</label>
                             <div class="col-md-8">
-                                <input class="form-control" name="vnp_HashSecret" id="vnp_HashSecret_edit">
+                                <input class="form-control" name="vnp_HashSecret" id="vnp_HashSecret_edit" required>
                             </div>
                         </div>
                         <div class="modal-footer">

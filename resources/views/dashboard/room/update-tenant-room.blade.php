@@ -5,16 +5,16 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="title">
-                        <h4>@lang('messages.navAssignTenant')</h4>
+                        <h4>Update services used</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('house.index') }}">@lang('messages.navHouse')</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('house.index') }}">House management</a></li>
                             <li class="breadcrumb-item" aria-current="page"><a
-                                    href="{{ route('room.index', $rental->rooms->houses->house_id) }}">@lang('messages.navRoom')</a>
+                                    href="{{ route('room.index', $rental->rooms->houses->house_id) }}">Room management</a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">@lang('messages.navAssignTenant')</li>
+                            <li class="breadcrumb-item active" aria-current="page">Update services used</li>
                         </ol>
                     </nav>
                 </div>
@@ -23,16 +23,22 @@
 
 
         <div class="pd-20 card-box mb-30">
-            <div class="pull-right">
-                <button class="btn btn-primary" type="submit" onclick="submitForm()"><i
-                        class="icon-copy dw dw-diskette2"></i> &nbsp; Submit</button>
-                <a class="btn btn-danger" href="{{ route('room.index', $rental->rooms->houses->house_id) }}"><i
-                        class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Cancel</a>
-            </div>
             <form id="assignTenant" method="post"
                 action="{{ route('room.update-tenant-action', [$rental->rooms->houses->house_id, $rental->rental_room_id]) }}">
                 @csrf
-                <h5 class="h5 text-blue mb-20">Services</h5>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <h5 class="h5 text-blue mb-20">Services</h5>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="icon-copy dw dw-diskette2"></i> &nbsp;
+                            Submit</button>
+                        <a class="btn btn-danger" href="{{ route('room.index', $rental->rooms->houses->house_id) }}">
+                            <i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Cancel</a>
+                    </div>
+                </div>
+
                 {{-- NOTE: Services section --}}
                 <div class="table-responsive">
                     <table class="table table-striped" id="house-table">
@@ -42,7 +48,6 @@
                                 <th scope="col">No. </th>
                                 <th scope="col">Service name</th>
                                 <th scope="col">Price</th>
-
                             </tr>
                         </thead>
                         <tbody>
@@ -71,9 +76,9 @@
                                     <td>
                                         <input type="hidden" class="form-control" value="{{ $service->service_id }}"
                                             name="serviceID[]">
-                                        <input type="text" class="form-control"
+                                        <input type="number" class="form-control"
                                             value="{{ $rental->servicesUsed->where('service_id', $service->service_id)->first() != null ? $rental->servicesUsed->where('service_id', $service->service_id)->first()->price_if_changed : $service->price }}"
-                                            name="servicePrice[]" style="width: 250px">
+                                            name="servicePrice[]" style="width: 250px" required>
                                     </td>
                                 </tr>
                             @endforeach
@@ -185,45 +190,11 @@
         </div>
     </div>
 
-    {{-- SECTION-START: confirm delete popup --}}
-    <div class="modal fade" id="confirm-replace-tenant-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body text-center font-18">
-                    <h4 class="padding-top-30 mb-30 weight-500">Are you sure you want a
-                        replacement?<br>
-                        <span class="weight-400 font-16" id="msg-delete-confirm">This action cannot be undone.</span>
-                    </h4>
-                    <form id="delete-form" method="post">
-                        @csrf
-                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
-                            <div class="col-6">
-                                <button type="button"
-                                    class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
-                                    data-dismiss="modal"><i class="fa fa-times"></i></button>
-                                NO
-                            </div>
-                            <div class="col-6">
-                                <button type="submit"
-                                    class="btn btn-primary border-radius-100 btn-block confirmation-btn"><i
-                                        class="fa fa-check"></i></button>
-                                YES
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- SECTION-END: confirm delete popup --}}
 
-    <script>
-        function submitForm() {
-            document.getElementById('assignTenant').submit();
-        }
-    </script>
 
-    <script>
+
+
+    {{-- <script>
         document.addEventListener("DOMContentLoaded", function() {
             var changeTenantBtn = document.querySelectorAll('#btn-replace-tenant');
             changeTenantBtn.forEach(function(e) {
@@ -245,5 +216,5 @@
                 });
             });
         })
-    </script>
+    </script> --}}
 @endsection

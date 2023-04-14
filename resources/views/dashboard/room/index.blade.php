@@ -6,13 +6,13 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            <h4>@lang('messages.navRoom')</h4>
+                            <h4>Room management</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('house.index') }}">@lang('messages.navHouse')</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">@lang('messages.navRoom')</li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('house.index') }}">House management</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Room management</li>
                             </ol>
                         </nav>
                     </div>
@@ -207,17 +207,18 @@
 
                         <div class="clearfix mb-10">
                             <div class="pull-left">
-                                {{-- <form action="" method="POST" class="d-flex">
-                                    @csrf
-                                    <input type="hidden" value="{{ $rooms[0]->house_id }}">
-                                    <div class="input-group custom">
-                                        <div class="input-group-prepend custom">
-                                            <div class="input-group-text" id="btnGroupAddon"><i class="dw dw-search mr-2"></i></div>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm mr-2" placeholder="Search room">
-                                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                                @if ($errors->any())
+                                    <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                                        <ul style="list-style-type:circle">
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
-                                </form> --}}
+                                @endif
                             </div>
                             <div class="pull-right">
                                 <button data-toggle="modal" data-target="#room-add" class="btn btn-success btn-sm"><i
@@ -355,22 +356,16 @@
                                                                     </div>
                                                                 @else
                                                                     <div class="pull-left">
-                                                                        {{-- <a href="#"
+                                                                        <button type="button" id="return-room-btn"
                                                                             class="btn btn-outline-secondary btn-sm"
-                                                                            title="Return"><i
-                                                                                class="icon-copy dw dw-refresh2"></i></a> --}}
-                                                                        <form action="">
-                                                                            @csrf
-                                                                            <button type="button" id="return-room-btn"
-                                                                                class="btn btn-outline-secondary btn-sm"
-                                                                                title="Return"
-                                                                                data-roomID="{{ $room->room_id }}"
-                                                                                data-tenantID="{{ $room->rentals->tenant_id }}"
-                                                                                data-tenantName="{{ $room->rentals->tenants->fullname }}"
-                                                                                data-roomName="{{ $room->room_name }}"
-                                                                                data-rentalID="{{ $room->rentals->rental_room_id }}"><i
-                                                                                    class="icon-copy dw dw-refresh2"></i></button>
-                                                                        </form>
+                                                                            title="Return"
+                                                                            data-roomID="{{ $room->room_id }}"
+                                                                            data-tenantID="{{ $room->rentals->tenant_id }}"
+                                                                            data-tenantName="{{ $room->rentals->tenants->fullname }}"
+                                                                            data-roomName="{{ $room->room_name }}"
+                                                                            data-rentalID="{{ $room->rentals->rental_room_id }}">
+                                                                            <i class="icon-copy dw dw-refresh2"></i>
+                                                                        </button>
                                                                     </div>
                                                                 @endif
 
@@ -456,13 +451,13 @@
                         <div class="form-group row">
                             <label class="col-md-4">Room name</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="room_name">
+                                <input type="text" class="form-control" name="room_name" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4">Price</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="price" id="price">
+                                <input type="text" class="form-control" name="price" id="price" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -556,13 +551,14 @@
                         <div class="form-group row">
                             <label class="col-md-4">Room name</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="room_name_edit" id="room_name_edit">
+                                <input type="text" class="form-control" name="room_name_edit" id="room_name_edit"
+                                    required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4">Price</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="price_edit" id="price_edit">
+                                <input type="text" class="form-control" name="price_edit" id="price_edit" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -760,11 +756,6 @@
 
                             {{-- NOTE: table for add new members start --}}
                             <div id="addMemebersTable">
-                                <div class="pull-right mb-10">
-                                    <button class="btn btn-primary btn-sm" type="submit" onclick="submitForm()"><i
-                                            class="icon-copy dw dw-diskette2"></i> &nbsp; Submit</button>
-
-                                </div>
                                 <div class="table-responsive">
                                     <form id="room-members" action="{{ route('assign-members') }}" method="POST"
                                         enctype="multipart/form-data">
@@ -775,6 +766,9 @@
                                                 <tr>
                                                     <th scope="col"
                                                         style="position: sticky; left: 0; z-index: 1; background: white">
+                                                        <button class="btn btn-primary btn-sm" type="submit"><i
+                                                            class="icon-copy dw dw-diskette2"></i> &nbsp;
+                                                        Submit</button>
                                                     </th>
                                                     <th scope="col">Full name </th>
                                                     <th scope="col">ID Card</th>
@@ -827,7 +821,7 @@
                                                     </td>
                                                     <td>
                                                         <input type='text' class='form-control' name='email[]'
-                                                            style="width: 200px" required>
+                                                            style="width: 200px">
                                                     </td>
                                                     <td>
                                                         <input type='text' class='form-control' name='hometown[]'
@@ -836,12 +830,12 @@
                                                     <td>
                                                         <input type='file' class='form-control'
                                                             name='idcard_front[]'style="width: 300px" accept="image/*"
-                                                            required>
+                                                            >
                                                     </td>
                                                     <td>
                                                         <input type='file' class='form-control'
                                                             name='idcard_back[]'style="width: 300px" accept="image/*"
-                                                            required>
+                                                            >
                                                     </td>
 
                                                 </tr>
@@ -893,7 +887,6 @@
                                             </p>
                                         </div>
                                         <div class="col-md-6">
-
                                             <p class="font-15 mb-5"><i class="icon-copy ion-transgender"></i> Gender:
                                                 <strong class="weight-600" id="modal_members_gender">
                                                     Members Gender
@@ -939,58 +932,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <ul>
-                                    <li class="clearfix">
-                                        <div class="invoice-sub">Website Design</div>
-                                        <div class="invoice-rate">$20</div>
-                                        <div class="invoice-hours">100</div>
-                                        <div class="invoice-subtotal"><span class="weight-600">$2000</span>
-                                        </div>
-                                    </li>
-                                    <li class="clearfix">
-                                        <div class="invoice-sub">Logo Design</div>
-                                        <div class="invoice-rate">$20</div>
-                                        <div class="invoice-hours">100</div>
-                                        <div class="invoice-subtotal"><span class="weight-600">$2000</span>
-                                        </div>
-                                    </li>
-                                    <li class="clearfix">
-                                        <div class="invoice-sub">Website Design</div>
-                                        <div class="invoice-rate">$20</div>
-                                        <div class="invoice-hours">100</div>
-                                        <div class="invoice-subtotal"><span class="weight-600">$2000</span>
-                                        </div>
-                                    </li>
-                                    <li class="clearfix">
-                                        <div class="invoice-sub">Logo Design</div>
-                                        <div class="invoice-rate">$20</div>
-                                        <div class="invoice-hours">100</div>
-                                        <div class="invoice-subtotal"><span class="weight-600">$2000</span>
-                                        </div>
-                                    </li>
-                                </ul> --}}
-                            {{-- </div> --}}
-                            {{-- <div class="invoice-desc-footer">
-                                <div class="invoice-desc-head clearfix">
-                                    <div class="invoice-sub">Bank Info</div>
-                                    <div class="invoice-rate">Due By</div>
-                                    <div class="invoice-subtotal">Total Due</div>
-                                </div>
-                                <div class="invoice-desc-body">
-                                    <ul>
-                                        <li class="clearfix">
-                                            <div class="invoice-sub">
-                                                <p class="font-14 mb-5">Account No: <strong class="weight-600">123 456
-                                                        789</strong></p>
-                                                <p class="font-14 mb-5">Code: <strong class="weight-600">4556</strong></p>
-                                            </div>
-                                            <div class="invoice-rate font-20 weight-600">10 Jan 2018</div>
-                                            <div class="invoice-subtotal"><span
-                                                    class="weight-600 font-24 text-danger">$8000</span></div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div> --}}
                         </div>
                         {{-- SECTION-END: room members --}}
                     </div>

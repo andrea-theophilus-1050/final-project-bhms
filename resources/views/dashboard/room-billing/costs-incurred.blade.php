@@ -6,12 +6,12 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            <h4>@lang('messages.navCostsIncurred')</h4>
+                            <h4>Costs incurred</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">@lang('messages.navCostsIncurred')</li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Costs incurred</li>
                             </ol>
                         </nav>
                     </div>
@@ -21,7 +21,12 @@
             <div class="pd-20 card-box mb-30">
                 <div class="clearfix mb-20">
                     <div class="pull-left">
-                        <h4 class="text-blue h4"></h4>
+                        <form action="{{ route('costs-incurred.filter') }}" class="d-flex justify-content-between align-items-center" method="POST">
+                            @csrf
+                            <input type="text" class="form-control form-control-sm month-picker mr-3"
+                                placeholder="Month picker" value="{{ $_GET['month'] }}" name="month-filter" required>
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
+                        </form>
                     </div>
                     <div class="pull-right">
                         <a href="{{ route('costs-incurred.add') }}" class="btn btn-success btn-sm"><i

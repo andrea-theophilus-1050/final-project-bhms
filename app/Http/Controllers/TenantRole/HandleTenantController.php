@@ -119,6 +119,10 @@ class HandleTenantController extends Controller
 
     public function sendFeedback(Request $request)
     {
+        // validate
+        $request->validate([
+            'contentFeedback' => 'required',
+        ]);
 
         $feedback = new Feedback();
         $feedback->content = $request->contentFeedback;
@@ -130,6 +134,11 @@ class HandleTenantController extends Controller
 
     public function updateFeedback(Request $request, $id)
     {
+        // validate
+        $request->validate([
+            'contentFeedback' => 'required',
+        ]);
+
         $feedback = Feedback::find($id);
         $feedback->content = $request->contentFeedback;
         $feedback->created_at = now();
@@ -235,22 +244,8 @@ class HandleTenantController extends Controller
         ]))->with('title', 'Payment Status');
     }
 
-    public function updateBillStatus(Request $request)
+    public function updateBillStatus()
     {
-        // $roomBilling = RoomBilling::find($request->billID);
-        // $roomBilling->status = 1;
-        // $roomBilling->save();
-
-        // // check exists notification
-        // $checkNotification = Notification::where('url', $roomBilling->id)->first();
-        // if (!$checkNotification) {
-        //     $notification = new Notification();
-        //     $notification->content = $roomBilling->rentalRoom->tenants->name . ' has paid for bill ' . $roomBilling->date;
-        //     $notification->user_id = $roomBilling->rentalRoom->rooms->houses->users->id;
-        //     $notification->url = $roomBilling->id;
-        //     $notification->save();
-        // }
-
         return redirect()->route('role.tenants.index');
     }
 

@@ -6,14 +6,14 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            <h4>@lang('messages.navUpdateTenant')</h4>
+                            <h4>Update tenant information</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                                 <li class="breadcrumb-item" aria-current="page"><a
-                                        href="{{ route('tenant.index') }}">@lang('messages.navTenant')</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">@lang('messages.navUpdateTenant')</li>
+                                        href="{{ route('tenant.index') }}">Tenants management</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Update tenant information</li>
                             </ol>
                         </nav>
                     </div>
@@ -24,6 +24,21 @@
                 <form method="post" action="{{ route('tenant.update', $tenant->tenant_id) }}">
                     @csrf
                     @method('PATCH')
+                    {{-- alert --}}
+                    @if ($errors->any())
+                        <div class="form-group row ml-1">
+                            <div class="alert alert-danger alert-dismissible fade show col-md-7" role="alert">
+                                <ul style="list-style-type:circle">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    @endif
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Full name</label>
                         <div class="col-sm-12 col-md-10">
@@ -135,8 +150,10 @@
                     <div class="form-group row">
                         <div class="col-sm-12 col-md-2"></div>
                         <div class="col-sm-12 col-md-10">
-                            <button class="btn btn-primary" type="submit"><i class="icon-copy dw dw-diskette2"></i> &nbsp; Submit</button>
-                            <a href="{{ route('tenant.index') }}" class="btn btn-danger"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp;  Cancel</a>
+                            <button class="btn btn-primary" type="submit"><i class="icon-copy dw dw-diskette2"></i>
+                                &nbsp; Submit</button>
+                            <a href="{{ route('tenant.index') }}" class="btn btn-danger"><i
+                                    class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Cancel</a>
                         </div>
                     </div>
                 </form>

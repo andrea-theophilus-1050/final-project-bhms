@@ -127,6 +127,7 @@ class RoomBillingController extends Controller
                 ->select(
                     'tb_rental_room.rental_room_id',
                     'tb_rental_room.status',
+                    'tb_rental_room.end_date',
                     'tb_water_bill.new_water_index',
                     'tb_water_bill.old_water_index',
                     'tb_water_bill.date',
@@ -156,6 +157,7 @@ class RoomBillingController extends Controller
                 ->select(
                     'tb_rental_room.rental_room_id',
                     'tb_rental_room.status',
+                    'tb_rental_room.end_date',
                     'tb_water_bill.new_water_index',
                     'tb_water_bill.old_water_index',
                     'tb_water_bill.date',
@@ -192,6 +194,7 @@ class RoomBillingController extends Controller
                 ->select(
                     'tb_rental_room.rental_room_id',
                     'tb_rental_room.status',
+                    'tb_rental_room.end_date',
                     'tb_electricity_bill.new_electricity_index',
                     'tb_electricity_bill.old_electricity_index',
                     'tb_electricity_bill.date',
@@ -221,6 +224,7 @@ class RoomBillingController extends Controller
                 ->select(
                     'tb_rental_room.rental_room_id',
                     'tb_rental_room.status',
+                    'tb_rental_room.end_date',
                     'tb_electricity_bill.new_electricity_index',
                     'tb_electricity_bill.old_electricity_index',
                     'tb_electricity_bill.date',
@@ -252,6 +256,7 @@ class RoomBillingController extends Controller
                 ->select(
                     'tb_rental_room.rental_room_id',
                     'tb_rental_room.status',
+                    'tb_rental_room.end_date',
                     'tb_costs_incurred.date',
                     'tb_costs_incurred.price',
                     'tb_costs_incurred.reason',
@@ -271,6 +276,7 @@ class RoomBillingController extends Controller
                 ->select(
                     'tb_rental_room.rental_room_id',
                     'tb_rental_room.status',
+                    'tb_rental_room.end_date',
                     'tb_costs_incurred.date',
                     'tb_costs_incurred.price',
                     'tb_costs_incurred.reason',
@@ -320,8 +326,10 @@ class RoomBillingController extends Controller
                     // NOTE: Get the room's, house's, and tenant's information 
                     $result->rental_room_id = $waterBill->rental_room_id;
                     $result->status = $waterBill->status;
+                    $result->end_date = $waterBill->end_date;
                     $result->house_name = $waterBill->house_name;
                     $result->house_address = $waterBill->house_address;
+                    $result->room_id = $waterBill->room_id;
                     $result->room_name = $waterBill->room_name;
                     $result->room_price = $waterBill->price;
                     $result->tenant_id = $waterBill->tenant_id;

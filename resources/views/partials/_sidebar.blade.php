@@ -15,7 +15,7 @@
                 <li class="dropdown">
                     <a href="{{ route('home') }}"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('home') ? 'active' : '' }}">
-                        <span class="micon fa fa-dashboard"></span><span class="mtext">@lang('messages.navHome')</span>
+                        <span class="micon fa fa-dashboard"></span><span class="mtext">Home</span>
                     </a>
                 </li>
                 <li class="dropdown">
@@ -27,16 +27,16 @@
                 <li class="dropdown">
                     <a href="{{ route('services.index') }}"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('services.index') ? 'active' : '' }}">
-                        <span class="micon dw dw-suitcase"></span><span class="mtext">@lang('messages.navService')</span>
+                        <span class="micon dw dw-suitcase"></span><span class="mtext">Services management</span>
                     </a>
                 </li>
                 <li class="dropdown">
                     <a href="{{ route('house.index') }}"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('house.index') || request()->routeIs('room.index') || request()->routeIs('room.assign-tenant') ? 'active' : '' }}">
-                        <span class="micon dw dw-house1"></span><span class="mtext">@lang('messages.navHouse')</span>
+                        <span class="micon dw dw-house1"></span><span class="mtext">House management</span>
                     </a>
                 </li>
-                
+
                 <li class="dropdown">
                     <a href="{{ route('electricity-bill', [now()->format('F Y'), 'all-house']) }}"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('electricity-bill') ? 'active' : '' }}">
@@ -52,27 +52,27 @@
                     </a>
                 </li>
                 <li class="dropdown">
-                    <a href="{{ route('costs-incurred') }}"
+                    <a href="{{ route('costs-incurred', ['month' => now()->format('F Y')]) }}"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('costs-incurred') ? 'active' : '' }}">
-                        <span class="micon dw dw-notebook"></span><span class="mtext">@lang('messages.navCostsIncurred')</span>
+                        <span class="micon dw dw-notebook"></span><span class="mtext">Costs incurred</span>
                     </a>
                 </li>
                 <li class="dropdown">
                     <a href="{{ route('room-billing', [now()->format('F Y'), 'all-house']) }}"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('room-billing') ? 'active' : '' }}">
-                        <span class="micon fa fa-calculator"></span><span class="mtext">@lang('messages.navRoomBilling')</span>
+                        <span class="micon fa fa-calculator"></span><span class="mtext">Room billing</span>
                     </a>
                 </li>
                 <li class="dropdown">
                     <a href="{{ route('feedback') }}"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('feedback') ? 'active' : '' }}">
-                        <span class="micon dw dw-chat-11"></span><span class="mtext">@lang('messages.navFeedback')</span>
+                        <span class="micon dw dw-chat-11"></span><span class="mtext">Feedback management</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('tenant.index') }}"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('tenant.index') || request()->routeIs('tenant.create') || request()->routeIs('tenant.edit') ? 'active' : '' }}">
-                        <span class="micon dw dw-user-2"></span><span class="mtext">@lang('messages.navTenant')</span>
+                        <span class="micon dw dw-user-2"></span><span class="mtext">Tenant management</span>
                     </a>
                 </li>
             </ul>

@@ -16,6 +16,12 @@ class PaymentVNPayController extends Controller
 
     public function store(Request $request)
     {
+        //validate
+        $request->validate([
+            'vnp_TmnCode' => 'required',
+            'vnp_HashSecret' => 'required',
+        ]);
+
         $payment = new VNPayPayment();
         $payment->vnp_TmnCode = $request->input('vnp_TmnCode');
         $payment->vnp_HashSecret = $request->input('vnp_HashSecret');
@@ -27,6 +33,12 @@ class PaymentVNPayController extends Controller
 
     public function update(Request $request, $id)
     {
+        //validate
+        $request->validate([
+            'vnp_TmnCode' => 'required',
+            'vnp_HashSecret' => 'required',
+        ]);
+
         $payment = VNPayPayment::find($id);
         $payment->vnp_TmnCode = $request->input('vnp_TmnCode');
         $payment->vnp_HashSecret = $request->input('vnp_HashSecret');

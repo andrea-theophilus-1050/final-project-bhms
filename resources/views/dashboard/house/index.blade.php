@@ -6,12 +6,12 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            <h4>@lang('messages.navHouse')</h4>
+                            <h4>House management</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">@lang('messages.navHouse')</li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">House management</li>
                             </ol>
                         </nav>
                     </div>
@@ -21,7 +21,18 @@
             <div class="pd-20 card-box mb-30">
                 <div class="clearfix mb-20">
                     <div class="pull-left">
-                        <h4 class="text-blue h4"></h4>
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                                <ul style="list-style-type:circle">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
                     </div>
                     <div class="pull-right">
                         <a href="javascript:;" data-toggle="modal" data-target="#house-add"

@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('tb_members', function (Blueprint $table) {
             $table->id('member_id');
-            $table->string('fullname');
-            $table->string('gender');
-            $table->string('dob');
-            $table->string('id_card');
-            $table->string('phone_number');
-            $table->string('email');
-            $table->string('hometown');
+            $table->string('fullname')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('dob')->nullable();
+            $table->string('id_card')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('email')->nullable();
+            $table->string('hometown')->nullable();
             $table->string('citizen_card_front_image')->nullable();
             $table->string('citizen_card_back_image')->nullable();
             $table->string('avatar')->nullable();

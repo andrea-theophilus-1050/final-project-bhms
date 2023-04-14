@@ -4,7 +4,7 @@
 <head>
     <!-- Basic Page Info -->
     <meta charset="utf-8">
-    <title>@lang('messages.titleTab')</title>
+    <title>Registration</title>
 
     <!-- Site favicon -->
     <link rel="shortcut icon" type="image/png" href="{{ asset('vendors/images/logo-login-register.png') }}">
@@ -48,27 +48,6 @@
                     <img src="{{ asset('vendors/images/logo-boarding-house.png') }}" alt="">
                 </a>
             </div>
-
-            {{-- NOTE: dropdownlist for change language --}}
-            <div class="dropdown">
-                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                    @if (app()->getLocale() == 'en')
-                        <img src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langEnglish')
-                    @elseif (app()->getLocale() == 'vie')
-                        <img src="{{ asset('vendors/images/Flag_Vietnam.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langVietnamese')
-                    @endif
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{{ route('lang-english') }}"><img
-                            src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langEnglish')</a>
-                    <a class="dropdown-item" href="{{ route('lang-vietnamese') }}"><img
-                            src="{{ asset('vendors/images/Flag_Vietnam.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langVietnamese')</a>
-                </div>
-            </div>
         </div>
     </div>
     <div class="register-page-wrap d-flex align-items-center flex-wrap justify-content-center">
@@ -80,7 +59,7 @@
                 <div class="col-md-6 col-lg-5">
                     <div class="login-box bg-white box-shadow border-radius-10">
                         <div class="login-title">
-                            <h2 class="text-center text-primary">@lang('messages.titleRegister')</h2>
+                            <h2 class="text-center text-primary">Sign up for Landlords</h2>
                         </div>
 
                         @if (session('errors'))
@@ -96,7 +75,7 @@
                             @csrf
                             <div class="input-group custom">
                                 <input type="text" class="form-control form-control-lg" id="username"
-                                    name="username" placeholder="@lang('messages.labelUsername')" autofocus autocomplete="on" required
+                                    name="username" placeholder="Username" autofocus autocomplete="on" required
                                     value="{{ old('username') }}">
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
@@ -105,20 +84,17 @@
 
                             <div class="input-group custom">
                                 <input type="email" class="form-control form-control-lg" id="email" name="email"
-                                    placeholder="@lang('messages.labelEmail')" autocomplete="on" required
-                                    value="{{ old('email') }}">
+                                    placeholder="Email address" autocomplete="on" required value="{{ old('email') }}">
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="icon-copy dw dw-email1"></i></span>
                                 </div>
                             </div>
 
                             <div class="input-group custom">
-                                <input type="password" class="form-control form-control-lg"
-                                    placeholder="@lang('messages.labelPassword')" id="password" name="password" required
-                                    onkeyup="trigger()">
+                                <input type="password" class="form-control form-control-lg" placeholder="Password"
+                                    id="password" name="password" required onkeyup="trigger()">
                                 <div class="input-group-append custom">
-                                    <span class="input-group-text"><i class="dw dw-eye"
-                                            id="togglePassword"></i></span>
+                                    <span class="input-group-text"><i class="dw dw-eye" id="togglePassword"></i></span>
                                 </div>
                             </div>
 
@@ -128,14 +104,14 @@
                                 <span class="medium"></span>
                                 <span class="strong"></span>
                             </div>
-                            <div class="text" id="weak">@lang('messages.passwordWeak')</div>
-                            <div class="text" id="medium">@lang('messages.passwordMedium')</div>
-                            <div class="text" id="strong">@lang('messages.passwordStrong')</div>
+                            <div class="text" id="weak">Your password is too weak</div>
+                            <div class="text" id="medium">Your password is medium</div>
+                            <div class="text" id="strong">Your password is strong</div>
 
                             <div class="input-group custom">
                                 <input type="password" class="form-control form-control-lg"
-                                    placeholder="@lang('messages.labelConfirmPassword')" id="confirmPassword" name="confirmPassword"
-                                    required onkeyup="comparePassword()">
+                                    placeholder="Confirm password" id="confirmPassword" name="confirmPassword" required
+                                    onkeyup="comparePassword()">
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="dw dw-checked"
                                             id="checkedPassword"></i><i class="dw dw-eye"
@@ -143,13 +119,14 @@
                                 </div>
                             </div>
 
-                            <div class="textComparePassword">@lang('messages.alertPasswordNotMatch')</div> {{-- NOTE: alert password not match --}}
+                            <div class="textComparePassword">Password and Confirm password do not match</div>
+                            {{-- NOTE: alert password not match --}}
 
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="input-group mb-0">
                                         <input class="btn btn-primary btn-lg btn-block" type="submit"
-                                            value="@lang('messages.btnRegister')" onclick="validateInput()">
+                                            value="Register" onclick="validateInput()">
                                     </div>
                                 </div>
                             </div>
@@ -157,16 +134,15 @@
                         <div class="row" style="margin-top: 5%">
                             <div class="col-sm-12">
                                 <div class="input-group mb-0">
-                                    @lang('messages.textAlreadyHaveAccount')
-                                    <a href="{{ route('login') }}"
-                                        style="margin-left: 3%; color: blue">@lang('messages.titleSignIn')</a>
+                                    Already have an account?
+                                    <a href="{{ route('login') }}" style="margin-left: 3%; color: blue">Sign in</a>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">
-                                    @lang('messages.textOr')
+                                    Or
                                 </div>
 
                                 <div class="input-group mb-0">
@@ -174,15 +150,8 @@
                                         href="{{ route('auth.googleRedirect') }}"><img
                                             src="{{ asset('vendors/images/google-logo.png') }}"
                                             style="height: 30px; width: 30px; margin-right: 10%; margin-left: 5%" />
-                                        @lang('messages.textLoginWithGoogle')</a>
+                                        Sign in with Google</a>
                                 </div>
-                                {{-- <div class="input-group mb-0" style="margin-top: 10px">
-                                    <a class="btn btn-outline-primary btn-lg btn-block d-flex justify-content-flex-start"
-                                        href="{{ route('auth.facebookRedirect') }}"><img
-                                            src="{{ asset('vendors/images/facebook-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 10%; margin-left: 5%" />
-                                        @lang('messages.textLoginWithFacebook')</a>
-                                </div> --}}
                             </div>
                         </div>
                     </div>

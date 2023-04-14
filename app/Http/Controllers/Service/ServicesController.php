@@ -18,6 +18,13 @@ class ServicesController extends Controller
 
     public function store(Request $request)
     {
+        //validate
+        $request->validate([
+            'service_name' => 'required',
+            'price' => 'required',
+            'typeService' => 'required',
+        ]);
+
         $typeService = $request->typeService;
         $existsService = "";
 
@@ -28,7 +35,7 @@ class ServicesController extends Controller
         }
 
         if ($existsService) {
-            return redirect()->back()->with('error', 'You can only have one electricity or water service');
+            return redirect()->back()->with('errors', 'You can only have one electricity or water service');
         }
 
         $service = new Services();
@@ -44,6 +51,11 @@ class ServicesController extends Controller
 
     public function update(Request $request, $id)
     {
+        //validate
+        $request->validate([
+            'price' => 'required',
+        ]);
+
         $service = Services::find($id);
         $service->price = intval(str_replace(",", "", $request->price));
         $service->description = $request->description;

@@ -12,15 +12,24 @@ class CostsIncurredController extends Controller
     // costs incurred page
     public function costs_incurred()
     {
+        $month = $_GET['month'];
+
         $dataList = CostIncurred::join('tb_rental_room', 'tb_rental_room.rental_room_id', '=', 'tb_costs_incurred.rental_room_id')
             ->join('tb_rooms', 'tb_rooms.room_id', '=', 'tb_rental_room.room_id')
             ->join('tb_house', 'tb_house.house_id', '=', 'tb_rooms.house_id')
             ->join('tb_user', 'tb_user.id', '=', 'tb_house.user_id')
             ->join('tb_main_tenants', 'tb_main_tenants.tenant_id', '=', 'tb_rental_room.tenant_id')
             ->where('tb_user.id', auth()->user()->id)
+            ->where('tb_costs_incurred.date', $month)
             ->select('tb_costs_incurred.id', 'tb_costs_incurred.price', 'tb_costs_incurred.date', 'tb_costs_incurred.reason', 'tb_main_tenants.fullname', 'tb_rooms.room_name', 'tb_house.house_name')
             ->get();
         return view('dashboard.room-billing.costs-incurred', compact(['dataList']))->with('title', 'Costs Incurred');
+    }
+
+    public function filter(Request $request)
+    {
+        $month = $request->input('month-filter');
+        return redirect()->route('costs-incurred', ['month' => $month]);
     }
 
     // add costs incurred page
@@ -39,6 +48,16 @@ class CostsIncurredController extends Controller
 
     public function costs_incurred_action(Request $request)
     {
+        // validate with custom message
+        $request->validate([
+            'rental_room_id' => 'required',
+            'price' => 'required',
+            'reason' => 'required',
+            'month_year' => 'required',
+        ], [
+            'rental_room_id.required' => 'Please select a tenant',
+        ]);
+
         $rentalID = $request->input('rental_room_id');
         $price = $request->input('price');
         $reason = $request->input('reason');
@@ -51,7 +70,7 @@ class CostsIncurredController extends Controller
         $costs->date = $date;
         $costs->save();
 
-        return redirect()->route('costs-incurred')->with('success', 'Insert data successfully');
+        return redirect()->route('costs-incurred', ['month' => $date])->with('success', 'Insert data successfully');
     }
 
     public function update_costs_incurred($id)
@@ -71,6 +90,16 @@ class CostsIncurredController extends Controller
 
     public function update_costs_incurred_action(Request $request, $id)
     {
+        // validate with custom message
+        $request->validate([
+            'rental_room_id' => 'required',
+            'price' => 'required',
+            'reason' => 'required',
+            'month_year' => 'required',
+        ], [
+            'rental_room_id.required' => 'Please select a tenant',
+        ]);
+
         $rentalID = $request->input('rental_room_id');
         $price = $request->input('price');
         $reason = $request->input('reason');
@@ -83,13 +112,13 @@ class CostsIncurredController extends Controller
         $costs->date = $date;
         $costs->save();
 
-        return redirect()->route('costs-incurred')->with('success', 'Update data successfully');
+        return redirect()->route('costs-incurred', ['month' => $date])->with('success', 'Update data successfully');
     }
 
     public function cost_incurred_delete($id)
     {
         $costs = CostIncurred::find($id);
         $costs->delete();
-        return redirect()->route('costs-incurred')->with('success', 'Delete data successfully');
+        return redirect()->back()->with('success', 'Delete data successfully');
     }
 }

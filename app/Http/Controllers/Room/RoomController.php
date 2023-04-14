@@ -44,6 +44,12 @@ class RoomController extends Controller
 
     public function addSingleRoom(Request $request, $id)
     {
+        // validate
+        $request->validate([
+            'room_name' => 'required',
+            'price' => 'required',
+        ]);
+
         //add room to database
         $room = new Room();
         $room->room_name = $request->room_name;
@@ -56,6 +62,14 @@ class RoomController extends Controller
 
     public function addMultipleRooms(Request $request, $id)
     {
+        // validate
+        $request->validate([
+            'room_name' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+            'start_from' => 'required',
+        ]);
+
         for ($i = 0; $i < $request->quantity; $i++) {
             $room = new Room();
             $room->room_name = $request->room_name . ' ' . ($request->start_from + $i);
@@ -69,6 +83,12 @@ class RoomController extends Controller
 
     public function update(Request $request, $id)
     {
+        // validate
+        $request->validate([
+            'room_name_edit' => 'required',
+            'price_edit' => 'required',
+        ]);
+
         $room = Room::find($id);
         $room->room_name = $request->room_name_edit;
         $room->price = intval(str_replace(",", "", $request->price_edit));
@@ -108,6 +128,18 @@ class RoomController extends Controller
 
     public function assignTenant_action(Request $request, $id)
     {
+
+        // validate
+        $request->validate([
+            'fullname' => 'required',
+            'gender' => 'required',
+            'dob' => 'required',
+            'id_card' => 'required',
+            'phone' => 'required',
+            'hometown' => 'required',
+            'start_date' => 'required',
+        ]);
+
         DB::beginTransaction();
 
         try {

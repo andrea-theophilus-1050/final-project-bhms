@@ -27,12 +27,13 @@ class TenantController extends Controller
 
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'tenant_name' => 'required',
-        //     'tenant_phone' => 'required',
-        //     'tenant_email' => 'required',
-        //     'tenant_address' => 'required',
-        // ]);
+        $request->validate([
+            'fullname' => 'required',
+            'dob' => 'required',
+            'id_card' => 'required',
+            'phone' => 'required',
+            'hometown' => 'required',
+        ]);
 
         $tenant = new Tenant();
         $tenant->fullname = $request->fullname;
@@ -71,6 +72,14 @@ class TenantController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'fullname' => 'required',
+            'dob' => 'required',
+            'id_card' => 'required',
+            'phone' => 'required',
+            'hometown' => 'required',
+        ]);
+
         $tenant = Tenant::find($id);
         $tenant->fullname = $request->fullname;
         $tenant->gender = $request->gender;

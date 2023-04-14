@@ -10,7 +10,7 @@
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Water bill</li>
                             </ol>
                         </nav>
@@ -166,7 +166,7 @@
                     input2.classList.remove('form-control-warning');
                 } else {
                     row.querySelector('div[id="usedIndex_water"]').innerHTML = "Errors";
-
+                    row.querySelector('div[id="totalAmount"]').innerHTML = "Errors";
                     input1.classList.add('form-control-warning');
                     input2.classList.add('form-control-warning');
                 }
@@ -188,6 +188,7 @@
                     input2.classList.remove('form-control-warning');
                 } else {
                     row.querySelector('div[id="usedIndex_water"]').innerHTML = "Errors";
+                    row.querySelector('div[id="totalAmount"]').innerHTML = "Errors";
                     input1.classList.add('form-control-warning');
                     input2.classList.add('form-control-warning');
                 }
@@ -210,6 +211,7 @@
                     input2.classList.remove('form-control-warning');
                 } else {
                     row.querySelector('div[id="usedIndex_water"]').innerHTML = "Errors";
+                    row.querySelector('div[id="totalAmount"]').innerHTML = "Errors";
                     input1.classList.add('form-control-warning');
                     input2.classList.add('form-control-warning');
                 }

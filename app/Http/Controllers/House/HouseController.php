@@ -50,6 +50,12 @@ class HouseController extends Controller
     //Update house with house id
     public function update(Request $request, $id)
     {
+        // validate request
+        $request->validate([
+            'house_name' => 'required',
+            'house_address' => 'required',
+        ]);
+
         $house = House::find($id);
         $house->house_name = $request->house_name;
         $house->house_address = $request->house_address;

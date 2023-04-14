@@ -10,7 +10,7 @@
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Your feedback management</li>
                             </ol>
                         </nav>
@@ -40,6 +40,20 @@
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped" id="house-table">
+                        {{-- alert --}}
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show col-md-7" role="alert">
+                                <ul style="list-style-type:circle">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
                         <thead>
                             <tr>
                                 <th scope="col">No. </th>
@@ -103,7 +117,7 @@
                         <div class="form-group row">
                             <label class="col-md-4">Your feedback</label>
                             <div class="col-md-8">
-                                <textarea class="form-control" name="contentFeedback"></textarea>
+                                <textarea class="form-control" name="contentFeedback" required></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -135,7 +149,7 @@
                         <div class="form-group row">
                             <label class="col-md-4">Your feedback</label>
                             <div class="col-md-8">
-                                <textarea class="form-control" name="contentFeedback" id="contentFeedback_edit"></textarea>
+                                <textarea class="form-control" name="contentFeedback" id="contentFeedback_edit" required></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">

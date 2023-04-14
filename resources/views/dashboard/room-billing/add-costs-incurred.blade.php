@@ -9,8 +9,8 @@
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('costs-incurred') }}">@lang('messages.navCostsIncurred')</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('costs-incurred') }}">Add costs incurred</a></li>
                             <li class="breadcrumb-item active">Add costs incurred</li>
                         </ol>
                     </nav>
@@ -25,13 +25,30 @@
                     <h4 class="text-blue h4"></h4>
                 </div>
                 <div class="pull-right">
-                    <button class="btn btn-secondary btn-sm mb-20" data-target="#tenant-list" data-toggle="modal"><i class="icon-copy dw dw-list"></i> &nbsp; Get
+                    <button class="btn btn-secondary btn-sm mb-20" data-target="#tenant-list" data-toggle="modal"><i
+                            class="icon-copy dw dw-list"></i> &nbsp; Get
                         information</button>
                 </div>
             </div>
             <form id="Form_CostsIncurred" method="post" action="{{ route('add.costs-incurred.action') }}">
                 @csrf
-                <input type="hidden" value="" name="rental_room_id" id="rental_room_id">
+                {{-- alert --}}
+                @if ($errors->any())
+                    <div class="form-group row ml-1">
+                        <div class="alert alert-danger alert-dismissible fade show col-md-7" role="alert">
+                            <ul style="list-style-type:circle">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                @endif
+
+                <input type="hidden" name="rental_room_id" id="rental_room_id">
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Month/Year</label>
                     <div class="col-sm-12 col-md-4">
@@ -41,8 +58,7 @@
 
                     <label class="col-sm-12 col-md-2 col-form-label">House name</label>
                     <div class="col-sm-12 col-md-4">
-                        <input class="form-control" value="" type="text" id="house_name" name="house_name"
-                            readonly>
+                        <input class="form-control" type="text" id="house_name" name="house_name" readonly required>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -53,7 +69,7 @@
                     </div>
                     <label class="col-sm-12 col-md-2 col-form-label">Room name</label>
                     <div class="col-sm-12 col-md-4">
-                        <input class="form-control" value="" type="text" id="room_name" name="room_name" readonly>
+                        <input class="form-control" type="text" id="room_name" name="room_name" readonly required>
                     </div>
                 </div>
 
@@ -65,14 +81,16 @@
 
                     <label class="col-sm-12 col-md-2 col-form-label">Tenant name</label>
                     <div class="col-sm-6 col-md-4">
-                        <input class="form-control" type="text" name="tenant_name" id="tenant_name" readonly>
+                        <input class="form-control" type="text" name="tenant_name" id="tenant_name" readonly required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-12 col-md-2"></div>
                     <div class="col-sm-12 col-md-10">
-                        <button class="btn btn-primary" type="submit"><i class="icon-copy dw dw-diskette2"></i> &nbsp; Save</button>
-                        <a href="{{ route('costs-incurred') }}" class="btn btn-danger"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Cancel</a>
+                        <button class="btn btn-primary" type="submit"><i class="icon-copy dw dw-diskette2"></i> &nbsp;
+                            Save</button>
+                        <a href="{{ route('costs-incurred', ['month' => now()->format('F Y')]) }}" class="btn btn-danger"><i
+                                class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Cancel</a>
                     </div>
                 </div>
 
@@ -128,8 +146,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
-                    <button type="button" class="btn btn-primary" onclick="getTenant()"><i class="icon-copy dw dw-tick"></i> &nbsp; Assign Tenant</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                            class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
+                    <button type="button" class="btn btn-primary" onclick="getTenant()"><i
+                            class="icon-copy dw dw-tick"></i> &nbsp; Assign Tenant</button>
                 </div>
             </div>
         </div>

@@ -31,11 +31,13 @@ return [
     'titleHover' => 'Thay đổi ngôn ngữ',
     'placeholderSearch' => 'Tìm kiếm...',
     'navHome' => 'Trang chủ',
+    'navConfigVNPay' => 'Cấu hình VNPay',
     'navHouse' => 'Quản lý nhà trọ',
     'navRoom' => 'Quản lý phòng',
     'navService' => 'Quản lý dịch vụ',
     'navTenant' => 'Quản lý người thuê trọ',
-    'navUtility' => 'Chỉ số điện nước',
+    'navElectricity' => 'Hóa đơn điện',
+    'navWater' => 'Hóa đơn nước',
     'navCostsIncurred' => 'Chi phí phát sinh',
     'navRoomBilling' => 'Tính tiền phòng',
     'navFeedback' => 'Quản lý phản hồi',
@@ -47,14 +49,11 @@ return [
     'navLayoutSetting' => 'Cài đặt Giao diện',
     'langEnglish' => 'Tiếng Anh',
     'langVietnamese' => 'Tiếng Việt',
-    
+
 
     //Profile page
     'contactInfo' => 'Thông tin liên hệ',
     'tabSetting' => 'Thông tin cá nhân',
-    'tabChangePassword' => 'Thay đổi mật khẩu',
-    'tabTimeline' => 'Dòng thời gian',
-    'tabTask' => 'Công việc',
 
     //tab Personal information
     'titleSetting' => 'Chỉnh sửa thông tin cá nhân',

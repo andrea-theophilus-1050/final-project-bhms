@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('dob');
             $table->string('id_card');
             $table->string('phone_number');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('hometown');
             $table->string('citizen_card_front_image')->nullable();
             $table->string('citizen_card_back_image')->nullable();

@@ -14,7 +14,7 @@
                 <li class="dropdown">
                     <a href="{{ route('role.tenants.index') }}"
                         class="dropdown-toggle no-arrow {{ request()->routeIs('role.tenants.index') ? 'active' : '' }}">
-                        <span class="micon fa fa-dashboard"></span><span class="mtext">@lang('messages.navHome')</span>
+                        <span class="micon fa fa-dashboard"></span><span class="mtext">Home</span>
                     </a>
                 </li>
                 <li class="dropdown">

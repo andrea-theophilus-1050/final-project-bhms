@@ -6,7 +6,7 @@
             <form>
                 <div class="form-group mb-0">
                     <i class="dw dw-search2 search-icon"></i>
-                    <input type="text" class="form-control search-input" placeholder="@lang('messages.placeholderSearch')">
+                    <input type="text" class="form-control search-input" placeholder="Search">
                     <div class="dropdown">
                         <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
                             <i class="ion-arrow-down-c"></i>
@@ -98,34 +98,6 @@
             </div>
         </div>
 
-        <div class="user-info-dropdown" title="@lang('messages.titleHover')">
-            <div class="dropdown">
-                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                    <span class="user-icon">
-                        @if (app()->getLocale() == 'en')
-                            <img src="{{ asset('vendors/images/Flag_English_square.png') }}" alt="">
-                        @elseif(app()->getLocale() == 'vie')
-                            <img src="{{ asset('vendors/images/Flag_Vietnam_square.png') }}" alt="">
-                        @endif
-                    </span>
-                    <span class="user-name">
-                        @if (app()->getLocale() == 'en')
-                            @lang('messages.langEnglish')
-                        @elseif(app()->getLocale() == 'vie')
-                            @lang('messages.langVietnamese')
-                        @endif
-                    </span>
-                </a>
-
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                    <a class="dropdown-item" href="{{ route('lang-english') }}">
-                        <img src="{{ asset('vendors/images/Flag_English.png') }}"> @lang('messages.langEnglish')</a>
-                    <a class="dropdown-item" href="{{ route('lang-vietnamese') }}">
-                        <img src="{{ asset('vendors/images/Flag_Vietnam.png') }}"> @lang('messages.langVietnamese')</a>
-                </div>
-            </div>
-        </div>
-
         <div class="user-info-dropdown">
             <div class="dropdown">
                 <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -154,13 +126,13 @@
                         </b>
                     </span> --}}
                     <a class="dropdown-item" href="{{ route('role.tenants.profile') }}">
-                        <i class="dw dw-user1"></i> @lang('messages.navProfile')</a>
+                        <i class="dw dw-user1"></i> Profile</a>
                     <a class="dropdown-item" href="javascript:;" data-toggle="right-sidebar">
-                        <i class="dw dw-settings2"></i> @lang('messages.navLayoutSetting')</a>
+                        <i class="dw dw-settings2"></i> Layout settings</a>
                     <a class="dropdown-item" href="faq.html">
                         <i class="dw dw-help"></i> Help</a>
                     <a class="dropdown-item" href="{{ route('role.tenants.logout') }}">
-                        <i class="dw dw-logout"></i> @lang('messages.navLogout')</a>
+                        <i class="dw dw-logout"></i> Logout</a>
                 </div>
             </div>
         </div>

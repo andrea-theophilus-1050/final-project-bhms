@@ -4,7 +4,7 @@
 <head>
     <!-- Basic Page Info -->
     <meta charset="utf-8">
-    <title>@lang('messages.titleSignIn')</title>
+    <title>Sign in</title>
 
     <!-- Site favicon -->
     <link rel=" shortcut icon" type="image/png" sizes="16x16" href="{{ asset('vendors/images/logo-login-register.png') }}">
@@ -43,27 +43,6 @@
                     <img src="{{ asset('vendors/images/logo-boarding-house.png') }}" alt="">
                 </a>
             </div>
-
-            {{-- NOTE: dropdownlist for change language --}}
-            <div class="dropdown">
-                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                    @if (app()->getLocale() == 'en')
-                        <img src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langEnglish')
-                    @elseif (app()->getLocale() == 'vie')
-                        <img src="{{ asset('vendors/images/Flag_Vietnam.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langVietnamese')
-                    @endif
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{{ route('lang-english') }}"><img
-                            src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langEnglish')</a>
-                    <a class="dropdown-item" href="{{ route('lang-vietnamese') }}"><img
-                            src="{{ asset('vendors/images/Flag_Vietnam.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langVietnamese')</a>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -76,7 +55,7 @@
                 <div class="col-md-6 col-lg-5">
                     <div class="login-box bg-white box-shadow border-radius-10">
                         <div class="login-title">
-                            <h2 class="text-center text-primary">@lang('messages.titleSignIn')</h2>
+                            <h2 class="text-center text-primary">Sign in</h2>
                         </div>
 
                         {{-- NOTE: alert success message after registration --}}
@@ -120,23 +99,21 @@
                                 </div>
                             </div> --}}
                             <div class="input-group custom">
-                                <input type="text" class="form-control form-control-lg"
-                                    placeholder="@lang('messages.labelUsername')" name="username" id="username" autofocus
-                                    autocomplete="on" required value="{{ old('username') }}" @>
+                                <input type="text" class="form-control form-control-lg" placeholder="Username"
+                                    name="username" id="username" autofocus autocomplete="on" required
+                                    value="{{ old('username') }}" @>
 
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
                                 </div>
                             </div>
                             <div class="input-group custom">
-                                <input type="password" class="form-control form-control-lg"
-                                    placeholder="@lang('messages.labelPassword')" id="password" name="password" required
-                                    minlength="6"
+                                <input type="password" class="form-control form-control-lg" placeholder="Password"
+                                    id="password" name="password" required minlength="6"
                                     oninvalid="this.setCustomValidity('Password must be at least 6 characters')"
                                     oninput="this.setCustomValidity('')" value="{{ old('password') }}">
                                 <div class="input-group-append custom">
-                                    <span class="input-group-text"><i class="dw dw-eye"
-                                            id="togglePassword"></i></span>
+                                    <span class="input-group-text"><i class="dw dw-eye" id="togglePassword"></i></span>
                                 </div>
                             </div>
                             <div class="row pb-30">
@@ -144,21 +121,20 @@
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="remember_me"
                                             name="remember_me">
-                                        <label class="custom-control-label"
-                                            for="remember_me">@lang('messages.labelRemember')</label>
+                                        <label class="custom-control-label" for="remember_me">Remember me</label>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="forgot-password">
-                                        <a href="{{ url('forgot-password') }}">@lang('messages.labelForgot')</a>
+                                        <a href="{{ url('forgot-password') }}">Forgot password?</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="input-group mb-0">
-                                        <input class="btn btn-primary btn-lg btn-block" type="submit"
-                                            value="@lang('messages.btnLogin')" onclick="checkEmail()">
+                                        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Login"
+                                            onclick="checkEmail()">
                                     </div>
                                 </div>
                             </div>
@@ -166,16 +142,16 @@
                         <div class="row" style="margin-top: 5%">
                             <div class="col-sm-12">
                                 <div class="input-group mb-0">
-                                    @lang('messages.textDonHaveAccount')
+                                    Don't have an account?
                                     <a href="{{ route('register') }}"
-                                        style="margin-left: 3%; color: blue">@lang('messages.linkRegister')</a>
+                                        style="margin-left: 3%; color: blue">Register</a>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">
-                                    @lang('messages.textOr')
+                                    Or
                                 </div>
 
                                 <div class="input-group mb-0">
@@ -183,16 +159,8 @@
                                         href="{{ route('auth.googleRedirect') }}"><img
                                             src="{{ asset('vendors/images/google-logo.png') }}"
                                             style="height: 30px; width: 30px; margin-right: 10%; margin-left: 5%" />
-                                        @lang('messages.textLoginWithGoogle')</a>
+                                        Sign in with Google</a>
                                 </div>
-                                {{-- <div class="input-group mb-0" style="margin-top: 10px">
-                                    <a class="btn btn-outline-primary btn-lg btn-block d-flex justify-content-flex-start"
-                                        href="{{ route('auth.facebookRedirect') }}"><img
-                                            src="{{ asset('vendors/images/facebook-logo.png') }}"
-                                            style="height: 30px; width: 30px; margin-right: 10%; margin-left: 5%" />
-                                        @lang('messages.textLoginWithFacebook')</a>
-                                </div> --}}
-
                             </div>
                         </div>
                     </div>

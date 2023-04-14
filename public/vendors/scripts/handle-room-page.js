@@ -292,12 +292,12 @@ addRowButton.addEventListener("click", function () {
         "<label class='custom-control-label weight-400' for='female" + clickCount +
         "'>Female</label> </div>";
     cell6.innerHTML = "<input type='text' class='form-control' name='phone[]' style='width: 200px' required>";
-    cell7.innerHTML = "<input type='text' class='form-control' name='email[]' style='width: 200px' required>";
+    cell7.innerHTML = "<input type='text' class='form-control' name='email[]' style='width: 200px'>";
     cell8.innerHTML = "<input type='text' class='form-control' name='hometown[]' style='width: 200px' required>";
     cell9.innerHTML =
-        "<input type='file' class='form-control' name='idcard_front[]' style='width: 300px' accept='image/*' required>";
+        "<input type='file' class='form-control' name='idcard_front[]' style='width: 300px' accept='image/*' >";
     cell10.innerHTML =
-        "<input type='file' class='form-control' name='idcard_back[]' style='width: 300px' accept='image/*' required>";
+        "<input type='file' class='form-control' name='idcard_back[]' style='width: 300px' accept='image/*' >";
     // NOTE: Append the cells to the new row
     newRow.appendChild(cell1);
     newRow.appendChild(cell2);

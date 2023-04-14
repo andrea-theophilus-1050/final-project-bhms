@@ -43,27 +43,6 @@
                     <img src="{{ asset('vendors/images/logo-boarding-house.png') }}" alt="">
                 </a>
             </div>
-
-            {{-- NOTE: dropdownlist for change language --}}
-            <div class="dropdown">
-                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                    @if (app()->getLocale() == 'en')
-                        <img src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langEnglish')
-                    @elseif (app()->getLocale() == 'vie')
-                        <img src="{{ asset('vendors/images/Flag_Vietnam.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langVietnamese')
-                    @endif
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{{ route('lang-english') }}"><img
-                            src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langEnglish')</a>
-                    <a class="dropdown-item" href="{{ route('lang-vietnamese') }}"><img
-                            src="{{ asset('vendors/images/Flag_Vietnam.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langVietnamese')</a>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -98,7 +77,7 @@
                     <form method="POST" action="{{ route('tenant.login.action') }}">
                         @csrf
                         <div class="input-group custom">
-                            <input type="text" class="form-control form-control-lg" placeholder="@lang('messages.labelUsername')"
+                            <input type="text" class="form-control form-control-lg" placeholder="Username"
                                 name="credential" id="username" autofocus autocomplete="on" required
                                 value="{{ old('credential') }}">
 
@@ -107,7 +86,7 @@
                             </div>
                         </div>
                         <div class="input-group custom">
-                            <input type="password" class="form-control form-control-lg" placeholder="@lang('messages.labelPassword')"
+                            <input type="password" class="form-control form-control-lg" placeholder="Password"
                                 id="password" name="password" required minlength="6"
                                 oninvalid="this.setCustomValidity('Password must be at least 6 characters')"
                                 oninput="this.setCustomValidity('')" value="{{ old('password') }}">
@@ -120,7 +99,7 @@
                             <div class="col-sm-12">
                                 <div class="input-group mb-0">
                                     <input class="btn btn-primary btn-lg btn-block" type="submit"
-                                        value="@lang('messages.btnLogin')" onclick="checkEmail()">
+                                        value="Login" onclick="checkEmail()">
                                 </div>
                             </div>
                         </div>
@@ -128,7 +107,7 @@
                             <div class="col-6"></div>
                             <div class="col-6">
                                 <div class="forgot-password">
-                                    <a href="{{ url('forgot-password') }}">@lang('messages.labelForgot')</a>
+                                    <a href="{{ url('forgot-password') }}">Forgot password</a>
                                 </div>
                             </div>
                         </div>

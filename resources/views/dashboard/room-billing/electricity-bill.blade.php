@@ -10,7 +10,7 @@
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Electricity bill</li>
                             </ol>
                         </nav>
@@ -53,8 +53,10 @@
                                 Electricity bill</h4>
                         </div>
                         <div class="pull-right">
-                            <button type="submit" class="btn btn-primary btn-sm"><i class="icon-copy dw dw-diskette2"></i> &nbsp; Save</button>
-                            <a href="{{ route('home') }}" class="btn btn-danger btn-sm"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Cancel</a>
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="icon-copy dw dw-diskette2"></i>
+                                &nbsp; Save</button>
+                            <a href="{{ route('home') }}" class="btn btn-danger btn-sm"><i class="icon-copy fa fa-close"
+                                    aria-hidden="true"></i> &nbsp; Cancel</a>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -90,18 +92,18 @@
                                             @if (collect($oldIndexes)->where('rental_room_id', $data->rental_room_id)->where('new_electricity_index', '!=', 0)->isNotEmpty())
                                                 <input class="form-control form-control-sm" type="number"
                                                     name="oldIndex_electric[]" id="oldIndex_electric" placeholder="0"
-                                                    min="0"
+                                                    min="0" 
                                                     value="{{ collect($oldIndexes)->where('rental_room_id', $data->rental_room_id)->pluck('new_electricity_index')->first() }}">
                                             @else
                                                 @if (collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->isNotEmpty())
                                                     <input class="form-control form-control-sm" type="number"
                                                         name="oldIndex_electric[]" id="oldIndex_electric" placeholder="0"
-                                                        min="0"
+                                                        min="0" 
                                                         value="{{ collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->pluck('old_electricity_index')->first() }}">
                                                 @else
                                                     <input class="form-control form-control-sm" type="number"
                                                         name="oldIndex_electric[]" id="oldIndex_electric" placeholder="0"
-                                                        min="0">
+                                                        min="0" >
                                                 @endif
                                             @endif
                                         </td>
@@ -109,12 +111,12 @@
                                             @if (collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->isNotEmpty())
                                                 <input class="form-control form-control-sm" type="number"
                                                     name="newIndex_electric[]" id="newIndex_electric" placeholder="0"
-                                                    min="0"
+                                                    min="0" 
                                                     value="{{ collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->pluck('new_electricity_index')->first() }}">
                                             @else
                                                 <input class="form-control form-control-sm" type="number"
                                                     name="newIndex_electric[]" id="newIndex_electric" placeholder="0"
-                                                    min="0">
+                                                    min="0" >
                                             @endif
                                         </td>
                                         <td style="text-align: center">
@@ -164,6 +166,7 @@
                     input2.classList.remove('form-control-warning');
                 } else {
                     row.querySelector('div[id="usedIndex_electric"]').innerHTML = "Errors";
+                    row.querySelector('div[id="totalAmount"]').innerHTML = "Errors";
                     input1.classList.add('form-control-warning');
                     input2.classList.add('form-control-warning');
                 }
@@ -185,6 +188,7 @@
 
                 } else {
                     row.querySelector('div[id="usedIndex_electric"]').innerHTML = "Errors";
+                    row.querySelector('div[id="totalAmount"]').innerHTML = "Errors";
                     input1.classList.add('form-control-warning');
                     input2.classList.add('form-control-warning');
                 }
@@ -207,6 +211,7 @@
                     input2.classList.remove('form-control-warning');
                 } else {
                     row.querySelector('div[id="usedIndex_electric"]').innerHTML = "Errors";
+                    row.querySelector('div[id="totalAmount"]').innerHTML = "Errors";
                     input1.classList.add('form-control-warning');
                     input2.classList.add('form-control-warning');
                 }

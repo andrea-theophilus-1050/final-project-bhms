@@ -45,27 +45,6 @@
                     <img src="{{ asset('vendors/images/logo-boarding-house.png') }}" alt="">
                 </a>
             </div>
-
-            {{-- NOTE: dropdownlist for change language --}}
-            <div class="dropdown">
-                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                    @if (app()->getLocale() == 'en')
-                        <img src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langEnglish')
-                    @elseif (app()->getLocale() == 'vie')
-                        <img src="{{ asset('vendors/images/Flag_Vietnam.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langVietnamese')
-                    @endif
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{{ route('lang-english') }}"><img
-                            src="{{ asset('vendors/images/Flag_English.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langEnglish')</a>
-                    <a class="dropdown-item" href="{{ route('lang-vietnamese') }}"><img
-                            src="{{ asset('vendors/images/Flag_Vietnam.png') }}" height="30px" width="40px"
-                            alt=""> @lang('messages.langVietnamese')</a>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -95,7 +74,7 @@
                         <input type="hidden" value="{{ request('email') }}" name="email">
 
                         <div class="input-group custom">
-                            <input type="password" class="form-control form-control-lg" placeholder="@lang('messages.labelNewPass')"
+                            <input type="password" class="form-control form-control-lg" placeholder="New password"
                                 id="password" name="password" required onkeyup="trigger()">
                             <div class="input-group-append custom">
                                 <span class="input-group-text"><i class="dw dw-eye" id="togglePassword"></i></span>
@@ -108,13 +87,13 @@
                             <span class="medium"></span>
                             <span class="strong"></span>
                         </div>
-                        <div class="text" id="weak">@lang('messages.passwordWeak')</div>
-                        <div class="text" id="medium">@lang('messages.passwordMedium')</div>
-                        <div class="text" id="strong">@lang('messages.passwordStrong')</div>
+                        <div class="text" id="weak">Your password is too weak</div>
+                        <div class="text" id="medium">Your password is medium</div>
+                        <div class="text" id="strong">Your password is strong</div>
 
                         <div class="input-group custom">
                             <input type="password" class="form-control form-control-lg"
-                                placeholder="@lang('messages.labelConfirmPassword')" id="confirmPassword" name="password_confirmation"
+                                placeholder="Confirm password" id="confirmPassword" name="password_confirmation"
                                 required onkeyup="comparePassword()">
                             <div class="input-group-append custom">
                                 <span class="input-group-text"><i class="dw dw-checked" id="checkedPassword"></i><i
@@ -122,7 +101,7 @@
                             </div>
                         </div>
 
-                        <div class="textComparePassword">@lang('messages.alertPasswordNotMatch')</div> {{-- NOTE: alert password not match --}}
+                        <div class="textComparePassword">Password and Confirm password do not match</div> {{-- NOTE: alert password not match --}}
 
                         <div class="row">
                             <div class="col-sm-12">

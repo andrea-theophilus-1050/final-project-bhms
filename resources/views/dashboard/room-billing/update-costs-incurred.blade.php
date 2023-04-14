@@ -5,12 +5,12 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="title">
-                        <h4>Add costs incurred</h4>
+                        <h4>Update costs incurred</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('costs-incurred') }}">@lang('messages.navCostsIncurred')</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('costs-incurred') }}">Costs incurred</a></li>
                             <li class="breadcrumb-item active">Update costs incurred</li>
                         </ol>
                     </nav>
@@ -25,14 +25,32 @@
                     <h4 class="text-blue h4"></h4>
                 </div>
                 <div class="pull-right">
-                    <button class="btn btn-secondary btn-sm mb-20" data-target="#tenant-list" data-toggle="modal"><i class="icon-copy dw dw-list"></i> &nbsp; Get
+                    <button class="btn btn-secondary btn-sm mb-20" data-target="#tenant-list" data-toggle="modal"><i
+                            class="icon-copy dw dw-list"></i> &nbsp; Get
                         information</button>
                 </div>
             </div>
             <form id="Form_CostsIncurred" method="post"
                 action="{{ route('update.costs-incurred.action', $costIncurred->id) }}">
                 @csrf
-                <input type="hidden" value="{{ collect($dataList)->where('rental_room_id', $costIncurred->rental_room_id)->pluck('rental_room_id')->first() }}" name="rental_room_id" id="rental_room_id">
+                {{-- alert --}}
+                @if ($errors->any())
+                    <div class="form-group row ml-1">
+                        <div class="alert alert-danger alert-dismissible fade show col-md-7" role="alert">
+                            <ul style="list-style-type:circle">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                @endif
+                <input type="hidden"
+                    value="{{ collect($dataList)->where('rental_room_id', $costIncurred->rental_room_id)->pluck('rental_room_id')->first() }}"
+                    name="rental_room_id" id="rental_room_id">
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Month/Year</label>
                     <div class="col-sm-12 col-md-4">
@@ -74,8 +92,10 @@
                 <div class="form-group row">
                     <div class="col-sm-12 col-md-2"></div>
                     <div class="col-sm-12 col-md-10">
-                        <button class="btn btn-primary" type="submit"><i class="icon-copy dw dw-diskette2"></i> &nbsp; Submit</button>
-                        <a href="{{ route('costs-incurred') }}" class="btn btn-danger"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Cancel</a>
+                        <button class="btn btn-primary" type="submit"><i class="icon-copy dw dw-diskette2"></i> &nbsp;
+                            Submit</button>
+                        <a href="{{ route('costs-incurred', ['month' => now()->format('F Y')]) }}" class="btn btn-danger"><i
+                                class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Cancel</a>
                     </div>
                 </div>
 
@@ -131,8 +151,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
-                    <button type="button" class="btn btn-primary" onclick="getTenant()"><i class="icon-copy dw dw-tick"></i> &nbsp; Assign Tenant</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                            class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
+                    <button type="button" class="btn btn-primary" onclick="getTenant()"><i
+                            class="icon-copy dw dw-tick"></i> &nbsp; Assign Tenant</button>
                 </div>
             </div>
         </div>

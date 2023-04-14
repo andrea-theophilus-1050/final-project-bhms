@@ -12,13 +12,13 @@
                     <div class="form-group row">
                         <label class="col-md-4">House name</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="house_name">
+                            <input type="text" class="form-control" name="house_name" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-4">House address</label>
                         <div class="col-md-8">
-                            <textarea class="form-control" name="house_address"></textarea>
+                            <textarea class="form-control" name="house_address" required></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -56,13 +56,13 @@
                     <div class="form-group row">
                         <label class="col-md-4">House name</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="house_name" id="house_name_edit">
+                            <input type="text" class="form-control" name="house_name" id="house_name_edit" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-4">House address</label>
                         <div class="col-md-8">
-                            <textarea class="form-control" name="house_address" id="house_address_edit"></textarea>
+                            <textarea class="form-control" name="house_address" id="house_address_edit" required></textarea>
                         </div>
                     </div>
                     <div class="form-group row">

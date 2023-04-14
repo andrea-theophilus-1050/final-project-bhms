@@ -6,12 +6,12 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="title">
-                            <h4>@lang('messages.navService')</h4>
+                            <h4>Services management</h4>
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('messages.navHome')</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">@lang('messages.navService')</li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Services management</li>
                             </ol>
                         </nav>
                     </div>
@@ -21,17 +21,18 @@
             <div class="pd-20 card-box mb-30">
                 <div class="clearfix mb-20">
                     <div class="pull-left">
-                        <h6 class="text-blue h6">
-                            @if (session('error'))
-                                <div class="alert alert-danger d-flex align-items-center justify-content-center"
-                                    role="alert">
-                                    <strong>Error! </strong> &nbsp;&nbsp;{{ session('error') }}
-                                    <button type="button" class="close ml-2" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            @endif
-                        </h6>
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                                <ul style="list-style-type:circle">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
                     </div>
                     <div class="pull-right">
                         <a href="javascript:;" data-toggle="modal" data-target="#service-add"
@@ -104,7 +105,7 @@
                         <div class="form-group row">
                             <label class="col-md-4">Service name</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="service_name">
+                                <input type="text" class="form-control" name="service_name" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -123,7 +124,7 @@
                         <div class="form-group row">
                             <label class="col-md-4">Pirce</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="price" id="price">
+                                <input type="text" class="form-control" name="price" id="price" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -133,8 +134,10 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><i class="icon-copy dw dw-diskette2"></i> &nbsp; Add new service</button>
-                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
+                            <button type="submit" class="btn btn-primary"><i class="icon-copy dw dw-diskette2"></i>
+                                &nbsp; Add new service</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i
+                                    class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
                         </div>
                     </form>
                 </div>
@@ -178,7 +181,7 @@
                         <div class="form-group row">
                             <label class="col-md-4">Price</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" name="price" id="price_edit">
+                                <input type="text" class="form-control" name="price" id="price_edit" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -188,8 +191,10 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><i class="icon-copy dw dw-diskette2"></i> &nbsp; Update</button>
-                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
+                            <button type="submit" class="btn btn-primary"><i class="icon-copy dw dw-diskette2"></i>
+                                &nbsp; Update</button>
+                            <button type="reset" class="btn btn-secondary" data-dismiss="modal"><i
+                                    class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Close</button>
                         </div>
                     </form>
                 </div>
