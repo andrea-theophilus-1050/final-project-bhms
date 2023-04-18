@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Tenant;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use Twilio\Rest\Client;
 
 
 class TenantController extends Controller
@@ -82,16 +83,29 @@ class TenantController extends Controller
             'hometown' => 'required',
         ]);
 
-        $tenant = Tenant::find($id);
-        $tenant->fullname = $request->fullname;
-        $tenant->gender = $request->gender;
-        $tenant->dob = $request->dob;
-        $tenant->id_card = $request->id_card;
-        $tenant->phone_number = $request->phone;
-        $tenant->email = $request->email;
-        $tenant->hometown = $request->hometown;
-        $tenant->save();
-        return redirect()->route('tenant.index')->with('success', 'Tenant has been updated successfully');
+        // check id card exists
+        $check_id_card = DB::table('tb_main_tenants')->where('id_card', $request->id_card)->where('tenant_id', '!=', $id)->first();
+        $check_phone_number = DB::table('tb_main_tenants')->where('phone_number', $request->phone)->where('tenant_id', '!=', $id)->first();
+        $check_email = DB::table('tb_main_tenants')->where('email', $request->email)->where('tenant_id', '!=', $id)->first();
+
+        if ($check_id_card) {
+            return redirect()->back()->with('error', 'ID card already exists')->withInput($request->all());
+        } elseif ($check_phone_number) {
+            return redirect()->back()->with('error', 'Phone number already exists')->withInput($request->all());
+        } elseif ($check_email) {
+            return redirect()->back()->with('error', 'Email already exists')->withInput($request->all());
+        } else {
+            $tenant = Tenant::find($id);
+            $tenant->fullname = $request->fullname;
+            $tenant->gender = $request->gender;
+            $tenant->dob = $request->dob;
+            $tenant->id_card = $request->id_card;
+            $tenant->phone_number = $request->phone;
+            $tenant->email = $request->email;
+            $tenant->hometown = $request->hometown;
+            $tenant->save();
+            return redirect()->route('tenant.index')->with('success', 'Tenant has been updated successfully');
+        }
     }
 
     public function destroy($id)
@@ -105,6 +119,30 @@ class TenantController extends Controller
     {
         $tenant = Tenant::find($id);
         Mail::to($tenant->email)->send(new \App\Mail\NotifyAccountInfo($tenant));
+
+        if ($tenant->phone_number == '+84398371050') {
+            $sid = env('TWILIO_SID');
+            $token = env('TWILIO_TOKEN');
+            $numberFrom = env('TWILIO_FROM');
+
+            $client = new Client($sid, $token);
+
+            $client->messages->create(
+                $tenant->phone_number,
+                [
+                    'from' => $numberFrom,
+                    'body' => chr(10) . 'Hello: ' . $tenant->fullname . chr(10) . chr(10) . // chr(10) is a new line
+                        'This is your account to login to the system: ' . chr(10) . chr(10) .
+                        'Email: ' . $tenant->email . chr(10) .
+                        'Password: 12345678' . chr(10) . chr(10) .
+                        'or' . chr(10) . chr(10) .
+                        'Phone number: ' . $tenant->phone_number . chr(10) .
+                        'Password: 12345678' . chr(10) . chr(10) .
+                        'Please access to the system via: ' . url('/') . '/tenant/login'
+                ]
+            );
+        }
+
         return redirect()->back()->with('success', 'Account info has been sent successfully');
     }
 

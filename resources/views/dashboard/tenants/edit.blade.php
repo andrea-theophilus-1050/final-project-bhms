@@ -39,6 +39,15 @@
                             </div>
                         </div>
                     @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show col-md-7" role="alert">
+                            <strong>Error! </strong> {{ session('error') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Full name</label>
                         <div class="col-sm-12 col-md-10">

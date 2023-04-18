@@ -151,18 +151,31 @@ class RoomController extends Controller
 
         try {
             if ($request->tenant_id == null) {
-                // add new tenant
-                $tenant = new Tenant();
-                $tenant->fullname = $request->fullname;
-                $tenant->gender = $request->gender;
-                $tenant->dob = $request->dob;
-                $tenant->id_card = $request->id_card;
-                $tenant->phone_number = $request->phone;
-                $tenant->email = $request->email;
-                $tenant->hometown = $request->hometown;
-                $tenant->status = 1;
-                $tenant->user_id = auth()->user()->id;
-                $tenant->save();
+                // check phone number exists
+                $checkPhone = Tenant::where('phone_number', $request->phone)->first();
+                $checkEmail = Tenant::where('email', $request->email)->first();
+                $checkIdCard = Tenant::where('id_card', $request->id_card)->first();
+
+                if ($checkPhone) {
+                    return redirect()->back()->with('error', 'Phone number already exists')->withInput($request->all());
+                } elseif ($checkEmail) {
+                    return redirect()->back()->with('error', 'Email already exists')->withInput($request->all());
+                } elseif ($checkIdCard) {
+                    return redirect()->back()->with('error', 'ID card already exists')->withInput($request->all());
+                } else {
+                    // add new tenant
+                    $tenant = new Tenant();
+                    $tenant->fullname = $request->fullname;
+                    $tenant->gender = $request->gender;
+                    $tenant->dob = $request->dob;
+                    $tenant->id_card = $request->id_card;
+                    $tenant->phone_number = $request->phone;
+                    $tenant->email = $request->email;
+                    $tenant->hometown = $request->hometown;
+                    $tenant->status = 1;
+                    $tenant->user_id = auth()->user()->id;
+                    $tenant->save();
+                }
             } else {
                 // update status of tenant to 1, means it is rented
                 $tenant = Tenant::find($request->tenant_id);

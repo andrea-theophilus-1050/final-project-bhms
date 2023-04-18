@@ -71,17 +71,19 @@
                                                 @if ($tenant->status == 1)
                                                     <a href="{{ route('notify.account-info.email', $tenant->tenant_id) }}"
                                                         class="dropdown-item"><i class="icon-copy dw dw-user-13"></i>
-                                                        Notify account info via Email </a>
+                                                        Send notify account info</a>
                                                 @endif
                                                 <a href="{{ route('tenant.edit', $tenant->tenant_id) }}"
                                                     class="dropdown-item" title="Edit tenant"><i class="dw dw-edit2"></i>
                                                     Edit</a>
-                                                <a class="dropdown-item" type="button" id="confirm-delete-modal-btn"
-                                                    data-toggle="modal" data-target="#confirm-delete-modal"
-                                                    data-tenantID="{{ $tenant->tenant_id }}"
-                                                    data-tenantName="{{ $tenant->fullname }}" data-backdrop="static"
-                                                    style="color: red; font-weight: bold"><i class="dw dw-delete-3"></i>
-                                                    Delete</a>
+                                                @if ($tenant->status == 0 || $tenant->status == 2)
+                                                    <a class="dropdown-item" type="button" id="confirm-delete-modal-btn"
+                                                        data-toggle="modal" data-target="#confirm-delete-modal"
+                                                        data-tenantID="{{ $tenant->tenant_id }}"
+                                                        data-tenantName="{{ $tenant->fullname }}" data-backdrop="static"
+                                                        style="color: red; font-weight: bold"><i class="dw dw-delete-3"></i>
+                                                        Delete</a>
+                                                @endif
                                             </div>
                                         </div>
                                     </td>

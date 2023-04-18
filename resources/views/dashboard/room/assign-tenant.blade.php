@@ -39,6 +39,18 @@
                         </div>
                     </div>
                 @endif
+
+                @if (session('error'))
+                    {{-- alert --}}
+                    <div class="form-group row ml-1">
+                        <div class="alert alert-danger alert-dismissible fade show col-md-7" role="alert">
+                            <strong>Error! </strong> {{ session('error') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                @endif
                 <div class="form-group row">
                     <div class="col-md-6 text-left">
                         <button class="btn btn-secondary btn-sm mb-20" data-target="#tenant-list" data-toggle="modal">
@@ -72,21 +84,21 @@
 
                     <label class="col-sm-12 col-md-2 col-form-label">Full name</label>
                     <div class="col-sm-6 col-md-4">
-                        <input class="form-control" type="text" placeholder="Full name" autofocus name="fullname"
+                        <input class="form-control" type="text" placeholder="Full name" autofocus name="fullname" value="{{ old('fullname') }}"
                             id="tenant_name" required>
                     </div>
 
                     <label class="col-sm-12 col-md-2 col-form-label">ID Card Number</label>
                     <div class="col-sm-6 col-md-4">
                         <input class="form-control" placeholder="ID Card number" type="text" name="id_card"
-                            id="tenant_id_card" required>
+                            value="{{ old('id_card') }}" id="tenant_id_card" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Date of birth</label>
                     <div class="col-sm-12 col-md-4">
                         <input class="form-control date-picker" placeholder="Date of birth" type="text" name="dob"
-                            id="dob" required>
+                            value="{{ old('dob') }}" id="dob" required>
                     </div>
 
                     <label class="col-sm-12 col-md-2 col-form-label">Gender</label>
@@ -109,25 +121,26 @@
                     <label class="col-sm-12 col-md-2 col-form-label">Phone number</label>
                     <div class="col-sm-12 col-md-4">
                         <input class="form-control" placeholder="Phone number" type="text" name="phone"
-                            id="phone_number" required>
+                            value="{{ old('phone') }}" id="phone_number" required>
                     </div>
 
                     <label class="col-sm-12 col-md-2 col-form-label">Email</label>
                     <div class="col-sm-12 col-md-4">
-                        <input class="form-control" placeholder="Email" type="text" name="email" id="email">
+                        <input class="form-control" placeholder="Email" type="text" name="email" id="email"
+                            value="{{ old('email') }}">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Hometown</label>
                     <div class="col-sm-12 col-md-4">
-                        <textarea class="form-control" placeholder="Hometown address" type="text" name="hometown"
-                            id="hometown" required></textarea>
+                        <textarea class="form-control" placeholder="Hometown address" type="text" name="hometown" id="hometown"
+                             required>{{ old('hometown') }}</textarea>
                     </div>
 
                     <label class="col-sm-12 col-md-2 col-form-label">Start date</label>
                     <div class="col-sm-12 col-md-4">
                         <input class="form-control date-picker" placeholder="Start date" type="text"
-                            name="start_date" required>
+                            value="{{ old('start_date') }}" name="start_date" required>
                     </div>
                 </div>
 
