@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('phone')->unique()->nullable();
+            $table->string('id_card')->nullable();
             $table->string('dob')->nullable();
             $table->string('gender')->nullable();
             $table->string('avatar')->nullable();

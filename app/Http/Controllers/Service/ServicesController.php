@@ -38,15 +38,19 @@ class ServicesController extends Controller
             return redirect()->back()->with('errors', 'You can only have one electricity or water service');
         }
 
-        $service = new Services();
-        $service->service_name = $request->service_name;
-        $service->price = intval(str_replace(",", "", $request->price));
-        $service->description = $request->description;
-        $service->user_id = auth()->user()->id;
-        $service->type_id = $request->typeService;
-        $service->changed = 1;
-        $service->save();
-        return redirect()->route('services.index');
+        if ($request->price != 'NaN') {
+            $service = new Services();
+            $service->service_name = $request->service_name;
+            $service->price = intval(str_replace(",", "", $request->price));
+            $service->description = $request->description;
+            $service->user_id = auth()->user()->id;
+            $service->type_id = $request->typeService;
+            $service->changed = 1;
+            $service->save();
+            return redirect()->route('services.index');
+        } else {
+            return redirect()->back()->with('errorPrice', 'Price is not valid');
+        }
     }
 
     public function update(Request $request, $id)

@@ -147,7 +147,7 @@
                 </div>
             </div> --}}
             <div class="row">
-                <div class="col-xl-3 mb-30">
+                <div class="col-xl-4 mb-30">
                     <div class="card-box height-100-p widget-style1">
                         <div class="d-flex flex-wrap align-items-center">
                             <div class="progress-data">
@@ -160,7 +160,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 mb-30">
+                <div class="col-xl-4 mb-30">
                     <div class="card-box height-100-p widget-style1">
                         <div class="d-flex flex-wrap align-items-center">
                             <div class="progress-data">
@@ -173,7 +173,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 mb-30">
+                <div class="col-xl-4 mb-30">
                     <div class="card-box height-100-p widget-style1">
                         <div class="d-flex flex-wrap align-items-center">
                             <div class="progress-data">
@@ -182,19 +182,6 @@
                             <div class="widget-data">
                                 <div class="h4 mb-0" id="s3">{{ $countAvailableRoom }}</div>
                                 <div class="weight-600 font-14">Available</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 mb-30">
-                    <div class="card-box height-100-p widget-style1">
-                        <div class="d-flex flex-wrap align-items-center">
-                            <div class="progress-data">
-                                <div id="statistic4"></div>
-                            </div>
-                            <div class="widget-data">
-                                <div class="h4 mb-0" id="s4">0</div>
-                                <div class="weight-600 font-14">Unknown</div>
                             </div>
                         </div>
                     </div>
@@ -219,13 +206,28 @@
                                         </button>
                                     </div>
                                 @endif
+                                @if (session('errorPrice'))
+                                    <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                                        <ul style="list-style-type:circle">
+                                            <li>{{ session('errorPrice') }}</li>
+                                        </ul>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
                             </div>
                             <div class="pull-right">
+                                @if ($rooms->count() > 0)
+                                    <a href="{{ route('export-rooms', $rooms[0]->houses->house_id) }}"
+                                        class="btn btn-info btn-sm"><i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                                        Export rooms excel</a>
+                                @endif
                                 <button data-toggle="modal" data-target="#room-add" class="btn btn-success btn-sm"><i
                                         class="icon-copy fa fa-plus" aria-hidden="true"></i>
                                     Add a new room</button>
-                                <button data-toggle="modal" data-target="#room-add-multiple" class="btn btn-info btn-sm"><i
-                                        class="icon-copy fa fa-plus" aria-hidden="true"></i>
+                                <button data-toggle="modal" data-target="#room-add-multiple"
+                                    class="btn btn-primary btn-sm"><i class="icon-copy fa fa-plus" aria-hidden="true"></i>
                                     Add
                                     multiple new rooms</button>
 
@@ -243,7 +245,11 @@
                                     <div class="pd-20">
                                         <div class="row clearfix" id="card-rooms">
                                             @if (count($rooms) == 0)
-                                                <h4>No data found</h4>
+                                                <div class="col-sm-12 col-md-3 mb-30">
+                                                    <div class="text-center">
+                                                        <h4>No room to show</h4>
+                                                    </div>
+                                                </div>
                                             @else
                                                 @foreach ($rooms as $room)
                                                     <div class="col-sm-12 col-md-3 mb-30">
@@ -254,7 +260,7 @@
                                                                     <div>
                                                                         <input type="checkbox" id="room-checkbox"
                                                                             name="selectedRooms[]"
-                                                                            style="width: 15px; height: 15px; margin-right: 8px"
+                                                                            style="width: 15px; height: 15px; margin-right: 8px; cursor: pointer"
                                                                             value="{{ $room->room_id }}">
                                                                         <i class="icon-copy dw dw-house"></i>
                                                                         &nbsp;&nbsp;{{ $room->room_name }}
@@ -767,8 +773,8 @@
                                                     <th scope="col"
                                                         style="position: sticky; left: 0; z-index: 1; background: white">
                                                         <button class="btn btn-primary btn-sm" type="submit"><i
-                                                            class="icon-copy dw dw-diskette2"></i> &nbsp;
-                                                        Submit</button>
+                                                                class="icon-copy dw dw-diskette2"></i> &nbsp;
+                                                            Submit</button>
                                                     </th>
                                                     <th scope="col">Full name </th>
                                                     <th scope="col">ID Card</th>
@@ -829,13 +835,11 @@
                                                     </td>
                                                     <td>
                                                         <input type='file' class='form-control'
-                                                            name='idcard_front[]'style="width: 300px" accept="image/*"
-                                                            >
+                                                            name='idcard_front[]'style="width: 300px" accept="image/*">
                                                     </td>
                                                     <td>
                                                         <input type='file' class='form-control'
-                                                            name='idcard_back[]'style="width: 300px" accept="image/*"
-                                                            >
+                                                            name='idcard_back[]'style="width: 300px" accept="image/*">
                                                     </td>
 
                                                 </tr>

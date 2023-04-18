@@ -119,13 +119,11 @@
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Hometown</label>
-                    <div class="col-sm-12 col-md-10">
-                        <input class="form-control" placeholder="Hometown address" type="text" name="hometown"
-                            id="hometown" required>
+                    <div class="col-sm-12 col-md-4">
+                        <textarea class="form-control" placeholder="Hometown address" type="text" name="hometown"
+                            id="hometown" required></textarea>
                     </div>
-                </div>
 
-                <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Start date</label>
                     <div class="col-sm-12 col-md-4">
                         <input class="form-control date-picker" placeholder="Start date" type="text"

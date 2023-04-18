@@ -2,34 +2,41 @@
 
 namespace App\Exports;
 
-use App\Models\Tenant;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use App\Models\Water;
 
-class ExportTenantList implements FromCollection, WithHeadings, WithStyles, ShouldAutoSize
+class ExportWaterBill implements FromCollection, WithStyles, WithHeadings, ShouldAutoSize
 {
     /**
      * @return \Illuminate\Support\Collection
      */
+    protected $date;
+
+    public function __construct($date)
+    {
+        $this->date = $date;
+    }
+
     public function collection()
     {
-        $tenants = Tenant::where('user_id', auth()->user()->id)->get();
+        $water = Water::where('date', $this->date)->get();
 
         $data = [];
 
-        foreach ($tenants as $index => $tenant) {
+        foreach ($water as $index => $w) {
             $data[] = [
                 'No.' => $index + 1,
-                'Tenant Name' => $tenant->fullname,
-                'Gender' => $tenant->gender,
-                'Date of Birth' => $tenant->dob,
-                'ID Card number' => $tenant->id_card,
-                'Phone number' => $tenant->phone_number,
-                'Email' => $tenant->email,
-                'Hometown' => $tenant->hometown,
+                'House name' => $w->rentalRoom->rooms->houses->house_name,
+                'Room name' => $w->rentalRoom->rooms->room_name,
+                'Tenant name' => $w->rentalRoom->tenants->fullname,
+                'Date' => $w->date,
+                'Old index' => $w->old_water_index,
+                'New index' => $w->new_water_index,
+                'Consumed' => $w->new_water_index - $w->old_water_index,
             ];
         }
 
@@ -40,13 +47,13 @@ class ExportTenantList implements FromCollection, WithHeadings, WithStyles, Shou
     {
         return [
             'No.',
-            'Full Name',
-            'Gender',
-            'Date of birth',
-            'ID Card number',
-            'Phone number',
-            'Email',
-            'Hometown',
+            'House name',
+            'Room name',
+            'Tenant name',
+            'Date',
+            'Old index',
+            'New index',
+            'Consumed',
         ];
     }
 

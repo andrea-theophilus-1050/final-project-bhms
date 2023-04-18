@@ -17,8 +17,6 @@ use App\Http\Controllers\TenantRole\AuthTenantController;
 use App\Http\Controllers\TenantRole\HandleTenantController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\ExportBills;
 use App\Http\Controllers\ExportPDFController;
 use App\Http\Controllers\Mail\SendMailController;
 use App\Http\Controllers\Payment\PaymentVNPayController;
@@ -105,12 +103,15 @@ Route::middleware(['auth', 'verified', 'userRole:landlords'])->group(function ()
                             Route::post('room/{id}/update-services-used/{rental_id}', 'editServicesUsed_action')->name('room.update-tenant-action');
 
                             Route::post('room/assignMembers', 'assignMembers')->name('assign-members');
+
+                            Route::get('export-rooms/{houseID}', [RoomController::class, 'exportRooms'])->name('export-rooms');
                         });
                     });
 
                     // Route::post('change-password', [DashboardController::class, 'changePassword'])->name('change-password');
 
                     Route::resource('tenant', TenantController::class);
+                    Route::get('/export-tenant', [TenantController::class, 'exportTenant'])->name('export-tenant');
                     Route::get('send-account-info/{id}', [TenantController::class, 'sendAccountInfo'])->name('notify.account-info.email');
 
 
@@ -118,12 +119,16 @@ Route::middleware(['auth', 'verified', 'userRole:landlords'])->group(function ()
                         Route::get('electricity-bill/{date}/{house}', 'electricity_bill')->name('electricity-bill');
                         Route::post('electricity-filter', 'electricity_filter')->name('electricity-filter');
                         Route::post('electricity-insert', 'electricity_insert')->name('electricity.insert');
+
+                        Route::get('export-electricity/{date}', [ElectricityController::class, 'exportElectricity'])->name('export-electricity');
                     });
 
                     Route::controller(WaterController::class)->group(function () {
                         Route::get('water-bill/{date}/{house}', 'water_bill')->name('water-bill');
                         Route::post('water-filter', 'water_filter')->name('water-filter');
                         Route::post('water-insert', 'water_insert')->name('water.insert');
+
+                        Route::get('export-water/{date}', [WaterController::class, 'exportWater'])->name('export-water');
                     });
 
                     Route::controller(CostsIncurredController::class)->group(function () {
@@ -141,6 +146,8 @@ Route::middleware(['auth', 'verified', 'userRole:landlords'])->group(function ()
                         Route::post('calculate-room-billing', 'calculateRoomBilling')->name('calculate.room-billing');
                         Route::post('update-status-bill/{id}', 'updateStatusBill')->name('update-status-bill');
 
+                        Route::get('/export-bill/{month}', 'exportBillExcel')->name('export-bill');
+
                         Route::get('test', 'test')->name('test');
                     });
 
@@ -153,23 +160,11 @@ Route::middleware(['auth', 'verified', 'userRole:landlords'])->group(function ()
                     });
 
                     Route::get('export-bill-pdf/{month}/{house}', [ExportPDFController::class, 'exportPDF'])->name('export-pdf');
-
                     Route::post('send-mail-bill/{month}/{house}', [SendMailController::class, 'sendMailBill'])->name('mail.send-bill');
                     Route::post('sendSMS/{month}/{house}', [SendSMSController::class, 'sendSMS'])->name('sms.send-bill');
 
-
-
                     Route::get('feedback', [DashboardController::class, 'feedback'])->name('feedback');
                     Route::post('solve-feedback', [DashboardController::class, 'solveFeedback'])->name('feedback.solve');
-
-                    // NOTE: Export testing, not done 
-                    Route::get('/export-users', [UserController::class, 'exportUsers'])->name('export-users');
-                    Route::get('/export-tenant', [TenantController::class, 'exportTenant'])->name('export-tenant');
-                    Route::get('/export-bill', function (Request $request) {
-                        $invoices = $request->input('invoices');
-
-                        return Excel::download(new ExportBills($invoices), 'bill.xlsx');
-                    })->name('export-bill');
                 });
             });
             Route::resource('services', ServicesController::class);

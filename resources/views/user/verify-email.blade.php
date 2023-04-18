@@ -54,7 +54,7 @@
                 <div class="col-md-6">
                     <div class="login-box bg-white box-shadow border-radius-10">
                         <div class="login-title">
-                            <h2 class="text-center text-primary">Verify You Email Address</h2>
+                            <h2 class="text-center text-primary">Verify Your Email Address</h2>
                         </div>
                         <p>{{ __('Before proceeding, please check your email for a verification link.') }}
                             {{ __('If you did not receive the email') }},</p>

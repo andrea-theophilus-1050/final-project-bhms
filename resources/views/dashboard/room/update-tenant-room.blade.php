@@ -95,14 +95,6 @@
                                 href="{{ route('tenant.edit', $rental->tenants->tenant_id) }}" class="text-blue"><u>please
                                     click here</u></a>
                         </div>
-                        <b>OR</b>
-                        <div>
-                            If you want to <i>"replace with another tenant"</i>, <a id="btn-replace-tenant"
-                                href="javascript:;" class="text-blue" data-id="{{ $rental->rental_room_id }}"
-                                data-tenantName="{{ $rental->tenants->fullname }}"
-                                data-roomName="{{ $rental->rooms->room_name }}"><u>please
-                                    click here</u></a>
-                        </div>
                     </small>
                 </h5>
 
@@ -173,48 +165,18 @@
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Hometown</label>
-                    <div class="col-sm-12 col-md-10">
-                        <input class="form-control" placeholder="Hometown address" type="text"
-                            value="{{ $rental->tenants->hometown }}" id="hometown" readonly>
+                    <div class="col-sm-12 col-md-4">
+                        <textarea class="form-control" placeholder="Hometown address" type="text" id="hometown" readonly>{{ $rental->tenants->hometown }}</textarea>
                     </div>
-                </div>
 
-                <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Start date</label>
                     <div class="col-sm-12 col-md-4">
                         <input class="form-control date-picker" placeholder="Start date" type="text"
                             value="{{ $rental->start_date }}" readonly>
                     </div>
                 </div>
+
             </form>
         </div>
     </div>
-
-
-
-
-
-    {{-- <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var changeTenantBtn = document.querySelectorAll('#btn-replace-tenant');
-            changeTenantBtn.forEach(function(e) {
-                e.addEventListener('click', function() {
-                    var id = e.getAttribute('data-id');
-                    var tenantName = e.getAttribute('data-tenantName');
-                    var roomName = e.getAttribute('data-roomName');
-
-
-                    // var serviceName = e.getAttribute('data-serviceName');
-                    // var formDelete = document.querySelector('#delete-form');
-                    var msg = document.querySelector('#msg-delete-confirm');
-
-                    msg.innerHTML = "<b>Room</b>: " + roomName + ' - <b>Tenant</b>: ' + tenantName;
-                    // formDelete.action = "{{ route('services.destroy', ':id') }}".replace(':id',
-                    //     serviceID);
-
-                    $('#confirm-replace-tenant-modal').modal('show');
-                });
-            });
-        })
-    </script> --}}
 @endsection

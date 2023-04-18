@@ -16,6 +16,7 @@ class DashboardController extends Controller
         $revenueByMonth = DB::table('tb_revenue')
             ->select(DB::raw("date as month"), DB::raw('SUM(total_price) as total_price'))
             ->where('date', 'LIKE', '% ' . date('Y') . '%')
+            ->where('user_id', auth()->user()->id)
             ->groupBy('month')
             ->get();
 
@@ -29,11 +30,15 @@ class DashboardController extends Controller
         $totalRooms = Room::join('tb_house', 'tb_house.house_id', '=', 'tb_rooms.house_id')
             ->where('tb_house.user_id', auth()->user()->id)->count();
 
-        $occupiedRooms = Room::join('tb_house', 'tb_house.house_id', '=', 'tb_rooms.house_id')
-            ->where('tb_house.user_id', auth()->user()->id)
-            ->where('tb_rooms.status', 1)->count();
+        if ($totalRooms) {
+            $occupiedRooms = Room::join('tb_house', 'tb_house.house_id', '=', 'tb_rooms.house_id')
+                ->where('tb_house.user_id', auth()->user()->id)
+                ->where('tb_rooms.status', 1)->count();
 
-        $percentOccupiedRooms = number_format((($occupiedRooms / $totalRooms) * 100), 0);
+            $percentOccupiedRooms = number_format((($occupiedRooms / $totalRooms) * 100), 0);
+        } else {
+            $percentOccupiedRooms = 0;
+        }
 
         return view('dashboard.index', compact(['revenueByMonth', 'unpaidBill', 'percentOccupiedRooms']))->with('title', 'Dashboard');
 

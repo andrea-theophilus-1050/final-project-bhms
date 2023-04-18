@@ -80,28 +80,10 @@
 
                         <form method="POST" action="{{ route('login.action') }}">
                             @csrf
-                            {{-- <div class="select-role">
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn active">
-                                        <input type="radio" name="options" id="admin" checked>
-                                        <div class="icon"><img src="{{ asset('vendors/images/briefcase.svg') }}"
-                                                class="svg" alt=""></div>
-                                        <span>I'm</span>
-                                        Landlord
-                                    </label>
-                                    <label class="btn">
-                                        <input type="radio" name="options" id="user">
-                                        <div class="icon"><img src="{{ asset('vendors/images/person.svg') }}"
-                                                class="svg" alt=""></div>
-                                        <span>I'm</span>
-                                        Ternant
-                                    </label>
-                                </div>
-                            </div> --}}
                             <div class="input-group custom">
-                                <input type="text" class="form-control form-control-lg" placeholder="Username"
-                                    name="username" id="username" autofocus autocomplete="on" required
-                                    value="{{ old('username') }}" @>
+                                <input type="text" class="form-control form-control-lg" placeholder="Username or Email address"
+                                    name="credential" id="username" autofocus autocomplete="on" required
+                                    value="{{ old('credential') }}">
 
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>

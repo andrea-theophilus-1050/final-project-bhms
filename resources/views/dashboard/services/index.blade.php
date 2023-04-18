@@ -33,6 +33,24 @@
                                 </button>
                             </div>
                         @endif
+
+                        @if (session('firstUpdateServiceError'))
+                            <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                                <strong>Error! </strong>{{ session('firstUpdateServiceError') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+
+                        @if (session('errorPrice'))
+                            <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                                <strong>Error! </strong>{{ session('errorPrice') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
                     </div>
                     <div class="pull-right">
                         <a href="javascript:;" data-toggle="modal" data-target="#service-add"
@@ -67,7 +85,8 @@
                                             white-space: nowrap;"
                                         title="{{ $service->description }}">{{ $service->description }}</td>
                                     <td>
-                                        <a id="edit-service" href="javascript:;" data-serviceID="{{ $service->service_id }}"
+                                        <a id="edit-service" href="javascript:;"
+                                            data-serviceID="{{ $service->service_id }}"
                                             data-serviceName="{{ $service->service_name }}"
                                             data-price="{{ $service->price }}"
                                             data-typeService="{{ $service->type->type_id }}"
@@ -122,7 +141,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-4">Pirce</label>
+                            <label class="col-md-4">Price</label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" name="price" id="price" required>
                             </div>

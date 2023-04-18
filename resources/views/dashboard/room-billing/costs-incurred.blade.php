@@ -25,7 +25,7 @@
                             @csrf
                             <input type="text" class="form-control form-control-sm month-picker mr-3"
                                 placeholder="Month picker" value="{{ $_GET['month'] }}" name="month-filter" required>
-                            <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
+                            <button type="submit" class="btn btn-primary btn-sm">Filter</button>
                         </form>
                     </div>
                     <div class="pull-right">

@@ -15,17 +15,9 @@
                             </ol>
                         </nav>
                     </div>
-                </div>
-            </div>
-
-            <form method="POST" action="{{ route('water-filter') }}">
-                @csrf
-                <div class="page-header">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="title mb-10">
-                                <h5>Filter</h5>
-                            </div>
+                    <div class="col-md-6 col-sm-12 text-right">
+                        <form method="POST" action="{{ route('water-filter') }}">
+                            @csrf
                             <div class="dropdown d-flex">
                                 <input type="text" class="form-control form-control-sm month-picker mr-3"
                                     placeholder="Month picker" value="{{ $date }}" name="month-filter">
@@ -40,10 +32,10 @@
                                 </select>
                                 <button type="submit" class="btn btn-primary btn-sm">Filter</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
-            </form>
+            </div>
 
             <form method="POST" action="{{ route('water.insert') }}">
                 @csrf
@@ -59,8 +51,11 @@
                             class="btn btn-success btn-sm"><i class="ion-plus-round"></i> Add a new service</a>
                     </div> --}}
                         <div class="pull-right">
-                            <button type="submit" class="btn btn-primary btn-sm"><i class="icon-copy dw dw-diskette2"></i> &nbsp; Save</button>
-                            <a href="{{ route('home') }}" class="btn btn-danger btn-sm"><i class="icon-copy fa fa-close" aria-hidden="true"></i> &nbsp; Cancel</a>
+                            <a href="{{ route('export-water', $date) }}" class="btn btn-info btn-sm"><i class="fa fa-file-excel-o"></i> Export excel</a>
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="icon-copy dw dw-diskette2"></i>
+                                &nbsp; Save</button>
+                            <a href="{{ route('home') }}" class="btn btn-danger btn-sm"><i class="icon-copy fa fa-close"
+                                    aria-hidden="true"></i> &nbsp; Cancel</a>
                         </div>
                     </div>
                     <div class="table-responsive">

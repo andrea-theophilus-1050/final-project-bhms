@@ -27,8 +27,8 @@
                         <button class="btn btn-success btn-sm mr-2" data-target="#room-billing-modal" data-toggle="modal"><i
                                 class="ion-calculator"></i> &nbsp; Calculate</button>
                         @if (collect($data)->count() > 0)
-                            <a href="{{ route('export-bill') }}?invoices={{ urlencode(json_encode($data)) }}"
-                                class="btn btn-primary btn-sm mr-2"><i class="icon-copy fi-page-export"></i> &nbsp; Export
+                            <a href="{{ route('export-bill', $month) }}"
+                                class="btn btn-info btn-sm mr-2"><i class="fa fa-file-excel-o"></i> &nbsp; Export
                                 Excel</a>
 
                             <a href="{{ route('export-pdf', [$month, $house]) }}" class="btn btn-primary btn-sm mr-2"><i

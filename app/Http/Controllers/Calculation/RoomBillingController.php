@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\RoomBilling;
 use App\Models\Notification;
 use App\Models\Revenue;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportBills;
 
 
 class RoomBillingController extends Controller
@@ -410,5 +412,11 @@ class RoomBillingController extends Controller
         }
 
         return $data;
+    }
+
+    public function exportBillExcel($month)
+    {
+        return Excel::download(new ExportBills($month), 'Room billings - ' . $month . '.xlsx');
+        // dd($month);
     }
 }

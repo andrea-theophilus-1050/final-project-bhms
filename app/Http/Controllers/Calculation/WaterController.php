@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Water;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportWaterBill;
 
 class WaterController extends Controller
 {
@@ -25,7 +27,6 @@ class WaterController extends Controller
                 ->join('tb_main_tenants', 'tb_main_tenants.tenant_id', '=', 'tb_rental_room.tenant_id')
                 ->where('tb_services.type_id', 2)
                 ->where('tb_house.user_id', auth()->user()->id)
-                ->where('tb_rental_room.status', 0)
                 ->get();
         } else {
             // get all rooms in the house of the user where the room is occupied
@@ -40,7 +41,6 @@ class WaterController extends Controller
                 ->where('tb_services.type_id', 2)
                 ->where('tb_house.user_id', auth()->user()->id)
                 ->where('tb_house.house_id', $house_id)
-                ->where('tb_rental_room.status', 0)
                 ->get();
         }
 
@@ -109,5 +109,10 @@ class WaterController extends Controller
         $house_id = $request->input('house-filter');
 
         return redirect()->route('water-bill', [$date, $house_id]);
+    }
+
+    public function exportWater($date)
+    {
+        return Excel::download(new ExportWaterBill($date), 'Water - ' . $date . '.xlsx');
     }
 }

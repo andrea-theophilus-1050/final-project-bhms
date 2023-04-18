@@ -75,8 +75,23 @@ class UserController extends Controller
     //function handle login
     public function login_action(Request $request)
     {
+        // validate form
+        $request->validate([
+            'credential' => 'required',
+            'password' => 'required|min:6'
+        ]);
+
         $remember = $request->has('remember_me') || Cookie::has('remember_me');
-        $credentials = $request->only('username', 'password');
+
+        $credentials = [
+            'password' => $request->password,
+        ];
+
+        if (filter_var($request->credential, FILTER_VALIDATE_EMAIL)) {
+            $credentials['email'] = $request->credential;
+        } else {
+            $credentials['username'] = $request->credential;
+        }
 
         if (Auth::attempt($credentials, $remember)) {
             // $request->session()->regenerate();
@@ -102,7 +117,7 @@ class UserController extends Controller
     public function register_action(Request $request)
     {
         $request->validate([
-            'username' => 'required',
+            'username' => 'required|unique:tb_user',
             'password' => 'required|min:6',
             'email' => 'email|required|unique:tb_user',
             'confirmPassword' => 'required|same:password',
@@ -119,7 +134,7 @@ class UserController extends Controller
             Services::create([
                 'service_name' => 'Water',
                 'price' => 0,
-                'description' => 'Default and required water service,',
+                'description' => 'Default and required water service',
                 'user_id' => $user->id,
                 'type_id' => 2,
             ]);
@@ -151,23 +166,31 @@ class UserController extends Controller
     {
         switch ($request->btnSubmit) {
             case 'updateInformation': // if user click button update information
-                // check email unique
-                // $email = DB::table('tb_user')->where('email', $request->email)->where('id', '!=', auth()->user()->id)->first();
-                $email = User::where('email', $request->email)->where('id', '!=', auth()->user()->id)->first();
+                // validate form
+                $request->validate([
+                    'phone' => 'required|numeric|digits_between:10,11',
+                    'id_card' => 'required|numeric|digits_between:9,12',
+                    'name' => 'required',
+                    'dob' => 'required',
+                    'gender' => 'required',
+                ]);
+
                 // check phone unique
-                // $phone = DB::table('tb_user')->where('phone', $request->phone)->where('id', '!=', auth()->user()->id)->first();
                 $phone = User::where('phone', $request->phone)->where('id', '!=', auth()->user()->id)->first();
+
+                // check id card unique
+                $idCard = User::where('id_card', $request->id_card)->where('id', '!=', auth()->user()->id)->first();
 
                 if ($phone) {
                     return redirect()->back()->with('errorProfile', 'Phone already exists')->withInput($request->all());
-                } else if ($email) {
-                    return redirect()->back()->with('errorProfile', 'Email already exists')->withInput($request->all());
+                } else if ($idCard) {
+                    return redirect()->back()->with('errorProfile', 'ID card already exists')->withInput($request->all());
                 } else {
                     $user = User::find(auth()->user()->id);
                     $user->name = $request->name;
-                    $user->email = $request->email;
                     $user->phone = $request->phone;
                     $user->dob = $request->dob;
+                    $user->id_card = $request->id_card;
                     $user->gender = $request->gender;
 
                     $generatedAvatarName = null;

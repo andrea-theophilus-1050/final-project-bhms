@@ -88,8 +88,8 @@
                             <div class="tab height-100-p">
                                 <ul class="nav nav-tabs customtab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="tab" href="#setting"
-                                            role="tab">Personal information</a>
+                                        <a class="nav-link active" data-toggle="tab" href="#setting" role="tab">Personal
+                                            information</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
@@ -123,47 +123,69 @@
                                                                 </button>
                                                             </div>
                                                         @endif
+                                                        @if ($errors->any())
+                                                            <div class="alert alert-danger alert-dismissible fade show"
+                                                                role="alert">
+                                                                <ul>
+                                                                    @foreach ($errors->all() as $error)
+                                                                        <li>
+                                                                            <strong>Error! </strong>
+                                                                            {{ $error }}
+                                                                        </li>
+                                                                    @endforeach
+                                                                </ul>
+                                                                <button type="button" class="close" data-dismiss="alert"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                        @endif
                                                         <label style="color:red; font-size: 14px"><i>(*)
                                                                 Required</i></label>
                                                         <div class="form-group">
                                                             @if ($user->type_login == 'username')
                                                                 <label>Username</label>
                                                                 <input class="form-control form-control-lg" type="text"
-                                                                    id="username" name="username"
-                                                                    placeholder="Username"
+                                                                    id="username" name="username" placeholder="Username"
                                                                     value="{{ $user->username }}" readonly disabled>
                                                             @endif
                                                         </div>
                                                         <div class="form-group">
                                                             <label>(*) Full name</label>
                                                             <input class="form-control form-control-lg" type="text"
-                                                                id="name" name="name"
-                                                                placeholder="Fullname"
+                                                                id="name" name="name" placeholder="Fullname"
                                                                 value="{{ $user->name }}" onfocus="this.placeholder = ''"
                                                                 onblur="this.placeholder = 'Fullname'" required>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>(*) Email address</label>
+                                                            <label>Email address</label>
                                                             <input class="form-control form-control-lg" type="email"
-                                                                id="email" name="email"
-                                                                placeholder="Email address"
-                                                                value="{{ $user->email }}" onfocus="this.placeholder = ''"
-                                                                onblur="this.placeholder = 'Email address'" required>
+                                                                id="email" name="email" placeholder="Email address"
+                                                                value="{{ $user->email }}"
+                                                                onfocus="this.placeholder = ''"
+                                                                onblur="this.placeholder = 'Email address'" disabled>
                                                         </div>
                                                         <div class="form-group">
                                                             <label>(*) Phone number</label>
                                                             <input class="form-control form-control-lg" type="text"
-                                                                id="phone" name="phone"
-                                                                placeholder="Phone number"
+                                                                id="phone" name="phone" placeholder="Phone number"
                                                                 value="{{ $user->phone }}"
                                                                 onfocus="this.placeholder = ''"
                                                                 onblur="this.placeholder = 'Phone number'" required>
                                                         </div>
                                                         <div class="form-group">
+                                                            <label>(*) ID Card number</label>
+                                                            <input class="form-control form-control-lg" type="text"
+                                                                id="phone" name="id_card" placeholder="ID Card number"
+                                                                value="{{ $user->id_card }}"
+                                                                onfocus="this.placeholder = ''"
+                                                                onblur="this.placeholder = 'ID Card number'" required>
+                                                        </div>
+                                                        <div class="form-group">
                                                             <label>(*) Date of birth</label>
                                                             <input class="form-control form-control-lg date-picker"
-                                                                type="text" placeholder="Date of birth"
-                                                                name="dob" onfocus="this.placeholder = ''"
+                                                                type="text" placeholder="Date of birth" name="dob"
+                                                                onfocus="this.placeholder = ''"
                                                                 value="{{ $user->dob }}"
                                                                 onblur="this.placeholder = 'Date of birth'" required>
                                                         </div>
@@ -243,8 +265,7 @@
                                                             <label>New password</label>
                                                             <input class="form-control form-control-lg" type="password"
                                                                 id="newPassword" name="newPassword"
-                                                                placeholder="New password"
-                                                                onfocus="this.placeholder = ''"
+                                                                placeholder="New password" onfocus="this.placeholder = ''"
                                                                 onblur="this.placeholder = 'New password'"
                                                                 onkeyup="trigger()">
                                                         </div>
@@ -254,9 +275,12 @@
                                                                 <span class="medium"></span>
                                                                 <span class="strong"></span>
                                                             </div>
-                                                            <div class="text" id="weak">Your password is too weak</div>
-                                                            <div class="text" id="medium">Your password is medium</div>
-                                                            <div class="text" id="strong">Your password is strong</div>
+                                                            <div class="text" id="weak">Your password is too weak
+                                                            </div>
+                                                            <div class="text" id="medium">Your password is medium
+                                                            </div>
+                                                            <div class="text" id="strong">Your password is strong
+                                                            </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Confirm new password</label>
@@ -271,14 +295,15 @@
                                                             <div class="textComparePassword" id="notMatch">
                                                                 Password and Confirm password do not match</div>
                                                             <div class="textComparePassword" id="match"
-                                                                style="color: blue;">Password and Confirm password matched</div>
+                                                                style="color: blue;">Password and Confirm password matched
+                                                            </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="custom-control custom-checkbox mb-5">
                                                                 <input type="checkbox" class="custom-control-input"
                                                                     id="showPass" onclick="showPassword()">
-                                                                <label class="custom-control-label"
-                                                                    for="showPass">Show password</label>
+                                                                <label class="custom-control-label" for="showPass">Show
+                                                                    password</label>
                                                             </div>
                                                         </div>
 

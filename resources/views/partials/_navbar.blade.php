@@ -119,8 +119,6 @@
                         <i class="dw dw-user1"></i> Profile</a>
                     <a class="dropdown-item" href="javascript:;" data-toggle="right-sidebar">
                         <i class="dw dw-settings2"></i> Layout settings</a>
-                    <a class="dropdown-item" href="faq.html">
-                        <i class="dw dw-help"></i> Help</a>
                     <a class="dropdown-item" href="{{ route('logout') }}">
                         <i class="dw dw-logout"></i> Logout</a>
                 </div>

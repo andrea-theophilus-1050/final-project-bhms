@@ -79,7 +79,7 @@
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Phone number</label>
                         <div class="col-sm-12 col-md-10">
-                            <input class="form-control" placeholder="Phone number" type="text" name="phone"
+                            <input class="form-control" placeholder="Phone number" type="text" name="phone_number"
                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone number'" required>
                         </div>
                     </div>

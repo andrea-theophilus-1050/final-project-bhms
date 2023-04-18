@@ -15,17 +15,10 @@
                             </ol>
                         </nav>
                     </div>
-                </div>
-            </div>
-            <form method="POST" action="{{ route('electricity-filter') }}">
-                @csrf
-                <div class="page-header">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="title mb-10">
-                                <h5>Filter</h5>
-                            </div>
+                    <div class="col-md-6 col-sm-12 text-right">
+                        <form method="POST" action="{{ route('electricity-filter') }}">
                             <div class="dropdown d-flex">
+                                @csrf
                                 <input type="text" class="form-control form-control-sm month-picker mr-3"
                                     placeholder="Month picker" value="{{ $date }}" name="month-filter">
                                 <select class="form-control form-control-sm font-13 mr-3" name="house-filter">
@@ -39,10 +32,11 @@
                                 </select>
                                 <button type="submit" class="btn btn-primary btn-sm">Filter</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
-            </form>
+            </div>
+            
             <form method="POST" action="{{ route('electricity.insert') }}">
                 @csrf
                 <input type="hidden" name="date" value="{{ $date }}">
@@ -53,6 +47,7 @@
                                 Electricity bill</h4>
                         </div>
                         <div class="pull-right">
+                            <a href="{{ route('export-electricity', $date) }}" class="btn btn-info btn-sm"><i class="fa fa-file-excel-o"></i> Export excel</a>
                             <button type="submit" class="btn btn-primary btn-sm"><i class="icon-copy dw dw-diskette2"></i>
                                 &nbsp; Save</button>
                             <a href="{{ route('home') }}" class="btn btn-danger btn-sm"><i class="icon-copy fa fa-close"
@@ -92,18 +87,18 @@
                                             @if (collect($oldIndexes)->where('rental_room_id', $data->rental_room_id)->where('new_electricity_index', '!=', 0)->isNotEmpty())
                                                 <input class="form-control form-control-sm" type="number"
                                                     name="oldIndex_electric[]" id="oldIndex_electric" placeholder="0"
-                                                    min="0" 
+                                                    min="0"
                                                     value="{{ collect($oldIndexes)->where('rental_room_id', $data->rental_room_id)->pluck('new_electricity_index')->first() }}">
                                             @else
                                                 @if (collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->isNotEmpty())
                                                     <input class="form-control form-control-sm" type="number"
                                                         name="oldIndex_electric[]" id="oldIndex_electric" placeholder="0"
-                                                        min="0" 
+                                                        min="0"
                                                         value="{{ collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->pluck('old_electricity_index')->first() }}">
                                                 @else
                                                     <input class="form-control form-control-sm" type="number"
                                                         name="oldIndex_electric[]" id="oldIndex_electric" placeholder="0"
-                                                        min="0" >
+                                                        min="0">
                                                 @endif
                                             @endif
                                         </td>
@@ -111,12 +106,12 @@
                                             @if (collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->isNotEmpty())
                                                 <input class="form-control form-control-sm" type="number"
                                                     name="newIndex_electric[]" id="newIndex_electric" placeholder="0"
-                                                    min="0" 
+                                                    min="0"
                                                     value="{{ collect($currentIndexes)->where('rental_room_id', $data->rental_room_id)->pluck('new_electricity_index')->first() }}">
                                             @else
                                                 <input class="form-control form-control-sm" type="number"
                                                     name="newIndex_electric[]" id="newIndex_electric" placeholder="0"
-                                                    min="0" >
+                                                    min="0">
                                             @endif
                                         </td>
                                         <td style="text-align: center">

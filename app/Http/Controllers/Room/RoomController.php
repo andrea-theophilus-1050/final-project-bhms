@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Room;
 
+use App\Exports\ExportRooms;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,6 +12,7 @@ use App\Models\Tenant;
 use App\Models\RentalRoom;
 use App\Models\Services;
 use App\Models\Members;
+
 
 class RoomController extends Controller
 {
@@ -50,14 +53,18 @@ class RoomController extends Controller
             'price' => 'required',
         ]);
 
-        //add room to database
-        $room = new Room();
-        $room->room_name = $request->room_name;
-        $room->price = intval(str_replace(",", "", $request->price));
-        $room->room_description = $request->room_description;
-        $room->house_id = $id;
-        $room->save();
-        return redirect()->route('room.index', $id);
+        if ($request->price != 'NaN') {
+            //add room to database
+            $room = new Room();
+            $room->room_name = $request->room_name;
+            $room->price = intval(str_replace(",", "", $request->price));
+            $room->room_description = $request->room_description;
+            $room->house_id = $id;
+            $room->save();
+            return redirect()->route('room.index', $id);
+        } else {
+            return redirect()->route('room.index', $id)->with('errorPrice', 'Price is not valid');
+        }
     }
 
     public function addMultipleRooms(Request $request, $id)
@@ -284,5 +291,10 @@ class RoomController extends Controller
             $members->save();
         }
         return redirect()->back()->with('success', 'Members has been added successfully');
+    }
+
+    public function exportRooms($houseID)
+    {
+        return Excel::download(new ExportRooms($houseID), 'rooms.xlsx');
     }
 }

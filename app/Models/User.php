@@ -28,6 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'phone',
+        'id_card',
         'dob',
         'gender',
         'avatar',
@@ -69,6 +70,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Revenue::class, 'user_id');
     }
 
+
+    
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));

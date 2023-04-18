@@ -30,8 +30,9 @@ class TenantController extends Controller
         $request->validate([
             'fullname' => 'required',
             'dob' => 'required',
-            'id_card' => 'required',
-            'phone' => 'required',
+            'id_card' => 'required|unique:tb_main_tenants',
+            'email' => 'email|unique:tb_main_tenants',
+            'phone_number' => 'required|unique:tb_main_tenants',
             'hometown' => 'required',
         ]);
 
@@ -40,7 +41,7 @@ class TenantController extends Controller
         $tenant->gender = $request->gender;
         $tenant->dob = $request->dob;
         $tenant->id_card = $request->id_card;
-        $tenant->phone_number = $request->phone;
+        $tenant->phone_number = $request->phone_number;
         $tenant->email = $request->email;
         $tenant->hometown = $request->hometown;
         $tenant->user_id = auth()->user()->id;
@@ -60,7 +61,8 @@ class TenantController extends Controller
         $tenant->citizen_card_front_image = $id_card_front_name;
         $tenant->citizen_card_back_image = $id_card_back_name;
         $tenant->save();
-        return redirect()->route('tenant.index');
+
+        return redirect()->route('tenant.index')->with('success', 'Tenant has been added successfully');
     }
 
 
@@ -89,7 +91,7 @@ class TenantController extends Controller
         $tenant->email = $request->email;
         $tenant->hometown = $request->hometown;
         $tenant->save();
-        return redirect()->route('tenant.index');
+        return redirect()->route('tenant.index')->with('success', 'Tenant has been updated successfully');
     }
 
     public function destroy($id)

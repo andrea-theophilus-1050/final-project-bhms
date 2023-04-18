@@ -23,7 +23,7 @@ class ServicesPriceChangedFirst
             if ($user->role == 'landlords') {
                 $services = Services::where('user_id', $user->id)->where('changed', 0)->get();
                 if (count($services) > 0) {
-                    return redirect()->route('services.index')->with('error', 'You must change the price of the service before using the system');
+                    return redirect()->route('services.index')->with('firstUpdateServiceError', 'You must change the price of the service before using the system');
                 } else {
                     return $next($request);
                 }

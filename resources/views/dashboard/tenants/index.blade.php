@@ -24,14 +24,23 @@
                         <h4 class="text-blue h4"></h4>
                     </div>
                     <div class="pull-right">
-                        {{-- <a id="test" href="javascript:;" data-toggle="modal" data-target="#tenant-add"
-                            class="btn btn-success btn-sm"><i class="ion-plus-round"></i> Add new tenant</a> --}}
+                        <a href="{{ route('export-tenant') }}" class="btn btn-info btn-sm"><i
+                                class="fa fa-file-excel-o"></i>
+                            Export excel</a>
                         <a href="{{ route('tenant.create') }}" class="btn btn-success btn-sm"><i class="ion-plus-round"></i>
                             Add new tenant</a>
                     </div>
                 </div>
 
                 <div class="table-responsive">
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show col-7" role="alert">
+                            <strong>Success! </strong> {{ session('success') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     <table class="table table-striped hover" id="tenant-table">
                         <thead style="white-space: nowrap;">
                             <tr>
