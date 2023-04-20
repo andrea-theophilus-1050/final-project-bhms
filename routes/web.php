@@ -35,6 +35,10 @@ use App\Http\Controllers\Room\ReturnRoomController;
 |
 */
 
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
 
 Route::controller(UserController::class)->group(function () {
     Route::get('login', 'login')->name('login');
