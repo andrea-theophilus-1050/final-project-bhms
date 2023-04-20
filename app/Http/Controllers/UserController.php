@@ -246,12 +246,6 @@ class UserController extends Controller
         }
         return redirect()->back();
     }
-
-    //Test export excel - need to delete
-    public function exportUsers(Request $request)
-    {
-        return Excel::download(new ExportUser, 'users.xlsx');
-    }
 }
 
 
