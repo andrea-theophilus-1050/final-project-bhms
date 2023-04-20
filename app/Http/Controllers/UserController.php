@@ -253,3 +253,7 @@ class UserController extends Controller
         return Excel::download(new ExportUser, 'users.xlsx');
     }
 }
+
+
+
+
