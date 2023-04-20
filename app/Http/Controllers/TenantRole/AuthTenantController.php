@@ -33,7 +33,7 @@ class AuthTenantController extends Controller
         }
 
         if (Auth::guard('tenants')->attempt($credentials)) {
-            if (Auth::guard('tenants')->user()->status == 0) {
+            if (Auth::guard('tenants')->user()->status == 0 || Auth::guard('tenants')->user()->status == 2) {
                 Auth::guard('tenants')->logout();
                 return back()->with('errors', 'Your account is not active')->withInput($request->all());
             } else {

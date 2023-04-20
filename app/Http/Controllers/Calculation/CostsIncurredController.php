@@ -63,12 +63,16 @@ class CostsIncurredController extends Controller
         $reason = $request->input('reason');
         $date = $request->input('month_year');
 
-        $costs = new CostIncurred();
-        $costs->rental_room_id = $rentalID;
-        $costs->price = intval(str_replace(",", "", $price));
-        $costs->reason = $reason;
-        $costs->date = $date;
-        $costs->save();
+        if ($price != "NaN") {
+            $costs = new CostIncurred();
+            $costs->rental_room_id = $rentalID;
+            $costs->price = intval(str_replace(",", "", $price));
+            $costs->reason = $reason;
+            $costs->date = $date;
+            $costs->save();
+        } else {
+            return redirect()->back()->with('error', 'Price must be a number');
+        }
 
         return redirect()->route('costs-incurred', ['month' => $date])->with('success', 'Insert data successfully');
     }

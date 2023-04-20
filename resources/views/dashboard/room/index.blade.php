@@ -216,6 +216,16 @@
                                         </button>
                                     </div>
                                 @endif
+                                @if (session('success'))
+                                    <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                                        <ul style="list-style-type:circle">
+                                            <li>{{ session('success') }}</li>
+                                        </ul>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
                             </div>
                             <div class="pull-right">
                                 @if ($rooms->count() > 0)
@@ -227,7 +237,8 @@
                                         class="icon-copy fa fa-plus" aria-hidden="true"></i>
                                     Add a new room</button>
                                 <button data-toggle="modal" data-target="#room-add-multiple"
-                                    class="btn btn-primary btn-sm"><i class="icon-copy fa fa-plus" aria-hidden="true"></i>
+                                    class="btn btn-primary btn-sm"><i class="icon-copy fa fa-plus"
+                                        aria-hidden="true"></i>
                                     Add
                                     multiple new rooms</button>
 
@@ -299,7 +310,12 @@
                                                                     style="background-color: #1899F5">
                                                                     <div>
                                                                         <i class="icon-copy dw dw-house"></i>
-                                                                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>{{ $room->room_name }}</strong>
+                                                                        &nbsp;&nbsp;<strong>{{ $room->room_name }}</strong>
+                                                                        @if ($room->rentals->status == 1)
+                                                                            <span class="badge badge-pill badge-warning"
+                                                                                style="font-size: 10px">Pending
+                                                                                return</span>
+                                                                        @endif
                                                                     </div>
 
                                                                     <div class="dropdown">
@@ -1163,7 +1179,7 @@
 
                     var msg = document.querySelector('#return-room-modal #msg-confirm');
                     msg.innerHTML = " \"" + roomName + " - " + tenantName +
-                        "\" <br>return room confirmation?"
+                        "\" <br>put on the return room waiting list?"
 
                     var formReturnRoom = document.querySelector('#return-room-form');
                     formReturnRoom.action = "{{ route('room.return') }}";

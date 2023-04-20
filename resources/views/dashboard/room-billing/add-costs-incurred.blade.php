@@ -34,18 +34,25 @@
                 @csrf
                 {{-- alert --}}
                 @if ($errors->any())
-                    <div class="form-group row ml-1">
-                        <div class="alert alert-danger alert-dismissible fade show col-md-7" role="alert">
-                            <ul style="list-style-type:circle">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                    <div class="alert alert-danger alert-dismissible fade show col-md-7" role="alert">
+                        <ul style="list-style-type:circle">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
+                @endif
+
+                @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show col-md-7" role="alert">
+                    <strong>Error! </strong> {{ session('error') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 @endif
 
                 <input type="hidden" name="rental_room_id" id="rental_room_id">
