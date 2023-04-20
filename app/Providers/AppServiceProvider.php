@@ -7,6 +7,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Cookie;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,6 +39,10 @@ class AppServiceProvider extends ServiceProvider
             if ($user) {
                 Auth::login($user, true);
             }
+        }
+
+        if(env('APP_ENV') === 'production') {
+            URL::forceScheme('https');
         }
     }
 }
