@@ -62,9 +62,22 @@
                             <h2 class="text-center text-primary">Sign up for Landlords</h2>
                         </div>
 
-                        @if (session('errors'))
+                        {{-- @if (session('errors'))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <strong>Error!</strong> {{ session('errors') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif --}}
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <ul style="list-style-type:circle">
+                                    @foreach ($errors->all() as $error)
+                                        <li><strong>Error! </strong>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -110,8 +123,8 @@
 
                             <div class="input-group custom">
                                 <input type="password" class="form-control form-control-lg"
-                                    placeholder="Confirm password" id="confirmPassword" name="confirmPassword" required
-                                    onkeyup="comparePassword()">
+                                    placeholder="Confirm password" id="confirmPassword" name="confirmPassword"
+                                    required onkeyup="comparePassword()">
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="dw dw-checked"
                                             id="checkedPassword"></i><i class="dw dw-eye"

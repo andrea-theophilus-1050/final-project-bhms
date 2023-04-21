@@ -37,15 +37,15 @@
                             @if ($user->avatar == null)
                                 <img src="{{ asset('avatar/default-avatar.png') }}" alt="" class="avatar-photo">
                             @else
-                                <img src="{{ asset('avatar/' . auth()->user()->avatar) }}" alt=""
+                                <img src="{{ asset('avatar/' . auth('tenants')->user()->avatar) }}" alt=""
                                     class="avatar-photo">
                             @endif
                         </div>
                         <h5 class="text-center h5 mb-0">
-                            @if ($user->name == null)
+                            @if ($user->fullname == null)
                                 Not provided
                             @else
-                                {{ $user->name }}
+                                {{ $user->fullname }}
                             @endif
                         </h5>
                         <p class="text-center text-muted font-14">Lorem ipsum dolor sit amet</p>
@@ -62,20 +62,11 @@
                                 </li>
                                 <li>
                                     <span>Phone number</span>
-                                    @if ($user->phone == null)
+                                    @if ($user->phone_number == null)
                                         Not provided
                                     @else
-                                        {{ $user->phone }}
+                                        {{ $user->phone_number }}
                                     @endif
-                                </li>
-                                <li>
-                                    <span>Country:</span>
-                                    America
-                                </li>
-                                <li>
-                                    <span>Address:</span>
-                                    1807 Holden Street<br>
-                                    San Diego, CA 92115
                                 </li>
                             </ul>
                         </div>
@@ -127,8 +118,7 @@
                                                         <div class="form-group">
                                                             <label>(*) Fullname</label>
                                                             <input class="form-control form-control-lg" type="text"
-                                                                id="name" name="name"
-                                                                placeholder="Fullname"
+                                                                id="name" name="name" placeholder="Fullname"
                                                                 value="{{ $user->fullname }}"
                                                                 onfocus="this.placeholder = ''"
                                                                 onblur="this.placeholder = 'Fullname'" required>
@@ -136,16 +126,14 @@
                                                         <div class="form-group">
                                                             <label>(*) Email address</label>
                                                             <input class="form-control form-control-lg" type="email"
-                                                                id="email" name="email"
-                                                                placeholder="Email address" value="{{ $user->email }}"
-                                                                onfocus="this.placeholder = ''"
+                                                                id="email" name="email" placeholder="Email address"
+                                                                value="{{ $user->email }}" onfocus="this.placeholder = ''"
                                                                 onblur="this.placeholder = 'Email address'" required>
                                                         </div>
                                                         <div class="form-group">
                                                             <label>(*) Phone number</label>
                                                             <input class="form-control form-control-lg" type="text"
-                                                                id="phone" name="phone"
-                                                                placeholder="Phone number"
+                                                                id="phone" name="phone" placeholder="Phone number"
                                                                 value="{{ $user->phone_number }}"
                                                                 onfocus="this.placeholder = ''"
                                                                 onblur="this.placeholder = 'Phone number'" required>
@@ -153,8 +141,8 @@
                                                         <div class="form-group">
                                                             <label>(*) Date of birth</label>
                                                             <input class="form-control form-control-lg date-picker"
-                                                                type="text" placeholder="Date of birth"
-                                                                name="dob" onfocus="this.placeholder = ''"
+                                                                type="text" placeholder="Date of birth" name="dob"
+                                                                onfocus="this.placeholder = ''"
                                                                 value="{{ $user->dob }}"
                                                                 onblur="this.placeholder = 'Date of birth'" required>
                                                         </div>
@@ -234,8 +222,7 @@
                                                             <label>New password</label>
                                                             <input class="form-control form-control-lg" type="password"
                                                                 id="newPassword" name="newPassword"
-                                                                placeholder="New password"
-                                                                onfocus="this.placeholder = ''"
+                                                                placeholder="New password" onfocus="this.placeholder = ''"
                                                                 onblur="this.placeholder = 'New password'"
                                                                 onkeyup="trigger()">
                                                         </div>
@@ -245,9 +232,12 @@
                                                                 <span class="medium"></span>
                                                                 <span class="strong"></span>
                                                             </div>
-                                                            <div class="text" id="weak">Your password is too weak</div>
-                                                            <div class="text" id="medium">Your password is medium</div>
-                                                            <div class="text" id="strong">Your password is strong</div>
+                                                            <div class="text" id="weak">Your password is too weak
+                                                            </div>
+                                                            <div class="text" id="medium">Your password is medium
+                                                            </div>
+                                                            <div class="text" id="strong">Your password is strong
+                                                            </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Confirm new password</label>
@@ -262,14 +252,15 @@
                                                             <div class="textComparePassword" id="notMatch">
                                                                 Password and Confirm password do not match</div>
                                                             <div class="textComparePassword" id="match"
-                                                                style="color: blue;">Password and Confirm password matched</div>
+                                                                style="color: blue;">Password and Confirm password matched
+                                                            </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="custom-control custom-checkbox mb-5">
                                                                 <input type="checkbox" class="custom-control-input"
                                                                     id="showPass" onclick="showPassword()">
-                                                                <label class="custom-control-label"
-                                                                    for="showPass">Show password</label>
+                                                                <label class="custom-control-label" for="showPass">Show
+                                                                    password</label>
                                                             </div>
                                                         </div>
 

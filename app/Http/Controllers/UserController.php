@@ -101,10 +101,10 @@ class UserController extends Controller
             if (Auth::user()->role == 'landlords') {
                 return redirect()->route('home')->with('success', 'Login successful!');
             } else {
-                return back()->with('errors', 'You cannot access the system')->withInput($request->all());
+                return back()->with('errorLogin', 'You cannot access the system')->withInput($request->all());
             }
         }
-        return back()->with('errors', 'Incorrect username or password')->withInput($request->all());
+        return back()->with('errorLogin', 'Incorrect username or password')->withInput($request->all());
     }
 
     //function return view register

@@ -69,9 +69,23 @@
                         @endif
 
                         {{-- NOTE: alert error message after registration --}}
-                        @if (session('errors'))
+                        @if (session('errorLogin'))
                             <div class="alert alert-danger" role="alert">
-                                <strong>Error! </strong>{{ session('errors') }}
+                                <strong>Error! </strong>{{ session('errorLogin') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <ul style="list-style-type:circle">
+                                    @foreach ($errors->all() as $error)
+                                        <li><strong>Error! </strong>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -81,9 +95,9 @@
                         <form method="POST" action="{{ route('login.action') }}">
                             @csrf
                             <div class="input-group custom">
-                                <input type="text" class="form-control form-control-lg" placeholder="Username or Email address"
-                                    name="credential" id="username" autofocus autocomplete="on" required
-                                    value="{{ old('credential') }}">
+                                <input type="text" class="form-control form-control-lg"
+                                    placeholder="Username or Email address" name="credential" id="username" autofocus
+                                    autocomplete="on" required value="{{ old('credential') }}">
 
                                 <div class="input-group-append custom">
                                     <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
