@@ -70,8 +70,11 @@
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                 @if ($tenant->status == 1)
                                                     <a href="{{ route('notify.account-info.email', $tenant->tenant_id) }}"
-                                                        class="dropdown-item"><i class="icon-copy dw dw-user-13"></i>
-                                                        Send notify account info</a>
+                                                        class="dropdown-item"><i class="icon-copy dw dw-email"></i>
+                                                        Send notify account info via Email</a>
+                                                    <a href="{{ route('notify.account-info.sms', $tenant->tenant_id) }}"
+                                                        class="dropdown-item"><i class="icon-copy dw dw-email1"></i>
+                                                        Send notify account info via SMS</a>
                                                 @endif
                                                 <a href="{{ route('tenant.edit', $tenant->tenant_id) }}"
                                                     class="dropdown-item" title="Edit tenant"><i class="dw dw-edit2"></i>

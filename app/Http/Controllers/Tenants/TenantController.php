@@ -119,7 +119,12 @@ class TenantController extends Controller
     {
         $tenant = Tenant::find($id);
         Mail::to($tenant->email)->send(new \App\Mail\NotifyAccountInfo($tenant));
+        return redirect()->back()->with('success', 'Account info has been sent successfully');
+    }
 
+    public function sendAccountInfo_SMS($id)
+    {
+        $tenant = Tenant::find($id);
         if ($tenant->phone_number == '+84398371050') {
             $sid = env('TWILIO_SID');
             $token = env('TWILIO_TOKEN');
@@ -142,7 +147,6 @@ class TenantController extends Controller
                 ]
             );
         }
-
         return redirect()->back()->with('success', 'Account info has been sent successfully');
     }
 

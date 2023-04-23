@@ -117,6 +117,7 @@ Route::middleware(['auth', 'verified', 'userRole:landlords'])->group(function ()
                     Route::resource('tenant', TenantController::class);
                     Route::get('/export-tenant', [TenantController::class, 'exportTenant'])->name('export-tenant');
                     Route::get('send-account-info/{id}', [TenantController::class, 'sendAccountInfo'])->name('notify.account-info.email');
+                    Route::get('send-account-info-sms/{id}', [TenantController::class, 'sendAccountInfo_SMS'])->name('notify.account-info.sms');
 
 
                     Route::controller(ElectricityController::class)->group(function () {
