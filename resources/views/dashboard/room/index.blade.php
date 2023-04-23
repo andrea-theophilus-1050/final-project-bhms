@@ -378,16 +378,30 @@
                                                                     </div>
                                                                 @else
                                                                     <div class="pull-left">
-                                                                        <button type="button" id="return-room-btn"
-                                                                            class="btn btn-outline-secondary btn-sm"
-                                                                            title="Return"
-                                                                            data-roomID="{{ $room->room_id }}"
-                                                                            data-tenantID="{{ $room->rentals->tenant_id }}"
-                                                                            data-tenantName="{{ $room->rentals->tenants->fullname }}"
-                                                                            data-roomName="{{ $room->room_name }}"
-                                                                            data-rentalID="{{ $room->rentals->rental_room_id }}">
-                                                                            <i class="icon-copy dw dw-refresh2"></i>
-                                                                        </button>
+                                                                        @if ($room->rentals->status == 0)
+                                                                            <button type="button" id="return-room-btn"
+                                                                                class="btn btn-outline-secondary btn-sm"
+                                                                                title="Return"
+                                                                                data-roomID="{{ $room->room_id }}"
+                                                                                data-tenantID="{{ $room->rentals->tenant_id }}"
+                                                                                data-tenantName="{{ $room->rentals->tenants->fullname }}"
+                                                                                data-roomName="{{ $room->room_name }}"
+                                                                                data-rentalID="{{ $room->rentals->rental_room_id }}">
+                                                                                <i class="icon-copy dw dw-refresh2"></i>
+                                                                            </button>
+                                                                        @else
+                                                                            <button type="button"
+                                                                                id="cancel-return-room-btn"
+                                                                                class="btn btn-outline-danger btn-sm"
+                                                                                title="Cancel return"
+                                                                                data-roomID="{{ $room->room_id }}"
+                                                                                data-tenantID="{{ $room->rentals->tenant_id }}"
+                                                                                data-tenantName="{{ $room->rentals->tenants->fullname }}"
+                                                                                data-roomName="{{ $room->room_name }}"
+                                                                                data-rentalID="{{ $room->rentals->rental_room_id }}">
+                                                                                <i class="icon-copy fi-x-circle"></i>
+                                                                            </button>
+                                                                        @endif
                                                                     </div>
                                                                 @endif
 
@@ -1050,6 +1064,40 @@
     {{-- SECTION-END: confirm return room popup --}}
 
     {{-- SECTION-START: confirm return room popup --}}
+    <div class="modal fade" id="cancel-return-room-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center font-18">
+                    <h4 class="padding-top-30 mb-30 weight-500" id="msg-confirm">Are you sure you want to continue?
+                    </h4>
+                    <form id="cancel-return-room-form" method="post">
+                        @csrf
+                        <input type="hidden" name="roomID" id="roomID">
+                        <input type="hidden" name="tenantID" id="tenantID">
+                        <input type="hidden" name="rentalID" id="rentalID">
+
+                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+                            <div class="col-6">
+                                <button type="button"
+                                    class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+                                    data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                NO
+                            </div>
+                            <div class="col-6">
+                                <button type="submit"
+                                    class="btn btn-primary border-radius-100 btn-block confirmation-btn"><i
+                                        class="fa fa-check"></i></button>
+                                YES
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- SECTION-END: confirm return room popup --}}
+
+    {{-- SECTION-START: confirm return room popup --}}
     <div class="modal fade" id="multiple-delete" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -1187,6 +1235,37 @@
 
                     $('#return-room-modal').modal('show');
                 });
+            });
+
+            var cancelReturnRoomBtn = document.querySelectorAll('#cancel-return-room-btn');
+            cancelReturnRoomBtn.forEach(function(e) {
+                e.addEventListener('click', function() {
+                    var roomID = e.getAttribute('data-roomID');
+                    var roomName = e.getAttribute('data-roomName');
+                    var tenantID = e.getAttribute('data-tenantID');
+                    var tenantName = e.getAttribute('data-tenantName');
+                    var rentalID = e.getAttribute('data-rentalID');
+
+                    var roomIDInput = document.querySelector('#cancel-return-room-modal #roomID');
+                    var tenantIDInput = document.querySelector(
+                        '#cancel-return-room-modal #tenantID');
+                    var rentalIDInput = document.querySelector(
+                        '#cancel-return-room-modal #rentalID');
+
+                    roomIDInput.value = roomID;
+                    tenantIDInput.value = tenantID;
+                    rentalIDInput.value = rentalID;
+
+                    var msg = document.querySelector('#cancel-return-room-modal #msg-confirm');
+                    msg.innerHTML = " \"" + roomName + " - " + tenantName +
+                        "\" <br>cancel return room?"
+
+                    var formCancelReturnRoom = document.querySelector('#cancel-return-room-form');
+                    formCancelReturnRoom.action = "{{ route('room.cancelReturn') }}";
+
+                    $('#cancel-return-room-modal').modal('show');
+                });
+
             });
         });
     </script>

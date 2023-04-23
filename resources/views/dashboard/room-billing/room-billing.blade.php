@@ -120,10 +120,10 @@
                                                 <i class="icon-copy dw dw-tick"></i> &nbsp; Change status
                                             </button>
                                         @else
-                                            <button class="btn btn-secondary btn-sm" id="update-status-btn" type="button"
+                                            <button class="btn btn-info btn-sm" id="update-status-btn" type="button"
                                                 data-billID="{{ collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->id }}"
                                                 data-totalPrice="{{ $bill->total }}">
-                                                <i class="icon-copy dw dw-tick"></i> &nbsp; Change status
+                                                <i class="icon-copy dw dw-tick"></i> &nbsp; Make unpaid
                                             </button>
                                         @endif
                                     </td>
@@ -398,7 +398,7 @@
                             </div>
                         </div>
 
-                        <div class="padding-bottom-30 row" style="max-width: 400px; margin: 0 auto;">
+                        <div class="padding-bottom-30 row" style="max-width: 100%; margin: 0 auto;">
                             <div class="col-4">
                                 <button type="button"
                                     class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
@@ -406,10 +406,10 @@
                                 Cancel
                             </div>
                             <div class="col-4">
-                                <button type="submit" name="status" value="unpaid"
+                                <button type="submit" name="status" value="keep_staying"
                                     class="btn btn-danger border-radius-100 btn-block confirmation-btn"><i
                                         class="fa fa-times"></i></button>
-                                Not return
+                                Keep staying
                             </div>
                             <div class="col-4">
                                 <button type="submit" name="status" value="return"

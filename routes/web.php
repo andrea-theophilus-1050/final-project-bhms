@@ -158,6 +158,7 @@ Route::middleware(['auth', 'verified', 'userRole:landlords'])->group(function ()
                     Route::controller(ReturnRoomController::class)->group(function () {
                         Route::post('room/return', 'returnRoom')->name('room.return');
                         Route::post('confirm-return-room', 'confirmReturnRoom')->name('confirm-return-room');
+                        Route::post('cancel-return-room', 'cancelReturnRoom')->name('room.cancelReturn');
 
                         // Route::get('handle-returned-room/{roomID}/{tenantID}/{rentalID}', 'handleReturnedRoom')->name('handle-returned-room');
                         // Route::post('service-insert', 'serviceInsert')->name('return.service-bill.insert');

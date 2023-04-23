@@ -26,6 +26,18 @@ class ReturnRoomController extends Controller
         return redirect()->back()->with('success', 'Room returned successfully');
     }
 
+    public function cancelReturnRoom(Request $request)
+    {
+        $rentalID = $request->rentalID;
+
+        $rentalRoom = RentalRoom::find($rentalID);
+        $rentalRoom->status = 0;
+        $rentalRoom->end_date = null;
+        $rentalRoom->save();
+
+        return redirect()->back()->with('success', 'Cancel return room successfully');
+    }
+
     public function confirmReturnRoom(Request $request)
     {
         $rentalID = $request->rentalRoomID;
@@ -48,6 +60,16 @@ class ReturnRoomController extends Controller
                 $tenant->save();
 
                 return redirect()->back()->with('success', 'Room returned successfully');
+                break;
+
+            case 'keep_staying':
+                $rentalRoom = RentalRoom::find($rentalID);
+                $rentalRoom->status = 0;
+                $rentalRoom->end_date = null;
+                $rentalRoom->save();
+
+                return redirect()->back()->with('success', 'Cancel return room successfully');
+                break;
         }
     }
 }
