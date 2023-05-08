@@ -16,29 +16,6 @@
                             </ol>
                         </nav>
                     </div>
-                    {{-- <div class="col-md-6 col-sm-12">
-                        <div class="dropdown">
-                            <form action="" style="display: flex; justify-content: space-between">
-                                <input type="text" name="search" placeholder="Room number" class="form-control"
-                                    style="margin-right: 5%; font-size: 13px">
-                                <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
-                                    <option value="">Room status</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                </select>
-                                <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
-                                    <option value="">Room billed</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                </select>
-                                <button type="submit" class="btn btn-primary btn-sm">Search</button>
-                            </form>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
 
@@ -104,48 +81,6 @@
                 <!-- SECTION-END: add & update house popup -->
             @endif
 
-            {{-- <div class="page-header">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="dropdown">
-                            <form action="" style="display: flex; justify-content: space-between">
-                                <input type="text" name="search" placeholder="Room number" class="form-control"
-                                    style="margin-right: 5%; font-size: 13px">
-                                <select class="form-control" name="" style="margin-right: 5%; font-size: 13px"> --}}
-
-            {{-- @foreach ($house as $item)
-                                        <option value="{{ $item->house_id }}">{{ $item->house_name }}</option>
-                                    @endforeach --}}
-            {{-- <option value="">Room status</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option> --}}
-            {{-- </select>
-                                <select class="form-control" name="" style="margin-right: 5%; font-size: 13px">
-                                    <option value="">Room billed</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                    <option value="">1</option>
-                                </select>
-                                <button type="submit" class="btn btn-primary btn-sm">Search</button>
-                            </form>
-                        </div> --}}
-            {{-- <div class="dropdown">
-                            <label style="font-size: 15px; font-weight: bold">Area: </label>
-                            <a class="btn btn-success btn-sm dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                January 2018
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Export List</a>
-                                <a class="dropdown-item" href="#">Policies</a>
-                                <a class="dropdown-item" href="#">View Assets</a>
-                            </div>
-                        </div> --}}
-            {{-- </div>
-                </div>
-            </div> --}}
             <div class="row">
                 <div class="col-xl-4 mb-30">
                     <div class="card-box height-100-p widget-style1">

@@ -98,7 +98,7 @@ class WaterController extends Controller
         }
 
         Water::insert($data);
-        return redirect()->back()->with('success', 'Insert data successfully');
+        return redirect()->back()->with('success', 'Saved successfully');
 
         // dd($request->all());
     }

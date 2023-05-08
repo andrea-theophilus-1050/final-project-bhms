@@ -97,12 +97,7 @@ class UserController extends Controller
             // $request->session()->regenerate();
             $user = Auth::user();
             Auth::login($user, $remember);
-
-            if (Auth::user()->role == 'landlords') {
-                return redirect()->route('home')->with('success', 'Login successful!');
-            } else {
-                return back()->with('errorLogin', 'You cannot access the system')->withInput($request->all());
-            }
+            return redirect()->route('home')->with('success', 'Login successful!');
         }
         return back()->with('errorLogin', 'Incorrect username or password')->withInput($request->all());
     }
@@ -247,7 +242,3 @@ class UserController extends Controller
         return redirect()->back();
     }
 }
-
-
-
-

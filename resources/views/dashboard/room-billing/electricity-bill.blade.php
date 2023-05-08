@@ -36,24 +36,37 @@
                     </div>
                 </div>
             </div>
-            
+
             <form method="POST" action="{{ route('electricity.insert') }}">
                 @csrf
                 <input type="hidden" name="date" value="{{ $date }}">
                 <div class="pd-20 card-box mb-30">
                     <div class="clearfix mb-20">
                         <div class="pull-left">
-                            <h4 class="text-blue h4"> <i class="dw dw-calendar-11"></i> <u>{{ $date }}</u> -
-                                Electricity bill</h4>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <h4 class="text-blue h4"> <i class="dw dw-calendar-11"></i> <u>{{ $date }}</u> -
+                                    Electricity bill </h4>
+
+                                @if (session('success'))
+                                    <div class="alert alert-success alert-dismissible fade show ml-3" role="alert">
+                                        <strong>Success! </strong>{{ session('success') }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                         <div class="pull-right">
-                            <a href="{{ route('export-electricity', $date) }}" class="btn btn-info btn-sm"><i class="fa fa-file-excel-o"></i> Export excel</a>
+                            <a href="{{ route('export-electricity', $date) }}" class="btn btn-info btn-sm"><i
+                                    class="fa fa-file-excel-o"></i> Export excel</a>
                             <button type="submit" class="btn btn-primary btn-sm"><i class="icon-copy dw dw-diskette2"></i>
                                 &nbsp; Save</button>
                             <a href="{{ route('home') }}" class="btn btn-danger btn-sm"><i class="icon-copy fa fa-close"
                                     aria-hidden="true"></i> &nbsp; Cancel</a>
                         </div>
                     </div>
+                    
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered" id="house-table">
                             <thead>
