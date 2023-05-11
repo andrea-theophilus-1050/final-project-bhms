@@ -66,9 +66,13 @@
                                     aria-hidden="true"></i> &nbsp; Cancel</a>
                         </div>
                     </div>
-                    
+
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered" id="house-table">
+
+
+                        <input type="text" class="form-control form-control-sm col-6 mb-3" placeholder="Search..."
+                            name="search" id="search">
+                        <table class="table table-striped table-bordered" id="electricity-table">
                             <thead>
                                 <tr>
                                     <th scope="col" rowspan=2># </th>
@@ -225,6 +229,31 @@
                 }
             }
 
+        });
+    </script>
+
+    <script>
+        const search = document.querySelector('#search');
+        const table = document.querySelector('#electricity-table');
+
+        search.addEventListener('input', function() {
+            const searchTerm = search.value.toLowerCase();
+
+            table.querySelectorAll('tbody tr').forEach(function(row) {
+                let machFound = false;
+
+                row.querySelectorAll('td').forEach(function(cell) {
+                    if (cell.textContent.toLowerCase().indexOf(searchTerm) > -1) {
+                        machFound = true;
+                    }
+                });
+
+                if (machFound) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
         });
     </script>
 @endsection

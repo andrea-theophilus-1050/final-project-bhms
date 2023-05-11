@@ -28,9 +28,9 @@ class RoomController extends Controller
             ->join('tb_main_tenants', 'tb_main_tenants.tenant_id', '=', 'tb_rental_room.tenant_id')
             ->get();
 
-        $countTotal = Room::where('house_id', $id)->count();
-        $countRentedRoom = Room::where('house_id', $id)->where('status', 1)->count();
-        $countAvailableRoom = Room::where('house_id', $id)->where('status', 0)->count();
+        // $countTotal = Room::where('house_id', $id)->count();
+        // $countRentedRoom = Room::where('house_id', $id)->where('status', 1)->count();
+        // $countAvailableRoom = Room::where('house_id', $id)->where('status', 0)->count();
 
         return view('dashboard.room.index', compact(
             [
@@ -38,9 +38,9 @@ class RoomController extends Controller
                 'tenants',
                 'serviceUsed',
                 'id',
-                'countTotal',
-                'countRentedRoom',
-                'countAvailableRoom'
+                // 'countTotal',
+                // 'countRentedRoom',
+                // 'countAvailableRoom'
             ]
         ))->with('title', 'Room Management');
     }
@@ -122,6 +122,35 @@ class RoomController extends Controller
         }
 
         return redirect()->back()->with('success', 'Rooms have been deleted successfully');
+    }
+
+    public function search(Request $request, $id)
+    {
+        $search = $request->search;
+
+        if($search == null){
+            return redirect()->route('room.index', $id);
+        }
+
+        $rooms = Room::where('room_name', 'like', '%' . $search . '%')->where('house_id', $id)->paginate(20);
+        $tenants = Tenant::where('user_id', auth()->user()->id)->where('status', 0)->get();
+        $serviceUsed = DB::table('tb_services_used')
+            ->join('tb_services', 'tb_services.service_id', '=', 'tb_services_used.service_id')
+            ->join('tb_type_service', 'tb_type_service.type_id', '=', 'tb_services.type_id')
+            ->join('tb_rental_room', 'tb_rental_room.rental_room_id', '=', 'tb_services_used.rental_room_id')
+            ->join('tb_rooms', 'tb_rooms.room_id', '=', 'tb_rental_room.room_id')
+            ->join('tb_main_tenants', 'tb_main_tenants.tenant_id', '=', 'tb_rental_room.tenant_id')
+            ->get();
+
+        return view('dashboard.room.index', compact(
+            [
+                'rooms',
+                'tenants',
+                'serviceUsed',
+                'id',
+                'search'
+            ]
+        ))->with('title', 'Room Management');
     }
 
     public function assignTenant($id)

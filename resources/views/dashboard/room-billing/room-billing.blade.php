@@ -27,8 +27,8 @@
                         <button class="btn btn-success btn-sm mr-2" data-target="#room-billing-modal" data-toggle="modal"><i
                                 class="ion-calculator"></i> &nbsp; Calculate</button>
                         @if (collect($data)->count() > 0)
-                            <a href="{{ route('export-bill', $month) }}"
-                                class="btn btn-info btn-sm mr-2"><i class="fa fa-file-excel-o"></i> &nbsp; Export
+                            <a href="{{ route('export-bill', $month) }}" class="btn btn-info btn-sm mr-2"><i
+                                    class="fa fa-file-excel-o"></i> &nbsp; Export
                                 Excel</a>
 
                             <a href="{{ route('export-pdf', [$month, $house]) }}" class="btn btn-primary btn-sm mr-2"><i
@@ -53,7 +53,10 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-striped" id="house-table">
+                    <input type="text" class="form-control form-control-sm col-6 mb-3" placeholder="Search..."
+                        name="search" id="search">
+
+                    <table class="table table-striped" id="bill-table">
                         {{-- alert --}}
                         @if (session('success'))
                             <div class="col-md-6">
@@ -478,6 +481,31 @@
             e.preventDefault();
             $('#loading-modal').modal('show');
             form.submit();
+        });
+    </script>
+
+    <script>
+        const search = document.querySelector('#search');
+        const table = document.querySelector('#bill-table');
+
+        search.addEventListener('input', function() {
+            const searchTerm = search.value.toLowerCase();
+
+            table.querySelectorAll('tbody tr').forEach(function(row) {
+                let machFound = false;
+
+                row.querySelectorAll('td').forEach(function(cell) {
+                    if (cell.textContent.toLowerCase().indexOf(searchTerm) > -1) {
+                        machFound = true;
+                    }
+                });
+
+                if (machFound) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
         });
     </script>
 

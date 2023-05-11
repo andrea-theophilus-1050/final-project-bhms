@@ -196,9 +196,10 @@ class UserController extends Controller
 
                         $generatedAvatarName = 'avatar-' . time() . '.' . $request->avatar->extension();
                         $request->avatar->move(public_path('avatar'), $generatedAvatarName);
+                       
+                        $user->avatar = $generatedAvatarName;
                     }
 
-                    $user->avatar = $generatedAvatarName;
                     $user->save();
                 }
                 return redirect()->route('profile')->with('successProfile', 'Profile updated successfully');

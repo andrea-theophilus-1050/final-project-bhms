@@ -115,6 +115,23 @@ class TenantController extends Controller
         return redirect()->route('tenant.index')->with('success', 'Tenant has been deleted successfully');
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->search;
+
+        if ($search == null) {
+            return redirect()->route('tenant.index');
+        }
+        
+        $tenants = Tenant::where('fullname', 'like', '%' . $search . '%')
+            ->orWhere('id_card', 'like', '%' . $search . '%')
+            ->orWhere('phone_number', 'like', '%' . $search . '%')
+            ->orWhere('email', 'like', '%' . $search . '%')
+            ->orWhere('hometown', 'like', '%' . $search . '%')
+            ->where('user_id', auth()->user()->id)->paginate(30);
+        return view('dashboard.tenants.index', compact(['tenants', 'search']))->with('title', 'Tenant Management');
+    }
+
     public function sendAccountInfo($id)
     {
         $tenant = Tenant::find($id);

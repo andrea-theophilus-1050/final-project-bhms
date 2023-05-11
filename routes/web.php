@@ -109,12 +109,15 @@ Route::middleware(['auth', 'verified', 'userRole:landlords'])->group(function ()
                             Route::post('room/assignMembers', 'assignMembers')->name('assign-members');
 
                             Route::get('export-rooms/{houseID}', [RoomController::class, 'exportRooms'])->name('export-rooms');
+
+                            Route::post('room/search/{id}', [RoomController::class, 'search'])->name('room.search');
                         });
                     });
 
                     // Route::post('change-password', [DashboardController::class, 'changePassword'])->name('change-password');
 
                     Route::resource('tenant', TenantController::class);
+                    Route::post('tenant/search', [TenantController::class, 'search'])->name('tenant.search');
                     Route::get('/export-tenant', [TenantController::class, 'exportTenant'])->name('export-tenant');
                     Route::get('send-account-info/{id}', [TenantController::class, 'sendAccountInfo'])->name('notify.account-info.email');
                     Route::get('send-account-info-sms/{id}', [TenantController::class, 'sendAccountInfo_SMS'])->name('notify.account-info.sms');

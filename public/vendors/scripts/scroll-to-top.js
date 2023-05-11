@@ -7,7 +7,10 @@ window.onscroll = function () {
 };
 
 function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    if (
+        document.body.scrollTop > 20 ||
+        document.documentElement.scrollTop > 20
+    ) {
         mybutton.style.display = "block";
     } else {
         mybutton.style.display = "none";
@@ -16,9 +19,10 @@ function scrollFunction() {
 
 // When the user clicks on the button, scroll to the top of the document:
 function topFunction() {
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    if (scrollTop > 0) {
-        window.requestAnimationFrame(topFunction);
-        window.scrollTo(0, scrollTop - scrollTop / 8);
-    }
+    // const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    // if (scrollTop > 0) {
+    //     window.requestAnimationFrame(topFunction);
+    //     window.scrollTo(0, scrollTop - scrollTop / 8);
+    // }
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }

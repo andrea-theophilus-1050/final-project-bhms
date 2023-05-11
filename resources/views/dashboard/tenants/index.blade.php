@@ -21,7 +21,11 @@
             <div class="pd-20 card-box mb-30">
                 <div class="clearfix mb-20">
                     <div class="pull-left">
-                        <h4 class="text-blue h4"></h4>
+                        <form action="{{ route('tenant.search') }}" method="POST">
+                            @csrf
+                            <input type="text" class="form-control form-control-sm" placeholder="Search..."
+                                name="search" @if (isset($search)) value="{{ $search }}" @endif>
+                        </form>
                     </div>
                     <div class="pull-right">
                         <a href="{{ route('export-tenant') }}" class="btn btn-info btn-sm"><i
@@ -41,6 +45,8 @@
                             </button>
                         </div>
                     @endif
+
+
                     <table class="table table-striped hover" id="tenant-table">
                         <thead style="white-space: nowrap;">
                             <tr>

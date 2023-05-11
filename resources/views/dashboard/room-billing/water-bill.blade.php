@@ -46,7 +46,7 @@
                             <div class="d-flex justify-content-center align-items-center">
                                 <h4 class="text-blue h4"> <i class="dw dw-calendar-11"></i> <u>{{ $date }}</u> -
                                     Water bill</h4>
-                                    
+
                                 @if (session('success'))
                                     <div class="alert alert-success alert-dismissible fade show ml-3" role="alert">
                                         <strong>Success! </strong>{{ session('success') }}
@@ -71,7 +71,11 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered" id="house-table">
+
+                        <input type="text" class="form-control form-control-sm col-6 mb-3" placeholder="Search..."
+                            name="search" id="search">
+
+                        <table class="table table-striped table-bordered" id="water-table">
                             <thead>
                                 <tr>
                                     <th scope="col" rowspan=2># </th>
@@ -223,6 +227,31 @@
                     input2.classList.add('form-control-warning');
                 }
             }
+        });
+    </script>
+
+    <script>
+        const search = document.querySelector('#search');
+        const table = document.querySelector('#water-table');
+
+        search.addEventListener('input', function() {
+            const searchTerm = search.value.toLowerCase();
+
+            table.querySelectorAll('tbody tr').forEach(function(row) {
+                let machFound = false;
+
+                row.querySelectorAll('td').forEach(function(cell) {
+                    if (cell.textContent.toLowerCase().indexOf(searchTerm) > -1) {
+                        machFound = true;
+                    }
+                });
+
+                if (machFound) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
         });
     </script>
 @endsection

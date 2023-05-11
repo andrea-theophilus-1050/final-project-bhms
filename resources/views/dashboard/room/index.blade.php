@@ -19,6 +19,16 @@
                 </div>
             </div>
 
+            @php
+                $countTotal = App\Models\Room::where('house_id', $id)->count();
+                $countRentedRoom = App\Models\Room::where('house_id', $id)
+                    ->where('status', 1)
+                    ->count();
+                $countAvailableRoom = App\Models\Room::where('house_id', $id)
+                    ->where('status', 0)
+                    ->count();
+            @endphp
+
             {{-- NOTE: if the landlords have only house, this appears for the user if they wanna add another new house --}}
             @if (session('hasOneHouse') && count($rooms) > 0)
                 <div class="page-header">
@@ -182,6 +192,14 @@
                                         aria-hidden="true"></i>
                                     Delete selected rooms</button>
                             </div>
+                        </div>
+
+                        <div class="clearfix mb-10">
+                            <form action="{{ route('room.search', $id) }}" method="POST">
+                                @csrf
+                                <input type="text" class="form-control form-control-sm col-6 mb-3 ml-3"
+                                    placeholder="Search..." name="search" id="search" @if(isset($search)) value="{{ $search }}" @endif>
+                            </form>
                         </div>
 
 
