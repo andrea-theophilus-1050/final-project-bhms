@@ -154,7 +154,7 @@
 
     <script>
         // NOTE: get all the rows in the table body
-        var rows = document.querySelectorAll('#house-table tbody tr');
+        var rows = document.querySelectorAll('#water-table tbody tr');
 
         // loop through each row and add an event listener to the new index electric input field
         rows.forEach(function(row) {
