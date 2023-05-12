@@ -18,6 +18,7 @@ class DashboardController extends Controller
             ->where('date', 'LIKE', '% ' . date('Y') . '%')
             ->where('user_id', auth()->user()->id)
             ->groupBy('month')
+            ->orderBy(DB::raw("STR_TO_DATE(CONCAT('01 ', month), '%d %M %Y')"), 'asc')
             ->get();
 
         $unpaidBill = RoomBilling::join('tb_rental_room', 'tb_rental_room.rental_room_id', '=', 'tb_room_billing.rental_room_id')
