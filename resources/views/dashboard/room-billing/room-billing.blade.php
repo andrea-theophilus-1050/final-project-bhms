@@ -79,6 +79,7 @@
                         @endif
                         <thead>
                             <tr>
+                                <th scope="col">#</th>
                                 <th scope="col">House name</th>
                                 <th scope="col">Room name </th>
                                 <th scope="col">Tenant name</th>
@@ -92,7 +93,7 @@
                         <tbody>
                             @foreach ($data as $bill)
                                 <tr>
-
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $bill->house_name }}</td>
                                     <td>{{ $bill->room_name }}</td>
                                     <td>{{ $bill->tenant_name }}</td>
@@ -120,13 +121,13 @@
                                             <button class="btn btn-success btn-sm" id="update-status-btn" type="button"
                                                 data-billID="{{ collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->id }}"
                                                 data-totalPrice="{{ $bill->total }}">
-                                                <i class="icon-copy dw dw-tick"></i> &nbsp; Change status
+                                                <i class="icon-copy dw dw-tick"></i> &nbsp; Mark as Paid
                                             </button>
                                         @else
                                             <button class="btn btn-info btn-sm" id="update-status-btn" type="button"
                                                 data-billID="{{ collect($roomBilling)->where('rental_room_id', $bill->rental_room_id)->where('date', $bill->billDate)->first()->id }}"
                                                 data-totalPrice="{{ $bill->total }}">
-                                                <i class="icon-copy dw dw-tick"></i> &nbsp; Make unpaid
+                                                <i class="icon-copy dw dw-tick"></i> &nbsp; Mark as Unpaid
                                             </button>
                                         @endif
                                     </td>
