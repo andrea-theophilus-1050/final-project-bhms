@@ -128,11 +128,20 @@ class RoomController extends Controller
     {
         $search = $request->search;
 
-        if($search == null){
+        if ($search == null) {
             return redirect()->route('room.index', $id);
         }
 
         $rooms = Room::where('room_name', 'like', '%' . $search . '%')->where('house_id', $id)->paginate(20);
+
+        if ($rooms->count() == 0) {
+            $rooms = Room::join('tb_rental_room', 'tb_rental_room.room_id', '=', 'tb_rooms.room_id')
+                ->join('tb_main_tenants', 'tb_main_tenants.tenant_id', '=', 'tb_rental_room.tenant_id')
+                ->where('tb_main_tenants.fullname', 'like', '%' . $search . '%')
+                ->where('tb_rooms.house_id', $id)
+                ->paginate(20);
+        }
+
         $tenants = Tenant::where('user_id', auth()->user()->id)->where('status', 0)->get();
         $serviceUsed = DB::table('tb_services_used')
             ->join('tb_services', 'tb_services.service_id', '=', 'tb_services_used.service_id')

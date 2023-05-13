@@ -29,7 +29,6 @@ class SendSMSController extends Controller
 
             $data = $roomBilling->getData($waterBills, $electricityBills, $costsIncurred, $otherServicesUsed);
 
-
             foreach ($data as $bill) {
                 // NOTE: This is a free Twilio trial account, so I only send SMS to my own phone number "+84398371050"
                 // NOTE: Remove if-else code when the Twilio account is upgraded to a paid account

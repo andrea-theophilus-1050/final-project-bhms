@@ -42,8 +42,7 @@
                                     Send email</button>
                             </form>
 
-                            <form method="POST" action="{{ route('sms.send-bill', [$month, $house]) }}"
-                                id="send-email-form">
+                            <form method="POST" action="{{ route('sms.send-bill', [$month, $house]) }}" id="send-sms-form">
                                 @csrf
                                 <button class="btn btn-primary btn-sm" type="submit"><i class="icon-copy fi-mail"></i>
                                     &nbsp;
@@ -477,11 +476,20 @@
     </script>
 
     <script>
-        const form = document.querySelector('#send-email-form');
-        form.querySelector('button[type="submit"]').addEventListener('click', function(e) {
+        const formEmail = document.querySelector('#send-email-form');
+        formEmail.querySelector('button[type="submit"]').addEventListener('click', function(e) {
             e.preventDefault();
             $('#loading-modal').modal('show');
-            form.submit();
+            formEmail.submit();
+        });
+    </script>
+
+    <script>
+        const formSMS = document.querySelector('#send-sms-form');
+        formSMS.querySelector('button[type="submit"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            $('#loading-modal').modal('show');
+            formSMS.submit();
         });
     </script>
 
