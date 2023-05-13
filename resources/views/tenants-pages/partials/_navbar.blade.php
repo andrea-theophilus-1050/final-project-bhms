@@ -6,7 +6,8 @@
             <form>
                 <div class="form-group mb-0">
                     <i class="dw dw-search2 search-icon"></i>
-                    <input type="text" class="form-control search-input month-picker" placeholder="Search Here" id="searchBill" name="searchBill">
+                    <input type="text" class="form-control search-input month-picker" placeholder="Search Here"
+                        id="searchBill" name="searchBill">
                 </div>
             </form>
         </div>
@@ -102,8 +103,6 @@
                         <i class="dw dw-user1"></i> Profile</a>
                     <a class="dropdown-item" href="javascript:;" data-toggle="right-sidebar">
                         <i class="dw dw-settings2"></i> Layout settings</a>
-                    <a class="dropdown-item" href="faq.html">
-                        <i class="dw dw-help"></i> Help</a>
                     <a class="dropdown-item" href="{{ route('role.tenants.logout') }}">
                         <i class="dw dw-logout"></i> Logout</a>
                 </div>

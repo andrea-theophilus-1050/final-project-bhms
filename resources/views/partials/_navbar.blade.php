@@ -47,9 +47,9 @@
                             <ul>
                                 @foreach ($notifications as $notify)
                                     <li>
-                                        <a href="{{ $notify->url }}">
+                                        <a href="{{ route('handle-notify', $notify->url) }}" onclick="return confirm('Are you sure to reset the password?')">
                                             <img src="{{ asset('vendors/images/bell-notify.png') }}" alt="">
-                                            <h3>Bill status</h3>
+                                            <h3>Reset tenant password</h3>
                                             <p>{{ $notify->content }}</p>
 
                                             <span style="font-size: 10px">{{ $notify->created_at->diffForHumans() }}</span>

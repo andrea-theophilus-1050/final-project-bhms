@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\TenantRole;
 
 use App\Http\Controllers\Controller;
+use App\Models\Notification;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,6 +43,35 @@ class AuthTenantController extends Controller
             }
         } else {
             return back()->with('errors', 'Incorrect email or password')->withInput($request->all());
+        }
+    }
+
+    public function forgotPassword()
+    {
+        return view('tenants-pages.forgot-password')->with('title', 'Forgot Password');
+    }
+
+    public function forgotPasswordAction(Request $request)
+    {
+        $request->validate([
+            'credential' => 'required',
+        ]);
+
+        if (filter_var($request->credential, FILTER_VALIDATE_EMAIL)) {
+            $tenant = Tenant::where('email', $request->credential)->first();
+        } else {
+            $tenant = Tenant::where('phone_number', $request->credential)->first();
+        }
+
+        if ($tenant->count() != 0) {
+            $notification = new Notification();
+
+            $notification->user_id = $tenant->user_id;
+            $notification->content = 'Your tenant account has requested to reset password';
+            $notification->url = $tenant->tenant_id;
+            $notification->save();
+
+            return redirect()->back()->with('success', 'Please wait for your landlord to change your password');
         }
     }
 

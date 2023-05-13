@@ -107,7 +107,7 @@
                             <div class="col-6"></div>
                             <div class="col-6">
                                 <div class="forgot-password">
-                                    <a href="{{ url('forgot-password') }}">Forgot password</a>
+                                    <a href="{{ route('tenant.forgot-password') }}">Forgot password</a>
                                 </div>
                             </div>
                         </div>

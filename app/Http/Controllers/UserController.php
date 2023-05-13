@@ -14,6 +14,9 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Auth\Events\Registered;
 use App\Models\Services;
 use App\Models\Notification;
+use App\Models\Tenant;
+use Twilio\Rest\Client;
+
 
 class UserController extends Controller
 {
@@ -196,7 +199,7 @@ class UserController extends Controller
 
                         $generatedAvatarName = 'avatar-' . time() . '.' . $request->avatar->extension();
                         $request->avatar->move(public_path('avatar'), $generatedAvatarName);
-                       
+
                         $user->avatar = $generatedAvatarName;
                     }
 
@@ -240,6 +243,40 @@ class UserController extends Controller
         foreach ($notification as $item) {
             $item->delete();
         }
+        return redirect()->back();
+    }
+
+    public function handleNotify($id)
+    {
+        $tenant = Tenant::find($id);
+        $tenant->password = Hash::make('12345678');
+        $tenant->save();
+
+        // Because Twilio trial account can only send message to verified number
+        // So we only send message to my number
+        // Remove this if-else code when the account is upgraded
+        if ($tenant->phone_number == '+84398371050') {
+            $sid = env('TWILIO_SID');
+            $token = env('TWILIO_TOKEN');
+            $numberFrom = env('TWILIO_FROM');
+
+            $client = new Client($sid, $token);
+
+            $client->messages->create(
+                $tenant->phone_number,
+                [
+                    'from' => $numberFrom,
+                    'body' => chr(10) . 'Hello: ' . $tenant->fullname . chr(10) . chr(10) . // chr(10) is a new line
+                        'Your password has been reset to default password' . chr(10) . chr(10) .
+                        'Password: 12345678' . chr(10) . chr(10) .
+                        'Please access to the system via: ' . url('/') . '/tenant/login'
+                ]
+            );
+        }
+
+        $notification = Notification::where('user_id', auth()->user()->id)->where('url', $id)->first();
+        $notification->delete();
+
         return redirect()->back();
     }
 }

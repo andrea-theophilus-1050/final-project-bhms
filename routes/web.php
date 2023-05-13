@@ -184,6 +184,7 @@ Route::middleware(['auth', 'verified', 'userRole:landlords'])->group(function ()
             Route::post('/dashboard/update-profile', 'updateProfile')->name('update-profile');
 
             Route::get('clear-notification', 'clearNotification')->name('clear-notification');
+            Route::get('handle-notify/{id}', 'handleNotify')->name('handle-notify');
         });
     });
 });
@@ -194,6 +195,8 @@ Route::middleware(['auth', 'verified', 'userRole:landlords'])->group(function ()
 // NOTE: Route auth user role tenants
 Route::get('tenant/login', [AuthTenantController::class, 'login'])->name('tenant.login');
 Route::post('tenant/login', [AuthTenantController::class, 'login_action'])->name('tenant.login.action');
+Route::get('tenant/forgot-password', [AuthTenantController::class, 'forgotPassword'])->name('tenant.forgot-password');
+Route::post('tenant/forgot-password', [AuthTenantController::class, 'forgotPasswordAction'])->name('tenant.forgotPassword.action');
 
 
 Route::middleware(['auth:tenants'])->group(function () {
