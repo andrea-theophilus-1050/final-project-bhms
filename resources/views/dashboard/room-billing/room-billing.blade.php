@@ -490,13 +490,13 @@
         const table = document.querySelector('#bill-table');
 
         search.addEventListener('input', function() {
-            const searchTerm = search.value.toLowerCase();
+            const searchTerm = search.value.trim().toLowerCase();
 
             table.querySelectorAll('tbody tr').forEach(function(row) {
                 let machFound = false;
 
                 row.querySelectorAll('td').forEach(function(cell) {
-                    if (cell.textContent.toLowerCase().indexOf(searchTerm) > -1) {
+                    if (cell.textContent.trim().toLowerCase().indexOf(searchTerm) > -1) {
                         machFound = true;
                     }
                 });

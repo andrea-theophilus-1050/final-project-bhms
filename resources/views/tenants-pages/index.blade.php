@@ -27,8 +27,11 @@
                     </div>
                 </div>
             </div>
-            @foreach ($data->roomBills as $bill)
-                <div class="pd-20 card-box mb-30" @if ($bill->status != 0) style="background-color: #F7F7F7" @endif id="notify-{{ $bill->id }}">
+
+
+            @foreach ($data->roomBills->sortBy('status') as $bill)
+                <div class="pd-20 card-box mb-30" @if ($bill->status != 0) style="background-color: #F7F7F7" @endif
+                    id="notify-{{ $bill->id }}" name="{{ $bill->date }}">
                     <div class="clearfix">
                         <div class="table-responsive">
                             <div class="pull-right mb-10">
@@ -54,9 +57,7 @@
                                                 @if ($bill->status == 0)
                                                     <span class="badge badge-danger">Unpaid</span>
                                                 @elseif($bill->status == 1)
-                                                    <span class="badge badge-success">Paid</span>
-                                                @elseif ($bill->status == 2)
-                                                    <span class="badge badge-warning">Still owed</span>
+                                                    <span class="badge badge-primary">Paid</span>
                                                 @endif
                                             </div>
                                             <div class="ml-2">
@@ -140,7 +141,13 @@
                                             Total
                                         </td>
                                         <td class="text-center font-weight-bold" style="font-size: 18px">
-                                            {{ number_format($bill->total_price, 0, ',', ',') }}
+                                            @if ($bill->status == 0)
+                                                {{ number_format($bill->total_price, 0, ',', ',') }}
+                                            @elseif($bill->status == 1)
+                                                <span style="font-weight:normal">
+                                                    {{ number_format($bill->total_price, 0, ',', ',') }}
+                                                </span>
+                                            @endif
                                         </td>
                                     </tr>
                                 </tfoot>
@@ -151,4 +158,23 @@
             @endforeach
         </div>
     </div>
+
+    <script>
+        const searchBill = document.getElementById('searchBill');
+
+        searchBill.addEventListener('blur', function(e) {
+            const term = e.target.value.toLowerCase();
+            const bills = document.getElementsByClassName('card-box');
+
+            Array.from(bills).forEach(function(bill) {
+                const date = bill.getAttribute('name');
+
+                if (date.toLowerCase().indexOf(term) != -1) {
+                    bill.style.display = 'block';
+                } else {
+                    bill.style.display = 'none';
+                }
+            })
+        })
+    </script>
 @endsection

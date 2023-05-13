@@ -1,7 +1,15 @@
 <div class="header">
     <div class="header-left">
         <div class="menu-icon dw dw-menu"></div>
-        
+        <div class="search-toggle-icon dw dw-search2" data-toggle="header_search"></div>
+        <div class="header-search">
+            <form>
+                <div class="form-group mb-0">
+                    <i class="dw dw-search2 search-icon"></i>
+                    <input type="text" class="form-control search-input month-picker" placeholder="Search Here" id="searchBill" name="searchBill">
+                </div>
+            </form>
+        </div>
     </div>
     <div class="header-right">
         {{-- <div class="dashboard-setting user-notification">
@@ -45,7 +53,8 @@
                                             <img src="{{ asset('vendors/images/bell-notify.png') }}" alt="">
                                             <h3>Room billing notify</h3>
                                             <p>{{ $notify->content }}</p>
-                                            <span style="font-size: 10px">{{ $notify->created_at->diffForHumans() }}</span>
+                                            <span
+                                                style="font-size: 10px">{{ $notify->created_at->diffForHumans() }}</span>
                                         </a>
                                     </li>
                                 @endforeach
