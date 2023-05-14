@@ -142,7 +142,7 @@ class TenantController extends Controller
     public function sendAccountInfo_SMS($id)
     {
         $tenant = Tenant::find($id);
-        if ($tenant->phone_number == '+84398371050') {
+        // if ($tenant->phone_number == '+84398371050') {
             $sid = env('TWILIO_SID');
             $token = env('TWILIO_TOKEN');
             $numberFrom = env('TWILIO_FROM');
@@ -163,7 +163,7 @@ class TenantController extends Controller
                         'Please access to the system via: ' . url('/') . '/tenant/login'
                 ]
             );
-        }
+        // }
         return redirect()->back()->with('success', 'Account info has been sent successfully');
     }
 
