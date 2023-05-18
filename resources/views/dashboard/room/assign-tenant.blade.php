@@ -169,10 +169,10 @@
                                                 name="selectService[]" value="{{ $service->service_id }}" disabled
                                                 checked>
                                             <input type="hidden" class="form-control" style="width: 25px;"
-                                                name="selectService[]" value="{{ $service->service_id }}" checked>
+                                                name="selectService[]" value="{{ $service->service_id }}">
                                         @else
                                             <input type="checkbox" class="form-control" style="width: 25px;"
-                                                name="selectService[]" value="{{ $service->service_id }}" checked>
+                                                name="selectService[]" value="{{ $service->service_id }}">
                                         @endif
                                     </td>
                                     <td hidden>{{ $service->service_id }}</td>

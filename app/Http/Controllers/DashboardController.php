@@ -26,7 +26,9 @@ class DashboardController extends Controller
             ->join('tb_rooms', 'tb_rooms.room_id', '=', 'tb_rental_room.room_id')
             ->join('tb_house', 'tb_house.house_id', '=', 'tb_rooms.house_id')
             ->where('tb_house.user_id', auth()->user()->id)
-            ->where('tb_room_billing.status', '!=', 1)->get();
+            ->where('tb_room_billing.status', '!=', 1)
+            ->orderBy(DB::raw("STR_TO_DATE(CONCAT('01 ', date), '%d %M %Y')"), 'desc')
+            ->get();
 
         $totalRooms = Room::join('tb_house', 'tb_house.house_id', '=', 'tb_rooms.house_id')
             ->where('tb_house.user_id', auth()->user()->id)->count();

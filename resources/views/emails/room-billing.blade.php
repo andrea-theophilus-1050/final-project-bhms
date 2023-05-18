@@ -152,8 +152,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="height:40px; margin-bottom: 50px">Please access to the system to view detail:
-                                        <a
+                                    <td style="height:40px; margin-bottom: 50px;">Please access to the system to view detail:
+                                        <a style="color: blue"
                                             href="{{ url('/') . '/tenant/login' }}">{{ url('/') . '/tenant/login' }}
                                         </a>
                                     </td>
