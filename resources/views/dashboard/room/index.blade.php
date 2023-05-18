@@ -195,10 +195,23 @@
                         </div>
 
                         <div class="clearfix mb-10">
-                            <form action="{{ route('room.search', $id) }}" method="POST">
+                            <form action="{{ route('room.search', $id) }}" method="POST"
+                                class="d-flex align-items-center">
                                 @csrf
-                                <input type="text" class="form-control form-control-sm col-6 mb-3 ml-3"
-                                    placeholder="Search..." name="search" id="search" @if(isset($search)) value="{{ $search }}" @endif>
+                                <input type="text" class="form-control form-control-sm col-3  ml-3"
+                                    placeholder="Search..." name="search" id="search"
+                                    @if (isset($search)) value="{{ $search }}" @endif>
+
+                                <select name="status" id="status" class="form-control form-control-sm col-2 ml-3">
+                                    <option value="">--- Status ---</option>
+                                    <option value="1" @if (isset($status) && $status == 1) selected @endif>Available
+                                    </option>
+                                    <option value="2" @if (isset($status) && $status == 2) selected @endif>Occupied
+                                    </option>
+                                </select>
+
+                                <button type="submit" class="btn btn-primary btn-sm ml-3"><i class="fa fa-search"
+                                        aria-hidden="true"></i> Search</button>
                             </form>
                         </div>
 
