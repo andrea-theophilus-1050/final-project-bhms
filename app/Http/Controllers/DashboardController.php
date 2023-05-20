@@ -52,7 +52,7 @@ class DashboardController extends Controller
     // feedback page
     public function feedback()
     {
-        $feedbacks = Feedback::join('tb_main_tenants', 'tb_main_tenants.tenant_id', '=', 'tb_feedbacks.tenant_id')->where('tb_main_tenants.user_id', auth()->user()->id)->orderBy('tb_feedbacks.created_at', 'desc')
+        $feedbacks = Feedback::join('tb_main_tenants', 'tb_main_tenants.tenant_id', '=', 'tb_feedbacks.tenant_id')->where('tb_main_tenants.user_id', auth()->user()->id)->where('tb_feedbacks.status', '!=', 3)->orderBy('tb_feedbacks.created_at', 'desc')
             ->select('tb_feedbacks.*')
             ->paginate(10);
         return view('dashboard.feedback.feedback', compact(['feedbacks']))->with('title', 'Feedback');
@@ -80,5 +80,13 @@ class DashboardController extends Controller
                 return redirect()->back()->with('success', 'Feedback rejected');
                 break;
         }
+    }
+
+    public function deleteFeedback($id)
+    {
+        $feedback = Feedback::find($id);
+        $feedback->status = 3;
+        $feedback->save();
+        return redirect()->back()->with('success', 'Feedback deleted');
     }
 }

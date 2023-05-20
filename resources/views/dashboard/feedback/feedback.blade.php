@@ -73,6 +73,11 @@
                                             data-content="{{ $feedback->content }}" id="solve-btn">
                                             <i class="fa fa-info"></i>
                                         </button>
+                                        <button class="btn btn-danger btn-sm" data-id="{{ $feedback->feedback_id }}"
+                                            data-content="{{ $feedback->feedback_id }}" id="delete-fb-btn">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+
 
                                     </td>
                                 </tr>
@@ -127,6 +132,36 @@
     </div>
     {{-- SECTION-END: confirm delete popup --}}
 
+    {{-- SECTION-START: confirm delete popup start --}}
+    <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center font-18">
+                    <h4 class="padding-top-30 mb-30 weight-500" id="msg-delete-confirm">Are you sure you want to continue?
+                    </h4>
+                    <form id="delete-form" method="post">
+                        @csrf
+                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+                            <div class="col-6">
+                                <button type="button"
+                                    class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
+                                    data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                NO
+                            </div>
+                            <div class="col-6">
+                                <button type="submit"
+                                    class="btn btn-primary border-radius-100 btn-block confirmation-btn"><i
+                                        class="fa fa-check"></i></button>
+                                YES
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- SECTION-END: confirm delete popup end --}}
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             //NOTE: passing value to update house modal
@@ -146,6 +181,27 @@
                     form.action = "{{ route('feedback.solve') }}";
 
                     $('#solve-feedback-modal').modal('show');
+                });
+            });
+
+            //NOTE: passing value to delete house modal
+            var deleteBtn = document.querySelectorAll('#delete-fb-btn');
+
+            deleteBtn.forEach(function(e) {
+                e.addEventListener('click', function() {
+                    var id = e.getAttribute('data-id');
+                    var content = e.getAttribute('data-content');
+
+                    var msgDeleteConfirm = document.querySelector('#msg-delete-confirm');
+                    msgDeleteConfirm.innerHTML = "Are you sure you want to delete this feedback?";
+
+                    var idInput = document.querySelector('#idFeedback');
+                    idInput.value = id;
+
+                    var form = document.querySelector('#delete-form');
+                    form.action = "{{ route('landlords.feedback.delete', ':id') }}".replace(':id', id);
+
+                    $('#confirm-delete-modal').modal('show');
                 });
             });
         });

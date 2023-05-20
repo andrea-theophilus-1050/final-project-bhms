@@ -174,6 +174,7 @@ Route::middleware(['auth', 'verified', 'userRole:landlords'])->group(function ()
 
                     Route::get('feedback', [DashboardController::class, 'feedback'])->name('feedback');
                     Route::post('solve-feedback', [DashboardController::class, 'solveFeedback'])->name('feedback.solve');
+                    Route::post('delete-feedback/{id}', [DashboardController::class, 'deleteFeedback'])->name('landlords.feedback.delete');
                 });
             });
             Route::resource('services', ServicesController::class);

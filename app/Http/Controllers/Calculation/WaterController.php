@@ -27,6 +27,7 @@ class WaterController extends Controller
                 ->join('tb_main_tenants', 'tb_main_tenants.tenant_id', '=', 'tb_rental_room.tenant_id')
                 ->where('tb_services.type_id', 2)
                 ->where('tb_house.user_id', auth()->user()->id)
+                ->orderBy('tb_house.house_id', 'asc')
                 ->get();
         } else {
             // get all rooms in the house of the user where the room is occupied
